@@ -1,0 +1,10 @@
+apiVersion: cassandra.tungstenfabric.io/v1alpha1
+kind: Cassandra
+metadata:
+  name: cassandra
+spec:
+  # Add fields here
+  size: 3
+  hostnetwork: true
+  registry: docker.io/michaelhenkel
+  version: 5.1.1-dev3
