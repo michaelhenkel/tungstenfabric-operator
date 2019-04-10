@@ -235,9 +235,6 @@ func newPodForCR(cr *cassandrav1alpha1.Cassandra) *corev1.Pod {
 
 func (r *ReconcileCassandra) configmapForCassandra(m *cassandrav1alpha1.Cassandra, podIpList []string) *corev1.ConfigMap {
 	nodeListString := strings.Join(podIpList,",")
-	seedLength := len(podIpList) - 1
-	seedList := podIpList[0:seedLength]
-	seedListString := strings.Join(seedList,",")
 
 	configMap := &corev1.ConfigMap{
 		ObjectMeta: metav1.ObjectMeta{
@@ -246,7 +243,7 @@ func (r *ReconcileCassandra) configmapForCassandra(m *cassandrav1alpha1.Cassandr
 		},
 		Data: map[string]string{
 			"CONTROLLER_NODES": nodeListString,
-			"CASSANDRA_SEEDS": seedListString,
+			"CASSANDRA_SEEDS": nodeListString,
 			"CASSANDRA_CLUSTER_NAME": "ContrailConfigDB",
 			"CASSANDRA_START_RPC": m.Spec.StartRpc,
 			"CASSANDRA_LISTEN_ADDRESS": m.Spec.ListenAddress,
