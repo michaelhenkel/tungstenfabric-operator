@@ -449,5 +449,5 @@ spec:
   image: "docker.io/michaelhenkel/contrail-external-zookeeper:5.1.1-dev3"
   imagepullpolicy: "Always"
   zookeeperport: "2181"
-  zookeeperports: "2888-3888"
+  zookeeperports: "2888:3888"
 
