@@ -28,8 +28,40 @@ spec:
         metadata:
           type: object
         spec:
+          properties:
+            hostnetwork:
+              type: boolean
+            image:
+              type: string
+            imagepullpolicy:
+              type: string
+            size:
+              format: int32
+              type: integer
+            zookeeperport:
+              type: string
+            zookeeperports:
+              type: string
+          required:
+          - size
+          - image
+          - hostnetwork
+          - imagepullpolicy
+          - zookeeperport
+          - zookeeperports
           type: object
         status:
+          properties:
+            nodes:
+              description: 'INSERT ADDITIONAL STATUS FIELD - define observed state
+                of cluster Important: Run "operator-sdk generate k8s" to regenerate
+                code after modifying this file Add custom validation using kubebuilder
+                tags: https://book.kubebuilder.io/beyond_basics/generating_crd.html'
+              items:
+                type: string
+              type: array
+          required:
+          - nodes
           type: object
   version: v1alpha1
   versions:

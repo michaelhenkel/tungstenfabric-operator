@@ -2,6 +2,7 @@ package v1alpha1
 
 import (
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
+	basev1 "github.com/michaelhenkel/tungstenfabric-operator/pkg/apis/base/v1alpha1"
 )
 
 // EDIT THIS FILE!  THIS IS SCAFFOLDING FOR YOU TO OWN!
@@ -13,10 +14,9 @@ type ZookeeperSpec struct {
 	// INSERT ADDITIONAL SPEC FIELDS - desired state of cluster
 	// Important: Run "operator-sdk generate k8s" to regenerate code after modifying this file
 	// Add custom validation using kubebuilder tags: https://book.kubebuilder.io/beyond_basics/generating_crd.html
-	Size int32 `json:"size"`
-        Registry string `json:"registry"`
-        Version string `json:"version"`
-        HostNetwork bool `json:"hostnetwork"`
+	basev1.BaseParameter `json:",inline"`
+	ZookeeperPort string `json:"zookeeperport"`
+	ZookeeperPorts string `json:"zookeeperports"`
 }
 
 // ZookeeperStatus defines the observed state of Zookeeper

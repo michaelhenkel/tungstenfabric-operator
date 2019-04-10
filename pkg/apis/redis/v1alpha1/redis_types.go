@@ -2,31 +2,24 @@ package v1alpha1
 
 import (
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
-	basev1 "github.com/michaelhenkel/tungstenfabric-operator/pkg/apis/base/v1alpha1"
+        basev1 "github.com/michaelhenkel/tungstenfabric-operator/pkg/apis/base/v1alpha1"
 )
 
 // EDIT THIS FILE!  THIS IS SCAFFOLDING FOR YOU TO OWN!
 // NOTE: json tags are required.  Any new fields you add must have json tags for the fields to be serialized.
 
-// CassandraSpec defines the desired state of Cassandra
+// RedisSpec defines the desired state of Redis
 // +k8s:openapi-gen=true
-type CassandraSpec struct {
+type RedisSpec struct {
 	// INSERT ADDITIONAL SPEC FIELDS - desired state of cluster
 	// Important: Run "operator-sdk generate k8s" to regenerate code after modifying this file
 	// Add custom validation using kubebuilder tags: https://book.kubebuilder.io/beyond_basics/generating_crd.html
-	basev1.BaseParameter `json:",inline"`
-	StartRpc string `json:"startrpc"`
-	ListenAddress string `json:"listenaddress"`
-	Port string `json:"port"`
-	CqlPort string `json:"cqlport"`
-	SslStoragePort string `json:"sslstorageport"`
-	StoragePort string `json:"storageport"`
-	JmxPort string `json:"jmxport"`
+        basev1.BaseParameter `json:",inline"`
 }
 
-// CassandraStatus defines the observed state of Cassandra
+// RedisStatus defines the observed state of Redis
 // +k8s:openapi-gen=true
-type CassandraStatus struct {
+type RedisStatus struct {
 	// INSERT ADDITIONAL STATUS FIELD - define observed state of cluster
 	// Important: Run "operator-sdk generate k8s" to regenerate code after modifying this file
 	// Add custom validation using kubebuilder tags: https://book.kubebuilder.io/beyond_basics/generating_crd.html
@@ -35,25 +28,25 @@ type CassandraStatus struct {
 
 // +k8s:deepcopy-gen:interfaces=k8s.io/apimachinery/pkg/runtime.Object
 
-// Cassandra is the Schema for the cassandras API
+// Redis is the Schema for the redis API
 // +k8s:openapi-gen=true
-type Cassandra struct {
+type Redis struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`
 
-	Spec   CassandraSpec   `json:"spec,omitempty"`
-	Status CassandraStatus `json:"status,omitempty"`
+	Spec   RedisSpec   `json:"spec,omitempty"`
+	Status RedisStatus `json:"status,omitempty"`
 }
 
 // +k8s:deepcopy-gen:interfaces=k8s.io/apimachinery/pkg/runtime.Object
 
-// CassandraList contains a list of Cassandra
-type CassandraList struct {
+// RedisList contains a list of Redis
+type RedisList struct {
 	metav1.TypeMeta `json:",inline"`
 	metav1.ListMeta `json:"metadata,omitempty"`
-	Items           []Cassandra `json:"items"`
+	Items           []Redis `json:"items"`
 }
 
 func init() {
-	SchemeBuilder.Register(&Cassandra{}, &CassandraList{})
+	SchemeBuilder.Register(&Redis{}, &RedisList{})
 }

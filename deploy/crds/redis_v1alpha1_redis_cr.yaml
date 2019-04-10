@@ -1,0 +1,10 @@
+apiVersion: redis.tungstenfabric.io/v1alpha1
+kind: Redis
+metadata:
+  name: redis
+spec:
+  # Add fields here
+  size: 3
+  hostnetwork: false
+  image: "docker.io/michaelhenkel/contrail-external-redis:5.1.1-dev3"
+  imagepullpolicy: "Always"

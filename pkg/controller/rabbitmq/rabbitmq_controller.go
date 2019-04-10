@@ -1,11 +1,12 @@
-package zookeeper
+package rabbitmq
 
 import (
 	"context"
 	"reflect"
+	//"fmt"
 	"strings"
 
-	zookeeperv1alpha1 "github.com/michaelhenkel/tungstenfabric-operator/pkg/apis/zookeeper/v1alpha1"
+	rabbitmqv1alpha1 "github.com/michaelhenkel/tungstenfabric-operator/pkg/apis/rabbitmq/v1alpha1"
 
 	appsv1 "k8s.io/api/apps/v1"
 	corev1 "k8s.io/api/core/v1"
@@ -24,9 +25,9 @@ import (
 	"sigs.k8s.io/controller-runtime/pkg/source"
 )
 
-var log = logf.Log.WithName("controller_zookeeper")
+var log = logf.Log.WithName("controller_rabbitmq")
 
-// Add creates a new Zookeeper Controller and adds it to the Manager. The Manager will set fields on the Controller
+// Add creates a new Rabbitmq Controller and adds it to the Manager. The Manager will set fields on the Controller
 // and Start it when the Manager is Started.
 func Add(mgr manager.Manager) error {
 	return add(mgr, newReconciler(mgr))
@@ -34,28 +35,28 @@ func Add(mgr manager.Manager) error {
 
 // newReconciler returns a new reconcile.Reconciler
 func newReconciler(mgr manager.Manager) reconcile.Reconciler {
-	return &ReconcileZookeeper{client: mgr.GetClient(), scheme: mgr.GetScheme()}
+	return &ReconcileRabbitmq{client: mgr.GetClient(), scheme: mgr.GetScheme()}
 }
 
 // add adds a new Controller to mgr with r as the reconcile.Reconciler
 func add(mgr manager.Manager, r reconcile.Reconciler) error {
 	// Create a new controller
-	c, err := controller.New("zookeeper-controller", mgr, controller.Options{Reconciler: r})
+	c, err := controller.New("rabbitmq-controller", mgr, controller.Options{Reconciler: r})
 	if err != nil {
 		return err
 	}
 
-	// Watch for changes to primary resource Zookeeper
-	err = c.Watch(&source.Kind{Type: &zookeeperv1alpha1.Zookeeper{}}, &handler.EnqueueRequestForObject{})
+	// Watch for changes to primary resource Rabbitmq
+	err = c.Watch(&source.Kind{Type: &rabbitmqv1alpha1.Rabbitmq{}}, &handler.EnqueueRequestForObject{})
 	if err != nil {
 		return err
 	}
 
 	// TODO(user): Modify this to be the types you create that are owned by the primary resource
-	// Watch for changes to secondary resource Pods and requeue the owner Zookeeper
+	// Watch for changes to secondary resource Pods and requeue the owner Rabbitmq
 	err = c.Watch(&source.Kind{Type: &corev1.Pod{}}, &handler.EnqueueRequestForOwner{
 		IsController: true,
-		OwnerType:    &zookeeperv1alpha1.Zookeeper{},
+		OwnerType:    &rabbitmqv1alpha1.Rabbitmq{},
 	})
 	if err != nil {
 		return err
@@ -64,26 +65,26 @@ func add(mgr manager.Manager, r reconcile.Reconciler) error {
 	return nil
 }
 
-var _ reconcile.Reconciler = &ReconcileZookeeper{}
+var _ reconcile.Reconciler = &ReconcileRabbitmq{}
 
-// ReconcileZookeeper reconciles a Zookeeper object
-type ReconcileZookeeper struct {
+// ReconcileRabbitmq reconciles a Rabbitmq object
+type ReconcileRabbitmq struct {
 	// This client, initialized using mgr.Client() above, is a split client
 	// that reads objects from the cache and writes to the apiserver
 	client client.Client
 	scheme *runtime.Scheme
 }
 
-// Reconcile reads that state of the cluster for a Zookeeper object and makes changes based on the state read
-// and what is in the Zookeeper.Spec
+// Reconcile reads that state of the cluster for a Rabbitmq object and makes changes based on the state read
+// and what is in the Rabbitmq.Spec
 // The Controller will requeue the Request to be processed again if the returned error is non-nil or
 // Result.Requeue is true, otherwise upon completion it will remove the work from the queue.
-func (r *ReconcileZookeeper) Reconcile(request reconcile.Request) (reconcile.Result, error) {
+func (r *ReconcileRabbitmq) Reconcile(request reconcile.Request) (reconcile.Result, error) {
 	reqLogger := log.WithValues("Request.Namespace", request.Namespace, "Request.Name", request.Name)
-	reqLogger.Info("Reconciling Zookeeper")
+	reqLogger.Info("Reconciling Rabbitmq")
 
-	// Fetch the Zookeeper instance
-	instance := &zookeeperv1alpha1.Zookeeper{}
+	// Fetch the Rabbitmq instance
+	instance := &rabbitmqv1alpha1.Rabbitmq{}
 	err := r.client.Get(context.TODO(), request.NamespacedName, instance)
 	if err != nil {
 		if errors.IsNotFound(err) {
@@ -100,7 +101,7 @@ func (r *ReconcileZookeeper) Reconcile(request reconcile.Request) (reconcile.Res
 	err = r.client.Get(context.TODO(), types.NamespacedName{Name: instance.Name, Namespace: instance.Namespace}, foundDeployment)
 	if err != nil && errors.IsNotFound(err) {
 		// Define a new deployment
-		dep := r.deploymentForZookeeper(instance)
+		dep := r.deploymentForRabbitmq(instance)
 		reqLogger.Info("Creating a new Deployment.", "Deployment.Namespace", dep.Namespace, "Deployment.Name", dep.Name)
 		err = r.client.Create(context.TODO(), dep)
 		if err != nil {
@@ -125,17 +126,17 @@ func (r *ReconcileZookeeper) Reconcile(request reconcile.Request) (reconcile.Res
 		return reconcile.Result{Requeue: true}, nil
 	}
 
-	// Update the Zookeeper status with the pod names
-	// List the pods for this zookeeper's deployment
+	// Update the Rabbitmq status with the pod names
+	// List the pods for this rabbitmq's deployment
 	podList := &corev1.PodList{}
-	labelSelector := labels.SelectorFromSet(labelsForZookeeper(instance.Name))
+	labelSelector := labels.SelectorFromSet(labelsForRabbitmq(instance.Name))
 	listOps := &client.ListOptions{
 		Namespace:     instance.Namespace,
 		LabelSelector: labelSelector,
 	}
 	err = r.client.List(context.TODO(), listOps, podList)
 	if err != nil {
-		reqLogger.Error(err, "Failed to list pods.", "Zookeeper.Namespace", instance.Namespace, "Zookeeper.Name", instance.Name)
+		reqLogger.Error(err, "Failed to list pods.", "Rabbitmq.Namespace", instance.Namespace, "Rabbitmq.Name", instance.Name)
 		return reconcile.Result{}, err
 	}
 
@@ -145,7 +146,7 @@ func (r *ReconcileZookeeper) Reconcile(request reconcile.Request) (reconcile.Res
 		instance.Status.Nodes = podNames
 		err = r.client.Update(context.TODO(), instance)
 		if err != nil {
-			reqLogger.Error(err, "Failed to update Zookeeper status.")
+			reqLogger.Error(err, "Failed to update Rabbitmq status.")
 			return reconcile.Result{}, err
 		}
 	}
@@ -167,7 +168,7 @@ func (r *ReconcileZookeeper) Reconcile(request reconcile.Request) (reconcile.Res
 	}
 	if int32(len(podIpList)) == size && initContainerRunning {
 		foundConfigmap := &corev1.ConfigMap{}
-		err = r.client.Get(context.TODO(), types.NamespacedName{Name: "tfzookeepercmv1", Namespace: foundConfigmap.Namespace}, foundConfigmap)
+		err = r.client.Get(context.TODO(), types.NamespacedName{Name: "tfrabbitmqcmv1", Namespace: foundConfigmap.Namespace}, foundConfigmap)
 		if err != nil && errors.IsNotFound(err) {
 			// Define a new configmap
 			/*
@@ -175,7 +176,7 @@ func (r *ReconcileZookeeper) Reconcile(request reconcile.Request) (reconcile.Res
 				podIpList = podNodeNameList
 			}
 			*/
-			cm := r.configmapForZookeeper(instance, podIpList)
+			cm := r.configmapForRabbitmq(instance, podIpList)
 			reqLogger.Info("Creating a new Configmap.", "Configmap.Namespace", cm.Namespace, "Configmap.Name", cm.Name)
 			err = r.client.Create(context.TODO(), cm)
 			if err != nil {
@@ -210,7 +211,7 @@ func (r *ReconcileZookeeper) Reconcile(request reconcile.Request) (reconcile.Res
 }
 
 // newPodForCR returns a busybox pod with the same name/namespace as the cr
-func newPodForCR(cr *zookeeperv1alpha1.Zookeeper) *corev1.Pod {
+func newPodForCR(cr *rabbitmqv1alpha1.Rabbitmq) *corev1.Pod {
 	labels := map[string]string{
 		"app": cr.Name,
 	}
@@ -232,29 +233,30 @@ func newPodForCR(cr *zookeeperv1alpha1.Zookeeper) *corev1.Pod {
 	}
 }
 
-func (r *ReconcileZookeeper) configmapForZookeeper(m *zookeeperv1alpha1.Zookeeper, podIpList []string) *corev1.ConfigMap {
+func (r *ReconcileRabbitmq) configmapForRabbitmq(m *rabbitmqv1alpha1.Rabbitmq, podIpList []string) *corev1.ConfigMap {
 	nodeListString := strings.Join(podIpList,",")
+
 	configMap := &corev1.ConfigMap{
 		ObjectMeta: metav1.ObjectMeta{
-			Name: "tfzookeepercmv1",
+			Name: "tfrabbitmqcmv1",
 			Namespace: m.Namespace,
 		},
 		Data: map[string]string{
 			"CONTROLLER_NODES": nodeListString,
-			"ZOOKEEPER_NODES": nodeListString,
-			"ZOOKEEPER_PORT": m.Spec.ZookeeperPort,
-			"ZOOKEEPER_PORTS": m.Spec.ZookeeperPorts,
+			"RABBITMQ_NODES": nodeListString,
+			"RABBITMQ_NODE_PORT": m.Spec.Port,
+			"RABBITMQ_ERLANG_COOKIE": m.Spec.Cookie,
 			"NODE_TYPE": "config-database",
 		},
 	}
 	controllerutil.SetControllerReference(m, configMap, r.scheme)
 	return configMap
 }
-// deploymentForZookeeper returns a zookeeper Deployment object
-func (r *ReconcileZookeeper) deploymentForZookeeper(m *zookeeperv1alpha1.Zookeeper) *appsv1.Deployment {
-	ls := labelsForZookeeper(m.Name)
+// deploymentForRabbitmq returns a rabbitmq Deployment object
+func (r *ReconcileRabbitmq) deploymentForRabbitmq(m *rabbitmqv1alpha1.Rabbitmq) *appsv1.Deployment {
+	ls := labelsForRabbitmq(m.Name)
 	replicas := m.Spec.Size
-	zookeeperImage := m.Spec.Image
+	rabbitmqImage := m.Spec.Image
 	pullPolicy := corev1.PullAlways
 	if m.Spec.ImagePullPolicy == "Never" {
 		pullPolicy = corev1.PullNever
@@ -302,22 +304,22 @@ func (r *ReconcileZookeeper) deploymentForZookeeper(m *zookeeperv1alpha1.Zookeep
 							}},
 						}},
 						Containers: []corev1.Container{{
-							Image:   zookeeperImage,
-							Name:    "zookeeper",
+							Image:   rabbitmqImage,
+							Name:    "rabbitmq",
 							ImagePullPolicy: pullPolicy,
 							EnvFrom: []corev1.EnvFromSource{{
 								ConfigMapRef: &corev1.ConfigMapEnvSource{
 									LocalObjectReference: corev1.LocalObjectReference{
-										Name: "tfzookeepercmv1",
+										Name: "tfrabbitmqcmv1",
 									},
 								},
 							}},
 							VolumeMounts: []corev1.VolumeMount{{
-								Name: "zookeeper-data",
-								MountPath: "/var/lib/zookeeper",
+								Name: "rabbitmq-data",
+								MountPath: "/var/lib/rabbitmq",
 							},{
-								Name: "zookeeper-logs",
-								MountPath: "/var/log/zookeeper",
+								Name: "rabbitmq-logs",
+								MountPath: "/var/log/rabbitmq",
 							}},
 						}},
 						Volumes: []corev1.Volume{
@@ -337,18 +339,18 @@ func (r *ReconcileZookeeper) deploymentForZookeeper(m *zookeeperv1alpha1.Zookeep
 							},
 						},
 						{
-							Name: "zookeeper-data",
+							Name: "rabbitmq-data",
 							VolumeSource: corev1.VolumeSource{
 								HostPath: &corev1.HostPathVolumeSource{
-									Path: "/var/lib/contrail/zookeeper",
+									Path: "/var/lib/contrail/rabbitmq",
 								},
 							},
 						},
 						{
-							Name: "zookeeper-logs",
+							Name: "rabbitmq-logs",
 							VolumeSource: corev1.VolumeSource{
 								HostPath: &corev1.HostPathVolumeSource{
-									Path: "/var/log/contrail/zookeeper",
+									Path: "/var/log/contrail/rabbitmq",
 								},
 							},
 						},
@@ -357,15 +359,15 @@ func (r *ReconcileZookeeper) deploymentForZookeeper(m *zookeeperv1alpha1.Zookeep
 			},
 			},
         }
-        // Set Zookeeper instance as the owner and controller
+        // Set Rabbitmq instance as the owner and controller
         controllerutil.SetControllerReference(m, dep, r.scheme)
         return dep
 }
 
-// labelsForZookeeper returns the labels for selecting the resources
-// belonging to the given zookeeper CR name.
-func labelsForZookeeper(name string) map[string]string {
-        return map[string]string{"app": "zookeeper", "zookeeper_cr": name}
+// labelsForRabbitmq returns the labels for selecting the resources
+// belonging to the given rabbitmq CR name.
+func labelsForRabbitmq(name string) map[string]string {
+        return map[string]string{"app": "rabbitmq", "rabbitmq_cr": name}
 }
 
 // getPodNames returns the pod names of the array of pods passed in

@@ -3,8 +3,10 @@ kind: Zookeeper
 metadata:
   name: zookeeper
 spec:
-  # Add fields here
   size: 3
-  hostnetwork: true
-  registry: docker.io/michaelhenkel
-  version: 5.1.1-dev3
+  hostnetwork: false
+  image: "docker.io/michaelhenkel/contrail-external-zookeeper:5.1.1-dev3"
+  imagepullpolicy: "Always"
+  zookeeperport: "2181"
+  zookeeperports: "2888-3888"
+

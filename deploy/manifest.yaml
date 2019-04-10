@@ -1,0 +1,451 @@
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  creationTimestamp: null
+  name: tungstenfabric-operator
+rules:
+- apiGroups:
+  - ""
+  resources:
+  - pods
+  - services
+  - endpoints
+  - persistentvolumeclaims
+  - events
+  - configmaps
+  - secrets
+  verbs:
+  - '*'
+- apiGroups:
+  - ""
+  resources:
+  - namespaces
+  verbs:
+  - get
+- apiGroups:
+  - apps
+  resources:
+  - deployments
+  - daemonsets
+  - replicasets
+  - statefulsets
+  verbs:
+  - '*'
+- apiGroups:
+  - monitoring.coreos.com
+  resources:
+  - servicemonitors
+  verbs:
+  - get
+  - create
+- apiGroups:
+  - apps
+  resourceNames:
+  - tungstenfabric-operator
+  resources:
+  - deployments/finalizers
+  verbs:
+  - update
+- apiGroups:
+  - cassandra.tungstenfabric.io
+  resources:
+  - '*'
+  verbs:
+  - '*'
+- apiGroups:
+  - zookeeper.tungstenfabric.io
+  resources:
+  - '*'
+  verbs:
+  - '*'
+- apiGroups:
+  - rabbitmq.tungstenfabric.io
+  resources:
+  - '*'
+  verbs:
+  - '*'
+- apiGroups:
+  - redis.tungstenfabric.io
+  resources:
+  - '*'
+  verbs:
+  - '*'
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: tungstenfabric-operator
+---
+kind: RoleBinding
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: tungstenfabric-operator
+subjects:
+- kind: ServiceAccount
+  name: tungstenfabric-operator
+roleRef:
+  kind: Role
+  name: tungstenfabric-operator
+  apiGroup: rbac.authorization.k8s.io
+---
+apiVersion: apiextensions.k8s.io/v1beta1
+kind: CustomResourceDefinition
+metadata:
+  name: cassandras.cassandra.tungstenfabric.io
+spec:
+  group: cassandra.tungstenfabric.io
+  names:
+    kind: Cassandra
+    listKind: CassandraList
+    plural: cassandras
+    singular: cassandra
+  scope: Namespaced
+  subresources:
+    status: {}
+  validation:
+    openAPIV3Schema:
+      properties:
+        apiVersion:
+          description: 'APIVersion defines the versioned schema of this representation
+            of an object. Servers should convert recognized schemas to the latest
+            internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#resources'
+          type: string
+        kind:
+          description: 'Kind is a string value representing the REST resource this
+            object represents. Servers may infer this from the endpoint the client
+            submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#types-kinds'
+          type: string
+        metadata:
+          type: object
+        spec:
+          properties:
+            cqlport:
+              type: string
+            hostnetwork:
+              type: boolean
+            image:
+              type: string
+            imagepullpolicy:
+              type: string
+            jmxport:
+              type: string
+            listenaddress:
+              type: string
+            port:
+              type: string
+            size:
+              format: int32
+              type: integer
+            sslstorageport:
+              type: string
+            startrpc:
+              type: string
+            storageport:
+              type: string
+          required:
+          - size
+          - image
+          - hostnetwork
+          - imagepullpolicy
+          - startrpc
+          - listenaddress
+          - port
+          - cqlport
+          - sslstorageport
+          - storageport
+          - jmxport
+          type: object
+        status:
+          properties:
+            nodes:
+              description: 'INSERT ADDITIONAL STATUS FIELD - define observed state
+                of cluster Important: Run "operator-sdk generate k8s" to regenerate
+                code after modifying this file Add custom validation using kubebuilder
+                tags: https://book.kubebuilder.io/beyond_basics/generating_crd.html'
+              items:
+                type: string
+              type: array
+          required:
+          - nodes
+          type: object
+  version: v1alpha1
+  versions:
+  - name: v1alpha1
+    served: true
+    storage: true
+---
+apiVersion: apiextensions.k8s.io/v1beta1
+kind: CustomResourceDefinition
+metadata:
+  name: rabbitmqs.rabbitmq.tungstenfabric.io
+spec:
+  group: rabbitmq.tungstenfabric.io
+  names:
+    kind: Rabbitmq
+    listKind: RabbitmqList
+    plural: rabbitmqs
+    singular: rabbitmq
+  scope: Namespaced
+  subresources:
+    status: {}
+  validation:
+    openAPIV3Schema:
+      properties:
+        apiVersion:
+          description: 'APIVersion defines the versioned schema of this representation
+            of an object. Servers should convert recognized schemas to the latest
+            internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#resources'
+          type: string
+        kind:
+          description: 'Kind is a string value representing the REST resource this
+            object represents. Servers may infer this from the endpoint the client
+            submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#types-kinds'
+          type: string
+        metadata:
+          type: object
+        spec:
+          properties:
+            cookie:
+              type: string
+            hostnetwork:
+              type: boolean
+            image:
+              type: string
+            imagepullpolicy:
+              type: string
+            port:
+              type: string
+            size:
+              format: int32
+              type: integer
+          required:
+          - size
+          - image
+          - hostnetwork
+          - imagepullpolicy
+          - port
+          - cookie
+          type: object
+        status:
+          properties:
+            nodes:
+              description: 'INSERT ADDITIONAL STATUS FIELD - define observed state
+                of cluster Important: Run "operator-sdk generate k8s" to regenerate
+                code after modifying this file Add custom validation using kubebuilder
+                tags: https://book.kubebuilder.io/beyond_basics/generating_crd.html'
+              items:
+                type: string
+              type: array
+          required:
+          - nodes
+          type: object
+  version: v1alpha1
+  versions:
+  - name: v1alpha1
+    served: true
+    storage: true
+---
+apiVersion: apiextensions.k8s.io/v1beta1
+kind: CustomResourceDefinition
+metadata:
+  name: redis.redis.tungstenfabric.io
+spec:
+  group: redis.tungstenfabric.io
+  names:
+    kind: Redis
+    listKind: RedisList
+    plural: redis
+    singular: redis
+  scope: Namespaced
+  subresources:
+    status: {}
+  validation:
+    openAPIV3Schema:
+      properties:
+        apiVersion:
+          description: 'APIVersion defines the versioned schema of this representation
+            of an object. Servers should convert recognized schemas to the latest
+            internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#resources'
+          type: string
+        kind:
+          description: 'Kind is a string value representing the REST resource this
+            object represents. Servers may infer this from the endpoint the client
+            submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#types-kinds'
+          type: string
+        metadata:
+          type: object
+        spec:
+          type: object
+        status:
+          type: object
+  version: v1alpha1
+  versions:
+  - name: v1alpha1
+    served: true
+    storage: true
+---
+apiVersion: apiextensions.k8s.io/v1beta1
+kind: CustomResourceDefinition
+metadata:
+  name: zookeepers.zookeeper.tungstenfabric.io
+spec:
+  group: zookeeper.tungstenfabric.io
+  names:
+    kind: Zookeeper
+    listKind: ZookeeperList
+    plural: zookeepers
+    singular: zookeeper
+  scope: Namespaced
+  subresources:
+    status: {}
+  validation:
+    openAPIV3Schema:
+      properties:
+        apiVersion:
+          description: 'APIVersion defines the versioned schema of this representation
+            of an object. Servers should convert recognized schemas to the latest
+            internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#resources'
+          type: string
+        kind:
+          description: 'Kind is a string value representing the REST resource this
+            object represents. Servers may infer this from the endpoint the client
+            submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#types-kinds'
+          type: string
+        metadata:
+          type: object
+        spec:
+          properties:
+            hostnetwork:
+              type: boolean
+            image:
+              type: string
+            imagepullpolicy:
+              type: string
+            size:
+              format: int32
+              type: integer
+            zookeeperport:
+              type: string
+            zookeeperports:
+              type: string
+          required:
+          - size
+          - image
+          - hostnetwork
+          - imagepullpolicy
+          - zookeeperport
+          - zookeeperports
+          type: object
+        status:
+          properties:
+            nodes:
+              description: 'INSERT ADDITIONAL STATUS FIELD - define observed state
+                of cluster Important: Run "operator-sdk generate k8s" to regenerate
+                code after modifying this file Add custom validation using kubebuilder
+                tags: https://book.kubebuilder.io/beyond_basics/generating_crd.html'
+              items:
+                type: string
+              type: array
+          required:
+          - nodes
+          type: object
+  version: v1alpha1
+  versions:
+  - name: v1alpha1
+    served: true
+    storage: true
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: tungstenfabric-operator
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      name: tungstenfabric-operator
+  template:
+    metadata:
+      labels:
+        name: tungstenfabric-operator
+    spec:
+      nodeSelector:
+          node-role.kubernetes.io/master: ''
+      tolerations:
+      - operator: Exists
+        effect: NoSchedule
+      - operator: Exists
+        effect: NoExecute
+      hostNetwork: true
+      serviceAccountName: tungstenfabric-operator
+      containers:
+        - name: tungstenfabric-operator
+          # Replace this with the built image name
+          image: docker.io/michaelhenkel/tungstenfabric-operator:v0.0.1
+          command:
+          - tungstenfabric-operator
+          imagePullPolicy: Always
+          env:
+            - name: WATCH_NAMESPACE
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.namespace
+            - name: POD_NAME
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.name
+            - name: OPERATOR_NAME
+              value: "tungstenfabric-operator"
+---
+apiVersion: cassandra.tungstenfabric.io/v1alpha1
+kind: Cassandra
+metadata:
+  name: cassandra
+spec:
+  # Add fields here
+  size: 3
+  hostnetwork: false
+  image: "docker.io/michaelhenkel/contrail-external-cassandra:5.1.1-dev3"
+  imagepullpolicy: "Always"
+  startrpc: "true"
+  listenaddress: "auto"
+  port: "9160"
+  cqlport: "9042"
+  sslstorageport: "7001"
+  storageport: "7000"
+  jmxport: "7199"
+---
+apiVersion: rabbitmq.tungstenfabric.io/v1alpha1
+kind: Rabbitmq
+metadata:
+  name: rabbitmq
+spec:
+  # Add fields here
+  size: 3
+  image: "docker.io/michaelhenkel/contrail-external-rabbitmq:5.1.1-dev3"
+  port: "5673"
+  cookie: "47EFF3BB-4786-46E0-A5BB-58455B3C2CB4"
+---
+apiVersion: redis.tungstenfabric.io/v1alpha1
+kind: Redis
+metadata:
+  name: redis
+spec:
+  # Add fields here
+  size: 3
+  hostnetwork: false
+  image: "docker.io/michaelhenkel/contrail-external-redis:5.1.1-dev3"
+  imagepullpolicy: "Always"
+---
+apiVersion: zookeeper.tungstenfabric.io/v1alpha1
+kind: Zookeeper
+metadata:
+  name: zookeeper
+spec:
+  size: 3
+  hostnetwork: false
+  image: "docker.io/michaelhenkel/contrail-external-zookeeper:5.1.1-dev3"
+  imagepullpolicy: "Always"
+  zookeeperport: "2181"
+  zookeeperports: "2888-3888"
+

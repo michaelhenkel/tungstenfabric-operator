@@ -3,7 +3,6 @@ package cassandra
 import (
 	"context"
 	"reflect"
-	"fmt"
 	"strings"
 
 	cassandrav1alpha1 "github.com/michaelhenkel/tungstenfabric-operator/pkg/apis/cassandra/v1alpha1"
@@ -236,6 +235,9 @@ func newPodForCR(cr *cassandrav1alpha1.Cassandra) *corev1.Pod {
 
 func (r *ReconcileCassandra) configmapForCassandra(m *cassandrav1alpha1.Cassandra, podIpList []string) *corev1.ConfigMap {
 	nodeListString := strings.Join(podIpList,",")
+	seedLength := len(podIpList) - 1
+	seedList := podIpList[0:seedLength]
+	seedListString := strings.Join(seedList,",")
 
 	configMap := &corev1.ConfigMap{
 		ObjectMeta: metav1.ObjectMeta{
@@ -244,15 +246,15 @@ func (r *ReconcileCassandra) configmapForCassandra(m *cassandrav1alpha1.Cassandr
 		},
 		Data: map[string]string{
 			"CONTROLLER_NODES": nodeListString,
-			"CASSANDRA_SEEDS": nodeListString,
+			"CASSANDRA_SEEDS": seedListString,
 			"CASSANDRA_CLUSTER_NAME": "ContrailConfigDB",
-			"CASSANDRA_START_RPC": "true",
-			"CASSANDRA_LISTEN_ADDRESS": "auto",
-			"CASSANDRA_PORT": "9160",
-			"CASSANDRA_CQL_PORT": "9042",
-			"CASSANDRA_SSL_STORAGE_PORT": "7001",
-			"CASSANDRA_STORAGE_PORT": "7000",
-			"CASSANDRA_JMX_LOCAL_PORT": "7199",
+			"CASSANDRA_START_RPC": m.Spec.StartRpc,
+			"CASSANDRA_LISTEN_ADDRESS": m.Spec.ListenAddress,
+			"CASSANDRA_PORT": m.Spec.Port,
+			"CASSANDRA_CQL_PORT": m.Spec.CqlPort,
+			"CASSANDRA_SSL_STORAGE_PORT": m.Spec.SslStoragePort,
+			"CASSANDRA_STORAGE_PORT": m.Spec.StoragePort,
+			"CASSANDRA_JMX_LOCAL_PORT": m.Spec.JmxPort,
 			"NODE_TYPE": "config-database",
 		},
 	}
@@ -263,7 +265,14 @@ func (r *ReconcileCassandra) configmapForCassandra(m *cassandrav1alpha1.Cassandr
 func (r *ReconcileCassandra) deploymentForCassandra(m *cassandrav1alpha1.Cassandra) *appsv1.Deployment {
         ls := labelsForCassandra(m.Name)
         replicas := m.Spec.Size
-	cassandraImage := fmt.Sprintf("%s/contrail-external-cassandra:%s", m.Spec.Registry, m.Spec.Version)
+	cassandraImage := m.Spec.Image
+	pullPolicy := corev1.PullAlways
+	if m.Spec.ImagePullPolicy == "Never" {
+		pullPolicy = corev1.PullNever
+	}
+	if m.Spec.ImagePullPolicy == "IfNotPresent" {
+		pullPolicy = corev1.PullNever
+	}
 
         dep := &appsv1.Deployment{
                 TypeMeta: metav1.TypeMeta{
@@ -313,6 +322,7 @@ func (r *ReconcileCassandra) deploymentForCassandra(m *cassandrav1alpha1.Cassand
                                         Containers: []corev1.Container{{
                                                 Image:   cassandraImage,
                                                 Name:    "cassandra",
+						ImagePullPolicy: pullPolicy,
 						EnvFrom: []corev1.EnvFromSource{{
 							ConfigMapRef: &corev1.ConfigMapEnvSource{
 								LocalObjectReference: corev1.LocalObjectReference{

@@ -1,11 +1,11 @@
-package zookeeper
+package redis
 
 import (
 	"context"
 	"reflect"
 	"strings"
 
-	zookeeperv1alpha1 "github.com/michaelhenkel/tungstenfabric-operator/pkg/apis/zookeeper/v1alpha1"
+	redisv1alpha1 "github.com/michaelhenkel/tungstenfabric-operator/pkg/apis/redis/v1alpha1"
 
 	appsv1 "k8s.io/api/apps/v1"
 	corev1 "k8s.io/api/core/v1"
@@ -24,9 +24,9 @@ import (
 	"sigs.k8s.io/controller-runtime/pkg/source"
 )
 
-var log = logf.Log.WithName("controller_zookeeper")
+var log = logf.Log.WithName("controller_redis")
 
-// Add creates a new Zookeeper Controller and adds it to the Manager. The Manager will set fields on the Controller
+// Add creates a new Redis Controller and adds it to the Manager. The Manager will set fields on the Controller
 // and Start it when the Manager is Started.
 func Add(mgr manager.Manager) error {
 	return add(mgr, newReconciler(mgr))
@@ -34,28 +34,28 @@ func Add(mgr manager.Manager) error {
 
 // newReconciler returns a new reconcile.Reconciler
 func newReconciler(mgr manager.Manager) reconcile.Reconciler {
-	return &ReconcileZookeeper{client: mgr.GetClient(), scheme: mgr.GetScheme()}
+	return &ReconcileRedis{client: mgr.GetClient(), scheme: mgr.GetScheme()}
 }
 
 // add adds a new Controller to mgr with r as the reconcile.Reconciler
 func add(mgr manager.Manager, r reconcile.Reconciler) error {
 	// Create a new controller
-	c, err := controller.New("zookeeper-controller", mgr, controller.Options{Reconciler: r})
+	c, err := controller.New("redis-controller", mgr, controller.Options{Reconciler: r})
 	if err != nil {
 		return err
 	}
 
-	// Watch for changes to primary resource Zookeeper
-	err = c.Watch(&source.Kind{Type: &zookeeperv1alpha1.Zookeeper{}}, &handler.EnqueueRequestForObject{})
+	// Watch for changes to primary resource Redis
+	err = c.Watch(&source.Kind{Type: &redisv1alpha1.Redis{}}, &handler.EnqueueRequestForObject{})
 	if err != nil {
 		return err
 	}
 
 	// TODO(user): Modify this to be the types you create that are owned by the primary resource
-	// Watch for changes to secondary resource Pods and requeue the owner Zookeeper
+	// Watch for changes to secondary resource Pods and requeue the owner Redis
 	err = c.Watch(&source.Kind{Type: &corev1.Pod{}}, &handler.EnqueueRequestForOwner{
 		IsController: true,
-		OwnerType:    &zookeeperv1alpha1.Zookeeper{},
+		OwnerType:    &redisv1alpha1.Redis{},
 	})
 	if err != nil {
 		return err
@@ -64,26 +64,26 @@ func add(mgr manager.Manager, r reconcile.Reconciler) error {
 	return nil
 }
 
-var _ reconcile.Reconciler = &ReconcileZookeeper{}
+var _ reconcile.Reconciler = &ReconcileRedis{}
 
-// ReconcileZookeeper reconciles a Zookeeper object
-type ReconcileZookeeper struct {
+// ReconcileRedis reconciles a Redis object
+type ReconcileRedis struct {
 	// This client, initialized using mgr.Client() above, is a split client
 	// that reads objects from the cache and writes to the apiserver
 	client client.Client
 	scheme *runtime.Scheme
 }
 
-// Reconcile reads that state of the cluster for a Zookeeper object and makes changes based on the state read
-// and what is in the Zookeeper.Spec
+// Reconcile reads that state of the cluster for a Redis object and makes changes based on the state read
+// and what is in the Redis.Spec
 // The Controller will requeue the Request to be processed again if the returned error is non-nil or
 // Result.Requeue is true, otherwise upon completion it will remove the work from the queue.
-func (r *ReconcileZookeeper) Reconcile(request reconcile.Request) (reconcile.Result, error) {
+func (r *ReconcileRedis) Reconcile(request reconcile.Request) (reconcile.Result, error) {
 	reqLogger := log.WithValues("Request.Namespace", request.Namespace, "Request.Name", request.Name)
-	reqLogger.Info("Reconciling Zookeeper")
+	reqLogger.Info("Reconciling Redis")
 
-	// Fetch the Zookeeper instance
-	instance := &zookeeperv1alpha1.Zookeeper{}
+	// Fetch the Redis instance
+	instance := &redisv1alpha1.Redis{}
 	err := r.client.Get(context.TODO(), request.NamespacedName, instance)
 	if err != nil {
 		if errors.IsNotFound(err) {
@@ -100,7 +100,7 @@ func (r *ReconcileZookeeper) Reconcile(request reconcile.Request) (reconcile.Res
 	err = r.client.Get(context.TODO(), types.NamespacedName{Name: instance.Name, Namespace: instance.Namespace}, foundDeployment)
 	if err != nil && errors.IsNotFound(err) {
 		// Define a new deployment
-		dep := r.deploymentForZookeeper(instance)
+		dep := r.deploymentForRedis(instance)
 		reqLogger.Info("Creating a new Deployment.", "Deployment.Namespace", dep.Namespace, "Deployment.Name", dep.Name)
 		err = r.client.Create(context.TODO(), dep)
 		if err != nil {
@@ -125,17 +125,17 @@ func (r *ReconcileZookeeper) Reconcile(request reconcile.Request) (reconcile.Res
 		return reconcile.Result{Requeue: true}, nil
 	}
 
-	// Update the Zookeeper status with the pod names
-	// List the pods for this zookeeper's deployment
+	// Update the Redis status with the pod names
+	// List the pods for this redis's deployment
 	podList := &corev1.PodList{}
-	labelSelector := labels.SelectorFromSet(labelsForZookeeper(instance.Name))
+	labelSelector := labels.SelectorFromSet(labelsForRedis(instance.Name))
 	listOps := &client.ListOptions{
 		Namespace:     instance.Namespace,
 		LabelSelector: labelSelector,
 	}
 	err = r.client.List(context.TODO(), listOps, podList)
 	if err != nil {
-		reqLogger.Error(err, "Failed to list pods.", "Zookeeper.Namespace", instance.Namespace, "Zookeeper.Name", instance.Name)
+		reqLogger.Error(err, "Failed to list pods.", "Redis.Namespace", instance.Namespace, "Redis.Name", instance.Name)
 		return reconcile.Result{}, err
 	}
 
@@ -145,7 +145,7 @@ func (r *ReconcileZookeeper) Reconcile(request reconcile.Request) (reconcile.Res
 		instance.Status.Nodes = podNames
 		err = r.client.Update(context.TODO(), instance)
 		if err != nil {
-			reqLogger.Error(err, "Failed to update Zookeeper status.")
+			reqLogger.Error(err, "Failed to update Redis status.")
 			return reconcile.Result{}, err
 		}
 	}
@@ -167,7 +167,7 @@ func (r *ReconcileZookeeper) Reconcile(request reconcile.Request) (reconcile.Res
 	}
 	if int32(len(podIpList)) == size && initContainerRunning {
 		foundConfigmap := &corev1.ConfigMap{}
-		err = r.client.Get(context.TODO(), types.NamespacedName{Name: "tfzookeepercmv1", Namespace: foundConfigmap.Namespace}, foundConfigmap)
+		err = r.client.Get(context.TODO(), types.NamespacedName{Name: "tfrediscmv1", Namespace: foundConfigmap.Namespace}, foundConfigmap)
 		if err != nil && errors.IsNotFound(err) {
 			// Define a new configmap
 			/*
@@ -175,7 +175,7 @@ func (r *ReconcileZookeeper) Reconcile(request reconcile.Request) (reconcile.Res
 				podIpList = podNodeNameList
 			}
 			*/
-			cm := r.configmapForZookeeper(instance, podIpList)
+			cm := r.configmapForRedis(instance, podIpList)
 			reqLogger.Info("Creating a new Configmap.", "Configmap.Namespace", cm.Namespace, "Configmap.Name", cm.Name)
 			err = r.client.Create(context.TODO(), cm)
 			if err != nil {
@@ -210,7 +210,7 @@ func (r *ReconcileZookeeper) Reconcile(request reconcile.Request) (reconcile.Res
 }
 
 // newPodForCR returns a busybox pod with the same name/namespace as the cr
-func newPodForCR(cr *zookeeperv1alpha1.Zookeeper) *corev1.Pod {
+func newPodForCR(cr *redisv1alpha1.Redis) *corev1.Pod {
 	labels := map[string]string{
 		"app": cr.Name,
 	}
@@ -232,29 +232,26 @@ func newPodForCR(cr *zookeeperv1alpha1.Zookeeper) *corev1.Pod {
 	}
 }
 
-func (r *ReconcileZookeeper) configmapForZookeeper(m *zookeeperv1alpha1.Zookeeper, podIpList []string) *corev1.ConfigMap {
+func (r *ReconcileRedis) configmapForRedis(m *redisv1alpha1.Redis, podIpList []string) *corev1.ConfigMap {
 	nodeListString := strings.Join(podIpList,",")
 	configMap := &corev1.ConfigMap{
 		ObjectMeta: metav1.ObjectMeta{
-			Name: "tfzookeepercmv1",
+			Name: "tfrediscmv1",
 			Namespace: m.Namespace,
 		},
 		Data: map[string]string{
 			"CONTROLLER_NODES": nodeListString,
-			"ZOOKEEPER_NODES": nodeListString,
-			"ZOOKEEPER_PORT": m.Spec.ZookeeperPort,
-			"ZOOKEEPER_PORTS": m.Spec.ZookeeperPorts,
 			"NODE_TYPE": "config-database",
 		},
 	}
 	controllerutil.SetControllerReference(m, configMap, r.scheme)
 	return configMap
 }
-// deploymentForZookeeper returns a zookeeper Deployment object
-func (r *ReconcileZookeeper) deploymentForZookeeper(m *zookeeperv1alpha1.Zookeeper) *appsv1.Deployment {
-	ls := labelsForZookeeper(m.Name)
+// deploymentForRedis returns a redis Deployment object
+func (r *ReconcileRedis) deploymentForRedis(m *redisv1alpha1.Redis) *appsv1.Deployment {
+	ls := labelsForRedis(m.Name)
 	replicas := m.Spec.Size
-	zookeeperImage := m.Spec.Image
+	redisImage := m.Spec.Image
 	pullPolicy := corev1.PullAlways
 	if m.Spec.ImagePullPolicy == "Never" {
 		pullPolicy = corev1.PullNever
@@ -302,22 +299,22 @@ func (r *ReconcileZookeeper) deploymentForZookeeper(m *zookeeperv1alpha1.Zookeep
 							}},
 						}},
 						Containers: []corev1.Container{{
-							Image:   zookeeperImage,
-							Name:    "zookeeper",
+							Image:   redisImage,
+							Name:    "redis",
 							ImagePullPolicy: pullPolicy,
 							EnvFrom: []corev1.EnvFromSource{{
 								ConfigMapRef: &corev1.ConfigMapEnvSource{
 									LocalObjectReference: corev1.LocalObjectReference{
-										Name: "tfzookeepercmv1",
+										Name: "tfrediscmv1",
 									},
 								},
 							}},
 							VolumeMounts: []corev1.VolumeMount{{
-								Name: "zookeeper-data",
-								MountPath: "/var/lib/zookeeper",
+								Name: "redis-data",
+								MountPath: "/var/lib/redis",
 							},{
-								Name: "zookeeper-logs",
-								MountPath: "/var/log/zookeeper",
+								Name: "redis-logs",
+								MountPath: "/var/log/redis",
 							}},
 						}},
 						Volumes: []corev1.Volume{
@@ -337,18 +334,18 @@ func (r *ReconcileZookeeper) deploymentForZookeeper(m *zookeeperv1alpha1.Zookeep
 							},
 						},
 						{
-							Name: "zookeeper-data",
+							Name: "redis-data",
 							VolumeSource: corev1.VolumeSource{
 								HostPath: &corev1.HostPathVolumeSource{
-									Path: "/var/lib/contrail/zookeeper",
+									Path: "/var/lib/contrail/redis",
 								},
 							},
 						},
 						{
-							Name: "zookeeper-logs",
+							Name: "redis-logs",
 							VolumeSource: corev1.VolumeSource{
 								HostPath: &corev1.HostPathVolumeSource{
-									Path: "/var/log/contrail/zookeeper",
+									Path: "/var/log/contrail/redis",
 								},
 							},
 						},
@@ -357,15 +354,15 @@ func (r *ReconcileZookeeper) deploymentForZookeeper(m *zookeeperv1alpha1.Zookeep
 			},
 			},
         }
-        // Set Zookeeper instance as the owner and controller
+        // Set Redis instance as the owner and controller
         controllerutil.SetControllerReference(m, dep, r.scheme)
         return dep
 }
 
-// labelsForZookeeper returns the labels for selecting the resources
-// belonging to the given zookeeper CR name.
-func labelsForZookeeper(name string) map[string]string {
-        return map[string]string{"app": "zookeeper", "zookeeper_cr": name}
+// labelsForRedis returns the labels for selecting the resources
+// belonging to the given redis CR name.
+func labelsForRedis(name string) map[string]string {
+        return map[string]string{"app": "redis", "redis_cr": name}
 }
 
 // getPodNames returns the pod names of the array of pods passed in

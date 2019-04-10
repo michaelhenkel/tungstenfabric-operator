@@ -58,3 +58,15 @@ rules:
   - '*'
   verbs:
   - '*'
+- apiGroups:
+  - rabbitmq.tungstenfabric.io
+  resources:
+  - '*'
+  verbs:
+  - '*'
+- apiGroups:
+  - redis.tungstenfabric.io
+  resources:
+  - '*'
+  verbs:
+  - '*'
