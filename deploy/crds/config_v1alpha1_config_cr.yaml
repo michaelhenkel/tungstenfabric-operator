@@ -1,0 +1,16 @@
+apiVersion: config.tungstenfabric.io/v1alpha1
+kind: Config
+metadata:
+  name: config
+spec:
+  # Add fields here
+  size: 1
+  hostnetwork: false
+  imagepullpolicy: "Always"
+  apiImage: "docker.io/michaelhenkel/contrail-controller-config-api:5.1.1-dev3"
+  deviceManagerImage: "docker.io/michaelhenkel/contrail-controller-config-devicemgr:5.1.1-dev3"
+  schemaTransformerImage: "docker.io/michaelhenkel/contrail-controller-config-schema:5.1.1-dev3"
+  serviceMonitorImage: "docker.io/michaelhenkel/contrail-controller-config-svcmonitor:5.1.1-dev3"
+  nodeManagerImage: "docker.io/michaelhenkel/contrail-nodemgr:5.1.1-dev3"
+  nodeInitImage: "docker.io/michaelhenkel/contrail-node-init:5.1.1-dev3"
+  statusImage: "docker.io/michaelhenkel/contrail-status:5.1.1-dev3"

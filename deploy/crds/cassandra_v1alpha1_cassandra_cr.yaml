@@ -4,7 +4,7 @@ metadata:
   name: cassandra
 spec:
   # Add fields here
-  size: 3
+  size: 1
   hostnetwork: false
   image: "docker.io/michaelhenkel/contrail-external-cassandra:5.1.1-dev3"
   imagepullpolicy: "Always"

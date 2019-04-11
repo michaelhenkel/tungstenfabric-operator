@@ -3,7 +3,7 @@ kind: Zookeeper
 metadata:
   name: zookeeper
 spec:
-  size: 3
+  size: 1
   hostnetwork: false
   image: "docker.io/michaelhenkel/contrail-external-zookeeper:5.1.1-dev3"
   imagepullpolicy: "Always"
