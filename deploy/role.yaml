@@ -76,3 +76,17 @@ rules:
   - '*'
   verbs:
   - '*'
+- apiGroups:
+  - tf.tungstenfabric.io
+  resources:
+  - '*'
+  - cassandraclusters
+  - zookeeperclusters
+  - rabbitmqclusters
+  - configclusters
+  - analyticsclusters
+  - controlclusters
+  - kubemanagerclusters
+  - vrouters
+  verbs:
+  - '*'

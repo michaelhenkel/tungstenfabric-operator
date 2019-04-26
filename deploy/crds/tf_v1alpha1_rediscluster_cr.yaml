@@ -1,0 +1,10 @@
+apiVersion: tf.tungstenfabric.io/v1alpha1
+kind: RedisCluster
+metadata:
+  name: redis-cluster-1
+spec:
+  # Add fields here
+  size: 1
+  hostnetwork: false
+  image: "docker.io/michaelhenkel/contrail-external-redis:5.1.1-dev3"
+  imagepullpolicy: "Always"

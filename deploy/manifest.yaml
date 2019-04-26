@@ -70,6 +70,26 @@ rules:
   - '*'
   verbs:
   - '*'
+- apiGroups:
+  - config.tungstenfabric.io
+  resources:
+  - '*'
+  verbs:
+  - '*'
+- apiGroups:
+  - tf.tungstenfabric.io
+  resources:
+  - '*'
+  - cassandraclusters
+  - zookeeperclusters
+  - rabbitmqclusters
+  - configclusters
+  - analyticsclusters
+  - controlclusters
+  - kubemanagerclusters
+  - vrouters
+  verbs:
+  - '*'
 ---
 apiVersion: v1
 kind: ServiceAccount
@@ -91,14 +111,14 @@ roleRef:
 apiVersion: apiextensions.k8s.io/v1beta1
 kind: CustomResourceDefinition
 metadata:
-  name: cassandras.cassandra.tungstenfabric.io
+  name: cassandraclusters.tf.tungstenfabric.io
 spec:
-  group: cassandra.tungstenfabric.io
+  group: tf.tungstenfabric.io
   names:
-    kind: Cassandra
-    listKind: CassandraList
-    plural: cassandras
-    singular: cassandra
+    kind: CassandraCluster
+    listKind: CassandraClusterList
+    plural: cassandraclusters
+    singular: cassandracluster
   scope: Namespaced
   subresources:
     status: {}
@@ -144,7 +164,6 @@ spec:
               type: string
           required:
           - size
-          - image
           - hostnetwork
           - imagepullpolicy
           - startrpc
@@ -177,14 +196,188 @@ spec:
 apiVersion: apiextensions.k8s.io/v1beta1
 kind: CustomResourceDefinition
 metadata:
-  name: rabbitmqs.rabbitmq.tungstenfabric.io
+  name: configclusters.tf.tungstenfabric.io
 spec:
-  group: rabbitmq.tungstenfabric.io
+  group: tf.tungstenfabric.io
   names:
-    kind: Rabbitmq
-    listKind: RabbitmqList
-    plural: rabbitmqs
-    singular: rabbitmq
+    kind: ConfigCluster
+    listKind: ConfigClusterList
+    plural: configclusters
+    singular: configcluster
+  scope: Namespaced
+  subresources:
+    status: {}
+  validation:
+    openAPIV3Schema:
+      properties:
+        apiVersion:
+          description: 'APIVersion defines the versioned schema of this representation
+            of an object. Servers should convert recognized schemas to the latest
+            internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#resources'
+          type: string
+        kind:
+          description: 'Kind is a string value representing the REST resource this
+            object represents. Servers may infer this from the endpoint the client
+            submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#types-kinds'
+          type: string
+        metadata:
+          type: object
+        spec:
+          properties:
+            aaamode:
+              type: string
+            apiImage:
+              type: string
+            apiintrospectionport:
+              type: string
+            apiport:
+              type: string
+            authmode:
+              type: string
+            cassandraClusterName:
+              type: string
+            cloudadminrole:
+              type: string
+            deviceManagerImage:
+              type: string
+            globalreadonlyrole:
+              type: string
+            hostnetwork:
+              type: boolean
+            image:
+              type: string
+            imagepullpolicy:
+              type: string
+            nodeInitImage:
+              type: string
+            nodeManagerImage:
+              type: string
+            rabbitmqClusterName:
+              type: string
+            schemaTransformerImage:
+              type: string
+            serviceMonitorImage:
+              type: string
+            size:
+              format: int32
+              type: integer
+            statusImage:
+              type: string
+            zookeeperClusterName:
+              type: string
+          required:
+          - size
+          - hostnetwork
+          - imagepullpolicy
+          type: object
+        status:
+          properties:
+            nodes:
+              description: 'INSERT ADDITIONAL STATUS FIELD - define observed state
+                of cluster Important: Run "operator-sdk generate k8s" to regenerate
+                code after modifying this file Add custom validation using kubebuilder
+                tags: https://book.kubebuilder.io/beyond_basics/generating_crd.html'
+              items:
+                type: string
+              type: array
+          required:
+          - nodes
+          type: object
+  version: v1alpha1
+  versions:
+  - name: v1alpha1
+    served: true
+    storage: true
+---
+apiVersion: apiextensions.k8s.io/v1beta1
+kind: CustomResourceDefinition
+metadata:
+  name: controlclusters.tf.tungstenfabric.io
+spec:
+  group: tf.tungstenfabric.io
+  names:
+    kind: ControlCluster
+    listKind: ControlClusterList
+    plural: controlclusters
+    singular: controlcluster
+  scope: Namespaced
+  subresources:
+    status: {}
+  validation:
+    openAPIV3Schema:
+      properties:
+        apiVersion:
+          description: 'APIVersion defines the versioned schema of this representation
+            of an object. Servers should convert recognized schemas to the latest
+            internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#resources'
+          type: string
+        kind:
+          description: 'Kind is a string value representing the REST resource this
+            object represents. Servers may infer this from the endpoint the client
+            submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#types-kinds'
+          type: string
+        metadata:
+          type: object
+        spec:
+          type: object
+        status:
+          type: object
+  version: v1alpha1
+  versions:
+  - name: v1alpha1
+    served: true
+    storage: true
+---
+apiVersion: apiextensions.k8s.io/v1beta1
+kind: CustomResourceDefinition
+metadata:
+  name: kubemanagerclusters.tf.tungstenfabric.io
+spec:
+  group: tf.tungstenfabric.io
+  names:
+    kind: KubemanagerCluster
+    listKind: KubemanagerClusterList
+    plural: kubemanagerclusters
+    singular: kubemanagercluster
+  scope: Namespaced
+  subresources:
+    status: {}
+  validation:
+    openAPIV3Schema:
+      properties:
+        apiVersion:
+          description: 'APIVersion defines the versioned schema of this representation
+            of an object. Servers should convert recognized schemas to the latest
+            internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#resources'
+          type: string
+        kind:
+          description: 'Kind is a string value representing the REST resource this
+            object represents. Servers may infer this from the endpoint the client
+            submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#types-kinds'
+          type: string
+        metadata:
+          type: object
+        spec:
+          type: object
+        status:
+          type: object
+  version: v1alpha1
+  versions:
+  - name: v1alpha1
+    served: true
+    storage: true
+---
+apiVersion: apiextensions.k8s.io/v1beta1
+kind: CustomResourceDefinition
+metadata:
+  name: rabbitmqclusters.tf.tungstenfabric.io
+spec:
+  group: tf.tungstenfabric.io
+  names:
+    kind: RabbitmqCluster
+    listKind: RabbitmqClusterList
+    plural: rabbitmqclusters
+    singular: rabbitmqcluster
   scope: Namespaced
   subresources:
     status: {}
@@ -220,7 +413,6 @@ spec:
               type: integer
           required:
           - size
-          - image
           - hostnetwork
           - imagepullpolicy
           - port
@@ -248,14 +440,78 @@ spec:
 apiVersion: apiextensions.k8s.io/v1beta1
 kind: CustomResourceDefinition
 metadata:
-  name: redis.redis.tungstenfabric.io
+  name: redisclusters.tf.tungstenfabric.io
 spec:
-  group: redis.tungstenfabric.io
+  group: tf.tungstenfabric.io
   names:
-    kind: Redis
-    listKind: RedisList
-    plural: redis
-    singular: redis
+    kind: RedisCluster
+    listKind: RedisClusterList
+    plural: redisclusters
+    singular: rediscluster
+  scope: Namespaced
+  subresources:
+    status: {}
+  validation:
+    openAPIV3Schema:
+      properties:
+        apiVersion:
+          description: 'APIVersion defines the versioned schema of this representation
+            of an object. Servers should convert recognized schemas to the latest
+            internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#resources'
+          type: string
+        kind:
+          description: 'Kind is a string value representing the REST resource this
+            object represents. Servers may infer this from the endpoint the client
+            submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#types-kinds'
+          type: string
+        metadata:
+          type: object
+        spec:
+          properties:
+            hostnetwork:
+              type: boolean
+            image:
+              type: string
+            imagepullpolicy:
+              type: string
+            size:
+              format: int32
+              type: integer
+          required:
+          - size
+          - hostnetwork
+          - imagepullpolicy
+          type: object
+        status:
+          properties:
+            nodes:
+              description: 'INSERT ADDITIONAL STATUS FIELD - define observed state
+                of cluster Important: Run "operator-sdk generate k8s" to regenerate
+                code after modifying this file Add custom validation using kubebuilder
+                tags: https://book.kubebuilder.io/beyond_basics/generating_crd.html'
+              items:
+                type: string
+              type: array
+          required:
+          - nodes
+          type: object
+  version: v1alpha1
+  versions:
+  - name: v1alpha1
+    served: true
+    storage: true
+---
+apiVersion: apiextensions.k8s.io/v1beta1
+kind: CustomResourceDefinition
+metadata:
+  name: vrouters.tf.tungstenfabric.io
+spec:
+  group: tf.tungstenfabric.io
+  names:
+    kind: Vrouter
+    listKind: VrouterList
+    plural: vrouters
+    singular: vrouter
   scope: Namespaced
   subresources:
     status: {}
@@ -287,14 +543,14 @@ spec:
 apiVersion: apiextensions.k8s.io/v1beta1
 kind: CustomResourceDefinition
 metadata:
-  name: zookeepers.zookeeper.tungstenfabric.io
+  name: zookeeperclusters.tf.tungstenfabric.io
 spec:
-  group: zookeeper.tungstenfabric.io
+  group: tf.tungstenfabric.io
   names:
-    kind: Zookeeper
-    listKind: ZookeeperList
-    plural: zookeepers
-    singular: zookeeper
+    kind: ZookeeperCluster
+    listKind: ZookeeperClusterList
+    plural: zookeeperclusters
+    singular: zookeepercluster
   scope: Namespaced
   subresources:
     status: {}
@@ -330,7 +586,6 @@ spec:
               type: string
           required:
           - size
-          - image
           - hostnetwork
           - imagepullpolicy
           - zookeeperport
@@ -397,13 +652,13 @@ spec:
             - name: OPERATOR_NAME
               value: "tungstenfabric-operator"
 ---
-apiVersion: cassandra.tungstenfabric.io/v1alpha1
-kind: Cassandra
+apiVersion: tf.tungstenfabric.io/v1alpha1
+kind: CassandraCluster
 metadata:
-  name: cassandra
+  name: cassandra-cluster-1
 spec:
   # Add fields here
-  size: 3
+  size: 1
   hostnetwork: false
   image: "docker.io/michaelhenkel/contrail-external-cassandra:5.1.1-dev3"
   imagepullpolicy: "Always"
@@ -415,39 +670,96 @@ spec:
   storageport: "7000"
   jmxport: "7199"
 ---
-apiVersion: rabbitmq.tungstenfabric.io/v1alpha1
-kind: Rabbitmq
+apiVersion: tf.tungstenfabric.io/v1alpha1
+kind: ConfigCluster
 metadata:
-  name: rabbitmq
+  name: config-cluster-1
+spec:
+  size: 1
+  hostnetwork: false
+  imagepullpolicy: "Always"
+  apiImage: "docker.io/michaelhenkel/contrail-controller-config-api:5.1.1-dev3"
+  deviceManagerImage: "docker.io/michaelhenkel/contrail-controller-config-devicemgr:5.1.1-dev3"
+  schemaTransformerImage: "docker.io/michaelhenkel/contrail-controller-config-schema:5.1.1-dev3"
+  serviceMonitorImage: "docker.io/michaelhenkel/contrail-controller-config-svcmonitor:5.1.1-dev3"
+  analyticsApiImage: "docker.io/michaelhenkel/contrail-analytics-api:5.1.1-dev3"
+  collectorImage: "docker.io/michaelhenkel/contrail-analytics-collector:5.1.1-dev3"
+  nodeManagerImage: "docker.io/michaelhenkel/contrail-nodemgr:5.1.1-dev3"
+  nodeInitImage: "docker.io/michaelhenkel/contrail-node-init:5.1.1-dev3"
+  statusImage: "docker.io/michaelhenkel/contrail-status:5.1.1-dev3"
+  cassandraClusterName: "cassandra-cluster-1"
+  zookeeperClusterName: "zookeeper-cluster-1"
+  rabbitmqClusterName: "rabbitmq-cluster-1"
+  configClusterName: "config-cluster-1"
+
+---
+apiVersion: tf.tungstenfabric.io/v1alpha1
+kind: ControlCluster
+metadata:
+  name: control-cluster-1
+spec:
+  # Add fields here
+  size: 1
+  hostnetwork: false
+  imagepullpolicy: "Always"
+  controlImage: "docker.io/michaelhenkel/contrail-controller-control-control:5.1.1-dev3"
+  namedImage: "docker.io/michaelhenkel/contrail-controller-control-named:5.1.1-dev3"
+  dnsImage: "docker.io/michaelhenkel/contrail-controller-control-dns:5.1.1-dev3"
+  nodeManagerImage: "docker.io/michaelhenkel/contrail-nodemgr:5.1.1-dev3"
+  nodeInitImage: "docker.io/michaelhenkel/contrail-node-init:5.1.1-dev3"
+  statusImage: "docker.io/michaelhenkel/contrail-status:5.1.1-dev3"
+  cassandraClusterName: "cassandra-cluster-1"
+  rabbitmqClusterName: "rabbitmq-cluster-1"
+  configClusterName: "config-cluster-1"
+---
+apiVersion: tf.tungstenfabric.io/v1alpha1
+kind: KubemanagerCluster
+metadata:
+  name: example-kubemanagercluster
 spec:
   # Add fields here
   size: 3
+---
+apiVersion: tf.tungstenfabric.io/v1alpha1
+kind: RabbitmqCluster
+metadata:
+  name: rabbitmq-cluster-1
+spec:
+  # Add fields here
+  size: 1
   hostnetwork: false
   image: "docker.io/michaelhenkel/contrail-external-rabbitmq:5.1.1-dev3"
   port: "5673"
   cookie: "47EFF3BB-4786-46E0-A5BB-58455B3C2CB4"
   imagepullpolicy: "Always"
 ---
-apiVersion: redis.tungstenfabric.io/v1alpha1
-kind: Redis
+apiVersion: tf.tungstenfabric.io/v1alpha1
+kind: RedisCluster
 metadata:
-  name: redis
+  name: redis-cluster-1
 spec:
   # Add fields here
-  size: 3
+  size: 1
   hostnetwork: false
   image: "docker.io/michaelhenkel/contrail-external-redis:5.1.1-dev3"
   imagepullpolicy: "Always"
 ---
-apiVersion: zookeeper.tungstenfabric.io/v1alpha1
-kind: Zookeeper
+apiVersion: tf.tungstenfabric.io/v1alpha1
+kind: Vrouter
 metadata:
-  name: zookeeper
+  name: example-vrouter
 spec:
+  # Add fields here
   size: 3
+---
+apiVersion: tf.tungstenfabric.io/v1alpha1
+kind: ZookeeperCluster
+metadata:
+  name: zookeeper-cluster-1
+spec:
+  size: 1
   hostnetwork: false
   image: "docker.io/michaelhenkel/contrail-external-zookeeper:5.1.1-dev3"
   imagepullpolicy: "Always"
   zookeeperport: "2181"
   zookeeperports: "2888:3888"
-

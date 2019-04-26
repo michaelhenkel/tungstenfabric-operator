@@ -1,0 +1,12 @@
+apiVersion: tf.tungstenfabric.io/v1alpha1
+kind: RabbitmqCluster
+metadata:
+  name: rabbitmq-cluster-1
+spec:
+  # Add fields here
+  size: 1
+  hostnetwork: false
+  image: "docker.io/michaelhenkel/contrail-external-rabbitmq:5.1.1-dev3"
+  port: "5673"
+  cookie: "47EFF3BB-4786-46E0-A5BB-58455B3C2CB4"
+  imagepullpolicy: "Always"

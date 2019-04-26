@@ -1,0 +1,11 @@
+apiVersion: tf.tungstenfabric.io/v1alpha1
+kind: ZookeeperCluster
+metadata:
+  name: zookeeper-cluster-1
+spec:
+  size: 1
+  hostnetwork: false
+  image: "docker.io/michaelhenkel/contrail-external-zookeeper:5.1.1-dev3"
+  imagepullpolicy: "Always"
+  zookeeperport: "2181"
+  zookeeperports: "2888:3888"

@@ -1,0 +1,7 @@
+apiVersion: tf.tungstenfabric.io/v1alpha1
+kind: KubemanagerCluster
+metadata:
+  name: example-kubemanagercluster
+spec:
+  # Add fields here
+  size: 3

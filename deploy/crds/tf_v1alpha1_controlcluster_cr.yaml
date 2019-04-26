@@ -1,0 +1,18 @@
+apiVersion: tf.tungstenfabric.io/v1alpha1
+kind: ControlCluster
+metadata:
+  name: control-cluster-1
+spec:
+  # Add fields here
+  size: 1
+  hostnetwork: false
+  imagepullpolicy: "Always"
+  controlImage: "docker.io/michaelhenkel/contrail-controller-control-control:5.1.1-dev3"
+  namedImage: "docker.io/michaelhenkel/contrail-controller-control-named:5.1.1-dev3"
+  dnsImage: "docker.io/michaelhenkel/contrail-controller-control-dns:5.1.1-dev3"
+  nodeManagerImage: "docker.io/michaelhenkel/contrail-nodemgr:5.1.1-dev3"
+  nodeInitImage: "docker.io/michaelhenkel/contrail-node-init:5.1.1-dev3"
+  statusImage: "docker.io/michaelhenkel/contrail-status:5.1.1-dev3"
+  cassandraClusterName: "cassandra-cluster-1"
+  rabbitmqClusterName: "rabbitmq-cluster-1"
+  configClusterName: "config-cluster-1"
