@@ -440,70 +440,6 @@ spec:
 apiVersion: apiextensions.k8s.io/v1beta1
 kind: CustomResourceDefinition
 metadata:
-  name: redisclusters.tf.tungstenfabric.io
-spec:
-  group: tf.tungstenfabric.io
-  names:
-    kind: RedisCluster
-    listKind: RedisClusterList
-    plural: redisclusters
-    singular: rediscluster
-  scope: Namespaced
-  subresources:
-    status: {}
-  validation:
-    openAPIV3Schema:
-      properties:
-        apiVersion:
-          description: 'APIVersion defines the versioned schema of this representation
-            of an object. Servers should convert recognized schemas to the latest
-            internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#resources'
-          type: string
-        kind:
-          description: 'Kind is a string value representing the REST resource this
-            object represents. Servers may infer this from the endpoint the client
-            submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#types-kinds'
-          type: string
-        metadata:
-          type: object
-        spec:
-          properties:
-            hostnetwork:
-              type: boolean
-            image:
-              type: string
-            imagepullpolicy:
-              type: string
-            size:
-              format: int32
-              type: integer
-          required:
-          - size
-          - hostnetwork
-          - imagepullpolicy
-          type: object
-        status:
-          properties:
-            nodes:
-              description: 'INSERT ADDITIONAL STATUS FIELD - define observed state
-                of cluster Important: Run "operator-sdk generate k8s" to regenerate
-                code after modifying this file Add custom validation using kubebuilder
-                tags: https://book.kubebuilder.io/beyond_basics/generating_crd.html'
-              items:
-                type: string
-              type: array
-          required:
-          - nodes
-          type: object
-  version: v1alpha1
-  versions:
-  - name: v1alpha1
-    served: true
-    storage: true
----
-apiVersion: apiextensions.k8s.io/v1beta1
-kind: CustomResourceDefinition
-metadata:
   name: vrouters.tf.tungstenfabric.io
 spec:
   group: tf.tungstenfabric.io
@@ -684,6 +620,7 @@ spec:
   serviceMonitorImage: "docker.io/michaelhenkel/contrail-controller-config-svcmonitor:5.1.1-dev3"
   analyticsApiImage: "docker.io/michaelhenkel/contrail-analytics-api:5.1.1-dev3"
   collectorImage: "docker.io/michaelhenkel/contrail-analytics-collector:5.1.1-dev3"
+  redisImage: "docker.io/michaelhenkel/contrail-external-redis:5.1.1-dev3"
   nodeManagerImage: "docker.io/michaelhenkel/contrail-nodemgr:5.1.1-dev3"
   nodeInitImage: "docker.io/michaelhenkel/contrail-node-init:5.1.1-dev3"
   statusImage: "docker.io/michaelhenkel/contrail-status:5.1.1-dev3"
@@ -691,7 +628,6 @@ spec:
   zookeeperClusterName: "zookeeper-cluster-1"
   rabbitmqClusterName: "rabbitmq-cluster-1"
   configClusterName: "config-cluster-1"
-
 ---
 apiVersion: tf.tungstenfabric.io/v1alpha1
 kind: ControlCluster
@@ -715,10 +651,26 @@ spec:
 apiVersion: tf.tungstenfabric.io/v1alpha1
 kind: KubemanagerCluster
 metadata:
-  name: example-kubemanagercluster
+  name: kubemanager-cluster-1
 spec:
   # Add fields here
-  size: 3
+  size: 1
+  hostnetwork: false
+  imagepullpolicy: "Always"
+  kubeManagerImage: "docker.io/michaelhenkel/contrail-kubernetes-kube-manager:5.1.1-dev3"
+  nodeInitImage: "docker.io/michaelhenkel/contrail-node-init:5.1.1-dev3"
+  statusImage: "docker.io/michaelhenkel/contrail-status:5.1.1-dev3"
+  cassandraClusterName: "cassandra-cluster-1"
+  rabbitmqClusterName: "rabbitmq-cluster-1"
+  configClusterName: "config-cluster-1"
+  zookeeperClusterName: "zookeeper-cluster-1"
+  #kubernetesApiServer: "10.96.0.1"
+  #kubernetesApiPort: "443"
+  #kubernetesPodSubnets: "10.32.0.0/12"
+  #kubernetesServiceSubnets: "10.96.0.0/12"
+  #kubernetesClusterName: "k8s-default"
+  kubernetesIpFabricForwarding: "true"
+  kubernetesIpFabricSnat: "true"
 ---
 apiVersion: tf.tungstenfabric.io/v1alpha1
 kind: RabbitmqCluster
@@ -731,17 +683,6 @@ spec:
   image: "docker.io/michaelhenkel/contrail-external-rabbitmq:5.1.1-dev3"
   port: "5673"
   cookie: "47EFF3BB-4786-46E0-A5BB-58455B3C2CB4"
-  imagepullpolicy: "Always"
----
-apiVersion: tf.tungstenfabric.io/v1alpha1
-kind: RedisCluster
-metadata:
-  name: redis-cluster-1
-spec:
-  # Add fields here
-  size: 1
-  hostnetwork: false
-  image: "docker.io/michaelhenkel/contrail-external-redis:5.1.1-dev3"
   imagepullpolicy: "Always"
 ---
 apiVersion: tf.tungstenfabric.io/v1alpha1

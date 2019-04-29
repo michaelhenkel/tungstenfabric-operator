@@ -12,6 +12,7 @@ spec:
   serviceMonitorImage: "docker.io/michaelhenkel/contrail-controller-config-svcmonitor:5.1.1-dev3"
   analyticsApiImage: "docker.io/michaelhenkel/contrail-analytics-api:5.1.1-dev3"
   collectorImage: "docker.io/michaelhenkel/contrail-analytics-collector:5.1.1-dev3"
+  redisImage: "docker.io/michaelhenkel/contrail-external-redis:5.1.1-dev3"
   nodeManagerImage: "docker.io/michaelhenkel/contrail-nodemgr:5.1.1-dev3"
   nodeInitImage: "docker.io/michaelhenkel/contrail-node-init:5.1.1-dev3"
   statusImage: "docker.io/michaelhenkel/contrail-status:5.1.1-dev3"
@@ -19,4 +20,3 @@ spec:
   zookeeperClusterName: "zookeeper-cluster-1"
   rabbitmqClusterName: "rabbitmq-cluster-1"
   configClusterName: "config-cluster-1"
-

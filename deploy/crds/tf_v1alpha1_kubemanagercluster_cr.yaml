@@ -1,7 +1,24 @@
 apiVersion: tf.tungstenfabric.io/v1alpha1
 kind: KubemanagerCluster
 metadata:
-  name: example-kubemanagercluster
+  name: kubemanager-cluster-1
 spec:
   # Add fields here
-  size: 3
+  size: 1
+  hostnetwork: false
+  imagepullpolicy: "Always"
+  kubeManagerImage: "docker.io/michaelhenkel/contrail-kubernetes-kube-manager:5.1.1-dev3"
+  nodeInitImage: "docker.io/michaelhenkel/contrail-node-init:5.1.1-dev3"
+  statusImage: "docker.io/michaelhenkel/contrail-status:5.1.1-dev3"
+  cassandraClusterName: "cassandra-cluster-1"
+  rabbitmqClusterName: "rabbitmq-cluster-1"
+  configClusterName: "config-cluster-1"
+  zookeeperClusterName: "zookeeper-cluster-1"
+  kubernetesApiServer: "10.96.0.1"
+  kubernetesApiPort: "443"
+  kubernetesPodSubnets: "10.32.0.0/12"
+  kubernetesServiceSubnets: "10.96.0.0/12"
+  kubernetesClusterName: "k8s-default"
+  kubernetesIpFabricForwarding: "true"
+  kubernetesIpFabricSnat: "true"
+  kubernetesTokenFile: "/var/run/secrets/kubernetes.io/serviceaccount/token"

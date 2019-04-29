@@ -156,8 +156,8 @@ func (r *ReconcileConfigCluster) Reconcile(request reconcile.Request) (reconcile
                 reqLogger.Info("rabbitmq configmap not found")
                 return reconcile.Result{Requeue: true}, nil
         }
-	configMap["RABBITMQ_NODES"] = rabbitmqConfigMap.Data["RABBITMQ_NODES"]
-	configMap["RABBITMQ_NODE_PORT"] = rabbitmqConfigMap.Data["RABBITMQ_NODE_PORT"]
+				configMap["RABBITMQ_NODES"] = rabbitmqConfigMap.Data["RABBITMQ_NODES"]
+				configMap["RABBITMQ_NODE_PORT"] = rabbitmqConfigMap.Data["RABBITMQ_NODE_PORT"]
 
 	foundDeployment := &appsv1.Deployment{}
 	err = r.client.Get(context.TODO(), types.NamespacedName{Name: instance.Name, Namespace: instance.Namespace}, foundDeployment)
@@ -295,10 +295,10 @@ func (r *ReconcileConfigCluster) configmapForConfigCluster(m *tfv1alpha1.ConfigC
 	configDbNodes := configMap["CONFIGDB_NODES"]
 	configDbPort := configMap["CONFIGDB_PORT"]
 	configDbCqlPort := configMap["CONFIGDB_CQL_PORT"]
-	zookeeperNodes := configMap["ZOOKEEPER_NODES"] 
-	zookeeperPort := configMap["ZOOKEEPER_NODE_PORT"] 
-	rabbitmqNodes := configMap["RABBITMQ_NODES"] 
-	rabbitmqPort := configMap["RABBITMQ_NODE_PORT"] 
+	zookeeperNodes := configMap["ZOOKEEPER_NODES"]
+	zookeeperPort := configMap["ZOOKEEPER_NODE_PORT"]
+	rabbitmqNodes := configMap["RABBITMQ_NODES"]
+	rabbitmqPort := configMap["RABBITMQ_NODE_PORT"]
 
 	newConfigMap := &corev1.ConfigMap{
 		ObjectMeta: metav1.ObjectMeta{
@@ -335,6 +335,7 @@ func (r *ReconcileConfigCluster) deploymentForConfigCluster(m *tfv1alpha1.Config
 	collectorImage := m.Spec.CollectorImage
 	nodeManagerImage := m.Spec.NodeManagerImage
 	nodeInitImage := m.Spec.NodeInitImage
+	redisImage := m.Spec.RedisImage
 	pullPolicy := corev1.PullAlways
 	if m.Spec.ImagePullPolicy == "Never" {
 		pullPolicy = corev1.PullNever
@@ -487,6 +488,24 @@ func (r *ReconcileConfigCluster) deploymentForConfigCluster(m *tfv1alpha1.Config
 							MountPath: "/var/log/contrail",
 						}},
 					},{
+						Image:   redisImage,
+						Name:    "redis",
+						ImagePullPolicy: pullPolicy,
+						EnvFrom: []corev1.EnvFromSource{{
+							ConfigMapRef: &corev1.ConfigMapEnvSource{
+								LocalObjectReference: corev1.LocalObjectReference{
+									Name: "tfconfigcmv1",
+								},
+							},
+						}},
+						VolumeMounts: []corev1.VolumeMount{{
+							Name: "rediscluster-data",
+							MountPath: "/var/lib/rediscluster",
+						},{
+							Name: "rediscluster-logs",
+							MountPath: "/var/log/rediscluster",
+						}},
+					},{
 						Image:   nodeManagerImage,
 						Name:    "config-nodemgr",
 						ImagePullPolicy: pullPolicy,
@@ -558,6 +577,22 @@ func (r *ReconcileConfigCluster) deploymentForConfigCluster(m *tfv1alpha1.Config
 							VolumeSource: corev1.VolumeSource{
 								HostPath: &corev1.HostPathVolumeSource{
 									Path: "/var/log/contrail/config",
+								},
+							},
+						},
+						{
+							Name: "rediscluster-data",
+							VolumeSource: corev1.VolumeSource{
+								HostPath: &corev1.HostPathVolumeSource{
+									Path: "/var/lib/contrail/rediscluster",
+								},
+							},
+						},
+						{
+							Name: "rediscluster-logs",
+							VolumeSource: corev1.VolumeSource{
+								HostPath: &corev1.HostPathVolumeSource{
+									Path: "/var/log/contrail/rediscluster",
 								},
 							},
 						},

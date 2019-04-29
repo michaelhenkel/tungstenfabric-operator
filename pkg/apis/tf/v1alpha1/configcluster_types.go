@@ -21,6 +21,7 @@ type ConfigClusterSpec struct {
 	ServiceMonitorImage string `json:"serviceMonitorImage,omitempty"`
 	AnalyticsApiImage string `json:"analyticsApiImage,omitempty"`
 	CollectorImage string `json:"collectorImage,omitempty"`
+	RedisImage string `json:"redisImage,omitempty"`
 	NodeManagerImage string `json:"nodeManagerImage,omitempty"`
 	NodeInitImage string `json:"nodeInitImage,omitempty"`
 	StatusImage string `json:"statusImage,omitempty"`
