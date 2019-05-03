@@ -1,0 +1,5 @@
+apiVersion: tf.tungstenfabric.io/v1alpha1
+kind: ControlCluster
+metadata:
+  name: cluster-1
+

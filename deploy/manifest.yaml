@@ -1,0 +1,266 @@
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  creationTimestamp: null
+  name: tungstenfabric-operator
+rules:
+- apiGroups:
+  - ""
+  resources:
+  - pods
+  - services
+  - endpoints
+  - persistentvolumeclaims
+  - events
+  - configmaps
+  - secrets
+  verbs:
+  - '*'
+- apiGroups:
+  - apps
+  resources:
+  - deployments
+  - daemonsets
+  - replicasets
+  - statefulsets
+  verbs:
+  - '*'
+- apiGroups:
+  - monitoring.coreos.com
+  resources:
+  - servicemonitors
+  verbs:
+  - get
+  - create
+- apiGroups:
+  - apps
+  resourceNames:
+  - tungstenfabric-operator
+  resources:
+  - deployments/finalizers
+  verbs:
+  - update
+- apiGroups:
+  - tf.tungstenfabric.io
+  resources:
+  - '*'
+  - vrouters
+  - cassandraclusters
+  - zookeeperclusters
+  - rabbitmqclusters
+  - configclusters
+  - controlclusters
+  verbs:
+  - '*'
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: tungstenfabric-operator
+---
+kind: RoleBinding
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: tungstenfabric-operator
+subjects:
+- kind: ServiceAccount
+  name: tungstenfabric-operator
+roleRef:
+  kind: Role
+  name: tungstenfabric-operator
+  apiGroup: rbac.authorization.k8s.io
+---
+kind: RoleBinding
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: add-on-cluster-admin
+subjects:
+- kind: ServiceAccount
+  name: tungstenfabric-operator
+roleRef:
+  kind: Role
+  name: cluster-admin
+  apiGroup: rbac.authorization.k8s.io
+---
+apiVersion: apiextensions.k8s.io/v1beta1
+kind: CustomResourceDefinition
+metadata:
+  name: tungstenfabricconfigs.tf.tungstenfabric.io
+spec:
+  group: tf.tungstenfabric.io
+  names:
+    kind: TungstenfabricConfig
+    listKind: TungstenfabricConfigList
+    plural: tungstenfabricconfigs
+    singular: tungstenfabricconfig
+  scope: Namespaced
+  subresources:
+    status: {}
+  validation:
+    openAPIV3Schema:
+      properties:
+        apiVersion:
+          description: 'APIVersion defines the versioned schema of this representation
+            of an object. Servers should convert recognized schemas to the latest
+            internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#resources'
+          type: string
+        kind:
+          description: 'Kind is a string value representing the REST resource this
+            object represents. Servers may infer this from the endpoint the client
+            submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#types-kinds'
+          type: string
+        metadata:
+          type: object
+        spec:
+          type: object
+        status:
+          properties:
+            nodes:
+              description: 'INSERT ADDITIONAL STATUS FIELD - define observed state
+                of cluster Important: Run "operator-sdk generate k8s" to regenerate
+                code after modifying this file Add custom validation using kubebuilder
+                tags: https://book.kubebuilder.io/beyond_basics/generating_crd.html'
+              items:
+                type: string
+              type: array
+          required:
+          - nodes
+          type: object
+  version: v1alpha1
+  versions:
+  - name: v1alpha1
+    served: true
+    storage: true
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: tungstenfabric-operator
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      name: tungstenfabric-operator
+  template:
+    metadata:
+      labels:
+        name: tungstenfabric-operator
+    spec:
+      serviceAccountName: tungstenfabric-operator
+      containers:
+        - name: tungstenfabric-operator
+          # Replace this with the built image name
+          image: REPLACE_IMAGE
+          command:
+          - tungstenfabric-operator
+          imagePullPolicy: Always
+          env:
+            - name: WATCH_NAMESPACE
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.namespace
+            - name: POD_NAME
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.name
+            - name: OPERATOR_NAME
+              value: "tungstenfabric-operator"
+---
+apiVersion: tf.tungstenfabric.io/v1alpha1
+kind: TungstenfabricConfig
+metadata:
+  name: cluster-1
+spec:
+  images:
+    nodeManager: "docker.io/michaelhenkel/contrail-nodemgr:5.1.1-dev3"
+    nodeInit: "docker.io/michaelhenkel/contrail-node-init:5.1.1-dev3"
+    status: "docker.io/michaelhenkel/contrail-status:5.1.1-dev3"
+    api: "docker.io/michaelhenkel/contrail-controller-config-api:5.1.1-dev3"
+    deviceManager: "docker.io/michaelhenkel/contrail-controller-config-devicemgr:5.1.1-dev3"
+    schemaTransformer: "docker.io/michaelhenkel/contrail-controller-config-schema:5.1.1-dev3"
+    serviceMonitor: "docker.io/michaelhenkel/contrail-controller-config-svcmonitor:5.1.1-dev3"
+    analyticsApi: "docker.io/michaelhenkel/contrail-analytics-api:5.1.1-dev3"
+    collector: "docker.io/michaelhenkel/contrail-analytics-collector:5.1.1-dev3"
+    redis: "docker.io/michaelhenkel/contrail-external-redis:5.1.1-dev3"
+    control: "docker.io/michaelhenkel/contrail-controller-control-control:5.1.1-dev3"
+    named: "docker.io/michaelhenkel/contrail-controller-control-named:5.1.1-dev3"
+    dns: "docker.io/michaelhenkel/contrail-controller-control-dns:5.1.1-dev3"
+    kubeManager: "docker.io/michaelhenkel/contrail-kubernetes-kube-manager:5.1.1-dev3"
+    cassandra: "docker.io/michaelhenkel/contrail-external-cassandra:5.1.1-dev3"
+    zookeeper: "docker.io/michaelhenkel/contrail-external-zookeeper:5.1.1-dev3"
+    rabbitmq: "docker.io/michaelhenkel/contrail-external-rabbitmq:5.1.1-dev3"
+  general:
+    size: "1"
+    hostNetwork: "false"
+    imagePullPolicy: "Always"
+    aaaMode: ""
+    authMode: ""
+    cloudAdminRole: ""
+    globalReadOnlyRole: ""
+  kubeManagerCluster:
+    size: "1"
+    kubernetesApiServer: "10.96.0.1"
+    kubernetesApiPort: "443"
+    podSubnets: "10.32.0.0/12"
+    serviceSubnets: "10.96.0.0/12"
+    clusterName: "k8s-default"
+    ipFabricForwarding: "true"
+    ipFabricSnat: "true"
+    tokenFile: "/var/run/secrets/kubernetes.io/serviceaccount/token"
+  cassandraCluster:
+    size: "1"
+    CASSANDRA_LISTEN_ADDRESS: "auto"
+    CASSANDRA_PORT: "9160"
+    CASSANDRA_CQL_PORT: "9042"
+    CASSANDRA_SSL_STORAGE_PORT: "7001"
+    CASSANDRA_STORAGE_PORT: "7000"
+    CASSANDRA_JMX_LOCAL_PORT: "7199"
+  zookeeperCluster:
+    size: "1"
+    ZOOKEEPER_PORT: "2181"
+    ZOOKEEPER_PORTS: "2888:3888"
+  rabbitmqCluster:
+    size: "1"
+    RABBITMQ_NODE_PORT: "5673"
+    RABBITMQ_ERLANG_COOKIE: "47EFF3BB-4786-46E0-A5BB-58455B3C2CB4"
+  configCluster:
+    size: "1"
+  controlCluster:
+    size: "1"
+
+---
+apiVersion: tf.tungstenfabric.io/v1alpha1
+kind: CassandraCluster
+metadata:
+  name: cluster-1
+
+---
+apiVersion: tf.tungstenfabric.io/v1alpha1
+kind: ConfigCluster
+metadata:
+  name: cluster-1
+
+---
+apiVersion: tf.tungstenfabric.io/v1alpha1
+kind: ControlCluster
+metadata:
+  name: cluster-1
+
+---
+apiVersion: tf.tungstenfabric.io/v1alpha1
+kind: RabbitmqCluster
+metadata:
+  name: cluster-1
+---
+apiVersion: tf.tungstenfabric.io/v1alpha1
+kind: Vrouter
+metadata:
+  name: example-vrouter
+spec:
+  # Add fields here
+  size: 3
+---
+apiVersion: tf.tungstenfabric.io/v1alpha1
+kind: ZookeeperCluster
+metadata:
+  name: cluster-1

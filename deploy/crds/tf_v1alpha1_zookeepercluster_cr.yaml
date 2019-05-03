@@ -1,0 +1,4 @@
+apiVersion: tf.tungstenfabric.io/v1alpha1
+kind: ZookeeperCluster
+metadata:
+  name: cluster-1
