@@ -23,6 +23,8 @@ import (
 	"sigs.k8s.io/controller-runtime/pkg/reconcile"
 	logf "sigs.k8s.io/controller-runtime/pkg/runtime/log"
 	"sigs.k8s.io/controller-runtime/pkg/source"
+
+	"fmt"
 )
 
 var log = logf.Log.WithName("controller_controlcluster")
@@ -249,9 +251,11 @@ func (r *ReconcileControlCluster) Reconcile(request reconcile.Request) (reconcil
 			}
 		}
 	}
+	fmt.Println("BLA1", size, podIpList, initContainerRunning)
 	if int32(len(podIpList)) == size && initContainerRunning {
+		fmt.Println("BLA2")
 		foundControlClustermap := &corev1.ConfigMap{}
-		err = r.client.Get(context.TODO(), types.NamespacedName{Name: "tfcontrolcmv1", Namespace: foundControlClustermap.Namespace}, foundControlClustermap)
+		err = r.client.Get(context.TODO(), types.NamespacedName{Name: "tfcontrolcmv1", Namespace: instance.Namespace}, foundControlClustermap)
 		if err != nil && errors.IsNotFound(err) {
 			cm := r.configmapForControlCluster(instance, podIpList, configMap)
 			reqLogger.Info("Creating a new ControlClustermap.", "ControlClustermap.Namespace", cm.Namespace, "ControlClustermap.Name", cm.Name)
@@ -264,12 +268,14 @@ func (r *ReconcileControlCluster) Reconcile(request reconcile.Request) (reconcil
 			reqLogger.Error(err, "Failed to get ConfigMap.")
 			return reconcile.Result{}, err
 		} else {
+
 			cm := r.configmapForControlCluster(instance, podIpList, configMap)
 			err = r.client.Update(context.TODO(), cm)
 			if err != nil {
 				reqLogger.Error(err, "Failed to update Configmap.", "Configmap.Namespace", cm.Namespace, "Configmap.Name", cm.Name)
 				return reconcile.Result{}, err
 			}
+			reqLogger.Info("Updated ControlClustermap.", "ControlClustermap.Namespace", cm.Namespace, "ControlClustermap.Name", cm.Name)
 		}
 		for _, pod := range(podList.Items){
 			foundPod := &corev1.Pod{}
@@ -289,32 +295,9 @@ func (r *ReconcileControlCluster) Reconcile(request reconcile.Request) (reconcil
 			}
 		}
 	} else {
-                return reconcile.Result{Requeue: true}, nil
+		return reconcile.Result{Requeue: true}, nil
 	}
 	return reconcile.Result{}, nil
-}
-
-// newPodForCR returns a busybox pod with the same name/namespace as the cr
-func newPodForCR(cr *tfv1alpha1.ControlCluster) *corev1.Pod {
-	labels := map[string]string{
-		"app": cr.Name,
-	}
-	return &corev1.Pod{
-		ObjectMeta: metav1.ObjectMeta{
-			Name:      cr.Name + "-pod",
-			Namespace: cr.Namespace,
-			Labels:    labels,
-		},
-		Spec: corev1.PodSpec{
-			Containers: []corev1.Container{
-				{
-					Name:    "busybox",
-					Image:   "busybox",
-					Command: []string{"sleep", "3600"},
-				},
-			},
-		},
-	}
 }
 
 func (r *ReconcileControlCluster) configmapForControlCluster(m *tfv1alpha1.ControlCluster, podIpList []string, configMap map[string]string) *corev1.ConfigMap {
@@ -332,8 +315,8 @@ func (r *ReconcileControlCluster) configmapForControlCluster(m *tfv1alpha1.Contr
 		},
 		Data: configMap,
 	}
-        controllerutil.SetControllerReference(m, newConfigMap, r.scheme)
-        return newConfigMap
+	controllerutil.SetControllerReference(m, newConfigMap, r.scheme)
+	return newConfigMap
 }
 // deploymentForControlCluster returns a config Deployment object
 func (r *ReconcileControlCluster) deploymentForControlCluster(m *tfv1alpha1.ControlCluster, size int32) *appsv1.Deployment {
@@ -560,7 +543,7 @@ func (r *ReconcileControlCluster) deploymentForControlCluster(m *tfv1alpha1.Cont
 // labelsForControlCluster returns the labels for selecting the resources
 // belonging to the given config CR name.
 func labelsForControlCluster(name string) map[string]string {
-        return map[string]string{"app": "config", "config_cr": name}
+        return map[string]string{"app": "control", "control_cr": name}
 }
 
 // getPodNames returns the pod names of the array of pods passed in
