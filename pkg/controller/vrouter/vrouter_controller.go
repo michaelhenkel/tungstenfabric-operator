@@ -19,6 +19,8 @@ import (
 	"sigs.k8s.io/controller-runtime/pkg/reconcile"
 	logf "sigs.k8s.io/controller-runtime/pkg/runtime/log"
 	"sigs.k8s.io/controller-runtime/pkg/source"
+
+	"fmt"
 )
 
 var log = logf.Log.WithName("controller_vrouter")
@@ -131,7 +133,10 @@ func (r *ReconcileVrouter) Reconcile(request reconcile.Request) (reconcile.Resul
 			instance.Spec.VrouterCni = baseInstance.Spec.Images["vrouterCni"]
 		}
 		if instance.Spec.VrouterAgent == "" {
-			instance.Spec.VrouterAgent = baseInstance.Spec.Images["vrouterNodeAgent"]
+			instance.Spec.VrouterAgent = baseInstance.Spec.Images["vrouterAgent"]
+		}
+		if instance.Spec.NodeManagerImage == "" {
+			instance.Spec.NodeManagerImage = baseInstance.Spec.Images["nodeManager"]
 		}
 		if instance.Spec.NodeInitImage == "" {
 			instance.Spec.NodeInitImage = baseInstance.Spec.Images["nodeInit"]
@@ -249,6 +254,13 @@ func (r *ReconcileVrouter) daemonSetForVrouter(m *tfv1alpha1.Vrouter) *appsv1.Da
 		pullPolicy = corev1.PullNever
 	}
 	privileged := true
+	fmt.Println("node init", m.Spec.NodeInitImage)
+	fmt.Println("vrouter kernel init", m.Spec.VrouterKernelInit)
+	fmt.Println("vrouter nic init", m.Spec.VrouterNicInit)
+	fmt.Println("vrouter cni", m.Spec.VrouterCni)
+	fmt.Println("vrouter agent", m.Spec.VrouterAgent)
+	fmt.Println("nodemanager", m.Spec.NodeManagerImage)
+
 	ds := &appsv1.DaemonSet{
 		TypeMeta: metav1.TypeMeta{
 			APIVersion: "apps/v1",
