@@ -28,6 +28,7 @@ import (
 	"k8s.io/client-go/rest"
 	"k8s.io/client-go/kubernetes"
 	"gopkg.in/yaml.v2"
+	"fmt"
 )
 
 var log = logf.Log.WithName("controller_kubemanagercluster")
@@ -316,9 +317,11 @@ func (r *ReconcileKubemanagerCluster) Reconcile(request reconcile.Request) (reco
 			}
 		}
 	}
+	fmt.Println("BLA1", size, podIpList, initContainerRunning)
 	if int32(len(podIpList)) == size && initContainerRunning {
+		fmt.Println("BLA2")
 		foundKubemanagerClustermap := &corev1.ConfigMap{}
-		err = r.client.Get(context.TODO(), types.NamespacedName{Name: "tfkubemanagercmv1", Namespace: foundKubemanagerClustermap.Namespace}, foundKubemanagerClustermap)
+		err = r.client.Get(context.TODO(), types.NamespacedName{Name: "tfkubemanagercmv1", Namespace: instance.Namespace}, foundKubemanagerClustermap)
 		if err != nil && errors.IsNotFound(err) {
 			cm := r.configmapForKubemanagerCluster(instance, podIpList, configMap)
 			reqLogger.Info("Creating a new KubemanagerClustermap.", "KubemanagerClustermap.Namespace", cm.Namespace, "KubemanagerClustermap.Name", cm.Name)
@@ -330,6 +333,13 @@ func (r *ReconcileKubemanagerCluster) Reconcile(request reconcile.Request) (reco
 		} else if err != nil {
 			reqLogger.Error(err, "Failed to get ConfigMap.")
 			return reconcile.Result{}, err
+		} else {
+			cm := r.configmapForKubemanagerCluster(instance, podIpList, configMap)
+			err = r.client.Update(context.TODO(), cm)
+			if err != nil {
+				reqLogger.Error(err, "Failed to update Configmap.", "Configmap.Namespace", cm.Namespace, "Configmap.Name", cm.Name)
+				return reconcile.Result{}, err
+			}
 		}
 		for _, pod := range(podList.Items){
 			foundPod := &corev1.Pod{}
@@ -456,6 +466,7 @@ func (r *ReconcileKubemanagerCluster) clusterRoleForKubemanagerCluster(m *tfv1al
 				"services",
 				"endpoints",
 				"events",
+				"configmaps",
 			},
 		}},
 	}

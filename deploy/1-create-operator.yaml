@@ -67,6 +67,7 @@ rules:
   - services
   - endpoints
   - events
+  - configmaps
   verbs:
   - get
   - list
