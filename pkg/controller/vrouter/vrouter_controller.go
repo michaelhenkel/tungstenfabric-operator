@@ -100,52 +100,490 @@ func (r *ReconcileVrouter) Reconcile(request reconcile.Request) (reconcile.Resul
 		return reconcile.Result{}, err
 	}
 
-	// Define a new Pod object
-	pod := newPodForCR(instance)
+	var configMap map[string]string
+	configMap = make(map[string]string)
 
-	// Set Vrouter instance as the owner and controller
-	if err := controllerutil.SetControllerReference(instance, pod, r.scheme); err != nil {
-		return reconcile.Result{}, err
+	baseInstance := &tfv1alpha1.Vrouter{}
+	err = r.client.Get(context.TODO(), types.NamespacedName{Name: instance.Name, Namespace: instance.Namespace}, baseInstance)
+	if err != nil && errors.IsNotFound(err){
+		reqLogger.Info("baseconfig instance not found")
+	} else {
+		for k,v := range(baseInstance.Spec.General){
+			configMap[k] = v
+		}
+		for k,v := range(baseInstance.Spec.ControlCluster){
+			configMap[k] = v
+		}
+		if instance.Spec.ImagePullPolicy == "" {
+			instance.Spec.ImagePullPolicy = baseInstance.Spec.General["imagePullPolicy"]
+		}
+		if instance.Spec.HostNetwork == ""{
+			instance.Spec.HostNetwork  = baseInstance.Spec.General["hostNetwork"]
+		}
+		if instance.Spec.VrouterNicInit == "" {
+			instance.Spec.VrouterNicInit = baseInstance.Spec.Images["vrouterNicInit"]
+		}
+		if instance.Spec.VrouterKernelInit == "" {
+			instance.Spec.VrouterKernelInit = baseInstance.Spec.Images["vrouterKernelInit"]
+		}
+		if instance.Spec.VrouterCni == "" {
+			instance.Spec.VrouterCni = baseInstance.Spec.Images["vrouterCni"]
+		}
+		if instance.Spec.VrouterAgent == "" {
+			instance.Spec.VrouterAgent = baseInstance.Spec.Images["vrouterNodeAgent"]
+		}
+		if instance.Spec.NodeInitImage == "" {
+			instance.Spec.NodeInitImage = baseInstance.Spec.Images["nodeInit"]
+		}
+		if instance.Spec.StatusImage == "" {
+			instance.Spec.StatusImage = baseInstance.Spec.Images["status"]
+		}
 	}
 
-	// Check if this Pod already exists
-	found := &corev1.Pod{}
-	err = r.client.Get(context.TODO(), types.NamespacedName{Name: pod.Name, Namespace: pod.Namespace}, found)
+	reqLogger.Info("control instance")
+	controlInstance := &tfv1alpha1.ControlCluster{}
+	err = r.client.Get(context.TODO(), types.NamespacedName{Name: instance.Name, Namespace: instance.Namespace}, controlInstance)
 	if err != nil && errors.IsNotFound(err) {
-		reqLogger.Info("Creating a new Pod", "Pod.Namespace", pod.Namespace, "Pod.Name", pod.Name)
-		err = r.client.Create(context.TODO(), pod)
+		reqLogger.Info("control instance not found")
+		return reconcile.Result{Requeue: true}, nil
+	}
+	controlConfigMap := &corev1.ConfigMap{}
+	err = r.client.Get(context.TODO(), types.NamespacedName{Name: "tfcontrolcmv1", Namespace: instance.Namespace}, controlConfigMap)
+	if err != nil && errors.IsNotFound(err) {
+		reqLogger.Info("control configmap not found")
+		return reconcile.Result{Requeue: true}, nil
+	}
+
+	configMap["CONTROL_NODES"] = rabbitmqConfigMap.Data["CONTROL_NODES"]
+
+	configInstance := &tfv1alpha1.ConfigCluster{}
+	err = r.client.Get(context.TODO(), types.NamespacedName{Name: instance.Name, Namespace: instance.Namespace}, configInstance)
+	if err != nil && errors.IsNotFound(err) {
+		reqLogger.Info("config instance not found")
+		return reconcile.Result{Requeue: true}, nil
+	}
+	reqLogger.Info("config instance")
+	configConfigMap := &corev1.ConfigMap{}
+	err = r.client.Get(context.TODO(), types.NamespacedName{Name: "tfconfigcmv1", Namespace: instance.Namespace}, configConfigMap)
+	if err != nil && errors.IsNotFound(err) {
+		reqLogger.Info("config configmap not found")
+		return reconcile.Result{Requeue: true}, nil
+	}
+
+	configMap["CONFIG_NODES"] = configConfigMap.Data["CONTROLLER_NODES"]
+
+	foundVroutermap := &corev1.ConfigMap{}
+	err = r.client.Get(context.TODO(), types.NamespacedName{Name: "tfvroutercmv1", Namespace: instance.Namespace}, foundVroutermap)
+	if err != nil && errors.IsNotFound(err) {
+		cm := r.configmapForVrouter(instance, configMap)
+		reqLogger.Info("Creating a new VrouterConfigmap.", "VrouterConfigmap.Namespace", cm.Namespace, "VrouterConfigmap.Name", cm.Name)
+		err = r.client.Create(context.TODO(), cm)
 		if err != nil {
+			reqLogger.Error(err, "Failed to create new VrouterConfigmap.", "VrouterConfigmap.Namespace", cm.Namespace, "VrouterConfigmap.Name", cm.Name)
 			return reconcile.Result{}, err
 		}
-
-		// Pod created successfully - don't requeue
-		return reconcile.Result{}, nil
 	} else if err != nil {
+		reqLogger.Error(err, "Failed to get ConfigMap.")
+		return reconcile.Result{}, err
+	} else {
+		cm := r.configmapForVrouter(instance, configMap)
+		err = r.client.Update(context.TODO(), cm)
+		if err != nil {
+			reqLogger.Error(err, "Failed to update VrouterConfigmap.", "VrouterConfigmap.Namespace", cm.Namespace, "VrouterConfigmap.Name", cm.Name)
+			return reconcile.Result{}, err
+		}
+		reqLogger.Info("Updated VrouterConfigmap.", "VrouterConfigmap.Namespace", cm.Namespace, "VrouterConfigmap.Name", cm.Name)
+	}
+
+	foundDaemonset := &appsv1.Daemonset{}
+	err = r.client.Get(context.TODO(), types.NamespacedName{Name: "vrouter-" + instance.Name, Namespace: instance.Namespace}, foundDaemonset)
+	if err != nil && errors.IsNotFound(err) {
+		// Define a new deployment
+		ds := r.daemonsetForVrouter(instance
+		reqLogger.Info("Creating a new Daemonset.", "Daemonset.Namespace", ds.Namespace, "Daemonset.Name", ds.Name)
+		err = r.client.Create(context.TODO(), ds)
+		if err != nil {
+			reqLogger.Error(err, "Failed to create new Daemonset.", "Daemonset.Namespace", ds.Namespace, "Daemonset.Name", ds.Name)
+			return reconcile.Result{}, err
+		}
+		return reconcile.Result{Requeue: true}, nil
+	} else if err != nil {
+		reqLogger.Error(err, "Failed to get Daemonset.")
 		return reconcile.Result{}, err
 	}
 
-	// Pod already exists - don't requeue
-	reqLogger.Info("Skip reconcile: Pod already exists", "Pod.Namespace", found.Namespace, "Pod.Name", found.Name)
 	return reconcile.Result{}, nil
 }
 
-// newPodForCR returns a busybox pod with the same name/namespace as the cr
-func newPodForCR(cr *tfv1alpha1.Vrouter) *corev1.Pod {
-	labels := map[string]string{
-		"app": cr.Name,
-	}
-	return &corev1.Pod{
+func (r *ReconcileControlCluster) configmapForVrouter(m *tfv1alpha1.ControlCluster, configMap map[string]string) *corev1.ConfigMap {
+	nodeListString := strings.Join(podIpList,",")
+
+	configMap["CONTROLLER_NODES"] = nodeListString
+	configMap["DOCKER_HOST"] = "unix://mnt/docker.sock"
+	configMap["CONTRAIL_STATUS_IMAGE"] = m.Spec.StatusImage
+	configMap["ANALYTICS_NODES"] = configMap["CONFIG_NODES"]
+
+	newConfigMap := &corev1.ConfigMap{
 		ObjectMeta: metav1.ObjectMeta{
-			Name:      cr.Name + "-pod",
-			Namespace: cr.Namespace,
-			Labels:    labels,
+			Name: "tfvroutercmv1",
+			Namespace: m.Namespace,
 		},
-		Spec: corev1.PodSpec{
-			Containers: []corev1.Container{
-				{
-					Name:    "busybox",
+		Data: configMap,
+	}
+	controllerutil.SetControllerReference(m, newConfigMap, r.scheme)
+	return newConfigMap
+}
+
+func daemonSetForVrouter(cr *tfv1alpha1.Vrouter) *appsv1.DaemonSet {
+	var hostNetworkBool bool
+	if m.Spec.HostNetwork == "true" {
+		hostNetworkBool = true
+	} else {
+		hostNetworkBool = false
+	}
+	pullPolicy := corev1.PullAlways
+	if m.Spec.ImagePullPolicy == "Never" {
+		pullPolicy = corev1.PullNever
+	}
+	if m.Spec.ImagePullPolicy == "IfNotPresent" {
+		pullPolicy = corev1.PullNever
+	}
+	privileged := true
+	ds := &appsv1.DaemonSet{
+		TypeMeta: metav1.TypeMeta{
+			APIVersion: "apps/v1",
+			Kind:       "DaemonSet",
+		},
+		ObjectMeta: metav1.ObjectMeta{
+			Name:      "vrouter-" + m.Name,
+			Namespace: m.Namespace,
+		},
+		Spec: appsv1.DaemonSetSpec{
+			Replicas: &replicas,
+			Selector: &metav1.LabelSelector{
+				MatchLabels: ls,
+			},
+			Template: corev1.PodTemplateSpec{
+				ObjectMeta: metav1.ObjectMeta{
+				        Labels: ls,
+				},
+				Spec: corev1.PodSpec{
+				HostNetwork: hostNetworkBool,
+				NodeSelector: map[string]string{
+					"node-role.kubernetes.io/master":"",
+				},
+				Tolerations: []corev1.Toleration{{
+					Operator: corev1.TolerationOpExists,
+					Effect: corev1.TaintEffectNoSchedule,
+				},{
+					Operator: corev1.TolerationOpExists,
+					Effect: corev1.TaintEffectNoExecute,
+				}},
+				InitContainers: []corev1.Container{{
 					Image:   "busybox",
-					Command: []string{"sleep", "3600"},
+					Name:    "init",
+					Command: []string{"sh","-c","until grep ready /tmp/podinfo/pod_labels > /dev/null 2>&1; do sleep 1; done"},
+					VolumeMounts: []corev1.VolumeMount{{
+						Name: "status",
+						MountPath: "/tmp/podinfo",
+					}},
+					},{
+						Image:   nodeInitImage,
+						Name:    "node-init",
+						SecurityContext: &corev1.SecurityContext{
+							Privileged: &privileged,
+						},
+						VolumeMounts: []corev1.VolumeMount{{
+							Name: "host-usr-bin",
+							MountPath: "/host/usr/bin",
+						}},
+						EnvFrom: []corev1.EnvFromSource{{
+							ConfigMapRef: &corev1.ConfigMapEnvSource{
+								LocalObjectReference: corev1.LocalObjectReference{
+									Name: "tfkubemanagercmv1",
+								},
+							},
+						}},
+					},{
+						Image:   vrouterKernelInit,
+						Name:    "contrail-vrouter-kernel-init",
+						ImagePullPolicy: pullPolicy,
+						SecurityContext: &corev1.SecurityContext{
+							Privileged: &privileged,
+						},
+						VolumeMounts: []corev1.VolumeMount{{
+							Name: "host-usr-bin",
+							MountPath: "/host/usr/bin",
+						},{
+							Name: "usr-src",
+							MountPath: "/usr/src",
+						},{
+							Name: "lib-modules",
+							MountPath: "/lib/modules",
+						},{
+							Name: "network-scripts",
+							MountPath: "/etc/sysconfig/network-scripts",
+						},{
+							Name: "host-bin",
+							MountPath: "/host/bin",
+						}},
+						EnvFrom: []corev1.EnvFromSource{{
+							ConfigMapRef: &corev1.ConfigMapEnvSource{
+								LocalObjectReference: corev1.LocalObjectReference{
+									Name: "tfvroutercmv1",
+								},
+							},
+						}},
+					},{
+						Image:   vrouterNicInit,
+						Name:    "contrail-vrouter-nic-init",
+						ImagePullPolicy: pullPolicy,
+						SecurityContext: &corev1.SecurityContext{
+							Privileged: &privileged,
+						},
+						VolumeMounts: []corev1.VolumeMount{{
+							Name: "host-usr-bin",
+							MountPath: "/host/usr/bin",
+						},{
+							Name: "usr-src",
+							MountPath: "/usr/src",
+						},{
+							Name: "lib-modules",
+							MountPath: "/lib/modules",
+						},{
+							Name: "network-scripts",
+							MountPath: "/etc/sysconfig/network-scripts",
+						},{
+							Name: "host-bin",
+							MountPath: "/host/bin",
+						}},
+						EnvFrom: []corev1.EnvFromSource{{
+							ConfigMapRef: &corev1.ConfigMapEnvSource{
+								LocalObjectReference: corev1.LocalObjectReference{
+									Name: "tfvroutercmv1",
+								},
+							},
+						}},
+					},{
+						Image:   vrouterCni,
+						Name:    "contrail-kubernetes-cni-init",
+						ImagePullPolicy: pullPolicy,
+						SecurityContext: &corev1.SecurityContext{
+							Privileged: &privileged,
+						},
+						VolumeMounts: []corev1.VolumeMount{{
+							Name: "var-lib-contrail",
+							MountPath: "/var/lib/contrail",
+						},{
+							Name: "etc-cni",
+							MountPath: "/host/etc_cni",
+						},{
+							Name: "opt-cni-bin",
+							MountPath: "/host/opt_cni_bin",
+						},{
+							Name: "var-log-contrail-cni",
+							MountPath: "/host/log_cni",
+						},{
+							Name: "agent-logs",
+							MountPath: "/var/log/contrail",
+						}},
+						EnvFrom: []corev1.EnvFromSource{{
+							ConfigMapRef: &corev1.ConfigMapEnvSource{
+								LocalObjectReference: corev1.LocalObjectReference{
+									Name: "tfvroutercmv1",
+								},
+							},
+						}},
+					},
+				},
+				Containers: []corev1.Container{{
+					Image:   vrouterAgentImage,
+					Name:    "vrouter-agent",
+					ImagePullPolicy: pullPolicy,
+					SecurityContext: &corev1.SecurityContext{
+						Privileged: &privileged,
+					},
+					EnvFrom: []corev1.EnvFromSource{{
+						ConfigMapRef: &corev1.ConfigMapEnvSource{
+							LocalObjectReference: corev1.LocalObjectReference{
+								Name: "tfkubemanagercmv1",
+							},
+						},
+					}},
+					VolumeMounts: []corev1.VolumeMount{{
+						Name: "agent-logs",
+						MountPath: "/var/log/contrail",
+					},{
+						Name: "dev",
+						MountPath: "/dev",
+					},{
+						Name: "network-scripts",
+						MountPath: "/etc/sysconfig/network-scripts",
+					},{
+						Name: "host-bin",
+						MountPath: "/host/bin",
+					},{
+						Name: "usr-src",
+						MountPath: "/usr/src",
+					},{
+						Name: "lib-modules",
+						MountPath: "/lib/modules",
+					},{
+						Name: "var-lib-contrail",
+						MountPath: "/var/lib/contrail",
+					},{
+						Name: "var-crashes",
+						MountPath: "/var/crashes",
+					}},
+				},{
+					Image:   nodeManagerImage,
+					Name:    "control-nodemgr",
+					ImagePullPolicy: pullPolicy,
+					Env: []corev1.EnvVar{{
+						Name: "NODE_TYPE",
+						Value: "vrouter",
+					}},
+					EnvFrom: []corev1.EnvFromSource{{
+						ConfigMapRef: &corev1.ConfigMapEnvSource{
+							LocalObjectReference: corev1.LocalObjectReference{
+								Name: "tfvroutermv1",
+							},
+						},
+					}},
+					VolumeMounts: []corev1.VolumeMount{{
+						Name: "control-logs",
+						MountPath: "/var/log/contrail",
+					},{
+						Name: "docker-unix-socket",
+						MountPath: "/mnt",
+					}},
+				}},
+				Volumes: []corev1.Volume{
+					{
+						Name: "status",
+						VolumeSource: corev1.VolumeSource{
+							DownwardAPI: &corev1.DownwardAPIVolumeSource{
+								Items: []corev1.DownwardAPIVolumeFile{
+									corev1.DownwardAPIVolumeFile{
+										Path: "pod_labels",
+										FieldRef: &corev1.ObjectFieldSelector{
+											FieldPath: "metadata.labels",
+										},
+									},
+									corev1.DownwardAPIVolumeFile{
+										Path: "pod_labelsx",
+										FieldRef: &corev1.ObjectFieldSelector{
+											FieldPath: "metadata.labels",
+										},
+									},
+								},
+							},
+						},
+					},
+					{
+						Name: "dev",
+						VolumeSource: corev1.VolumeSource{
+							HostPath: &corev1.HostPathVolumeSource{
+								Path: "/dev",
+							},
+						},
+					},
+					{
+						Name: "network-scripts",
+						VolumeSource: corev1.VolumeSource{
+							HostPath: &corev1.HostPathVolumeSource{
+								Path: "/etc/sysconfig/network-scripts",
+							},
+						},
+					},
+					{
+						Name: "host-bin",
+						VolumeSource: corev1.VolumeSource{
+							HostPath: &corev1.HostPathVolumeSource{
+								Path: "/bin",
+							},
+						},
+					},
+					{
+						Name: "docker-unix-socket",
+						VolumeSource: corev1.VolumeSource{
+							HostPath: &corev1.HostPathVolumeSource{
+								Path: "/var/run",
+							},
+						},
+					},
+					{
+						Name: "usr-src",
+						VolumeSource: corev1.VolumeSource{
+							HostPath: &corev1.HostPathVolumeSource{
+								Path: "/usr/src",
+							},
+						},
+					},
+					{
+						Name: "lib-modules",
+						VolumeSource: corev1.VolumeSource{
+							HostPath: &corev1.HostPathVolumeSource{
+								Path: "/lib/modules",
+							},
+						},
+					},
+					{
+						Name: "var-lib-contrail",
+						VolumeSource: corev1.VolumeSource{
+							HostPath: &corev1.HostPathVolumeSource{
+								Path: "/var/lib/contrail",
+							},
+						},
+					},
+					{
+						Name: "var-crashes",
+						VolumeSource: corev1.VolumeSource{
+							HostPath: &corev1.HostPathVolumeSource{
+								Path: "/var/contrail/crashes",
+							},
+						},
+					},
+					{
+						Name: "etc-cni",
+						VolumeSource: corev1.VolumeSource{
+							HostPath: &corev1.HostPathVolumeSource{
+								Path: "/etc/cni",
+							},
+						},
+					},
+					{
+						Name: "opt-cni-bin",
+						VolumeSource: corev1.VolumeSource{
+							HostPath: &corev1.HostPathVolumeSource{
+								Path: "/opt/cni/bin",
+							},
+						},
+					},
+					{
+						Name: "var-log-contrail-cni",
+						VolumeSource: corev1.VolumeSource{
+							HostPath: &corev1.HostPathVolumeSource{
+								Path: "/var/log/contrail/cni",
+							},
+						},
+					},
+					{
+						Name: "agent-logs",
+						VolumeSource: corev1.VolumeSource{
+							HostPath: &corev1.HostPathVolumeSource{
+								Path: "/var/log/contrail/agent",
+							},
+						},
+					},
+					{
+						Name: "host-usr-bin",
+						VolumeSource: corev1.VolumeSource{
+							HostPath: &corev1.HostPathVolumeSource{
+								Path: "/usr/bin",
+							},
+						},
+					},
 				},
 			},
 		},

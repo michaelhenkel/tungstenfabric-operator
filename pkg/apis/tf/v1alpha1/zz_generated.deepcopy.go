@@ -634,6 +634,13 @@ func (in *TungstenfabricConfigSpec) DeepCopyInto(out *TungstenfabricConfigSpec) 
 			(*out)[key] = val
 		}
 	}
+	if in.Vrouter != nil {
+		in, out := &in.Vrouter, &out.Vrouter
+		*out = make(map[string]string, len(*in))
+		for key, val := range *in {
+			(*out)[key] = val
+		}
+	}
 	return
 }
 

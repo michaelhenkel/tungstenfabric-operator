@@ -79,6 +79,7 @@ type TungstenfabricConfigSpec struct {
 	RabbitmqCluster map[string]string `json:"rabbitmqCluster,inline"`
 	ConfigCluster map[string]string `json:"configCluster,inline"`
 	ControlCluster map[string]string `json:"controlCluster,inline"`
+	Vrouter map[string]string `json:"vrouter,inline"`
 }
 
 // TungstenfabricConfigStatus defines the observed state of TungstenfabricConfig
