@@ -20,6 +20,9 @@ type VrouterSpec struct {
 	VrouterNicInit string `json:"vrouterNicInit,omitempty"`
 	VrouterCni string `json:"vrouterCni,omitempty"`
 	VrouterAgent string `json:"vrouterAgent,omitempty"`
+	NodeManagerImage string `json:"nodeManagerImage,omitempty"`
+	NodeInitImage string `json:"nodeInitImage,omitempty"`
+	StatusImage string `json:"statusImage,omitempty"`
 }
 
 // VrouterStatus defines the observed state of Vrouter

@@ -6,6 +6,7 @@ import (
 	tfv1alpha1 "github.com/michaelhenkel/tungstenfabric-operator/pkg/apis/tf/v1alpha1"
 
 	corev1 "k8s.io/api/core/v1"
+	appsv1 "k8s.io/api/apps/v1"
 	"k8s.io/apimachinery/pkg/api/errors"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/runtime"
@@ -103,7 +104,7 @@ func (r *ReconcileVrouter) Reconcile(request reconcile.Request) (reconcile.Resul
 	var configMap map[string]string
 	configMap = make(map[string]string)
 
-	baseInstance := &tfv1alpha1.Vrouter{}
+	baseInstance := &tfv1alpha1.TungstenfabricConfig{}
 	err = r.client.Get(context.TODO(), types.NamespacedName{Name: instance.Name, Namespace: instance.Namespace}, baseInstance)
 	if err != nil && errors.IsNotFound(err){
 		reqLogger.Info("baseconfig instance not found")
@@ -154,7 +155,7 @@ func (r *ReconcileVrouter) Reconcile(request reconcile.Request) (reconcile.Resul
 		return reconcile.Result{Requeue: true}, nil
 	}
 
-	configMap["CONTROL_NODES"] = rabbitmqConfigMap.Data["CONTROL_NODES"]
+	configMap["CONTROL_NODES"] = controlConfigMap.Data["CONTROL_NODES"]
 
 	configInstance := &tfv1alpha1.ConfigCluster{}
 	err = r.client.Get(context.TODO(), types.NamespacedName{Name: instance.Name, Namespace: instance.Namespace}, configInstance)
@@ -195,11 +196,11 @@ func (r *ReconcileVrouter) Reconcile(request reconcile.Request) (reconcile.Resul
 		reqLogger.Info("Updated VrouterConfigmap.", "VrouterConfigmap.Namespace", cm.Namespace, "VrouterConfigmap.Name", cm.Name)
 	}
 
-	foundDaemonset := &appsv1.Daemonset{}
+	foundDaemonset := &appsv1.DaemonSet{}
 	err = r.client.Get(context.TODO(), types.NamespacedName{Name: "vrouter-" + instance.Name, Namespace: instance.Namespace}, foundDaemonset)
 	if err != nil && errors.IsNotFound(err) {
 		// Define a new deployment
-		ds := r.daemonsetForVrouter(instance
+		ds := r.daemonSetForVrouter(instance)
 		reqLogger.Info("Creating a new Daemonset.", "Daemonset.Namespace", ds.Namespace, "Daemonset.Name", ds.Name)
 		err = r.client.Create(context.TODO(), ds)
 		if err != nil {
@@ -215,10 +216,8 @@ func (r *ReconcileVrouter) Reconcile(request reconcile.Request) (reconcile.Resul
 	return reconcile.Result{}, nil
 }
 
-func (r *ReconcileControlCluster) configmapForVrouter(m *tfv1alpha1.ControlCluster, configMap map[string]string) *corev1.ConfigMap {
-	nodeListString := strings.Join(podIpList,",")
+func (r *ReconcileVrouter) configmapForVrouter(m *tfv1alpha1.Vrouter, configMap map[string]string) *corev1.ConfigMap {
 
-	configMap["CONTROLLER_NODES"] = nodeListString
 	configMap["DOCKER_HOST"] = "unix://mnt/docker.sock"
 	configMap["CONTRAIL_STATUS_IMAGE"] = m.Spec.StatusImage
 	configMap["ANALYTICS_NODES"] = configMap["CONFIG_NODES"]
@@ -234,7 +233,8 @@ func (r *ReconcileControlCluster) configmapForVrouter(m *tfv1alpha1.ControlClust
 	return newConfigMap
 }
 
-func daemonSetForVrouter(cr *tfv1alpha1.Vrouter) *appsv1.DaemonSet {
+func (r *ReconcileVrouter) daemonSetForVrouter(m *tfv1alpha1.Vrouter) *appsv1.DaemonSet {
+	ls := labelsForVrouter(m.Name)
 	var hostNetworkBool bool
 	if m.Spec.HostNetwork == "true" {
 		hostNetworkBool = true
@@ -259,7 +259,6 @@ func daemonSetForVrouter(cr *tfv1alpha1.Vrouter) *appsv1.DaemonSet {
 			Namespace: m.Namespace,
 		},
 		Spec: appsv1.DaemonSetSpec{
-			Replicas: &replicas,
 			Selector: &metav1.LabelSelector{
 				MatchLabels: ls,
 			},
@@ -288,7 +287,7 @@ func daemonSetForVrouter(cr *tfv1alpha1.Vrouter) *appsv1.DaemonSet {
 						MountPath: "/tmp/podinfo",
 					}},
 					},{
-						Image:   nodeInitImage,
+						Image:   m.Spec.NodeInitImage,
 						Name:    "node-init",
 						SecurityContext: &corev1.SecurityContext{
 							Privileged: &privileged,
@@ -305,7 +304,7 @@ func daemonSetForVrouter(cr *tfv1alpha1.Vrouter) *appsv1.DaemonSet {
 							},
 						}},
 					},{
-						Image:   vrouterKernelInit,
+						Image:   m.Spec.VrouterKernelInit,
 						Name:    "contrail-vrouter-kernel-init",
 						ImagePullPolicy: pullPolicy,
 						SecurityContext: &corev1.SecurityContext{
@@ -335,7 +334,7 @@ func daemonSetForVrouter(cr *tfv1alpha1.Vrouter) *appsv1.DaemonSet {
 							},
 						}},
 					},{
-						Image:   vrouterNicInit,
+						Image:   m.Spec.VrouterNicInit,
 						Name:    "contrail-vrouter-nic-init",
 						ImagePullPolicy: pullPolicy,
 						SecurityContext: &corev1.SecurityContext{
@@ -365,7 +364,7 @@ func daemonSetForVrouter(cr *tfv1alpha1.Vrouter) *appsv1.DaemonSet {
 							},
 						}},
 					},{
-						Image:   vrouterCni,
+						Image:   m.Spec.VrouterCni,
 						Name:    "contrail-kubernetes-cni-init",
 						ImagePullPolicy: pullPolicy,
 						SecurityContext: &corev1.SecurityContext{
@@ -397,7 +396,7 @@ func daemonSetForVrouter(cr *tfv1alpha1.Vrouter) *appsv1.DaemonSet {
 					},
 				},
 				Containers: []corev1.Container{{
-					Image:   vrouterAgentImage,
+					Image:   m.Spec.VrouterAgent,
 					Name:    "vrouter-agent",
 					ImagePullPolicy: pullPolicy,
 					SecurityContext: &corev1.SecurityContext{
@@ -436,7 +435,7 @@ func daemonSetForVrouter(cr *tfv1alpha1.Vrouter) *appsv1.DaemonSet {
 						MountPath: "/var/crashes",
 					}},
 				},{
-					Image:   nodeManagerImage,
+					Image:   m.Spec.NodeManagerImage,
 					Name:    "control-nodemgr",
 					ImagePullPolicy: pullPolicy,
 					Env: []corev1.EnvVar{{
@@ -581,11 +580,19 @@ func daemonSetForVrouter(cr *tfv1alpha1.Vrouter) *appsv1.DaemonSet {
 						VolumeSource: corev1.VolumeSource{
 							HostPath: &corev1.HostPathVolumeSource{
 								Path: "/usr/bin",
+								},
 							},
 						},
 					},
 				},
-			},
+ 			},
 		},
-	}
+        }
+        // Set ControlCluster instance as the owner and controller
+        controllerutil.SetControllerReference(m, ds, r.scheme)
+        return ds
+}
+
+func labelsForVrouter(name string) map[string]string {
+        return map[string]string{"app": "vrouter", "vrouter_cr": name}
 }
