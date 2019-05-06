@@ -280,9 +280,6 @@ func (r *ReconcileVrouter) daemonSetForVrouter(m *tfv1alpha1.Vrouter) *appsv1.Da
 				},
 				Spec: corev1.PodSpec{
 				HostNetwork: hostNetworkBool,
-				NodeSelector: map[string]string{
-					"node-role.kubernetes.io/master":"",
-				},
 				Tolerations: []corev1.Toleration{{
 					Operator: corev1.TolerationOpExists,
 					Effect: corev1.TaintEffectNoSchedule,
