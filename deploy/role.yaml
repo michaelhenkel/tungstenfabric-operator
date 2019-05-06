@@ -50,5 +50,6 @@ rules:
   - rabbitmqclusters
   - configclusters
   - controlclusters
+  - kubemanagerclusters
   verbs:
   - '*'

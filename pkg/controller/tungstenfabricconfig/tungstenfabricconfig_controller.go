@@ -22,6 +22,7 @@ import (
 	"github.com/michaelhenkel/tungstenfabric-operator/pkg/controller/rabbitmqcluster"
 	"github.com/michaelhenkel/tungstenfabric-operator/pkg/controller/configcluster"
 	"github.com/michaelhenkel/tungstenfabric-operator/pkg/controller/controlcluster"
+	"github.com/michaelhenkel/tungstenfabric-operator/pkg/controller/kubemanagercluster"
 	apiextensionsv1beta1 "k8s.io/apiextensions-apiserver/pkg/apis/apiextensions/v1beta1"
 	"k8s.io/client-go/kubernetes/scheme"
 )
@@ -109,6 +110,9 @@ func (r *ReconcileTungstenfabricConfig) Reconcile(request reconcile.Request) (re
 
 	functionMap["controlcluster"] = controlcluster.Add
 	crdMap["ControlCluster"] = functionMap
+
+	functionMap["kubemanagercluster"] = kubemanagercluster.Add
+	crdMap["KubemanagerCluster"] = functionMap
 
 	for crdName, crdFunction := range crdMap{
 		singular := strings.ToLower(crdName)

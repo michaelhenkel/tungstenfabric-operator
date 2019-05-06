@@ -73,7 +73,7 @@ type TungstenfabricConfigSpec struct {
 	// Add custom validation using kubebuilder tags: https://book.kubebuilder.io/beyond_basics/generating_crd.html
 	Images map[string]string `json:"images,inline"`
 	General map[string]string `json:"general,inline"`
-	KubeManagerCluster map[string]string `json:"kubeManager,inline"`
+	KubemanagerCluster map[string]string `json:"kubemanagerCluster,inline"`
 	CassandraCluster map[string]string `json:"cassandraCluster,inline"`
 	ZookeeperCluster map[string]string `json:"zookeeperCluster,inline"`
 	RabbitmqCluster map[string]string `json:"rabbitmqCluster,inline"`

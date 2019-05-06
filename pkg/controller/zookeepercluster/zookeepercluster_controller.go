@@ -78,7 +78,7 @@ func (r *ReconcileZookeeperCluster) Reconcile(request reconcile.Request) (reconc
 		return reconcile.Result{}, err
 	}
 
-    var size int32
+	var size int32
 	var baseConfigMap map[string]string
 	baseConfigMap = make(map[string]string)
 
@@ -227,29 +227,6 @@ func (r *ReconcileZookeeperCluster) Reconcile(request reconcile.Request) (reconc
 		return reconcile.Result{Requeue: true}, nil
 	}
 	return reconcile.Result{}, nil
-}
-
-// newPodForCR returns a busybox pod with the same name/namespace as the cr
-func newPodForCR(cr *tfv1alpha1.ZookeeperCluster) *corev1.Pod {
-	labels := map[string]string{
-		"app": cr.Name,
-	}
-	return &corev1.Pod{
-		ObjectMeta: metav1.ObjectMeta{
-			Name:      cr.Name + "-pod",
-			Namespace: cr.Namespace,
-			Labels:    labels,
-		},
-		Spec: corev1.PodSpec{
-			Containers: []corev1.Container{
-				{
-					Name:    "busybox",
-					Image:   "busybox",
-					Command: []string{"sleep", "3600"},
-				},
-			},
-		},
-	}
 }
 
 func (r *ReconcileZookeeperCluster) configmapForZookeeperCluster(m *tfv1alpha1.ZookeeperCluster, podIpList []string, baseConfigMap map[string]string) *corev1.ConfigMap {

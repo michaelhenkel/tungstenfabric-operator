@@ -1,0 +1,5 @@
+apiVersion: tf.tungstenfabric.io/v1alpha1
+kind: KubemanagerCluster
+metadata:
+  name: cluster-1
+
