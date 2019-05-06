@@ -240,12 +240,6 @@ func (r *ReconcileVrouter) configmapForVrouter(m *tfv1alpha1.Vrouter, configMap 
 
 func (r *ReconcileVrouter) daemonSetForVrouter(m *tfv1alpha1.Vrouter) *appsv1.DaemonSet {
 	ls := labelsForVrouter(m.Name)
-	var hostNetworkBool bool
-	if m.Spec.HostNetwork == "true" {
-		hostNetworkBool = true
-	} else {
-		hostNetworkBool = false
-	}
 	pullPolicy := corev1.PullAlways
 	if m.Spec.ImagePullPolicy == "Never" {
 		pullPolicy = corev1.PullNever
@@ -279,7 +273,7 @@ func (r *ReconcileVrouter) daemonSetForVrouter(m *tfv1alpha1.Vrouter) *appsv1.Da
 				        Labels: ls,
 				},
 				Spec: corev1.PodSpec{
-				HostNetwork: hostNetworkBool,
+				HostNetwork: true,
 				Tolerations: []corev1.Toleration{{
 					Operator: corev1.TolerationOpExists,
 					Effect: corev1.TaintEffectNoSchedule,
@@ -287,7 +281,117 @@ func (r *ReconcileVrouter) daemonSetForVrouter(m *tfv1alpha1.Vrouter) *appsv1.Da
 					Operator: corev1.TolerationOpExists,
 					Effect: corev1.TaintEffectNoExecute,
 				}},
-				InitContainers: []corev1.Container{{
+				InitContainers: []corev1.Container{
+				{
+					Image:   m.Spec.NodeInitImage,
+					Name:    "node-init",
+					SecurityContext: &corev1.SecurityContext{
+						Privileged: &privileged,
+					},
+					VolumeMounts: []corev1.VolumeMount{{
+						Name: "host-usr-bin",
+						MountPath: "/host/usr/bin",
+					}},
+					EnvFrom: []corev1.EnvFromSource{{
+						ConfigMapRef: &corev1.ConfigMapEnvSource{
+							LocalObjectReference: corev1.LocalObjectReference{
+								Name: "tfvroutercmv1",
+							},
+						},
+					}},
+				},{
+					Image:   m.Spec.VrouterKernelInit,
+					Name:    "contrail-vrouter-kernel-init",
+					ImagePullPolicy: pullPolicy,
+					SecurityContext: &corev1.SecurityContext{
+						Privileged: &privileged,
+					},
+					VolumeMounts: []corev1.VolumeMount{{
+						Name: "host-usr-bin",
+						MountPath: "/host/usr/bin",
+					},{
+						Name: "usr-src",
+						MountPath: "/usr/src",
+					},{
+						Name: "lib-modules",
+						MountPath: "/lib/modules",
+					},{
+						Name: "network-scripts",
+						MountPath: "/etc/sysconfig/network-scripts",
+					},{
+						Name: "host-bin",
+						MountPath: "/host/bin",
+					}},
+					EnvFrom: []corev1.EnvFromSource{{
+						ConfigMapRef: &corev1.ConfigMapEnvSource{
+							LocalObjectReference: corev1.LocalObjectReference{
+								Name: "tfvroutercmv1",
+							},
+						},
+					}},
+				},{
+					Image:   m.Spec.VrouterNicInit,
+					Name:    "contrail-vrouter-nic-init",
+					ImagePullPolicy: pullPolicy,
+					SecurityContext: &corev1.SecurityContext{
+						Privileged: &privileged,
+					},
+					VolumeMounts: []corev1.VolumeMount{{
+						Name: "host-usr-bin",
+						MountPath: "/host/usr/bin",
+					},{
+						Name: "usr-src",
+						MountPath: "/usr/src",
+					},{
+						Name: "lib-modules",
+						MountPath: "/lib/modules",
+					},{
+						Name: "network-scripts",
+						MountPath: "/etc/sysconfig/network-scripts",
+					},{
+						Name: "host-bin",
+						MountPath: "/host/bin",
+					}},
+					EnvFrom: []corev1.EnvFromSource{{
+						ConfigMapRef: &corev1.ConfigMapEnvSource{
+							LocalObjectReference: corev1.LocalObjectReference{
+								Name: "tfvroutercmv1",
+							},
+						},
+					}},
+				},{
+					Image:   m.Spec.VrouterCni,
+					Name:    "contrail-kubernetes-cni-init",
+					ImagePullPolicy: pullPolicy,
+					SecurityContext: &corev1.SecurityContext{
+						Privileged: &privileged,
+					},
+					VolumeMounts: []corev1.VolumeMount{{
+						Name: "var-lib-contrail",
+						MountPath: "/var/lib/contrail",
+					},{
+						Name: "etc-cni",
+						MountPath: "/host/etc_cni",
+					},{
+						Name: "opt-cni-bin",
+						MountPath: "/host/opt_cni_bin",
+					},{
+						Name: "var-log-contrail-cni",
+						MountPath: "/host/log_cni",
+					},{
+						Name: "agent-logs",
+						MountPath: "/var/log/contrail",
+					}},
+					EnvFrom: []corev1.EnvFromSource{{
+						ConfigMapRef: &corev1.ConfigMapEnvSource{
+							LocalObjectReference: corev1.LocalObjectReference{
+								Name: "tfvroutercmv1",
+							},
+						},
+					}},
+/*
+				},{
+
 					Image:   "busybox",
 					Name:    "init",
 					Command: []string{"sh","-c","until grep ready /tmp/podinfo/pod_labels > /dev/null 2>&1; do sleep 1; done"},
@@ -295,114 +399,8 @@ func (r *ReconcileVrouter) daemonSetForVrouter(m *tfv1alpha1.Vrouter) *appsv1.Da
 						Name: "status",
 						MountPath: "/tmp/podinfo",
 					}},
-					},{
-						Image:   m.Spec.NodeInitImage,
-						Name:    "node-init",
-						SecurityContext: &corev1.SecurityContext{
-							Privileged: &privileged,
-						},
-						VolumeMounts: []corev1.VolumeMount{{
-							Name: "host-usr-bin",
-							MountPath: "/host/usr/bin",
-						}},
-						EnvFrom: []corev1.EnvFromSource{{
-							ConfigMapRef: &corev1.ConfigMapEnvSource{
-								LocalObjectReference: corev1.LocalObjectReference{
-									Name: "tfkubemanagercmv1",
-								},
-							},
-						}},
-					},{
-						Image:   m.Spec.VrouterKernelInit,
-						Name:    "contrail-vrouter-kernel-init",
-						ImagePullPolicy: pullPolicy,
-						SecurityContext: &corev1.SecurityContext{
-							Privileged: &privileged,
-						},
-						VolumeMounts: []corev1.VolumeMount{{
-							Name: "host-usr-bin",
-							MountPath: "/host/usr/bin",
-						},{
-							Name: "usr-src",
-							MountPath: "/usr/src",
-						},{
-							Name: "lib-modules",
-							MountPath: "/lib/modules",
-						},{
-							Name: "network-scripts",
-							MountPath: "/etc/sysconfig/network-scripts",
-						},{
-							Name: "host-bin",
-							MountPath: "/host/bin",
-						}},
-						EnvFrom: []corev1.EnvFromSource{{
-							ConfigMapRef: &corev1.ConfigMapEnvSource{
-								LocalObjectReference: corev1.LocalObjectReference{
-									Name: "tfvroutercmv1",
-								},
-							},
-						}},
-					},{
-						Image:   m.Spec.VrouterNicInit,
-						Name:    "contrail-vrouter-nic-init",
-						ImagePullPolicy: pullPolicy,
-						SecurityContext: &corev1.SecurityContext{
-							Privileged: &privileged,
-						},
-						VolumeMounts: []corev1.VolumeMount{{
-							Name: "host-usr-bin",
-							MountPath: "/host/usr/bin",
-						},{
-							Name: "usr-src",
-							MountPath: "/usr/src",
-						},{
-							Name: "lib-modules",
-							MountPath: "/lib/modules",
-						},{
-							Name: "network-scripts",
-							MountPath: "/etc/sysconfig/network-scripts",
-						},{
-							Name: "host-bin",
-							MountPath: "/host/bin",
-						}},
-						EnvFrom: []corev1.EnvFromSource{{
-							ConfigMapRef: &corev1.ConfigMapEnvSource{
-								LocalObjectReference: corev1.LocalObjectReference{
-									Name: "tfvroutercmv1",
-								},
-							},
-						}},
-					},{
-						Image:   m.Spec.VrouterCni,
-						Name:    "contrail-kubernetes-cni-init",
-						ImagePullPolicy: pullPolicy,
-						SecurityContext: &corev1.SecurityContext{
-							Privileged: &privileged,
-						},
-						VolumeMounts: []corev1.VolumeMount{{
-							Name: "var-lib-contrail",
-							MountPath: "/var/lib/contrail",
-						},{
-							Name: "etc-cni",
-							MountPath: "/host/etc_cni",
-						},{
-							Name: "opt-cni-bin",
-							MountPath: "/host/opt_cni_bin",
-						},{
-							Name: "var-log-contrail-cni",
-							MountPath: "/host/log_cni",
-						},{
-							Name: "agent-logs",
-							MountPath: "/var/log/contrail",
-						}},
-						EnvFrom: []corev1.EnvFromSource{{
-							ConfigMapRef: &corev1.ConfigMapEnvSource{
-								LocalObjectReference: corev1.LocalObjectReference{
-									Name: "tfvroutercmv1",
-								},
-							},
-						}},
-					},
+*/
+				},
 				},
 				Containers: []corev1.Container{{
 					Image:   m.Spec.VrouterAgent,
@@ -414,10 +412,19 @@ func (r *ReconcileVrouter) daemonSetForVrouter(m *tfv1alpha1.Vrouter) *appsv1.Da
 					EnvFrom: []corev1.EnvFromSource{{
 						ConfigMapRef: &corev1.ConfigMapEnvSource{
 							LocalObjectReference: corev1.LocalObjectReference{
-								Name: "tfkubemanagercmv1",
+								Name: "tfvroutercmv1",
 							},
 						},
 					}},
+					Lifecycle: &corev1.Lifecycle{
+						PreStop: &corev1.Handler{
+							Exec: &corev1.ExecAction{
+								Command: []string{
+									"/clean-up.sh",
+								},
+							},
+						},
+					},
 					VolumeMounts: []corev1.VolumeMount{{
 						Name: "agent-logs",
 						MountPath: "/var/log/contrail",
@@ -454,7 +461,7 @@ func (r *ReconcileVrouter) daemonSetForVrouter(m *tfv1alpha1.Vrouter) *appsv1.Da
 					EnvFrom: []corev1.EnvFromSource{{
 						ConfigMapRef: &corev1.ConfigMapEnvSource{
 							LocalObjectReference: corev1.LocalObjectReference{
-								Name: "tfvroutermv1",
+								Name: "tfvroutercmv1",
 							},
 						},
 					}},
