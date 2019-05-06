@@ -450,7 +450,7 @@ func (r *ReconcileVrouter) daemonSetForVrouter(m *tfv1alpha1.Vrouter) *appsv1.Da
 						},
 					}},
 					VolumeMounts: []corev1.VolumeMount{{
-						Name: "control-logs",
+						Name: "agent-logs",
 						MountPath: "/var/log/contrail",
 					},{
 						Name: "docker-unix-socket",
