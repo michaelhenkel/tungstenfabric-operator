@@ -431,7 +431,6 @@ func (r *ReconcileKubemanagerCluster) configmapForKubemanagerCluster(m *tfv1alph
 	return newConfigMap
 }
 func (r *ReconcileKubemanagerCluster) clusterRoleForKubemanagerCluster(m *tfv1alpha1.KubemanagerCluster) *rbacv1.ClusterRole {
-	apiGroup := []string{"*"}
 	cr := &rbacv1.ClusterRole {
 		TypeMeta: metav1.TypeMeta{
 			APIVersion: "rbac/v1",
@@ -449,7 +448,9 @@ func (r *ReconcileKubemanagerCluster) clusterRoleForKubemanagerCluster(m *tfv1al
 				"watch",
 				"patch",
 			},
-			APIGroups: apiGroup,
+			APIGroups: []string{
+				"",
+			},
 			Resources: []string{
 				"pods",
 				"services",
