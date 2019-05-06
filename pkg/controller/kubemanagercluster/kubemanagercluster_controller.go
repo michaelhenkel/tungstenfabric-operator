@@ -431,7 +431,7 @@ func (r *ReconcileKubemanagerCluster) configmapForKubemanagerCluster(m *tfv1alph
 	return newConfigMap
 }
 func (r *ReconcileKubemanagerCluster) clusterRoleForKubemanagerCluster(m *tfv1alpha1.KubemanagerCluster) *rbacv1.ClusterRole {
-	verb := []string{"*"}
+	apiGroup := []string{"*"}
 	cr := &rbacv1.ClusterRole {
 		TypeMeta: metav1.TypeMeta{
 			APIVersion: "rbac/v1",
@@ -442,9 +442,20 @@ func (r *ReconcileKubemanagerCluster) clusterRoleForKubemanagerCluster(m *tfv1al
 			Namespace: m.Namespace,
 		},
 		Rules: []rbacv1.PolicyRule{{
-			Verbs: verb,
-			APIGroups: verb,
-			Resources: verb,
+			Verbs: []string{
+				"get",
+				"list",
+				"update",
+				"watch",
+				"patch",
+			},
+			APIGroups: apiGroup,
+			Resources: []string{
+				"pods",
+				"services",
+				"endpoints",
+				"events",
+			},
 		}},
 	}
 	controllerutil.SetControllerReference(m, cr, r.scheme)
