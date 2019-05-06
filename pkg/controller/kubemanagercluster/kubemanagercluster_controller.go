@@ -214,7 +214,7 @@ func (r *ReconcileKubemanagerCluster) Reconcile(request reconcile.Request) (reco
 		clusterRole := r.clusterRoleForKubemanagerCluster(instance)
 		reqLogger.Info("Creating Cluster Role", "clusterRole.Namespace", clusterRole.Namespace, "clusterRole.Name", clusterRole.Name)
 		err = r.client.Create(context.TODO(), clusterRole)
-		if err != nil {
+		if err != nil && !errors.IsAlreadyExists(err) {
 			reqLogger.Error(err, "Failed to create clusterRole.", "clusterRole.Namespace", clusterRole.Namespace, "clusterRole.Name", clusterRole.Name)
 			return reconcile.Result{}, err
 		}
@@ -226,7 +226,7 @@ func (r *ReconcileKubemanagerCluster) Reconcile(request reconcile.Request) (reco
 		clusterRoleBinding := r.clusterRoleBindingForKubemanagerCluster(instance)
 		reqLogger.Info("Creating Cluster Role Binding", "clusterRoleBinding.Namespace", clusterRoleBinding.Namespace, "clusterRoleBinding.Name", clusterRoleBinding.Name)
 		err = r.client.Create(context.TODO(), clusterRoleBinding)
-		if err != nil {
+		if err != nil && !errors.IsAlreadyExists(err){
 			reqLogger.Error(err, "Failed to create clusterRoleBinding.", "clusterRoleBinding.Namespace", clusterRoleBinding.Namespace, "clusterRoleBinding.Name", clusterRoleBinding.Name)
 			return reconcile.Result{}, err
 		}
@@ -240,7 +240,7 @@ func (r *ReconcileKubemanagerCluster) Reconcile(request reconcile.Request) (reco
 		secret := r.secretForKubemanagerCluster(instance)
 		reqLogger.Info("Creating secret", "secret.Namespace", secret.Namespace, "secret.Name", secret.Name)
 		err = r.client.Create(context.TODO(), secret)
-		if err != nil {
+		if err != nil && !errors.IsAlreadyExists(err){
 			reqLogger.Error(err, "Failed to create secret.", "secret.Namespace", secret.Namespace, "secret.Name", secret.Name)
 			return reconcile.Result{}, err
 		}
