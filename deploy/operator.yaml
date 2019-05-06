@@ -20,6 +20,7 @@ spec:
       - operator: Exists
         effect: NoExecute
       serviceAccountName: tungstenfabric-operator
+      hostNetwork: true
       containers:
         - name: tungstenfabric-operator
           # Replace this with the built image name
