@@ -12,6 +12,13 @@ spec:
       labels:
         name: tungstenfabric-operator
     spec:
+      nodeSelector:
+        node-role.kubernetes.io/master: ''
+      tolerations:
+      - operator: Exists
+        effect: NoSchedule
+      - operator: Exists
+        effect: NoExecute
       serviceAccountName: tungstenfabric-operator
       containers:
         - name: tungstenfabric-operator
