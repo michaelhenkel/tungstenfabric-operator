@@ -1,16 +1,20 @@
-cat role.yaml > manifest.yaml
-echo "---" >> manifest.yaml
-cat service_account.yaml >> manifest.yaml
-echo "---" >> manifest.yaml
-cat role_binding.yaml >> manifest.yaml
-echo "---" >> manifest.yaml
-cat crds/tf_v1alpha1_tungstenfabricconfig_crd.yaml >> manifest.yaml
-echo "---" >> manifest.yaml
-cat operator.yaml >> manifest.yaml
-echo "---" >> manifest.yaml
-cat crds/tf_v1alpha1_tungstenfabricconfig_cr.yaml >> manifest.yaml
+cat role.yaml > 1-create-operator.yaml
+echo "---" >> 1-create-operator.yaml
+cat cluster_role.yaml > 1-create-operator.yaml
+echo "---" >> 1-create-operator.yaml
+cat service_account.yaml >> 1-create-operator.yaml
+echo "---" >> 1-create-operator.yaml
+cat role_binding.yaml >> 1-create-operator.yaml
+echo "---" >> 1-create-operator.yaml
+cat cluster_role_binding.yaml >> 1-create-operator.yaml
+echo "---" >> 1-create-operator.yaml
+cat crds/tf_v1alpha1_tungstenfabricconfig_crd.yaml >> 1-create-operator.yaml
+echo "---" >> 1-create-operator.yaml
+cat operator.yaml >> 1-create-operator.yaml
+echo "---" >> 1-create-operator.yaml
+cat crds/tf_v1alpha1_tungstenfabricconfig_cr.yaml >> 1-create-operator.yaml
 for i in `ls crds/*cr.yaml |grep -v tf_v1alpha1_tungstenfabricconfig_cr.yaml`
 do
-        echo "---" >> manifest.yaml
-        cat ${i} >> manifest.yaml
+        echo "---" >> 2-create-resources.yaml
+        cat ${i} >> 2-create-resources.yaml
 done

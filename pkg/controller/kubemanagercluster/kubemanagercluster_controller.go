@@ -196,7 +196,7 @@ func (r *ReconcileKubemanagerCluster) Reconcile(request reconcile.Request) (reco
 	configMap["CONFIG_NODES"] = configConfigMap.Data["CONTROLLER_NODES"]
 
 	// create rbac
-/*
+
 	serviceAccount := r.serviceAccountForKubemanagerCluster(instance)
 	reqLogger.Info("Creating Service Account", "serviceAccount.Namespace", serviceAccount.Namespace, "serviceAccount.Name", serviceAccount.Name)
 	err = r.client.Create(context.TODO(), serviceAccount)
@@ -220,7 +220,7 @@ func (r *ReconcileKubemanagerCluster) Reconcile(request reconcile.Request) (reco
 		reqLogger.Error(err, "Failed to create clusterRoleBinding.", "clusterRoleBinding.Namespace", clusterRoleBinding.Namespace, "clusterRoleBinding.Name", clusterRoleBinding.Name)
 		return reconcile.Result{}, err
 	}
-*/
+	
 	existingSecret := &corev1.Secret{}
 	reqLogger.Info("Trying to get secret")
 	err = r.client.Get(context.TODO(), types.NamespacedName{Name: "contrail-kube-manager-token", Namespace: instance.Namespace}, existingSecret)
@@ -467,7 +467,7 @@ func (r *ReconcileKubemanagerCluster) clusterRoleBindingForKubemanagerCluster(m 
 		},
 		Subjects: []rbacv1.Subject{{
 			Kind: "ServiceAccount",
-			Name: "tungstenfabric-operator",
+			Name: "contrail-service-account",
 			Namespace: m.Namespace,
 			}},
 		RoleRef: rbacv1.RoleRef{
@@ -490,7 +490,7 @@ func (r *ReconcileKubemanagerCluster) secretForKubemanagerCluster(m *tfv1alpha1.
 			Name:      "contrail-kube-manager-token",
 			Namespace: m.Namespace,
 			Annotations: map[string]string{
-				"kubernetes.io/service-account.name": "tungstenfabric-operator",
+				"kubernetes.io/service-account.name": "contrail-service-account",
 			},
 		},
 		Type: "kubernetes.io/service-account-token",
@@ -538,7 +538,7 @@ func (r *ReconcileKubemanagerCluster) deploymentForKubemanagerCluster(m *tfv1alp
 				        Labels: ls,
 				},
 				Spec: corev1.PodSpec{
-				ServiceAccountName: "tungstenfabric-operator",
+				ServiceAccountName: "contrail-service-account",
 				HostNetwork: hostNetworkBool,
 				NodeSelector: map[string]string{
 					"node-role.kubernetes.io/master":"",

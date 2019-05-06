@@ -1,0 +1,42 @@
+---
+apiVersion: tf.tungstenfabric.io/v1alpha1
+kind: CassandraCluster
+metadata:
+  name: cluster-1
+
+---
+apiVersion: tf.tungstenfabric.io/v1alpha1
+kind: ConfigCluster
+metadata:
+  name: cluster-1
+
+---
+apiVersion: tf.tungstenfabric.io/v1alpha1
+kind: ControlCluster
+metadata:
+  name: cluster-1
+
+---
+apiVersion: tf.tungstenfabric.io/v1alpha1
+kind: KubemanagerCluster
+metadata:
+  name: cluster-1
+
+---
+apiVersion: tf.tungstenfabric.io/v1alpha1
+kind: RabbitmqCluster
+metadata:
+  name: cluster-1
+---
+apiVersion: tf.tungstenfabric.io/v1alpha1
+kind: Vrouter
+metadata:
+  name: example-vrouter
+spec:
+  # Add fields here
+  size: 3
+---
+apiVersion: tf.tungstenfabric.io/v1alpha1
+kind: ZookeeperCluster
+metadata:
+  name: cluster-1
