@@ -196,31 +196,42 @@ func (r *ReconcileKubemanagerCluster) Reconcile(request reconcile.Request) (reco
 	configMap["CONFIG_NODES"] = configConfigMap.Data["CONTROLLER_NODES"]
 
 	// create rbac
-
-	serviceAccount := r.serviceAccountForKubemanagerCluster(instance)
-	reqLogger.Info("Creating Service Account", "serviceAccount.Namespace", serviceAccount.Namespace, "serviceAccount.Name", serviceAccount.Name)
-	err = r.client.Create(context.TODO(), serviceAccount)
-	if err != nil {
-		reqLogger.Error(err, "Failed to create serviceAccount.", "serviceAccount.Namespace", serviceAccount.Namespace, "serviceAccount.Name", serviceAccount.Name)
-		return reconcile.Result{}, err
+	existingServiceAccount := &corev1.ServiceAccount{}
+	err = r.client.Get(context.TODO(), types.NamespacedName{Name: "contrail-service-account", Namespace: instance.Namespace}, existingServiceAccount)
+	if err != nil && errors.IsNotFound(err) {
+		serviceAccount := r.serviceAccountForKubemanagerCluster(instance)
+		reqLogger.Info("Creating Service Account", "serviceAccount.Namespace", serviceAccount.Namespace, "serviceAccount.Name", serviceAccount.Name)
+		err = r.client.Create(context.TODO(), serviceAccount)
+		if err != nil {
+			reqLogger.Error(err, "Failed to create serviceAccount.", "serviceAccount.Namespace", serviceAccount.Namespace, "serviceAccount.Name", serviceAccount.Name)
+			return reconcile.Result{}, err
+		}
 	}
 
-	clusterRole := r.clusterRoleForKubemanagerCluster(instance)
-	reqLogger.Info("Creating Cluster Role", "clusterRole.Namespace", clusterRole.Namespace, "clusterRole.Name", clusterRole.Name)
-	err = r.client.Create(context.TODO(), clusterRole)
-	if err != nil {
-		reqLogger.Error(err, "Failed to create clusterRole.", "clusterRole.Namespace", clusterRole.Namespace, "clusterRole.Name", clusterRole.Name)
-		return reconcile.Result{}, err
+	existingClusterRole := &rbacv1.ClusterRole{}
+	err = r.client.Get(context.TODO(), types.NamespacedName{Name: "contrail-cluster-role", Namespace: instance.Namespace}, existingClusterRole)
+	if err != nil && errors.IsNotFound(err) {
+		clusterRole := r.clusterRoleForKubemanagerCluster(instance)
+		reqLogger.Info("Creating Cluster Role", "clusterRole.Namespace", clusterRole.Namespace, "clusterRole.Name", clusterRole.Name)
+		err = r.client.Create(context.TODO(), clusterRole)
+		if err != nil {
+			reqLogger.Error(err, "Failed to create clusterRole.", "clusterRole.Namespace", clusterRole.Namespace, "clusterRole.Name", clusterRole.Name)
+			return reconcile.Result{}, err
+		}
 	}
 
-	clusterRoleBinding := r.clusterRoleBindingForKubemanagerCluster(instance)
-	reqLogger.Info("Creating Cluster Role Binding", "clusterRoleBinding.Namespace", clusterRoleBinding.Namespace, "clusterRoleBinding.Name", clusterRoleBinding.Name)
-	err = r.client.Create(context.TODO(), clusterRoleBinding)
-	if err != nil {
-		reqLogger.Error(err, "Failed to create clusterRoleBinding.", "clusterRoleBinding.Namespace", clusterRoleBinding.Namespace, "clusterRoleBinding.Name", clusterRoleBinding.Name)
-		return reconcile.Result{}, err
+	existingClusterRoleBinding := &rbacv1.ClusterRoleBinding{}
+	err = r.client.Get(context.TODO(), types.NamespacedName{Name: "contrail-cluster-role-binding", Namespace: instance.Namespace}, existingClusterRoleBinding)
+	if err != nil && errors.IsNotFound(err) {
+		clusterRoleBinding := r.clusterRoleBindingForKubemanagerCluster(instance)
+		reqLogger.Info("Creating Cluster Role Binding", "clusterRoleBinding.Namespace", clusterRoleBinding.Namespace, "clusterRoleBinding.Name", clusterRoleBinding.Name)
+		err = r.client.Create(context.TODO(), clusterRoleBinding)
+		if err != nil {
+			reqLogger.Error(err, "Failed to create clusterRoleBinding.", "clusterRoleBinding.Namespace", clusterRoleBinding.Namespace, "clusterRoleBinding.Name", clusterRoleBinding.Name)
+			return reconcile.Result{}, err
+		}
 	}
-	
+
 	existingSecret := &corev1.Secret{}
 	reqLogger.Info("Trying to get secret")
 	err = r.client.Get(context.TODO(), types.NamespacedName{Name: "contrail-kube-manager-token", Namespace: instance.Namespace}, existingSecret)
