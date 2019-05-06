@@ -197,7 +197,7 @@ func (r *ReconcileKubemanagerCluster) Reconcile(request reconcile.Request) (reco
 
 	// create rbac
 	existingServiceAccount := &corev1.ServiceAccount{}
-	err = r.client.Get(context.TODO(), types.NamespacedName{Name: "contrail-service-account", Namespace: instance.Namespace}, existingServiceAccount)
+	err = r.client.Get(context.TODO(), types.NamespacedName{Name: "contrail-service-account-" + instance.Name, Namespace: instance.Namespace}, existingServiceAccount)
 	if err != nil && errors.IsNotFound(err) {
 		serviceAccount := r.serviceAccountForKubemanagerCluster(instance)
 		reqLogger.Info("Creating Service Account", "serviceAccount.Namespace", serviceAccount.Namespace, "serviceAccount.Name", serviceAccount.Name)
@@ -209,7 +209,7 @@ func (r *ReconcileKubemanagerCluster) Reconcile(request reconcile.Request) (reco
 	}
 
 	existingClusterRole := &rbacv1.ClusterRole{}
-	err = r.client.Get(context.TODO(), types.NamespacedName{Name: "contrail-cluster-role", Namespace: instance.Namespace}, existingClusterRole)
+	err = r.client.Get(context.TODO(), types.NamespacedName{Name: "contrail-cluster-role-" + instance.Name, Namespace: instance.Namespace}, existingClusterRole)
 	if err != nil && errors.IsNotFound(err) {
 		clusterRole := r.clusterRoleForKubemanagerCluster(instance)
 		reqLogger.Info("Creating Cluster Role", "clusterRole.Namespace", clusterRole.Namespace, "clusterRole.Name", clusterRole.Name)
@@ -221,7 +221,7 @@ func (r *ReconcileKubemanagerCluster) Reconcile(request reconcile.Request) (reco
 	}
 
 	existingClusterRoleBinding := &rbacv1.ClusterRoleBinding{}
-	err = r.client.Get(context.TODO(), types.NamespacedName{Name: "contrail-cluster-role-binding", Namespace: instance.Namespace}, existingClusterRoleBinding)
+	err = r.client.Get(context.TODO(), types.NamespacedName{Name: "contrail-cluster-role-binding-" + instance.Name, Namespace: instance.Namespace}, existingClusterRoleBinding)
 	if err != nil && errors.IsNotFound(err) {
 		clusterRoleBinding := r.clusterRoleBindingForKubemanagerCluster(instance)
 		reqLogger.Info("Creating Cluster Role Binding", "clusterRoleBinding.Namespace", clusterRoleBinding.Namespace, "clusterRoleBinding.Name", clusterRoleBinding.Name)
@@ -234,7 +234,7 @@ func (r *ReconcileKubemanagerCluster) Reconcile(request reconcile.Request) (reco
 
 	existingSecret := &corev1.Secret{}
 	reqLogger.Info("Trying to get secret")
-	err = r.client.Get(context.TODO(), types.NamespacedName{Name: "contrail-kube-manager-token", Namespace: instance.Namespace}, existingSecret)
+	err = r.client.Get(context.TODO(), types.NamespacedName{Name: "contrail-kube-manager-token-" + instance.Name, Namespace: instance.Namespace}, existingSecret)
 	if err != nil && errors.IsNotFound(err) {
 		reqLogger.Info("secret contrail-kube-manager-token doesn't exist. Creating it")
 		secret := r.secretForKubemanagerCluster(instance)
@@ -437,7 +437,7 @@ func (r *ReconcileKubemanagerCluster) clusterRoleForKubemanagerCluster(m *tfv1al
 			Kind:       "ClusterRole",
 		},
 		ObjectMeta: metav1.ObjectMeta{
-			Name:      "contrail-cluster-role",
+			Name:      "contrail-cluster-role-" + m.Name,
 			Namespace: m.Namespace,
 		},
 		Rules: []rbacv1.PolicyRule{{
@@ -470,7 +470,7 @@ func (r *ReconcileKubemanagerCluster) serviceAccountForKubemanagerCluster(m *tfv
 			Kind:       "ServiceAccount",
 		},
 		ObjectMeta: metav1.ObjectMeta{
-			Name:      "contrail-service-account",
+			Name:      "contrail-service-account-" + m.Name,
 			Namespace: m.Namespace,
 		},
 	}
@@ -485,18 +485,18 @@ func (r *ReconcileKubemanagerCluster) clusterRoleBindingForKubemanagerCluster(m 
 			Kind:       "ClusterRoleBinding",
 		},
 		ObjectMeta: metav1.ObjectMeta{
-			Name:      "contrail-cluster-role-binding",
+			Name:      "contrail-cluster-role-binding-" + m.Name,
 			Namespace: m.Namespace,
 		},
 		Subjects: []rbacv1.Subject{{
 			Kind: "ServiceAccount",
-			Name: "contrail-service-account",
+			Name: "contrail-service-account-" + m.Name,
 			Namespace: m.Namespace,
 			}},
 		RoleRef: rbacv1.RoleRef{
 			APIGroup: "rbac.authorization.k8s.io",
 			Kind: "ClusterRole",
-			Name: "contrail-cluster-role",
+			Name: "contrail-cluster-role-" + m.Name,
 			},
 	}
 	controllerutil.SetControllerReference(m, crb, r.scheme)
@@ -510,7 +510,7 @@ func (r *ReconcileKubemanagerCluster) secretForKubemanagerCluster(m *tfv1alpha1.
 			Kind:       "Secret",
 		},
 		ObjectMeta: metav1.ObjectMeta{
-			Name:      "contrail-kube-manager-token",
+			Name:      "contrail-kube-manager-token-" + m.Name,
 			Namespace: m.Namespace,
 			Annotations: map[string]string{
 				"kubernetes.io/service-account.name": "contrail-service-account",
@@ -561,7 +561,7 @@ func (r *ReconcileKubemanagerCluster) deploymentForKubemanagerCluster(m *tfv1alp
 				        Labels: ls,
 				},
 				Spec: corev1.PodSpec{
-				ServiceAccountName: "contrail-service-account",
+				ServiceAccountName: "contrail-service-account-" + m.Name,
 				HostNetwork: hostNetworkBool,
 				NodeSelector: map[string]string{
 					"node-role.kubernetes.io/master":"",
@@ -641,7 +641,7 @@ func (r *ReconcileKubemanagerCluster) deploymentForKubemanagerCluster(m *tfv1alp
 						Name: "pod-secret",
 						VolumeSource: corev1.VolumeSource{
 							Secret: &corev1.SecretVolumeSource{
-								SecretName: "contrail-kube-manager-token",
+								SecretName: "contrail-kube-manager-token-" + m.Name,
 							},
 						},
 					},
@@ -657,7 +657,7 @@ func (r *ReconcileKubemanagerCluster) deploymentForKubemanagerCluster(m *tfv1alp
 						Name: "kubemanager-logs",
 						VolumeSource: corev1.VolumeSource{
 							HostPath: &corev1.HostPathVolumeSource{
-								Path: "/var/log/contrail/config",
+								Path: "/var/log/contrail/kubemanager",
 							},
 						},
 					},
