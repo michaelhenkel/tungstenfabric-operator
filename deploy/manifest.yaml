@@ -158,8 +158,7 @@ spec:
       hostNetwork: true
       containers:
         - name: tungstenfabric-operator
-          # Replace this with the built image name
-          image: REPLACE_IMAGE
+          image: docker.io/michaelhenkel/tungstenfabric-operator:v0.0.1
           command:
           - tungstenfabric-operator
           imagePullPolicy: Always
