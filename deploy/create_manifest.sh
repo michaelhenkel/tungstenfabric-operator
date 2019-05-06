@@ -1,6 +1,6 @@
 cat role.yaml > 1-create-operator.yaml
 echo "---" >> 1-create-operator.yaml
-cat cluster_role.yaml > 1-create-operator.yaml
+cat cluster_role.yaml >> 1-create-operator.yaml
 echo "---" >> 1-create-operator.yaml
 cat service_account.yaml >> 1-create-operator.yaml
 echo "---" >> 1-create-operator.yaml
