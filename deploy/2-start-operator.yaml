@@ -22,6 +22,10 @@ spec:
     cassandra: "docker.io/michaelhenkel/contrail-external-cassandra:5.1.1-dev3"
     zookeeper: "docker.io/michaelhenkel/contrail-external-zookeeper:5.1.1-dev3"
     rabbitmq: "docker.io/michaelhenkel/contrail-external-rabbitmq:5.1.1-dev3"
+    vrouterKernelInit: "docker.io/michaelhenkel/contrail-vrouter-kernel-init:5.1.1-dev3"
+    vrouterNicInit: "docker.io/michaelhenkel/contrail-vrouter-nic-init:5.1.1-dev3"
+    vrouterCni: "docker.io/michaelhenkel/contrail-kubernetes-cni-init:5.1.1-dev3"
+    vrouterAgent: "docker.io/michaelhenkel/contrail-vrouter-agent:5.1.1-dev3"
   general:
     size: "1"
     hostNetwork: "false"

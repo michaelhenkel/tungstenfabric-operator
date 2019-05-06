@@ -1,7 +1,4 @@
 apiVersion: tf.tungstenfabric.io/v1alpha1
 kind: Vrouter
 metadata:
-  name: example-vrouter
-spec:
-  # Add fields here
-  size: 3
+  name: cluster-1
