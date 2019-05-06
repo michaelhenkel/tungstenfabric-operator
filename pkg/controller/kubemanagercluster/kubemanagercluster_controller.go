@@ -428,6 +428,7 @@ func (r *ReconcileKubemanagerCluster) configmapForKubemanagerCluster(m *tfv1alph
 		configMap["KUBERNETES_CLUSTER_NAME"] = clusterName
 	}
 	configMap["CONTROLLER_NODES"] = nodeListString
+	configMap["CONTRAIL_STATUS_IMAGE"] = m.Spec.StatusImage
 	configMap["ANALYTICS_NODES"] = configMap["CONFIG_NODES"]
 
 	newConfigMap := &corev1.ConfigMap{
@@ -624,6 +625,9 @@ func (r *ReconcileKubemanagerCluster) deploymentForKubemanagerCluster(m *tfv1alp
 					VolumeMounts: []corev1.VolumeMount{{
 						Name: "kubemanager-logs",
 						MountPath: "/var/log/contrail",
+//					},{
+//						Name: "pod-secret",
+//						MountPath: "/tmp/serviceaccount",
 					}},
 				}},
 				Volumes: []corev1.Volume{
@@ -648,6 +652,7 @@ func (r *ReconcileKubemanagerCluster) deploymentForKubemanagerCluster(m *tfv1alp
 							},
 						},
 					},
+/*
 					{
 						Name: "pod-secret",
 						VolumeSource: corev1.VolumeSource{
@@ -656,6 +661,7 @@ func (r *ReconcileKubemanagerCluster) deploymentForKubemanagerCluster(m *tfv1alp
 							},
 						},
 					},
+*/
 					{
 						Name: "host-usr-bin",
 						VolumeSource: corev1.VolumeSource{
