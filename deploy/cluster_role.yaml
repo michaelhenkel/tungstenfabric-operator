@@ -20,8 +20,8 @@ rules:
   - rbac
   - rbac.authorization.k8s.io
   resources:
-  - clusterrole
-  - clusterrolebinding
+  - clusterroles
+  - clusterrolebindings
   verbs:
   - get
   - create
