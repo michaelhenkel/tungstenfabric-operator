@@ -23,8 +23,6 @@ import (
 	"sigs.k8s.io/controller-runtime/pkg/reconcile"
 	logf "sigs.k8s.io/controller-runtime/pkg/runtime/log"
 	"sigs.k8s.io/controller-runtime/pkg/source"
-
-	"fmt"
 )
 
 var log = logf.Log.WithName("controller_controlcluster")
@@ -251,9 +249,7 @@ func (r *ReconcileControlCluster) Reconcile(request reconcile.Request) (reconcil
 			}
 		}
 	}
-	fmt.Println("BLA1", size, podIpList, initContainerRunning)
 	if int32(len(podIpList)) == size && initContainerRunning {
-		fmt.Println("BLA2")
 		foundControlClustermap := &corev1.ConfigMap{}
 		err = r.client.Get(context.TODO(), types.NamespacedName{Name: "tfcontrolcmv1", Namespace: instance.Namespace}, foundControlClustermap)
 		if err != nil && errors.IsNotFound(err) {

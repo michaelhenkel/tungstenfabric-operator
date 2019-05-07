@@ -28,7 +28,6 @@ import (
 	"k8s.io/client-go/rest"
 	"k8s.io/client-go/kubernetes"
 	"gopkg.in/yaml.v2"
-	"fmt"
 )
 
 var log = logf.Log.WithName("controller_kubemanagercluster")
@@ -317,9 +316,7 @@ func (r *ReconcileKubemanagerCluster) Reconcile(request reconcile.Request) (reco
 			}
 		}
 	}
-	fmt.Println("BLA1", size, podIpList, initContainerRunning)
 	if int32(len(podIpList)) == size && initContainerRunning {
-		fmt.Println("BLA2")
 		foundKubemanagerClustermap := &corev1.ConfigMap{}
 		err = r.client.Get(context.TODO(), types.NamespacedName{Name: "tfkubemanagercmv1", Namespace: instance.Namespace}, foundKubemanagerClustermap)
 		if err != nil && errors.IsNotFound(err) {
@@ -453,21 +450,28 @@ func (r *ReconcileKubemanagerCluster) clusterRoleForKubemanagerCluster(m *tfv1al
 		},
 		Rules: []rbacv1.PolicyRule{{
 			Verbs: []string{
+				"*",
+/*
 				"get",
 				"list",
 				"update",
 				"watch",
 				"patch",
+*/
 			},
 			APIGroups: []string{
-				"",
+//				"",
+				"*",
 			},
 			Resources: []string{
+				"*",
+/*
 				"pods",
 				"services",
 				"endpoints",
 				"events",
 				"configmaps",
+*/
 			},
 		}},
 	}

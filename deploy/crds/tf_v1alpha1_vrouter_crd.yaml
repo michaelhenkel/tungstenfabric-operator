@@ -28,6 +28,31 @@ spec:
         metadata:
           type: object
         spec:
+          properties:
+            hostNetwork:
+              type: string
+            imagePullPolicy:
+              type: string
+            nodeInitImage:
+              type: string
+            nodeManagerImage:
+              type: string
+            size:
+              description: 'INSERT ADDITIONAL SPEC FIELDS - desired state of cluster
+                Important: Run "operator-sdk generate k8s" to regenerate code after
+                modifying this file Add custom validation using kubebuilder tags:
+                https://book.kubebuilder.io/beyond_basics/generating_crd.html'
+              type: string
+            statusImage:
+              type: string
+            vrouterAgent:
+              type: string
+            vrouterCni:
+              type: string
+            vrouterKernelInit:
+              type: string
+            vrouterNicInit:
+              type: string
           type: object
         status:
           properties:

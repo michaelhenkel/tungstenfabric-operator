@@ -79,6 +79,7 @@ type TungstenfabricConfigSpec struct {
 	RabbitmqCluster map[string]string `json:"rabbitmqCluster,inline"`
 	ConfigCluster map[string]string `json:"configCluster,inline"`
 	ControlCluster map[string]string `json:"controlCluster,inline"`
+	WebuiCluster map[string]string `json:"webuiCluster,inline"`
 	Vrouter map[string]string `json:"vrouter,inline"`
 }
 

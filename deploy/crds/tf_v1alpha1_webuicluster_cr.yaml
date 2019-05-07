@@ -1,0 +1,10 @@
+apiVersion: tf.tungstenfabric.io/v1alpha1
+kind: WebuiCluster
+metadata:
+  name: cluster-1
+spec:
+  type: deployment
+  containers:
+    - name: webuiWeb
+      image: docker.io/michaelhenkel/contrail-controller-webui-web:5.1.1-dev3
+    - name: webuiJob

@@ -25,6 +25,8 @@ spec:
     vrouterNicInit: "docker.io/michaelhenkel/contrail-vrouter-nic-init:5.1.1-dev3"
     vrouterCni: "docker.io/michaelhenkel/contrail-kubernetes-cni-init:5.1.1-dev3"
     vrouterAgent: "docker.io/michaelhenkel/contrail-vrouter-agent:5.1.1-dev3"
+    webuiWeb: "docker.io/michaelhenkel/contrail-controller-webui-web:5.1.1-dev3"
+    webuiJob: "docker.io/michaelhenkel/contrail-controller-webui-job:5.1.1-dev3"
   general:
     size: "1"
     hostNetwork: "false"
@@ -63,5 +65,7 @@ spec:
   configCluster:
     size: "1"
   controlCluster:
+    size: "1"
+  webuiCluster:
     size: "1"
 
