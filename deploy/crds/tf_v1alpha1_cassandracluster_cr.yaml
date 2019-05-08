@@ -2,4 +2,7 @@ apiVersion: tf.tungstenfabric.io/v1alpha1
 kind: CassandraCluster
 metadata:
   name: cluster-1
+spec:
+  containers:
+    - name: cassandra
 

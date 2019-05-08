@@ -28,15 +28,16 @@ spec:
     webuiWeb: "docker.io/michaelhenkel/contrail-controller-webui-web:5.1.1-dev3"
     webuiJob: "docker.io/michaelhenkel/contrail-controller-webui-job:5.1.1-dev3"
   general:
-    size: "1"
+    size: "3"
     hostNetwork: "false"
-    imagePullPolicy: "Always"
+    pullPolicy: "Always"
     aaaMode: ""
     authMode: ""
     cloudAdminRole: ""
     globalReadOnlyRole: ""
-  kubemanagerCluster:
+  kubemanagerConfig:
     size: "1"
+    service:
     KUBERNETES_API_SERVER: "10.96.0.1"
     KUBERNETES_API_SECURE_PORT: "443"
     KUBERNETES_POD_SUBNETS: "10.32.0.0/12"
@@ -45,7 +46,7 @@ spec:
     KUBERNETES_IP_FABRIC_FORWARDING: "true"
     KUBERNETES_IP_FABRIC_SNAT: "true"
     K8S_TOKEN_FILE: "/var/run/secrets/kubernetes.io/serviceaccount/token"
-  cassandraCluster:
+  cassandraConfig:
     size: "1"
     CASSANDRA_LISTEN_ADDRESS: "auto"
     CASSANDRA_PORT: "9160"
@@ -54,18 +55,20 @@ spec:
     CASSANDRA_STORAGE_PORT: "7000"
     CASSANDRA_JMX_LOCAL_PORT: "7199"
     CASSANDRA_START_RPC: "true"
-  zookeeperCluster:
+    CASSANDRA_CLUSTER_NAME: "ContrailConfigDB"
+    NODE_TYPE: "config-database"
+  zookeeperConfig:
     size: "1"
     ZOOKEEPER_PORT: "2181"
     ZOOKEEPER_PORTS: "2888:3888"
-  rabbitmqCluster:
+  rabbitmqConfig:
     size: "1"
     RABBITMQ_NODE_PORT: "5673"
     RABBITMQ_ERLANG_COOKIE: "47EFF3BB-4786-46E0-A5BB-58455B3C2CB4"
   configCluster:
     size: "1"
-  controlCluster:
+  controlConfig:
     size: "1"
-  webuiCluster:
+  webuiConfig:
     size: "1"
-
+    BLA: "BLA"

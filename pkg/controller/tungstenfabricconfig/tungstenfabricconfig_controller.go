@@ -17,14 +17,17 @@ import (
 	"sigs.k8s.io/controller-runtime/pkg/reconcile"
 	logf "sigs.k8s.io/controller-runtime/pkg/runtime/log"
 	"sigs.k8s.io/controller-runtime/pkg/source"
-	"github.com/michaelhenkel/tungstenfabric-operator/pkg/controller/cassandracluster"
+/*
 	"github.com/michaelhenkel/tungstenfabric-operator/pkg/controller/zookeepercluster"
 	"github.com/michaelhenkel/tungstenfabric-operator/pkg/controller/rabbitmqcluster"
 	"github.com/michaelhenkel/tungstenfabric-operator/pkg/controller/configcluster"
 	"github.com/michaelhenkel/tungstenfabric-operator/pkg/controller/controlcluster"
 	"github.com/michaelhenkel/tungstenfabric-operator/pkg/controller/kubemanagercluster"
-	"github.com/michaelhenkel/tungstenfabric-operator/pkg/controller/webuicluster"
 	"github.com/michaelhenkel/tungstenfabric-operator/pkg/controller/vrouter"
+*/
+	"github.com/michaelhenkel/tungstenfabric-operator/pkg/controller/cassandracluster"
+	"github.com/michaelhenkel/tungstenfabric-operator/pkg/controller/webuicluster"
+
 	apiextensionsv1beta1 "k8s.io/apiextensions-apiserver/pkg/apis/apiextensions/v1beta1"
 	"k8s.io/client-go/kubernetes/scheme"
 )
@@ -97,9 +100,8 @@ func (r *ReconcileTungstenfabricConfig) Reconcile(request reconcile.Request) (re
 	
 	crdVersion := "v1alpha1"
 	crdGroup := "tf.tungstenfabric.io"
+/*
 
-	functionMap["cassandracluster"] = cassandracluster.Add
-	crdMap["CassandraCluster"] = functionMap
 
 	functionMap["zookeepercluster"] = zookeepercluster.Add
 	crdMap["ZookeeperCluster"] = functionMap
@@ -118,7 +120,11 @@ func (r *ReconcileTungstenfabricConfig) Reconcile(request reconcile.Request) (re
 
 	functionMap["vrouter"] = vrouter.Add
 	crdMap["Vrouter"] = functionMap
+*/
 
+	functionMap["cassandracluster"] = cassandracluster.Add
+	crdMap["CassandraCluster"] = functionMap
+	
 	functionMap["webuicluster"] = webuicluster.Add
 	crdMap["WebuiCluster"] = functionMap
 

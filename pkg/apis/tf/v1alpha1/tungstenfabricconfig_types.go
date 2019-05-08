@@ -10,77 +10,22 @@ import (
 // TungstenfabricConfigSpec defines the desired state of TungstenfabricConfig
 // +k8s:openapi-gen=true
 
-
-
-type General struct {
-	Size string `json:"size,omitempty"`
-	HostNetwork string `json:"hostNetwork,omitempty"`
-	ImagePullPolicy string `json:"imagePullPolicy,omitempty"`
-	AaaMode string `json:"aaaMode,omitempty"`
-	AuthMode string `json:"authMode,omitempty"`
-	CloudAdminRole string `json:"cloudAdminRole,omitempty"`
-	GlobalReadOnlyRole string `json:"globalReadOnlyRole,omitempty"`
-}
-
-/*
-type Images struct {
-	NodeManger string `json:"nodeManager,omitempty"`
-	NodeInit string `json:"nodeInit,omitempty"`
-	Status string `json:"status,omitempty"`
-	Api string `json:"api,omitempty"`
-	DeviceManager string `json:"deviceManager,omitempty"`
-	SchemaTransfomer string `json:"schemaTransformer,omitempty"`
-	ServiceMonitor string `json:"serviceMonitor,omitempty"`
-	AnalyticsApi string `json:"analyticsApi,omitempty"`
-	Collector string `json:"collector,omitempty"`
-	Redis string `json:"redis,omitempty"`
-	Control string `json:"control,omitempty"`
-	Named string `json:"named,omitempty"`
-	Dns string `json:"dns,omitempty"`
-	KubeManager string `json:"kubeManager,omitempty"`
-	Cassandra string `json:"cassandra,omitempty"`
-	Zookeeper string `json:"zookeeper,omitempty"`
-	RabbitMq string `json:"rabbitMq,omitempty"`
-}
-
-type KubeManagerCluster struct {
-	Size int32 `json:"size,omitempty"`
-	KubernetesApiServer string `json:"kubernetesApiServer,omitempty"`
-	KubernetesApiPort string `json:"kubernetesApiPort,omitempty"`
-	PodSubnets string `json:"podSubnets,omitempty"`
-	ServiceSubnets string `json:"serviceSubnets,omitempty"`
-	ClusterName string `json:"clusterName,omitempty"`
-	IpFabricForwarding string `json:"ipFabricForwarding,omitempty"`
-	IpFabricSnat string `json:"ipFabricSnat,omitempty"`
-	TokenFile string `json:"tokenFile,omitempty"`
-}
-
-type CassandraCluster struct {
-	Size int32 `json:"size,omitempty"`
-	KubernetesApiServer string `json:"kubernetesApiServer,omitempty"`
-	KubernetesApiPort string `json:"kubernetesApiPort,omitempty"`
-	PodSubnets string `json:"podSubnets,omitempty"`
-	ServiceSubnets string `json:"serviceSubnets,omitempty"`
-	ClusterName string `json:"clusterName,omitempty"`
-	IpFabricForwarding string `json:"ipFabricForwarding,omitempty"`
-	IpFabricSnat string `json:"ipFabricSnat,omitempty"`
-	TokenFile string `json:"tokenFile,omitempty"`
-}
-*/
 type TungstenfabricConfigSpec struct {
 	// INSERT ADDITIONAL SPEC FIELDS - desired state of cluster
 	// Important: Run "operator-sdk generate k8s" to regenerate code after modifying this file
 	// Add custom validation using kubebuilder tags: https://book.kubebuilder.io/beyond_basics/generating_crd.html
 	Images map[string]string `json:"images,inline"`
-	General map[string]string `json:"general,inline"`
-	KubemanagerCluster map[string]string `json:"kubemanagerCluster,inline"`
-	CassandraCluster map[string]string `json:"cassandraCluster,inline"`
-	ZookeeperCluster map[string]string `json:"zookeeperCluster,inline"`
-	RabbitmqCluster map[string]string `json:"rabbitmqCluster,inline"`
-	ConfigCluster map[string]string `json:"configCluster,inline"`
-	ControlCluster map[string]string `json:"controlCluster,inline"`
-	WebuiCluster map[string]string `json:"webuiCluster,inline"`
-	Vrouter map[string]string `json:"vrouter,inline"`
+	General *General `json:"general,inline"`
+
+	KubemanagerConfig map[string]string `json:"kubemanagerConfig,inline"`
+	CassandraConfig map[string]string `json:"cassandraConfig,inline"`
+	ZookeeperConfig map[string]string `json:"zookeeperConfig,inline"`
+	RabbitmqConfig map[string]string `json:"rabbitmqConfig,inline"`
+	ConfigConfig map[string]string `json:"configConfig,inline"`
+	ControlConfig map[string]string `json:"controlConfig,inline"`
+	WebuiConfig map[string]string `json:"webuiConfig,inline"`
+	VrouterConfig map[string]string `json:"vrouterConfig,inline"`
+
 }
 
 // TungstenfabricConfigStatus defines the observed state of TungstenfabricConfig

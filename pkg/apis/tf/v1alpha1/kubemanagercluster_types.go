@@ -13,12 +13,9 @@ type KubemanagerClusterSpec struct {
 	// INSERT ADDITIONAL SPEC FIELDS - desired state of cluster
 	// Important: Run "operator-sdk generate k8s" to regenerate code after modifying this file
 	// Add custom validation using kubebuilder tags: https://book.kubebuilder.io/beyond_basics/generating_crd.html
-	HostNetwork string `json:"hostnetwork"`
-	ImagePullPolicy string `json:"imagepullpolicy"`
-	Size string `json:"size,omitempty"`
-	KubeManagerImage string `json:"kubeManagerImage,omitempty"`
-	NodeInitImage string `json:"nodeInitImage,omitempty"`
-	StatusImage string `json:"statusImage,omitempty"`
+	Containers []*Container `json:"containers"`
+	ConfigParameters map[string]string
+	General *General
 }
 
 // KubemanagerClusterStatus defines the observed state of KubemanagerCluster

@@ -13,20 +13,9 @@ type ConfigClusterSpec struct {
 	// INSERT ADDITIONAL SPEC FIELDS - desired state of cluster
 	// Important: Run "operator-sdk generate k8s" to regenerate code after modifying this file
 	// Add custom validation using kubebuilder tags: https://book.kubebuilder.io/beyond_basics/generating_crd.html
-	Image string `json:"image"`
-	HostNetwork string `json:"hostnetwork"`
-	ImagePullPolicy string `json:"imagepullpolicy"`
-	Size string `json:"size,omitempty"`
-	ApiImage string `json:"apiImage,omitempty"`
-	DeviceManagerImage string `json:"deviceManagerImage,omitempty"`
-	SchemaTransformerImage string `json:"schemaTransformerImage,omitempty"`
-	ServiceMonitorImage string `json:"serviceMonitorImage,omitempty"`
-	AnalyticsApiImage string `json:"analyticsApiImage,omitempty"`
-	CollectorImage string `json:"collectorImage,omitempty"`
-	RedisImage string `json:"redisImage,omitempty"`
-	NodeManagerImage string `json:"nodeManagerImage,omitempty"`
-	NodeInitImage string `json:"nodeInitImage,omitempty"`
-	StatusImage string `json:"statusImage,omitempty"`
+	Containers []*Container `json:"containers"`
+	ConfigParameters map[string]string
+	General *General
 }
 
 // ConfigClusterStatus defines the observed state of ConfigCluster

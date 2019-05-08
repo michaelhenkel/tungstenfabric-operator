@@ -13,12 +13,9 @@ type ZookeeperClusterSpec struct {
 	// INSERT ADDITIONAL SPEC FIELDS - desired state of cluster
 	// Important: Run "operator-sdk generate k8s" to regenerate code after modifying this file
 	// Add custom validation using kubebuilder tags: https://book.kubebuilder.io/beyond_basics/generating_crd.html
-	Image string `json:"image"`
-	HostNetwork string `json:"hostnetwork"`
-	ImagePullPolicy string `json:"imagepullpolicy"`
-	Size string `json:"size,omitempty"`
-	ZookeeperPort string `json:"zookeeperport"`
-	ZookeeperPorts string `json:"zookeeperports"`
+	Containers []*Container `json:"containers"`
+	ConfigParameters map[string]string
+	General *General
 }
 
 // ZookeeperClusterStatus defines the observed state of ZookeeperCluster

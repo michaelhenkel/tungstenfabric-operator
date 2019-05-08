@@ -3,16 +3,16 @@ package cassandracluster
 import (
 	"context"
 	"reflect"
-	"strings"
-	"strconv"
+//	"strings"
+//	"strconv"
 
 	tfv1alpha1 "github.com/michaelhenkel/tungstenfabric-operator/pkg/apis/tf/v1alpha1"
 
-	appsv1 "k8s.io/api/apps/v1"
+//	appsv1 "k8s.io/api/apps/v1"
 	corev1 "k8s.io/api/core/v1"
 	"k8s.io/apimachinery/pkg/api/errors"
-	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
-	"k8s.io/apimachinery/pkg/labels"
+//	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
+//	"k8s.io/apimachinery/pkg/labels"
 	"k8s.io/apimachinery/pkg/runtime"
 	"k8s.io/apimachinery/pkg/types"
 	"sigs.k8s.io/controller-runtime/pkg/client"
@@ -23,6 +23,7 @@ import (
 	"sigs.k8s.io/controller-runtime/pkg/reconcile"
 	logf "sigs.k8s.io/controller-runtime/pkg/runtime/log"
 	"sigs.k8s.io/controller-runtime/pkg/source"
+	"fmt"
 )
 
 var log = logf.Log.WithName("controller_cassandracluster")
@@ -81,98 +82,126 @@ func (r *ReconcileCassandraCluster) Reconcile(request reconcile.Request) (reconc
 		return reconcile.Result{}, err
 	}
 
-    var size int32
-	var baseConfigMap map[string]string
-	baseConfigMap = make(map[string]string)
-
 	baseInstance := &tfv1alpha1.TungstenfabricConfig{}
 	err = r.client.Get(context.TODO(), types.NamespacedName{Name: instance.Name, Namespace: instance.Namespace}, baseInstance)
 	if err != nil && errors.IsNotFound(err){
 		reqLogger.Info("baseconfig instance not found")
-	} else {
-		for k,v := range(baseInstance.Spec.General){
-			baseConfigMap[k] = v
-		}
-		for k,v := range(baseInstance.Spec.CassandraCluster){
-			baseConfigMap[k] = v
-		}
-		if instance.Spec.Size == "" {
-			if baseInstance.Spec.CassandraCluster["size"] != "" {
-				instance.Spec.Size = baseInstance.Spec.CassandraCluster["size"]
-			}
-		}
-		if instance.Spec.ImagePullPolicy == "" {
-			instance.Spec.ImagePullPolicy = baseInstance.Spec.General["imagePullPolicy"]
-		}
-		if instance.Spec.HostNetwork == ""{
-			instance.Spec.HostNetwork  = baseInstance.Spec.General["hostNetwork"]
-		}
-		if instance.Spec.Image == "" {
-			instance.Spec.Image = baseInstance.Spec.Images["cassandra"]
-		}
 	}
 
-	size64, err := strconv.ParseInt(instance.Spec.Size, 10, 64)
+	var configMap = make(map[string]string)
+	for k,v := range(baseInstance.Spec.CassandraConfig){
+		configMap[k] = v
+	}
+
+	var resource tfv1alpha1.TungstenFabricResource
+	clusterResource := &tfv1alpha1.ClusterResource{
+		Name: "cassandra",
+		InstanceName: instance.Name,
+		InstanceNamespace: instance.Namespace,
+		Containers: instance.Spec.Containers,
+		General: instance.Spec.General,
+		ResourceConfig: configMap,
+		BaseInstance: baseInstance,
+		//WaitFor: []string{"cassandracluster"},
+		//CassandraInstance: cassandraInstance,
+		StatusVolume: true,
+		LogVolume: true,
+		DataVolume: true,
+		InitContainer: true,
+	}
+	resource = clusterResource
+
+	// Create Deployment
+	dep, err := resource.CreateDeployment(r.client)
 	if err != nil {
-		return reconcile.Result{}, err
-	}
-	size = int32(size64)
-
-	foundDeployment := &appsv1.Deployment{}
-	err = r.client.Get(context.TODO(), types.NamespacedName{Name: "cassandra-" + instance.Name, Namespace: instance.Namespace}, foundDeployment)
-	if err != nil && errors.IsNotFound(err) {
-		// Define a new deployment
-		dep := r.deploymentForCassandraCluster(instance, size)
-		reqLogger.Info("Creating a new Deployment.", "Deployment.Namespace", dep.Namespace, "Deployment.Name", dep.Name)
-		err = r.client.Create(context.TODO(), dep)
-		if err != nil {
-			reqLogger.Error(err, "Failed to create new Deployment.", "Deployment.Namespace", dep.Namespace, "Deployment.Name", dep.Name)
-			return reconcile.Result{}, err
-		}
-		// Deployment created successfully - return and requeue
-		 return reconcile.Result{Requeue: true}, nil
-	} else if err != nil {
-		reqLogger.Error(err, "Failed to get Deployment.")
-		return reconcile.Result{}, err
-	}
-
-
-	if *foundDeployment.Spec.Replicas != size {
-		foundDeployment.Spec.Replicas = &size
-		err = r.client.Update(context.TODO(), foundDeployment)
-		if err != nil {
-			reqLogger.Error(err, "Failed to update Deployment.", "Deployment.Namespace", foundDeployment.Namespace, "Deployment.Name", foundDeployment.Name)
-			return reconcile.Result{}, err
-		}
-		// Spec updated - return and requeue
 		return reconcile.Result{Requeue: true}, nil
 	}
-
-	// Update the CassandraCluster status with the pod names
-	// List the pods for this cassandra's deployment
-	podList := &corev1.PodList{}
-	labelSelector := labels.SelectorFromSet(labelsForCassandraCluster(instance.Name))
-
-	listOps := &client.ListOptions{
-		Namespace:     instance.Namespace,
-		LabelSelector: labelSelector,
+	controllerutil.SetControllerReference(instance, dep, r.scheme)
+	err = r.client.Create(context.TODO(), dep)
+	if err != nil && errors.IsAlreadyExists(err){
+		err = r.client.Update(context.TODO(), dep)
+	} else if err != nil {
+		return reconcile.Result{}, err		
 	}
-	err = r.client.List(context.TODO(), listOps, podList)
+	reqLogger.Info("Cassandra deployment created")
+
+	err = resource.UpdateDeployment(r.client, dep)
 	if err != nil {
-		reqLogger.Error(err, "Failed to list pods.", "CassandraCluster.Namespace", instance.Namespace, "CassandraCluster.Name", instance.Name)
+		reqLogger.Error(err, "Failed to update Deployment")
 		return reconcile.Result{}, err
+	} else {
+		reqLogger.Info("Updated Deployment")
 	}
 
-	podNames := getPodNames(podList.Items)
-	// Update status.Nodes if needed
+	var podNames []string
+	podNames, err = resource.GetPodNames(r.client)
+	if err != nil {
+		reqLogger.Error(err, "Failed to get PodNames")
+		return reconcile.Result{}, err
+	} else {
+		reqLogger.Info("Got PodNames")
+	}
+
 	if !reflect.DeepEqual(podNames, instance.Status.Nodes) {
 		instance.Status.Nodes = podNames
 		err = r.client.Update(context.TODO(), instance)
 		if err != nil {
-			reqLogger.Error(err, "Failed to update CassandraCluster status.")
+			reqLogger.Error(err, "Failed to update Pod status.")
 			return reconcile.Result{}, err
 		}
 	}
+	reqLogger.Info("Updated Node status with PodNames")
+
+	var initContainerRunning bool
+	initContainerRunning, err = resource.WaitForInitContainer(r.client)
+	if err != nil || !initContainerRunning{
+		reqLogger.Info("Init container not running")
+		return reconcile.Result{Requeue: true}, nil
+	}
+	reqLogger.Info("Init Container running")
+    fmt.Println("node ip list: ", resource.GetNodeIpList())
+	clusterResource.ResourceConfig["CONTROLLER_NODES"] = resource.GetNodeIpList()
+	clusterResource.ResourceConfig["CASSANDRA_SEEDS"] = resource.GetNodeIpList()
+
+	// Create ConfigMap
+	cm, err := resource.CreateConfigMap(r.client)
+	if err != nil {
+		return reconcile.Result{Requeue: true}, nil
+	}
+	controllerutil.SetControllerReference(instance, cm, r.scheme)
+	err = r.client.Create(context.TODO(), cm)
+	if err != nil && errors.IsAlreadyExists(err){
+		err = r.client.Update(context.TODO(), cm)
+	} else if err != nil {
+		return reconcile.Result{}, err
+	}
+/*
+	nodeListString := strings.Join(podIpList,",")
+
+	baseConfigMap["CONTROLLER_NODES"] = nodeListString
+	baseConfigMap["CASSANDRA_SEEDS"] = nodeListString
+	baseConfigMap["CASSANDRA_CLUSTER_NAME"] = "ContrailConfigDB"
+*/
+
+	reqLogger.Info("Cassandra configmap created")
+	var labeledPod *corev1.Pod
+	for _, pod := range(podNames){
+		labeledPod, err = resource.LabelPod(r.client, pod)
+		if err != nil {
+			return reconcile.Result{}, err
+		}
+			err = r.client.Update(context.TODO(), labeledPod)
+		if err != nil {
+			reqLogger.Error(err, "Failed to update Pod label.")
+			return reconcile.Result{}, err
+		}
+		reqLogger.Info("Labeled Pod")
+	}
+
+	return reconcile.Result{}, nil
+}
+/*
+
 
 	// Get state for init PODs
 	initContainerRunning := true
@@ -231,9 +260,13 @@ func (r *ReconcileCassandraCluster) Reconcile(request reconcile.Request) (reconc
 	} else {
 		return reconcile.Result{Requeue: true}, nil
 	}
+
 	return reconcile.Result{}, nil
 }
 
+*/
+
+/*
 func (r *ReconcileCassandraCluster) configmapForCassandraCluster(m *tfv1alpha1.CassandraCluster, podIpList []string, baseConfigMap map[string]string) *corev1.ConfigMap {
 	nodeListString := strings.Join(podIpList,",")
 
@@ -403,3 +436,5 @@ func getPodNames(pods []corev1.Pod) []string {
 	}
 	return podNames
 }
+
+*/
