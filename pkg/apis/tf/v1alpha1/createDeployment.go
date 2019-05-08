@@ -116,7 +116,6 @@ func (c *ClusterResource) CreateDeployment(client client.Client) (*appsv1.Deploy
 	createUnixSocketVolume := false
 	createHostUserBinVolume := false
 	createEtcContrailVolume := false
-	createDockerUnixSocketVolume := false
 
 	var containerList []corev1.Container
 	for _, container := range(c.Containers){
@@ -151,7 +150,7 @@ func (c *ClusterResource) CreateDeployment(client client.Client) (*appsv1.Deploy
 		if container.UnixSocketVolume{
 			unixSocketVolume := corev1.VolumeMount{
 				Name: "docker-unix-socket",
-				MountPath: "/var/run",
+				MountPath: "/mnt",
 			}
 			volumeMountList = append(volumeMountList, unixSocketVolume)
 			createUnixSocketVolume = true
