@@ -110,7 +110,8 @@ func (r *ReconcileControlCluster) Reconcile(request reconcile.Request) (reconcil
 	controllerutil.SetControllerReference(instance, dep, r.scheme)
 	err = r.client.Create(context.TODO(), dep)
 	if err != nil && errors.IsAlreadyExists(err){
-		err = r.client.Update(context.TODO(), dep)
+		reqLogger.Info("Control deployment already exists")
+		//err = r.client.Update(context.TODO(), dep)
 	} else if err != nil {
 		return reconcile.Result{}, err		
 	}

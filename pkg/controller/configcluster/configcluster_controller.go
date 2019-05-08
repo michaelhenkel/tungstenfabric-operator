@@ -103,16 +103,7 @@ func (r *ReconcileConfigCluster) Reconcile(request reconcile.Request) (reconcile
 	resource = clusterResource
 
 	// Create Deployment
-/*
-	foundDeployment := &appsv1.Deployment{}
-	err = r.client.Get(context.TODO(), types.NamespacedName{Name: "tf" + resourceType  + "-" + instance.Name, Namespace: instance.Namespace}, foundDeployment)
-	if err != nil && errors.IsAlreadyExists(err){
-		err = r.client.Update(context.TODO(), foundDeployment)
-		if err != nil {
-			return reconcile.Result{}, err
-		}
-	}
-*/
+
 	dep, err := resource.CreateDeployment(r.client)
 	if err != nil {
 		return reconcile.Result{Requeue: true}, nil

@@ -12,7 +12,6 @@ import (
 	"sigs.k8s.io/controller-runtime/pkg/client"
 	"k8s.io/apimachinery/pkg/types"
 	logf "sigs.k8s.io/controller-runtime/pkg/runtime/log"
-	"fmt"
 )
 var log = logf.Log.WithName("TungstenFabricResource")
 var err error
@@ -210,8 +209,6 @@ func (c *ClusterResource) CreateDeployment(client client.Client) (*appsv1.Deploy
 			MountPath: "/tmp/podinfo",
 		}},
 	}
-	fmt.Println("1")
-	fmt.Println(c.BaseInstance.Spec.Images["status"])
 	nodeInitContainer := corev1.Container{
 		Image:   c.BaseInstance.Spec.Images["nodeinit"],
 		Name:    "node-init",
@@ -234,7 +231,6 @@ func (c *ClusterResource) CreateDeployment(client client.Client) (*appsv1.Deploy
 			Value: c.BaseInstance.Spec.Images["status"],
 		}},
 	}
-	fmt.Println("2")
 
 	if c.InitContainer{
 		initContainerList = append(initContainerList, initContainer)
