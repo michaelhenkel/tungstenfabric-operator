@@ -4,6 +4,13 @@ type Container struct {
 	Name string `json:"name"`
 	Image string `json:"image,omitempty"`
 	PullPolicy string `json:"imagepullpolicy"`
+	LogVolumePath string `json:"logvolumepath"`
+	DataVolumePath string `json:"datavolumepath"`
+	UnixSocketVolume bool `json:"unixsocketvolume"`
+	HostUserBinVolume bool `json:"hostuserbinvolume"`
+	EtcContrailVolume bool `json:"etccontrailvolume"`
+	Privileged bool `json:"privileged"`
+	Env map[string]string `json:"env"`
 }
 
 type General struct {

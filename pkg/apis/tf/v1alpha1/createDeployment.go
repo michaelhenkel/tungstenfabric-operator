@@ -12,6 +12,7 @@ import (
 	"sigs.k8s.io/controller-runtime/pkg/client"
 	"k8s.io/apimachinery/pkg/types"
 	logf "sigs.k8s.io/controller-runtime/pkg/runtime/log"
+	"fmt"
 )
 var log = logf.Log.WithName("TungstenFabricResource")
 var err error
@@ -110,11 +111,74 @@ func (c *ClusterResource) CreateDeployment(client client.Client) (*appsv1.Deploy
 	} else {
 		hostNetworkBool = false
 	}
+	createDataVolume := false
+	createLogVolume := false
+	createUnixSocketVolume := false
+	createHostUserBinVolume := false
+	createEtcContrailVolume := false
+	createDockerUnixSocketVolume := false
+
 	var containerList []corev1.Container
 	for _, container := range(c.Containers){
+
+		var envList []corev1.EnvVar
+		if len(container.Env) > 0 {
+			for k, v := range(container.Env){
+				env := corev1.EnvVar{
+					Name: k,
+					Value: v,
+				}
+				envList = append(envList, env)
+			}
+		}
+		var volumeMountList []corev1.VolumeMount
+		if container.LogVolumePath != ""{
+			logVolumeMount := corev1.VolumeMount{
+				Name: c.Name + "-logs",
+				MountPath: container.LogVolumePath,
+			}
+			volumeMountList = append(volumeMountList, logVolumeMount)
+			createLogVolume = true
+		}
+		if container.DataVolumePath != ""{
+			dataVolumeMount := corev1.VolumeMount{
+				Name: c.Name + "-data",
+				MountPath: container.DataVolumePath,
+			}
+			volumeMountList = append(volumeMountList, dataVolumeMount)
+			createDataVolume = true
+		}
+		if container.UnixSocketVolume{
+			unixSocketVolume := corev1.VolumeMount{
+				Name: "docker-unix-socket",
+				MountPath: "/var/run",
+			}
+			volumeMountList = append(volumeMountList, unixSocketVolume)
+			createUnixSocketVolume = true
+		}
+		if container.HostUserBinVolume{
+			hostUserBinVolume := corev1.VolumeMount{
+				Name: "host-usr-bin",
+				MountPath: "/host/usr/bin",
+			}
+			volumeMountList = append(volumeMountList, hostUserBinVolume)
+			createHostUserBinVolume = true
+		}
+		if container.EtcContrailVolume{
+			etcContrailVolume := corev1.VolumeMount{
+				Name: "etc-contrail",
+				MountPath: "/etc/contrail",
+			}
+			volumeMountList = append(volumeMountList, etcContrailVolume)
+			createEtcContrailVolume = true
+		}
+
 		deploymentContainer := corev1.Container{
 			Image: container.Image,
 			Name: strings.ToLower(container.Name),
+			SecurityContext: &corev1.SecurityContext{
+				Privileged: &container.Privileged,
+			},
 			ImagePullPolicy: corev1.PullPolicy(container.PullPolicy),
 			EnvFrom: []corev1.EnvFromSource{{
 				ConfigMapRef: &corev1.ConfigMapEnvSource{
@@ -123,10 +187,8 @@ func (c *ClusterResource) CreateDeployment(client client.Client) (*appsv1.Deploy
 					},
 				},
 			}},
-			VolumeMounts: []corev1.VolumeMount{{
-				Name: c.Name + "-logs",
-				MountPath: "/var/log/contrail",
-			}},
+			Env: envList,
+			VolumeMounts: volumeMountList,
 		}
 		containerList = append(containerList, deploymentContainer)
 	}
@@ -149,9 +211,10 @@ func (c *ClusterResource) CreateDeployment(client client.Client) (*appsv1.Deploy
 			MountPath: "/tmp/podinfo",
 		}},
 	}
-
+	fmt.Println("1")
+	fmt.Println(c.BaseInstance.Spec.Images["status"])
 	nodeInitContainer := corev1.Container{
-		Image:   c.BaseInstance.Spec.Images["nodeInit"],
+		Image:   c.BaseInstance.Spec.Images["nodeinit"],
 		Name:    "node-init",
 		SecurityContext: &corev1.SecurityContext{
 			Privileged: &privileged,
@@ -167,7 +230,12 @@ func (c *ClusterResource) CreateDeployment(client client.Client) (*appsv1.Deploy
 				},
 			},
 		}},
+		Env: []corev1.EnvVar{{
+			Name: "CONTRAIL_STATUS_IMAGE",
+			Value: c.BaseInstance.Spec.Images["status"],
+		}},
 	}
+	fmt.Println("2")
 
 	if c.InitContainer{
 		initContainerList = append(initContainerList, initContainer)
@@ -175,6 +243,7 @@ func (c *ClusterResource) CreateDeployment(client client.Client) (*appsv1.Deploy
 
 	if c.NodeInitContainer{
 		initContainerList = append(initContainerList, nodeInitContainer)
+		createHostUserBinVolume = true
 	}
 
 	var volumeList []corev1.Volume
@@ -236,26 +305,36 @@ func (c *ClusterResource) CreateDeployment(client client.Client) (*appsv1.Deploy
 		},
 	}
 
-	if c.StatusVolume {
-		volumeList = append(volumeList, statusVolume)
+	etcContrailVolume := corev1.Volume{
+		Name: "etc-contrail",
+		VolumeSource: corev1.VolumeSource{
+			EmptyDir: &corev1.EmptyDirVolumeSource{
+			},
+		},
 	}
 
-	if c.LogVolume {
+
+	volumeList = append(volumeList, statusVolume)
+
+	if createLogVolume {
 		volumeList = append(volumeList, logVolume)
 	}
 
-	if c.DataVolume {
+	if createDataVolume {
 		volumeList = append(volumeList, dataVolume)
 	}
 
-	if c.UnixSocketVolume {
+	if createUnixSocketVolume {
 		volumeList = append(volumeList, unixSocketVolume)
 	}
 
-	if c.HostUserBinVolume {
+	if createHostUserBinVolume {
 		volumeList = append(volumeList, hostUserBinVolume)
 	}
 
+	if createEtcContrailVolume {
+		volumeList = append(volumeList, etcContrailVolume)
+	}
 
 	dep := &appsv1.Deployment{
 		ObjectMeta: metav1.ObjectMeta{
@@ -298,8 +377,17 @@ func getResourceConfig(c *ClusterResource, client client.Client, resourceType st
 	reqLogger.Info("getting " + resourceType + " config")
 
 	switch resourceType{
-	case "cassandracluster":
+	case "cassandra":
 		err = client.Get(context.TODO(), types.NamespacedName{Name: c.InstanceName, Namespace: c.InstanceNamespace}, c.CassandraInstance)
+
+	case "zookeeper":
+		err = client.Get(context.TODO(), types.NamespacedName{Name: c.InstanceName, Namespace: c.InstanceNamespace}, c.ZookeeperInstance)
+
+	case "rabbitmq":
+		err = client.Get(context.TODO(), types.NamespacedName{Name: c.InstanceName, Namespace: c.InstanceNamespace}, c.RabbitmqInstance)
+
+	case "config":
+		err = client.Get(context.TODO(), types.NamespacedName{Name: c.InstanceName, Namespace: c.InstanceNamespace}, c.ConfigInstance)
 	}
 
 	if err != nil && errors.IsNotFound(err) {
@@ -315,10 +403,22 @@ func getResourceConfig(c *ClusterResource, client client.Client, resourceType st
 	}
 
 	switch resourceType{
-	case "cassandracluster":
+	case "cassandra":
 		c.ResourceConfig["CONFIGDB_PORT"] = configMap.Data["CASSANDRA_PORT"]
 		c.ResourceConfig["CONFIGDB_CQL_PORT"] = configMap.Data["CASSANDRA_CQL_PORT"]
 		c.ResourceConfig["CONFIGDB_NODES"] = configMap.Data["CASSANDRA_SEEDS"]
+
+	case "zookeeper":
+		c.ResourceConfig["ZOOKEEPER_NODES"] = configMap.Data["ZOOKEEPER_NODES"]
+		c.ResourceConfig["ZOOKEEPER_NODE_PORT"] = configMap.Data["ZOOKEEPER_PORT"]
+
+	case "rabbitmq":
+		c.ResourceConfig["RABBITMQ_NODES"] = configMap.Data["RABBITMQ_NODES"]
+		c.ResourceConfig["RABBITMQ_NODE_PORT"] = configMap.Data["RABBITMQ_NODE_PORT"]
+
+	case "config":
+		c.ResourceConfig["CONFIG_NODES"] = configMap.Data["CONTROLLER_NODES"]
+		c.ResourceConfig["ANALYTICS_NODES"] = configMap.Data["CONTROLLER_NODES"]
 	}
 
 	return nil

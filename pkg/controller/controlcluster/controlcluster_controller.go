@@ -1,4 +1,4 @@
-package cassandracluster
+package controlcluster
 
 import (
 	"context"
@@ -18,32 +18,30 @@ import (
 	"sigs.k8s.io/controller-runtime/pkg/source"
 )
 
-var log = logf.Log.WithName("controller_cassandracluster")
+var log = logf.Log.WithName("controller_controlcluster")
 
 func Add(mgr manager.Manager) error {
 	return add(mgr, newReconciler(mgr))
 }
 
 func newReconciler(mgr manager.Manager) reconcile.Reconciler {
-	return &ReconcileCassandraCluster{client: mgr.GetClient(), scheme: mgr.GetScheme()}
+	return &ReconcileControlCluster{client: mgr.GetClient(), scheme: mgr.GetScheme()}
 }
 
 func add(mgr manager.Manager, r reconcile.Reconciler) error {
-	// Create a new controller
-	c, err := controller.New("cassandracluster-controller", mgr, controller.Options{Reconciler: r})
+	c, err := controller.New("controlcluster-controller", mgr, controller.Options{Reconciler: r})
 	if err != nil {
 		return err
 	}
 
-	// Watch for changes to primary resource CassandraCluster
-	err = c.Watch(&source.Kind{Type: &tfv1alpha1.CassandraCluster{}}, &handler.EnqueueRequestForObject{})
+	err = c.Watch(&source.Kind{Type: &tfv1alpha1.ControlCluster{}}, &handler.EnqueueRequestForObject{})
 	if err != nil {
 		return err
 	}
 
 	err = c.Watch(&source.Kind{Type: &corev1.Pod{}}, &handler.EnqueueRequestForOwner{
 		IsController: true,
-		OwnerType:    &tfv1alpha1.CassandraCluster{},
+		OwnerType:    &tfv1alpha1.ControlCluster{},
 	})
 	if err != nil {
 		return err
@@ -52,20 +50,18 @@ func add(mgr manager.Manager, r reconcile.Reconciler) error {
 	return nil
 }
 
-var _ reconcile.Reconciler = &ReconcileCassandraCluster{}
+var _ reconcile.Reconciler = &ReconcileControlCluster{}
 
-type ReconcileCassandraCluster struct {
-
+type ReconcileControlCluster struct {
 	client client.Client
 	scheme *runtime.Scheme
 }
 
-func (r *ReconcileCassandraCluster) Reconcile(request reconcile.Request) (reconcile.Result, error) {
+func (r *ReconcileControlCluster) Reconcile(request reconcile.Request) (reconcile.Result, error) {
 	reqLogger := log.WithValues("Request.Namespace", request.Namespace, "Request.Name", request.Name)
-	reqLogger.Info("Reconciling CassandraCluster")
+	reqLogger.Info("Reconciling ControlCluster")
 
-	// Fetch the CassandraCluster instance
-	instance := &tfv1alpha1.CassandraCluster{}
+	instance := &tfv1alpha1.ControlCluster{}
 	err := r.client.Get(context.TODO(), request.NamespacedName, instance)
 	if err != nil {
 		if errors.IsNotFound(err) {
@@ -73,7 +69,6 @@ func (r *ReconcileCassandraCluster) Reconcile(request reconcile.Request) (reconc
 		}
 		return reconcile.Result{}, err
 	}
-
 	baseInstance := &tfv1alpha1.TungstenfabricConfig{}
 	err = r.client.Get(context.TODO(), types.NamespacedName{Name: instance.Name, Namespace: instance.Namespace}, baseInstance)
 	if err != nil && errors.IsNotFound(err){
@@ -81,13 +76,16 @@ func (r *ReconcileCassandraCluster) Reconcile(request reconcile.Request) (reconc
 	}
 
 	var configMap = make(map[string]string)
-	for k,v := range(baseInstance.Spec.CassandraConfig){
+	for k,v := range(baseInstance.Spec.ControlConfig){
 		configMap[k] = v
 	}
-
+	cassandraInstance := &tfv1alpha1.CassandraCluster{}
+	rabbitmqInstance := &tfv1alpha1.RabbitmqCluster{}
+	zookeeperInstance := &tfv1alpha1.ZookeeperCluster{}
+	configInstance := &tfv1alpha1.ConfigCluster{}
 	var resource tfv1alpha1.TungstenFabricResource
 	clusterResource := &tfv1alpha1.ClusterResource{
-		Name: "cassandra",
+		Name: "control",
 		InstanceName: instance.Name,
 		InstanceNamespace: instance.Namespace,
 		Containers: instance.Spec.Containers,
@@ -95,6 +93,12 @@ func (r *ReconcileCassandraCluster) Reconcile(request reconcile.Request) (reconc
 		ResourceConfig: configMap,
 		BaseInstance: baseInstance,
 		InitContainer: true,
+		NodeInitContainer: true,
+		WaitFor: []string{"cassandra","zookeeper","rabbitmq","config"},
+		CassandraInstance: cassandraInstance,
+		ZookeeperInstance: zookeeperInstance,
+		RabbitmqInstance: rabbitmqInstance,
+		ConfigInstance: configInstance,
 	}
 	resource = clusterResource
 
@@ -110,7 +114,7 @@ func (r *ReconcileCassandraCluster) Reconcile(request reconcile.Request) (reconc
 	} else if err != nil {
 		return reconcile.Result{}, err		
 	}
-	reqLogger.Info("Cassandra deployment created")
+	reqLogger.Info("Control deployment created")
 
 	err = resource.UpdateDeployment(r.client, dep)
 	if err != nil {
@@ -148,7 +152,7 @@ func (r *ReconcileCassandraCluster) Reconcile(request reconcile.Request) (reconc
 	reqLogger.Info("Init Container running")
 
 	clusterResource.ResourceConfig["CONTROLLER_NODES"] = resource.GetNodeIpList()
-	clusterResource.ResourceConfig["CASSANDRA_SEEDS"] = resource.GetNodeIpList()
+	clusterResource.ResourceConfig["CONTROL_NODES"] = resource.GetNodeIpList()
 
 	// Create ConfigMap
 	cm, err := resource.CreateConfigMap(r.client)
@@ -163,7 +167,7 @@ func (r *ReconcileCassandraCluster) Reconcile(request reconcile.Request) (reconc
 		return reconcile.Result{}, err
 	}
 
-	reqLogger.Info("Cassandra configmap created")
+	reqLogger.Info("Control configmap created")
 	var labeledPod *corev1.Pod
 	for _, pod := range(podNames){
 		labeledPod, err = resource.LabelPod(r.client, pod)
@@ -180,3 +184,4 @@ func (r *ReconcileCassandraCluster) Reconcile(request reconcile.Request) (reconc
 
 	return reconcile.Result{}, nil
 }
+

@@ -1,4 +1,4 @@
-package cassandracluster
+package zookeepercluster
 
 import (
 	"context"
@@ -18,32 +18,31 @@ import (
 	"sigs.k8s.io/controller-runtime/pkg/source"
 )
 
-var log = logf.Log.WithName("controller_cassandracluster")
+var log = logf.Log.WithName("controller_zookeepercluster")
+
 
 func Add(mgr manager.Manager) error {
 	return add(mgr, newReconciler(mgr))
 }
 
 func newReconciler(mgr manager.Manager) reconcile.Reconciler {
-	return &ReconcileCassandraCluster{client: mgr.GetClient(), scheme: mgr.GetScheme()}
+	return &ReconcileZookeeperCluster{client: mgr.GetClient(), scheme: mgr.GetScheme()}
 }
 
 func add(mgr manager.Manager, r reconcile.Reconciler) error {
-	// Create a new controller
-	c, err := controller.New("cassandracluster-controller", mgr, controller.Options{Reconciler: r})
+	c, err := controller.New("zookeepercluster-controller", mgr, controller.Options{Reconciler: r})
 	if err != nil {
 		return err
 	}
 
-	// Watch for changes to primary resource CassandraCluster
-	err = c.Watch(&source.Kind{Type: &tfv1alpha1.CassandraCluster{}}, &handler.EnqueueRequestForObject{})
+	err = c.Watch(&source.Kind{Type: &tfv1alpha1.ZookeeperCluster{}}, &handler.EnqueueRequestForObject{})
 	if err != nil {
 		return err
 	}
 
 	err = c.Watch(&source.Kind{Type: &corev1.Pod{}}, &handler.EnqueueRequestForOwner{
 		IsController: true,
-		OwnerType:    &tfv1alpha1.CassandraCluster{},
+		OwnerType:    &tfv1alpha1.ZookeeperCluster{},
 	})
 	if err != nil {
 		return err
@@ -52,20 +51,18 @@ func add(mgr manager.Manager, r reconcile.Reconciler) error {
 	return nil
 }
 
-var _ reconcile.Reconciler = &ReconcileCassandraCluster{}
+var _ reconcile.Reconciler = &ReconcileZookeeperCluster{}
 
-type ReconcileCassandraCluster struct {
-
+type ReconcileZookeeperCluster struct {
 	client client.Client
 	scheme *runtime.Scheme
 }
 
-func (r *ReconcileCassandraCluster) Reconcile(request reconcile.Request) (reconcile.Result, error) {
+func (r *ReconcileZookeeperCluster) Reconcile(request reconcile.Request) (reconcile.Result, error) {
 	reqLogger := log.WithValues("Request.Namespace", request.Namespace, "Request.Name", request.Name)
-	reqLogger.Info("Reconciling CassandraCluster")
+	reqLogger.Info("Reconciling ZookeeperCluster")
 
-	// Fetch the CassandraCluster instance
-	instance := &tfv1alpha1.CassandraCluster{}
+	instance := &tfv1alpha1.ZookeeperCluster{}
 	err := r.client.Get(context.TODO(), request.NamespacedName, instance)
 	if err != nil {
 		if errors.IsNotFound(err) {
@@ -81,13 +78,13 @@ func (r *ReconcileCassandraCluster) Reconcile(request reconcile.Request) (reconc
 	}
 
 	var configMap = make(map[string]string)
-	for k,v := range(baseInstance.Spec.CassandraConfig){
+	for k,v := range(baseInstance.Spec.ZookeeperConfig){
 		configMap[k] = v
 	}
 
 	var resource tfv1alpha1.TungstenFabricResource
 	clusterResource := &tfv1alpha1.ClusterResource{
-		Name: "cassandra",
+		Name: "zookeeper",
 		InstanceName: instance.Name,
 		InstanceNamespace: instance.Namespace,
 		Containers: instance.Spec.Containers,
@@ -110,7 +107,7 @@ func (r *ReconcileCassandraCluster) Reconcile(request reconcile.Request) (reconc
 	} else if err != nil {
 		return reconcile.Result{}, err		
 	}
-	reqLogger.Info("Cassandra deployment created")
+	reqLogger.Info("Zookeeper deployment created")
 
 	err = resource.UpdateDeployment(r.client, dep)
 	if err != nil {
@@ -148,7 +145,7 @@ func (r *ReconcileCassandraCluster) Reconcile(request reconcile.Request) (reconc
 	reqLogger.Info("Init Container running")
 
 	clusterResource.ResourceConfig["CONTROLLER_NODES"] = resource.GetNodeIpList()
-	clusterResource.ResourceConfig["CASSANDRA_SEEDS"] = resource.GetNodeIpList()
+	clusterResource.ResourceConfig["ZOOKEEPER_NODES"] = resource.GetNodeIpList()
 
 	// Create ConfigMap
 	cm, err := resource.CreateConfigMap(r.client)
@@ -163,7 +160,7 @@ func (r *ReconcileCassandraCluster) Reconcile(request reconcile.Request) (reconc
 		return reconcile.Result{}, err
 	}
 
-	reqLogger.Info("Cassandra configmap created")
+	reqLogger.Info("Zookeeper configmap created")
 	var labeledPod *corev1.Pod
 	for _, pod := range(podNames){
 		labeledPod, err = resource.LabelPod(r.client, pod)
@@ -180,3 +177,5 @@ func (r *ReconcileCassandraCluster) Reconcile(request reconcile.Request) (reconc
 
 	return reconcile.Result{}, nil
 }
+
+

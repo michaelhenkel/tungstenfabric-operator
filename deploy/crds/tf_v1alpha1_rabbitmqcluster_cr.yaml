@@ -2,3 +2,8 @@ apiVersion: tf.tungstenfabric.io/v1alpha1
 kind: RabbitmqCluster
 metadata:
   name: cluster-1
+spec:
+  containers:
+    - name: rabbitmq
+      logvolumepath: "/var/log/rabbitmq"
+      datavolumepath: "/var/lib/rabbitmq"

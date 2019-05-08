@@ -2,3 +2,8 @@ apiVersion: tf.tungstenfabric.io/v1alpha1
 kind: ZookeeperCluster
 metadata:
   name: cluster-1
+spec:
+  containers:
+    - name: zookeeper
+      logvolumepath: "/var/log/zookeeker"
+      datavolumepath: "/var/lib/zookeeper"

@@ -18,13 +18,15 @@ import (
 	logf "sigs.k8s.io/controller-runtime/pkg/runtime/log"
 	"sigs.k8s.io/controller-runtime/pkg/source"
 /*
-	"github.com/michaelhenkel/tungstenfabric-operator/pkg/controller/zookeepercluster"
-	"github.com/michaelhenkel/tungstenfabric-operator/pkg/controller/rabbitmqcluster"
-	"github.com/michaelhenkel/tungstenfabric-operator/pkg/controller/configcluster"
-	"github.com/michaelhenkel/tungstenfabric-operator/pkg/controller/controlcluster"
+
+
 	"github.com/michaelhenkel/tungstenfabric-operator/pkg/controller/kubemanagercluster"
 	"github.com/michaelhenkel/tungstenfabric-operator/pkg/controller/vrouter"
 */
+	"github.com/michaelhenkel/tungstenfabric-operator/pkg/controller/controlcluster"
+	"github.com/michaelhenkel/tungstenfabric-operator/pkg/controller/configcluster"
+	"github.com/michaelhenkel/tungstenfabric-operator/pkg/controller/rabbitmqcluster"
+	"github.com/michaelhenkel/tungstenfabric-operator/pkg/controller/zookeepercluster"
 	"github.com/michaelhenkel/tungstenfabric-operator/pkg/controller/cassandracluster"
 	"github.com/michaelhenkel/tungstenfabric-operator/pkg/controller/webuicluster"
 
@@ -103,17 +105,13 @@ func (r *ReconcileTungstenfabricConfig) Reconcile(request reconcile.Request) (re
 /*
 
 
-	functionMap["zookeepercluster"] = zookeepercluster.Add
-	crdMap["ZookeeperCluster"] = functionMap
 
-	functionMap["rabbitmqcluster"] = rabbitmqcluster.Add
-	crdMap["RabbitmqCluster"] = functionMap
 
-	functionMap["configcluster"] = configcluster.Add
-	crdMap["ConfigCluster"] = functionMap
 
-	functionMap["controlcluster"] = controlcluster.Add
-	crdMap["ControlCluster"] = functionMap
+
+
+
+
 
 	functionMap["kubemanagercluster"] = kubemanagercluster.Add
 	crdMap["KubemanagerCluster"] = functionMap
@@ -121,6 +119,17 @@ func (r *ReconcileTungstenfabricConfig) Reconcile(request reconcile.Request) (re
 	functionMap["vrouter"] = vrouter.Add
 	crdMap["Vrouter"] = functionMap
 */
+	functionMap["controlcluster"] = controlcluster.Add
+	crdMap["ControlCluster"] = functionMap
+	
+	functionMap["configcluster"] = configcluster.Add
+	crdMap["ConfigCluster"] = functionMap
+
+	functionMap["rabbitmqcluster"] = rabbitmqcluster.Add
+	crdMap["RabbitmqCluster"] = functionMap
+
+	functionMap["zookeepercluster"] = zookeepercluster.Add
+	crdMap["ZookeeperCluster"] = functionMap
 
 	functionMap["cassandracluster"] = cassandracluster.Add
 	crdMap["CassandraCluster"] = functionMap

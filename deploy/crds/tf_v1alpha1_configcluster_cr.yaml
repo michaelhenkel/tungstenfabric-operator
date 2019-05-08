@@ -2,4 +2,33 @@ apiVersion: tf.tungstenfabric.io/v1alpha1
 kind: ConfigCluster
 metadata:
   name: cluster-1
+spec:
+  containers:
+    - name: api
+      logvolumepath: "/var/log/contrail"
+    - name: devicemanager
+      logvolumepath: "/var/log/contrail"
+    - name: schematransformer
+      logvolumepath: "/var/log/contrail"
+    - name: servicemonitor
+      logvolumepath: "/var/log/contrail"
+    - name: analyticsapi
+      logvolumepath: "/var/log/contrail"
+    - name: collector
+      logvolumepath: "/var/log/contrail"
+    - name: redis
+      logvolumepath: "/var/log/redis"
+      datavolumepath: "/var/lib/redis"
+    - name: nodemanagerconfig
+      logvolumepath: "/var/log/contrail"
+      unixsocketvolume: true
+      env:
+        "NODE_TYPE": "config"
+        "DOCKER_HOST": "unix://mnt/docker.sock"
+    - name: nodemanageranalytics
+      logvolumepath: "/var/log/contrail"
+      unixsocketvolume: true
+      env:
+        "NODE_TYPE": "analytics"
+        "DOCKER_HOST": "unix://mnt/docker.sock"
 

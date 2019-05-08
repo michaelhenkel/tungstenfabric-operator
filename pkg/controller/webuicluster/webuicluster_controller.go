@@ -81,7 +81,6 @@ func (r *ReconcileWebuiCluster) Reconcile(request reconcile.Request) (reconcile.
 		configMap[k] = v
 	}
 
-	cassandraInstance := &tfv1alpha1.CassandraCluster{}
 	var resource tfv1alpha1.TungstenFabricResource
 	resource = &tfv1alpha1.ClusterResource{
 		Name: "webui",
@@ -91,10 +90,6 @@ func (r *ReconcileWebuiCluster) Reconcile(request reconcile.Request) (reconcile.
 		General: instance.Spec.General,
 		ResourceConfig: configMap,
 		BaseInstance: baseInstance,
-		//WaitFor: []string{"cassandracluster"},
-		CassandraInstance: cassandraInstance,
-		StatusVolume: true,
-		LogVolume: true,
 		InitContainer: true,
 	}
 

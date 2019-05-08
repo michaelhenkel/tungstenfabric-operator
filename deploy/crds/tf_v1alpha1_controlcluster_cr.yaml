@@ -2,4 +2,20 @@ apiVersion: tf.tungstenfabric.io/v1alpha1
 kind: ControlCluster
 metadata:
   name: cluster-1
-
+spec:
+  containers:
+    - name: control
+      logvolumepath: "/var/log/contrail"
+    - name: named
+      logvolumepath: "/var/log/contrail"
+      privileged: true
+      etccontrailvolume: true
+    - name: dns
+      logvolumepath: "/var/log/contrail"
+      etccontrailvolume: true
+    - name: nodemanager
+      logvolumepath: "/var/log/contrail"
+      unixsocketvolume: true
+      env:
+        "NODE_TYPE": "control"
+        "DOCKER_HOST": "unix://mnt/docker.sock"

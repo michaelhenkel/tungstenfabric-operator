@@ -1,10 +1,11 @@
-package cassandracluster
+package configcluster
 
 import (
 	"context"
 	"reflect"
 	tfv1alpha1 "github.com/michaelhenkel/tungstenfabric-operator/pkg/apis/tf/v1alpha1"
 	corev1 "k8s.io/api/core/v1"
+	//appsv1 "k8s.io/api/apps/v1"
 	"k8s.io/apimachinery/pkg/api/errors"
 	"k8s.io/apimachinery/pkg/runtime"
 	"k8s.io/apimachinery/pkg/types"
@@ -18,32 +19,30 @@ import (
 	"sigs.k8s.io/controller-runtime/pkg/source"
 )
 
-var log = logf.Log.WithName("controller_cassandracluster")
+var log = logf.Log.WithName("controller_configcluster")
 
 func Add(mgr manager.Manager) error {
 	return add(mgr, newReconciler(mgr))
 }
 
 func newReconciler(mgr manager.Manager) reconcile.Reconciler {
-	return &ReconcileCassandraCluster{client: mgr.GetClient(), scheme: mgr.GetScheme()}
+	return &ReconcileConfigCluster{client: mgr.GetClient(), scheme: mgr.GetScheme()}
 }
 
 func add(mgr manager.Manager, r reconcile.Reconciler) error {
-	// Create a new controller
-	c, err := controller.New("cassandracluster-controller", mgr, controller.Options{Reconciler: r})
+	c, err := controller.New("configcluster-controller", mgr, controller.Options{Reconciler: r})
 	if err != nil {
 		return err
 	}
 
-	// Watch for changes to primary resource CassandraCluster
-	err = c.Watch(&source.Kind{Type: &tfv1alpha1.CassandraCluster{}}, &handler.EnqueueRequestForObject{})
+	err = c.Watch(&source.Kind{Type: &tfv1alpha1.ConfigCluster{}}, &handler.EnqueueRequestForObject{})
 	if err != nil {
 		return err
 	}
 
 	err = c.Watch(&source.Kind{Type: &corev1.Pod{}}, &handler.EnqueueRequestForOwner{
 		IsController: true,
-		OwnerType:    &tfv1alpha1.CassandraCluster{},
+		OwnerType:    &tfv1alpha1.ConfigCluster{},
 	})
 	if err != nil {
 		return err
@@ -52,20 +51,19 @@ func add(mgr manager.Manager, r reconcile.Reconciler) error {
 	return nil
 }
 
-var _ reconcile.Reconciler = &ReconcileCassandraCluster{}
+var _ reconcile.Reconciler = &ReconcileConfigCluster{}
 
-type ReconcileCassandraCluster struct {
-
+type ReconcileConfigCluster struct {
 	client client.Client
 	scheme *runtime.Scheme
 }
 
-func (r *ReconcileCassandraCluster) Reconcile(request reconcile.Request) (reconcile.Result, error) {
+func (r *ReconcileConfigCluster) Reconcile(request reconcile.Request) (reconcile.Result, error) {
+	resourceType := "config"
 	reqLogger := log.WithValues("Request.Namespace", request.Namespace, "Request.Name", request.Name)
-	reqLogger.Info("Reconciling CassandraCluster")
+	reqLogger.Info("Reconciling ConfigCluster")
 
-	// Fetch the CassandraCluster instance
-	instance := &tfv1alpha1.CassandraCluster{}
+	instance := &tfv1alpha1.ConfigCluster{}
 	err := r.client.Get(context.TODO(), request.NamespacedName, instance)
 	if err != nil {
 		if errors.IsNotFound(err) {
@@ -73,7 +71,6 @@ func (r *ReconcileCassandraCluster) Reconcile(request reconcile.Request) (reconc
 		}
 		return reconcile.Result{}, err
 	}
-
 	baseInstance := &tfv1alpha1.TungstenfabricConfig{}
 	err = r.client.Get(context.TODO(), types.NamespacedName{Name: instance.Name, Namespace: instance.Namespace}, baseInstance)
 	if err != nil && errors.IsNotFound(err){
@@ -81,13 +78,15 @@ func (r *ReconcileCassandraCluster) Reconcile(request reconcile.Request) (reconc
 	}
 
 	var configMap = make(map[string]string)
-	for k,v := range(baseInstance.Spec.CassandraConfig){
+	for k,v := range(baseInstance.Spec.ConfigConfig){
 		configMap[k] = v
 	}
-
+	cassandraInstance := &tfv1alpha1.CassandraCluster{}
+	rabbitmqInstance := &tfv1alpha1.RabbitmqCluster{}
+	zookeeperInstance := &tfv1alpha1.ZookeeperCluster{}
 	var resource tfv1alpha1.TungstenFabricResource
 	clusterResource := &tfv1alpha1.ClusterResource{
-		Name: "cassandra",
+		Name: resourceType,
 		InstanceName: instance.Name,
 		InstanceNamespace: instance.Namespace,
 		Containers: instance.Spec.Containers,
@@ -95,10 +94,25 @@ func (r *ReconcileCassandraCluster) Reconcile(request reconcile.Request) (reconc
 		ResourceConfig: configMap,
 		BaseInstance: baseInstance,
 		InitContainer: true,
+		NodeInitContainer: true,
+		WaitFor: []string{"cassandra","zookeeper","rabbitmq"},
+		CassandraInstance: cassandraInstance,
+		ZookeeperInstance: zookeeperInstance,
+		RabbitmqInstance: rabbitmqInstance,
 	}
 	resource = clusterResource
 
 	// Create Deployment
+/*
+	foundDeployment := &appsv1.Deployment{}
+	err = r.client.Get(context.TODO(), types.NamespacedName{Name: "tf" + resourceType  + "-" + instance.Name, Namespace: instance.Namespace}, foundDeployment)
+	if err != nil && errors.IsAlreadyExists(err){
+		err = r.client.Update(context.TODO(), foundDeployment)
+		if err != nil {
+			return reconcile.Result{}, err
+		}
+	}
+*/
 	dep, err := resource.CreateDeployment(r.client)
 	if err != nil {
 		return reconcile.Result{Requeue: true}, nil
@@ -106,11 +120,13 @@ func (r *ReconcileCassandraCluster) Reconcile(request reconcile.Request) (reconc
 	controllerutil.SetControllerReference(instance, dep, r.scheme)
 	err = r.client.Create(context.TODO(), dep)
 	if err != nil && errors.IsAlreadyExists(err){
-		err = r.client.Update(context.TODO(), dep)
+		reqLogger.Info("Config deployment already exists, updating")
+		//err = r.client.Update(context.TODO(), dep)
 	} else if err != nil {
+		reqLogger.Info("Config deployment update failed")
 		return reconcile.Result{}, err		
 	}
-	reqLogger.Info("Cassandra deployment created")
+	reqLogger.Info("Config deployment created")
 
 	err = resource.UpdateDeployment(r.client, dep)
 	if err != nil {
@@ -148,7 +164,7 @@ func (r *ReconcileCassandraCluster) Reconcile(request reconcile.Request) (reconc
 	reqLogger.Info("Init Container running")
 
 	clusterResource.ResourceConfig["CONTROLLER_NODES"] = resource.GetNodeIpList()
-	clusterResource.ResourceConfig["CASSANDRA_SEEDS"] = resource.GetNodeIpList()
+	clusterResource.ResourceConfig["CONFIG_NODES"] = resource.GetNodeIpList()
 
 	// Create ConfigMap
 	cm, err := resource.CreateConfigMap(r.client)
@@ -163,7 +179,7 @@ func (r *ReconcileCassandraCluster) Reconcile(request reconcile.Request) (reconc
 		return reconcile.Result{}, err
 	}
 
-	reqLogger.Info("Cassandra configmap created")
+	reqLogger.Info("Config configmap created")
 	var labeledPod *corev1.Pod
 	for _, pod := range(podNames){
 		labeledPod, err = resource.LabelPod(r.client, pod)
