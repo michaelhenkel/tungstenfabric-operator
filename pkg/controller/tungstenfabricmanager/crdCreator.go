@@ -4,7 +4,6 @@ import (
 	"strings"
 	apiextensionsv1beta1 "k8s.io/apiextensions-apiserver/pkg/apis/apiextensions/v1beta1"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
-	"fmt"
 )
 
 type PropertiesStruct struct {
@@ -37,7 +36,6 @@ func (r *ReconcileTungstenfabricManager) CreateCrd(crdName string,
 
 	propertiesStruct := getProperties(crdName)
 
-	fmt.Println(propertiesStruct.Properties)
 
 	kind := crdName
 	listKind := crdName + "List"

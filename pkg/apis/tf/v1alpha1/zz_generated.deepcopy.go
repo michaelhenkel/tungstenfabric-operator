@@ -994,6 +994,11 @@ func (in *TungstenfabricManagerSpec) DeepCopyInto(out *TungstenfabricManagerSpec
 			(*out)[key] = val
 		}
 	}
+	if in.StartResources != nil {
+		in, out := &in.StartResources, &out.StartResources
+		*out = make([]string, len(*in))
+		copy(*out, *in)
+	}
 	return
 }
 

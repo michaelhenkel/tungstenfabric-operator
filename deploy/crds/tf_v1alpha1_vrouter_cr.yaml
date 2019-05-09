@@ -2,3 +2,6 @@ apiVersion: tf.tungstenfabric.io/v1alpha1
 kind: Vrouter
 metadata:
   name: cluster-1
+spec:
+  containers:
+    - name: "agent"

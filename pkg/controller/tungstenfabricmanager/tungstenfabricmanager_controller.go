@@ -17,6 +17,7 @@ import (
 	"sigs.k8s.io/controller-runtime/pkg/reconcile"
 	logf "sigs.k8s.io/controller-runtime/pkg/runtime/log"
 	"sigs.k8s.io/controller-runtime/pkg/source"
+//	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 /*
 
 
@@ -166,5 +167,110 @@ func (r *ReconcileTungstenfabricManager) Reconcile(request reconcile.Request) (r
 		}
 		
 	}
-	return reconcile.Result{}, nil
+/*
+    m := map[string]func(string) string{
+        "foo": func(s string) string { return s + "nurf" },
+    }
+
+    m["foo"]("baz") // "baznurf"
+*/
+	
+
+
+	for _, resource := range(instance.Spec.StartResources){
+		switch resource{
+		case "CassandraCluster":
+			err = r.CassandraCluster(instance.Name, instance.Namespace)
+			if err != nil {
+				reqLogger.Error(err, "Failed to create resource " + resource)
+				return reconcile.Result{}, err
+			}
+		case "ZookeeperCluster":
+			err = r.ZookeeperCluster(instance.Name, instance.Namespace)
+			if err != nil {
+				reqLogger.Error(err, "Failed to create resource " + resource)
+				return reconcile.Result{}, err
+			}
+		case "RabbitmqCluster":
+			err = r.RabbitmqCluster(instance.Name, instance.Namespace)
+			if err != nil {
+				reqLogger.Error(err, "Failed to create resource " + resource)
+				return reconcile.Result{}, err
+			}
+		case "ConfigCluster":
+			err = r.ConfigCluster(instance.Name, instance.Namespace)
+			if err != nil {
+				reqLogger.Error(err, "Failed to create resource " + resource)
+				return reconcile.Result{}, err
+			}
+		case "ControlCluster":
+			err = r.ControlCluster(instance.Name, instance.Namespace)
+			if err != nil {
+				reqLogger.Error(err, "Failed to create resource " + resource)
+				return reconcile.Result{}, err
+			}
+		case "KubemanagerCluster":
+			err = r.KubemanagerCluster(instance.Name, instance.Namespace)
+			if err != nil {
+				reqLogger.Error(err, "Failed to create resource " + resource)
+				return reconcile.Result{}, err
+			}
+		case "WebuiCluster":
+			err = r.WebuiCluster(instance.Name, instance.Namespace)
+			if err != nil {
+				reqLogger.Error(err, "Failed to create resource " + resource)
+				return reconcile.Result{}, err
+			}
+		case "Vrouter":
+			err = r.Vrouter(instance.Name, instance.Namespace)
+			if err != nil {
+				reqLogger.Error(err, "Failed to create resource " + resource)
+				return reconcile.Result{}, err
+			}
+		}
+	}
+
+/*
+	var instanceMap = make(map[string]metav1.Object)
+
+	instanceMap["ConfigCluster"] = &tfv1alpha1.ConfigCluster{}
+	instanceMap["ControlCluster"] = &tfv1alpha1.ControlCluster{}
+	instanceMap["ZookeeperCluster"] = &tfv1alpha1.ZookeeperCluster{}
+	instanceMap["CassandraCluster"] = &tfv1alpha1.CassandraCluster{}
+	instanceMap["RabbitmqCluster"] = &tfv1alpha1.RabbitmqCluster{}
+	instanceMap["KubemanagerCluster"] = &tfv1alpha1.KubemanagerCluster{}
+	instanceMap["WebuiCluster"] = &tfv1alpha1.WebuiCluster{}
+
+
+	//instanceMap["Vrouter"] = tfv1alpha1.Vrouter{}
+	//bla := tfv1alpha1.ConfigCluster{}
+
+
+	var cr metav1.Object
+	var clusterResource metav1.Object
+	for _, resource := range(instance.Spec.StartResources){
+		cr = instanceMap[resource]
+		err := r.client.Get(context.TODO(), types.NamespacedName{Name: instance.Name, Namespace: instance.Namespace}, cr)
+		
+			clusterResource = r.CreateConfigResource(instance.Name, instance.Namespace, resource)
+			err = r.client.Create(context.TODO(), &clusterResource)
+			if err != nil {
+				return reconcile.Result{}, err
+			}
+		} else if err != nil {
+			return  reconcile.Result{}, err
+		}
+	}
+*/
+
+	return  reconcile.Result{},nil
+}
+
+func stringInSlice(a string, list []string) bool {
+    for _, b := range list {
+        if b == a {
+            return true
+        }
+    }
+    return false
 }

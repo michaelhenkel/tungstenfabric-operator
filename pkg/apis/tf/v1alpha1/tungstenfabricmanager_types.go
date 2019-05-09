@@ -24,6 +24,7 @@ type TungstenfabricManagerSpec struct {
 	ControlConfig map[string]string `json:"controlConfig,inline"`
 	WebuiConfig map[string]string `json:"webuiConfig,inline"`
 	VrouterConfig map[string]string `json:"vrouterConfig,inline"`
+	StartResources []string `json:"startResources,inline"`
 }
 
 // TungstenfabricManagerStatus defines the observed state of TungstenfabricManager

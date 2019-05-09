@@ -5,6 +5,7 @@ metadata:
 spec:
   type: deployment
   containers:
-    - name: webuiWeb
-      image: docker.io/michaelhenkel/contrail-controller-webui-web:5.1.1-dev3
-    - name: webuiJob
+    - name: webuiweb
+      logvolumepath: "/var/log/contrail"
+    - name: webuijob
+      logvolumepath: "/var/log/contrail"
