@@ -70,7 +70,7 @@ func (r *ReconcileConfigCluster) Reconcile(request reconcile.Request) (reconcile
 		}
 		return reconcile.Result{}, err
 	}
-	baseInstance := &tfv1alpha1.TungstenfabricConfig{}
+	baseInstance := &tfv1alpha1.TungstenfabricManager{}
 	err = r.client.Get(context.TODO(), types.NamespacedName{Name: instance.Name, Namespace: instance.Namespace}, baseInstance)
 	if err != nil && errors.IsNotFound(err){
 		reqLogger.Info("baseconfig instance not found")

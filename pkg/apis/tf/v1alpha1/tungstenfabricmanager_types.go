@@ -7,10 +7,9 @@ import (
 // EDIT THIS FILE!  THIS IS SCAFFOLDING FOR YOU TO OWN!
 // NOTE: json tags are required.  Any new fields you add must have json tags for the fields to be serialized.
 
-// TungstenfabricConfigSpec defines the desired state of TungstenfabricConfig
+// TungstenfabricManagerSpec defines the desired state of TungstenfabricManager
 // +k8s:openapi-gen=true
-
-type TungstenfabricConfigSpec struct {
+type TungstenfabricManagerSpec struct {
 	// INSERT ADDITIONAL SPEC FIELDS - desired state of cluster
 	// Important: Run "operator-sdk generate k8s" to regenerate code after modifying this file
 	// Add custom validation using kubebuilder tags: https://book.kubebuilder.io/beyond_basics/generating_crd.html
@@ -25,12 +24,11 @@ type TungstenfabricConfigSpec struct {
 	ControlConfig map[string]string `json:"controlConfig,inline"`
 	WebuiConfig map[string]string `json:"webuiConfig,inline"`
 	VrouterConfig map[string]string `json:"vrouterConfig,inline"`
-
 }
 
-// TungstenfabricConfigStatus defines the observed state of TungstenfabricConfig
+// TungstenfabricManagerStatus defines the observed state of TungstenfabricManager
 // +k8s:openapi-gen=true
-type TungstenfabricConfigStatus struct {
+type TungstenfabricManagerStatus struct {
 	// INSERT ADDITIONAL STATUS FIELD - define observed state of cluster
 	// Important: Run "operator-sdk generate k8s" to regenerate code after modifying this file
 	// Add custom validation using kubebuilder tags: https://book.kubebuilder.io/beyond_basics/generating_crd.html
@@ -39,25 +37,25 @@ type TungstenfabricConfigStatus struct {
 
 // +k8s:deepcopy-gen:interfaces=k8s.io/apimachinery/pkg/runtime.Object
 
-// TungstenfabricConfig is the Schema for the tungstenfabricconfigs API
+// TungstenfabricManager is the Schema for the tungstenfabricmanagers API
 // +k8s:openapi-gen=true
-type TungstenfabricConfig struct {
+type TungstenfabricManager struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`
 
-	Spec   TungstenfabricConfigSpec   `json:"spec,omitempty"`
-	Status TungstenfabricConfigStatus `json:"status,omitempty"`
+	Spec   TungstenfabricManagerSpec   `json:"spec,omitempty"`
+	Status TungstenfabricManagerStatus `json:"status,omitempty"`
 }
 
 // +k8s:deepcopy-gen:interfaces=k8s.io/apimachinery/pkg/runtime.Object
 
-// TungstenfabricConfigList contains a list of TungstenfabricConfig
-type TungstenfabricConfigList struct {
+// TungstenfabricManagerList contains a list of TungstenfabricManager
+type TungstenfabricManagerList struct {
 	metav1.TypeMeta `json:",inline"`
 	metav1.ListMeta `json:"metadata,omitempty"`
-	Items           []TungstenfabricConfig `json:"items"`
+	Items           []TungstenfabricManager `json:"items"`
 }
 
 func init() {
-	SchemeBuilder.Register(&TungstenfabricConfig{}, &TungstenfabricConfigList{})
+	SchemeBuilder.Register(&TungstenfabricManager{}, &TungstenfabricManagerList{})
 }

@@ -1,5 +1,5 @@
 apiVersion: tf.tungstenfabric.io/v1alpha1
-kind: TungstenfabricConfig
+kind: TungstenfabricManager
 metadata:
   name: cluster-1
 spec:

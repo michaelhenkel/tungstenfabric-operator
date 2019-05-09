@@ -1,4 +1,4 @@
-package tungstenfabricconfig
+package tungstenfabricmanager
 
 import (
 	"context"
@@ -35,7 +35,7 @@ import (
 	"k8s.io/client-go/kubernetes/scheme"
 )
 
-var log = logf.Log.WithName("controller_tungstenfabricconfig")
+var log = logf.Log.WithName("controller_tungstenfabricmanager")
 
 func Add(mgr manager.Manager) error {
 	return add(mgr, newReconciler(mgr))
@@ -43,23 +43,23 @@ func Add(mgr manager.Manager) error {
 
 func newReconciler(mgr manager.Manager) reconcile.Reconciler {
 	apiextensionsv1beta1.AddToScheme(scheme.Scheme)
-	return &ReconcileTungstenfabricConfig{client: mgr.GetClient(), scheme: mgr.GetScheme(), manager: mgr}
+	return &ReconcileTungstenfabricManager{client: mgr.GetClient(), scheme: mgr.GetScheme(), manager: mgr}
 }
 
 func add(mgr manager.Manager, r reconcile.Reconciler) error {
-	c, err := controller.New("tungstenfabricconfig-controller", mgr, controller.Options{Reconciler: r})
+	c, err := controller.New("tungstenfabricmanager-controller", mgr, controller.Options{Reconciler: r})
 	if err != nil {
 		return err
 	}
 
-	err = c.Watch(&source.Kind{Type: &tfv1alpha1.TungstenfabricConfig{}}, &handler.EnqueueRequestForObject{})
+	err = c.Watch(&source.Kind{Type: &tfv1alpha1.TungstenfabricManager{}}, &handler.EnqueueRequestForObject{})
 	if err != nil {
 		return err
 	}
 
 	err = c.Watch(&source.Kind{Type: &corev1.Pod{}}, &handler.EnqueueRequestForOwner{
 		IsController: true,
-		OwnerType:    &tfv1alpha1.TungstenfabricConfig{},
+		OwnerType:    &tfv1alpha1.TungstenfabricManager{},
 	})
 	if err != nil {
 		return err
@@ -68,8 +68,8 @@ func add(mgr manager.Manager, r reconcile.Reconciler) error {
 	return nil
 }
 
-var _ reconcile.Reconciler = &ReconcileTungstenfabricConfig{}
-type ReconcileTungstenfabricConfig struct {
+var _ reconcile.Reconciler = &ReconcileTungstenfabricManager{}
+type ReconcileTungstenfabricManager struct {
 
 	client client.Client
 	scheme *runtime.Scheme
@@ -77,11 +77,11 @@ type ReconcileTungstenfabricConfig struct {
 }
 
 
-func (r *ReconcileTungstenfabricConfig) Reconcile(request reconcile.Request) (reconcile.Result, error) {
+func (r *ReconcileTungstenfabricManager) Reconcile(request reconcile.Request) (reconcile.Result, error) {
 	reqLogger := log.WithValues("Request.Namespace", request.Namespace, "Request.Name", request.Name)
-	reqLogger.Info("Reconciling TungstenfabricConfig")
+	reqLogger.Info("Reconciling TungstenfabricManager")
 
-	instance := &tfv1alpha1.TungstenfabricConfig{}
+	instance := &tfv1alpha1.TungstenfabricManager{}
 	err := r.client.Get(context.TODO(), request.NamespacedName, instance)
 	if err != nil {
 		if errors.IsNotFound(err) {

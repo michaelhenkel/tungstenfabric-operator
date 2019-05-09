@@ -29,42 +29,49 @@ spec:
           type: object
         spec:
           properties:
-            analyticsApiImage:
-              type: string
-            apiImage:
-              type: string
-            collectorImage:
-              type: string
-            deviceManagerImage:
-              type: string
-            hostnetwork:
-              type: string
-            image:
+            containers:
               description: 'INSERT ADDITIONAL SPEC FIELDS - desired state of cluster
                 Important: Run "operator-sdk generate k8s" to regenerate code after
                 modifying this file Add custom validation using kubebuilder tags:
                 https://book.kubebuilder.io/beyond_basics/generating_crd.html'
-              type: string
-            imagepullpolicy:
-              type: string
-            nodeInitImage:
-              type: string
-            nodeManagerImage:
-              type: string
-            redisImage:
-              type: string
-            schemaTransformerImage:
-              type: string
-            serviceMonitorImage:
-              type: string
-            size:
-              type: string
-            statusImage:
-              type: string
+              items:
+                properties:
+                  datavolumepath:
+                    type: string
+                  env:
+                    additionalProperties:
+                      type: string
+                    type: object
+                  etccontrailvolume:
+                    type: boolean
+                  hostuserbinvolume:
+                    type: boolean
+                  image:
+                    type: string
+                  imagepullpolicy:
+                    type: string
+                  logvolumepath:
+                    type: string
+                  name:
+                    type: string
+                  privileged:
+                    type: boolean
+                  unixsocketvolume:
+                    type: boolean
+                required:
+                - name
+                - imagepullpolicy
+                - logvolumepath
+                - datavolumepath
+                - unixsocketvolume
+                - hostuserbinvolume
+                - etccontrailvolume
+                - privileged
+                - env
+                type: object
+              type: array
           required:
-          - image
-          - hostnetwork
-          - imagepullpolicy
+          - containers
           type: object
         status:
           properties:

@@ -53,5 +53,6 @@ rules:
   - controlclusters
   - kubemanagerclusters
   - webuiclusters
+  - tungstenfabricmanagers
   verbs:
   - '*'

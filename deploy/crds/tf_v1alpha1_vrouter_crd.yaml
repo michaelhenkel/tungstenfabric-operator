@@ -29,30 +29,49 @@ spec:
           type: object
         spec:
           properties:
-            hostNetwork:
-              type: string
-            imagePullPolicy:
-              type: string
-            nodeInitImage:
-              type: string
-            nodeManagerImage:
-              type: string
-            size:
+            containers:
               description: 'INSERT ADDITIONAL SPEC FIELDS - desired state of cluster
                 Important: Run "operator-sdk generate k8s" to regenerate code after
                 modifying this file Add custom validation using kubebuilder tags:
                 https://book.kubebuilder.io/beyond_basics/generating_crd.html'
-              type: string
-            statusImage:
-              type: string
-            vrouterAgent:
-              type: string
-            vrouterCni:
-              type: string
-            vrouterKernelInit:
-              type: string
-            vrouterNicInit:
-              type: string
+              items:
+                properties:
+                  datavolumepath:
+                    type: string
+                  env:
+                    additionalProperties:
+                      type: string
+                    type: object
+                  etccontrailvolume:
+                    type: boolean
+                  hostuserbinvolume:
+                    type: boolean
+                  image:
+                    type: string
+                  imagepullpolicy:
+                    type: string
+                  logvolumepath:
+                    type: string
+                  name:
+                    type: string
+                  privileged:
+                    type: boolean
+                  unixsocketvolume:
+                    type: boolean
+                required:
+                - name
+                - imagepullpolicy
+                - logvolumepath
+                - datavolumepath
+                - unixsocketvolume
+                - hostuserbinvolume
+                - etccontrailvolume
+                - privileged
+                - env
+                type: object
+              type: array
+          required:
+          - containers
           type: object
         status:
           properties:

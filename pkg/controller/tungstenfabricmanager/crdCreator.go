@@ -1,4 +1,4 @@
-package tungstenfabricconfig
+package tungstenfabricmanager
 
 import (
 	"strings"
@@ -30,7 +30,7 @@ func getProperties(crdName string) PropertiesStruct {
 }
 
 
-func (r *ReconcileTungstenfabricConfig) CreateCrd(crdName string,
+func (r *ReconcileTungstenfabricManager) CreateCrd(crdName string,
 	crdVersion string,
 	crdGroup string,
 	crdNamespace string) *apiextensionsv1beta1.CustomResourceDefinition {

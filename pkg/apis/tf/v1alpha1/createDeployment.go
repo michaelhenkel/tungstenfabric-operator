@@ -37,7 +37,7 @@ type ClusterResource struct {
 	Containers []*Container
 	General *General
 	ResourceConfig map[string]string
-	BaseInstance *TungstenfabricConfig
+	BaseInstance *TungstenfabricManager
 	WaitFor []string
 	CassandraInstance *CassandraCluster
 	ZookeeperInstance *ZookeeperCluster
