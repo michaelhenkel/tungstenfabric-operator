@@ -17,13 +17,7 @@ import (
 	"sigs.k8s.io/controller-runtime/pkg/reconcile"
 	logf "sigs.k8s.io/controller-runtime/pkg/runtime/log"
 	"sigs.k8s.io/controller-runtime/pkg/source"
-//	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
-/*
-
-
-
 	"github.com/michaelhenkel/tungstenfabric-operator/pkg/controller/vrouter"
-*/
 	"github.com/michaelhenkel/tungstenfabric-operator/pkg/controller/kubemanagercluster"
 	"github.com/michaelhenkel/tungstenfabric-operator/pkg/controller/controlcluster"
 	"github.com/michaelhenkel/tungstenfabric-operator/pkg/controller/configcluster"
@@ -31,7 +25,6 @@ import (
 	"github.com/michaelhenkel/tungstenfabric-operator/pkg/controller/zookeepercluster"
 	"github.com/michaelhenkel/tungstenfabric-operator/pkg/controller/cassandracluster"
 	"github.com/michaelhenkel/tungstenfabric-operator/pkg/controller/webuicluster"
-
 	apiextensionsv1beta1 "k8s.io/apiextensions-apiserver/pkg/apis/apiextensions/v1beta1"
 	"k8s.io/client-go/kubernetes/scheme"
 )
@@ -91,7 +84,6 @@ func (r *ReconcileTungstenfabricManager) Reconcile(request reconcile.Request) (r
 		return reconcile.Result{}, err
 	}
 
-
 	type AddFunction func(manager.Manager) error
 
 	var functionMap map[string]AddFunction
@@ -104,22 +96,9 @@ func (r *ReconcileTungstenfabricManager) Reconcile(request reconcile.Request) (r
 	
 	crdVersion := "v1alpha1"
 	crdGroup := "tf.tungstenfabric.io"
-/*
-
-
-
-
-
-
-
-
-
-
-
 
 	functionMap["vrouter"] = vrouter.Add
 	crdMap["Vrouter"] = functionMap
-*/
 
 	functionMap["kubemanagercluster"] = kubemanagercluster.Add
 	crdMap["KubemanagerCluster"] = functionMap
@@ -167,15 +146,6 @@ func (r *ReconcileTungstenfabricManager) Reconcile(request reconcile.Request) (r
 		}
 		
 	}
-/*
-    m := map[string]func(string) string{
-        "foo": func(s string) string { return s + "nurf" },
-    }
-
-    m["foo"]("baz") // "baznurf"
-*/
-	
-
 
 	for _, resource := range(instance.Spec.StartResources){
 		switch resource{
@@ -229,39 +199,6 @@ func (r *ReconcileTungstenfabricManager) Reconcile(request reconcile.Request) (r
 			}
 		}
 	}
-
-/*
-	var instanceMap = make(map[string]metav1.Object)
-
-	instanceMap["ConfigCluster"] = &tfv1alpha1.ConfigCluster{}
-	instanceMap["ControlCluster"] = &tfv1alpha1.ControlCluster{}
-	instanceMap["ZookeeperCluster"] = &tfv1alpha1.ZookeeperCluster{}
-	instanceMap["CassandraCluster"] = &tfv1alpha1.CassandraCluster{}
-	instanceMap["RabbitmqCluster"] = &tfv1alpha1.RabbitmqCluster{}
-	instanceMap["KubemanagerCluster"] = &tfv1alpha1.KubemanagerCluster{}
-	instanceMap["WebuiCluster"] = &tfv1alpha1.WebuiCluster{}
-
-
-	//instanceMap["Vrouter"] = tfv1alpha1.Vrouter{}
-	//bla := tfv1alpha1.ConfigCluster{}
-
-
-	var cr metav1.Object
-	var clusterResource metav1.Object
-	for _, resource := range(instance.Spec.StartResources){
-		cr = instanceMap[resource]
-		err := r.client.Get(context.TODO(), types.NamespacedName{Name: instance.Name, Namespace: instance.Namespace}, cr)
-		
-			clusterResource = r.CreateConfigResource(instance.Name, instance.Namespace, resource)
-			err = r.client.Create(context.TODO(), &clusterResource)
-			if err != nil {
-				return reconcile.Result{}, err
-			}
-		} else if err != nil {
-			return  reconcile.Result{}, err
-		}
-	}
-*/
 
 	return  reconcile.Result{},nil
 }
