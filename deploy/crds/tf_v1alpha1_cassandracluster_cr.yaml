@@ -3,6 +3,7 @@ kind: CassandraCluster
 metadata:
   name: cluster-1
 spec:
+  type: deployment
   containers:
     - name: cassandra
       logvolumepath: "/var/log/cassandra"

@@ -56,6 +56,7 @@ type ClusterResource struct {
 	NodeInitContainer bool
 	NodeIpList string
 	ServiceAccount bool
+	Type string
 }
 
 func (c *ClusterResource) CreateConfigMap(cl client.Client, instance metav1.Object, scheme *runtime.Scheme) error {
@@ -355,47 +356,83 @@ func (c *ClusterResource) CreateDeployment(cl client.Client, instance metav1.Obj
 		serviceAccountName = "contrail-service-account-" + c.Name
 	}
 
-	deployment := &appsv1.Deployment{
+	objectMeta := metav1.ObjectMeta{
+		Name: "tf" + c.Name + "-" + c.InstanceName,
+		Namespace: c.InstanceNamespace,
+	}
+
+	selector := metav1.LabelSelector{
+		MatchLabels: map[string]string{"app": c.Name, c.Name + "_cr": c.Name},
+	}
+
+	podTemplateSpec := corev1.PodTemplateSpec{
 		ObjectMeta: metav1.ObjectMeta{
-			Name: "tf" + c.Name + "-" + c.InstanceName,
-			Namespace: c.InstanceNamespace,
+			Labels: map[string]string{"app": c.Name, c.Name + "_cr": c.Name},
 		},
+		Spec: corev1.PodSpec{
+			ServiceAccountName: serviceAccountName,
+			HostNetwork: hostNetworkBool,
+			NodeSelector: map[string]string{
+				"node-role.kubernetes.io/master":"",
+			},
+			Tolerations: []corev1.Toleration{{
+				Operator: corev1.TolerationOpExists,
+				Effect: corev1.TaintEffectNoSchedule,
+			},{
+				Operator: corev1.TolerationOpExists,
+				Effect: corev1.TaintEffectNoExecute,
+			}},
+			InitContainers: initContainerList,
+			Containers: containerList,
+			Volumes: volumeList,
+		},
+	}
+
+	deployment := &appsv1.Deployment{
+		TypeMeta: metav1.TypeMeta{
+			APIVersion: "apps/v1",
+			Kind:       "Deployment",
+		},
+		ObjectMeta: objectMeta,
 		Spec: appsv1.DeploymentSpec{
 			Replicas: &size,
-			Selector: &metav1.LabelSelector{
-				MatchLabels: map[string]string{"app": c.Name, c.Name + "_cr": c.Name},
-			},
-			Template: corev1.PodTemplateSpec{
-				ObjectMeta: metav1.ObjectMeta{
-					Labels: map[string]string{"app": c.Name, c.Name + "_cr": c.Name},
-				},
-				Spec: corev1.PodSpec{
-					ServiceAccountName: serviceAccountName,
-					HostNetwork: hostNetworkBool,
-					NodeSelector: map[string]string{
-						"node-role.kubernetes.io/master":"",
-					},
-					Tolerations: []corev1.Toleration{{
-						Operator: corev1.TolerationOpExists,
-						Effect: corev1.TaintEffectNoSchedule,
-					},{
-						Operator: corev1.TolerationOpExists,
-						Effect: corev1.TaintEffectNoExecute,
-					}},
-					InitContainers: initContainerList,
-					Containers: containerList,
-					Volumes: volumeList,
-				},
-			},
-		},		
+			Selector: &selector,
+			Template: podTemplateSpec,		
+		},
 	}
-	existingDeployment := &appsv1.Deployment{}
-	err = cl.Get(context.TODO(), types.NamespacedName{Name: "tf" + c.Name + "-" + c.InstanceName, Namespace: c.InstanceNamespace}, existingDeployment)
-	if err != nil && errors.IsNotFound(err) {
-		controllerutil.SetControllerReference(instance, deployment, scheme)
-		err = cl.Create(context.TODO(), deployment)
-		if err != nil {
-			return err
+
+	daemonset := &appsv1.DaemonSet{
+		TypeMeta: metav1.TypeMeta{
+			APIVersion: "apps/v1",
+			Kind:       "DaemonSet",
+		},
+		ObjectMeta: objectMeta,
+		Spec: appsv1.DaemonSetSpec{
+			Selector: &selector,
+			Template: podTemplateSpec,		
+		},
+	}
+
+	if c.Type == "deployment"{
+		existingDeployment := &appsv1.Deployment{}
+		err = cl.Get(context.TODO(), types.NamespacedName{Name: "tf" + c.Name + "-" + c.InstanceName, Namespace: c.InstanceNamespace}, existingDeployment)
+		if err != nil && errors.IsNotFound(err) {
+			controllerutil.SetControllerReference(instance, deployment, scheme)
+			err = cl.Create(context.TODO(), deployment)
+			if err != nil {
+				return err
+			}
+		}
+	}
+	if c.Type == "daemonset"{
+		existingDaemonset := &appsv1.DaemonSet{}
+		err = cl.Get(context.TODO(), types.NamespacedName{Name: "tf" + c.Name + "-" + c.InstanceName, Namespace: c.InstanceNamespace}, existingDaemonset)
+		if err != nil && errors.IsNotFound(err) {
+			controllerutil.SetControllerReference(instance, daemonset, scheme)
+			err = cl.Create(context.TODO(), daemonset)
+			if err != nil {
+				return err
+			}
 		}
 	}
 	return nil

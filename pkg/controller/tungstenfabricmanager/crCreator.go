@@ -13,6 +13,7 @@ func (r *ReconcileTungstenfabricManager) ConfigCluster(
 	instanceNamespace string) error {
 
 	resourceSpec := tfv1alpha1.ConfigClusterSpec{
+		Type: "deployment",
 		Containers: []*tfv1alpha1.Container{
 			{
 				Name: "api",
@@ -79,6 +80,7 @@ func (r *ReconcileTungstenfabricManager) ControlCluster(
 	instanceNamespace string) error {
 
 	resourceSpec := tfv1alpha1.ControlClusterSpec{
+		Type: "deployment",
 		Containers: []*tfv1alpha1.Container{
 			{
 				Name: "control",
@@ -128,6 +130,7 @@ func (r *ReconcileTungstenfabricManager) KubemanagerCluster(
 	instanceNamespace string) error {
 
 	resourceSpec := tfv1alpha1.KubemanagerClusterSpec{
+		Type: "deployment",
 		Containers: []*tfv1alpha1.Container{
 			{
 				Name: "kubemanager",
@@ -160,6 +163,7 @@ func (r *ReconcileTungstenfabricManager) WebuiCluster(
 	instanceNamespace string) error {
 
 	resourceSpec := tfv1alpha1.WebuiClusterSpec{
+		Type: "deployment",
 		Containers: []*tfv1alpha1.Container{
 			{
 				Name: "webuiweb",
@@ -196,6 +200,7 @@ func (r *ReconcileTungstenfabricManager) Vrouter(
 	instanceNamespace string) error {
 
 	resourceSpec := tfv1alpha1.VrouterSpec{
+		Type: "daemonset",
 		Containers: []*tfv1alpha1.Container{
 			{
 				Name: "agent",
@@ -228,6 +233,7 @@ func (r *ReconcileTungstenfabricManager) CassandraCluster(
 	instanceNamespace string) error {
 
 	resourceSpec := tfv1alpha1.CassandraClusterSpec{
+		Type: "deployment",
 		Containers: []*tfv1alpha1.Container{
 			{
 				Name: "cassandra",
@@ -261,6 +267,7 @@ func (r *ReconcileTungstenfabricManager) ZookeeperCluster(
 	instanceNamespace string) error {
 
 	resourceSpec := tfv1alpha1.ZookeeperClusterSpec{
+		Type: "deployment",
 		Containers: []*tfv1alpha1.Container{
 			{
 				Name: "zookeeper",
@@ -294,6 +301,7 @@ func (r *ReconcileTungstenfabricManager) RabbitmqCluster(
 	instanceNamespace string) error {
 
 	resourceSpec := tfv1alpha1.RabbitmqClusterSpec{
+		Type: "deployment",
 		Containers: []*tfv1alpha1.Container{
 			{
 				Name: "rabbitmq",

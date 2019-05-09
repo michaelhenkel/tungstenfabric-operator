@@ -3,6 +3,7 @@ kind: ControlCluster
 metadata:
   name: cluster-1
 spec:
+  type: deployment
   containers:
     - name: control
       logvolumepath: "/var/log/contrail"

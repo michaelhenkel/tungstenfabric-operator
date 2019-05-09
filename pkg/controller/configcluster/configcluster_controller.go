@@ -98,6 +98,7 @@ func (r *ReconcileConfigCluster) Reconcile(request reconcile.Request) (reconcile
 		CassandraInstance: cassandraInstance,
 		ZookeeperInstance: zookeeperInstance,
 		RabbitmqInstance: rabbitmqInstance,
+		Type: instance.Spec.Type,
 	}
 	resource = clusterResource
 

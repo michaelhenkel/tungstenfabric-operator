@@ -16,6 +16,7 @@ type WebuiClusterSpec struct {
 	// Add custom validation using kubebuilder tags: https://book.kubebuilder.io/beyond_basics/generating_crd.html
 	Containers []*Container `json:"containers"`
 	ConfigParameters map[string]string
+	Type string
 	General *General `json:"general"`
 }
 

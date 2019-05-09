@@ -101,6 +101,7 @@ func (r *ReconcileKubemanagerCluster) Reconcile(request reconcile.Request) (reco
 		ZookeeperInstance: zookeeperInstance,
 		RabbitmqInstance: rabbitmqInstance,
 		ConfigInstance: configInstance,
+		Type: instance.Spec.Type,
 	}
 	resource = clusterResource
 

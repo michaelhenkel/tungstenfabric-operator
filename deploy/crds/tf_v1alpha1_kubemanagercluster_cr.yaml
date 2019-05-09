@@ -3,6 +3,7 @@ kind: KubemanagerCluster
 metadata:
   name: cluster-1
 spec:
+  type: deployment
   containers:
     - name: kubemanager
       logvolumepath: "/var/log/contrail"

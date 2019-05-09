@@ -3,6 +3,7 @@ kind: RabbitmqCluster
 metadata:
   name: cluster-1
 spec:
+  type: deployment
   containers:
     - name: rabbitmq
       logvolumepath: "/var/log/rabbitmq"

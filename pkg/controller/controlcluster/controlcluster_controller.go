@@ -99,6 +99,7 @@ func (r *ReconcileControlCluster) Reconcile(request reconcile.Request) (reconcil
 		RabbitmqInstance: rabbitmqInstance,
 		ConfigInstance: configInstance,
 		ControlInstance: instance,
+		Type: instance.Spec.Type,
 	}
 	resource = clusterResource
 

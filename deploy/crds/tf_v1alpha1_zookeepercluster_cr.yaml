@@ -3,6 +3,7 @@ kind: ZookeeperCluster
 metadata:
   name: cluster-1
 spec:
+  type: deployment
   containers:
     - name: zookeeper
       logvolumepath: "/var/log/zookeeker"

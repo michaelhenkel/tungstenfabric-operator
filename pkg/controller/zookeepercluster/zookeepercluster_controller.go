@@ -91,6 +91,7 @@ func (r *ReconcileZookeeperCluster) Reconcile(request reconcile.Request) (reconc
 		ResourceConfig: configMap,
 		BaseInstance: baseInstance,
 		InitContainer: true,
+		Type: instance.Spec.Type,
 	}
 	resource = clusterResource
 

@@ -3,5 +3,6 @@ kind: Vrouter
 metadata:
   name: cluster-1
 spec:
+  type: daemonset
   containers:
     - name: "agent"

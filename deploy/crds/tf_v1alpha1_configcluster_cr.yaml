@@ -3,6 +3,7 @@ kind: ConfigCluster
 metadata:
   name: cluster-1
 spec:
+  type: deployment
   containers:
     - name: api
       logvolumepath: "/var/log/contrail"
