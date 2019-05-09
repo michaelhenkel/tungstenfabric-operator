@@ -10,7 +10,6 @@ import (
 	"k8s.io/apimachinery/pkg/types"
 	"sigs.k8s.io/controller-runtime/pkg/client"
 	"sigs.k8s.io/controller-runtime/pkg/controller"
-	"sigs.k8s.io/controller-runtime/pkg/controller/controllerutil"
 	"sigs.k8s.io/controller-runtime/pkg/handler"
 	"sigs.k8s.io/controller-runtime/pkg/manager"
 	"sigs.k8s.io/controller-runtime/pkg/reconcile"
@@ -99,31 +98,16 @@ func (r *ReconcileControlCluster) Reconcile(request reconcile.Request) (reconcil
 		ZookeeperInstance: zookeeperInstance,
 		RabbitmqInstance: rabbitmqInstance,
 		ConfigInstance: configInstance,
+		ControlInstance: instance,
 	}
 	resource = clusterResource
 
 	// Create Deployment
-	dep, err := resource.CreateDeployment(r.client)
+	err = resource.CreateDeployment(r.client, instance, r.scheme)
 	if err != nil {
 		return reconcile.Result{Requeue: true}, nil
 	}
-	controllerutil.SetControllerReference(instance, dep, r.scheme)
-	err = r.client.Create(context.TODO(), dep)
-	if err != nil && errors.IsAlreadyExists(err){
-		reqLogger.Info("Control deployment already exists")
-		//err = r.client.Update(context.TODO(), dep)
-	} else if err != nil {
-		return reconcile.Result{}, err		
-	}
-	reqLogger.Info("Control deployment created")
-
-	err = resource.UpdateDeployment(r.client, dep)
-	if err != nil {
-		reqLogger.Error(err, "Failed to update Deployment")
-		return reconcile.Result{}, err
-	} else {
-		reqLogger.Info("Updated Deployment")
-	}
+	reqLogger.Info(clusterResource.Name + " deployment created")
 
 	var podNames []string
 	podNames, err = resource.GetPodNames(r.client)
@@ -156,19 +140,12 @@ func (r *ReconcileControlCluster) Reconcile(request reconcile.Request) (reconcil
 	clusterResource.ResourceConfig["CONTROL_NODES"] = resource.GetNodeIpList()
 
 	// Create ConfigMap
-	cm, err := resource.CreateConfigMap(r.client)
+	err = resource.CreateConfigMap(r.client, instance, r.scheme)
 	if err != nil {
 		return reconcile.Result{Requeue: true}, nil
 	}
-	controllerutil.SetControllerReference(instance, cm, r.scheme)
-	err = r.client.Create(context.TODO(), cm)
-	if err != nil && errors.IsAlreadyExists(err){
-		err = r.client.Update(context.TODO(), cm)
-	} else if err != nil {
-		return reconcile.Result{}, err
-	}
-
 	reqLogger.Info("Control configmap created")
+
 	var labeledPod *corev1.Pod
 	for _, pod := range(podNames){
 		labeledPod, err = resource.LabelPod(r.client, pod)

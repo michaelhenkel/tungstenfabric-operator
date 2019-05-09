@@ -1,11 +1,10 @@
-package configcluster
+package kubemanagercluster
 
 import (
 	"context"
 	"reflect"
 	tfv1alpha1 "github.com/michaelhenkel/tungstenfabric-operator/pkg/apis/tf/v1alpha1"
 	corev1 "k8s.io/api/core/v1"
-	//appsv1 "k8s.io/api/apps/v1"
 	"k8s.io/apimachinery/pkg/api/errors"
 	"k8s.io/apimachinery/pkg/runtime"
 	"k8s.io/apimachinery/pkg/types"
@@ -18,30 +17,30 @@ import (
 	"sigs.k8s.io/controller-runtime/pkg/source"
 )
 
-var log = logf.Log.WithName("controller_configcluster")
+var log = logf.Log.WithName("controller_kubemanagercluster")
 
 func Add(mgr manager.Manager) error {
 	return add(mgr, newReconciler(mgr))
 }
 
 func newReconciler(mgr manager.Manager) reconcile.Reconciler {
-	return &ReconcileConfigCluster{client: mgr.GetClient(), scheme: mgr.GetScheme()}
+	return &ReconcileKubemanagerCluster{client: mgr.GetClient(), scheme: mgr.GetScheme()}
 }
 
 func add(mgr manager.Manager, r reconcile.Reconciler) error {
-	c, err := controller.New("configcluster-controller", mgr, controller.Options{Reconciler: r})
+	c, err := controller.New("kubemanagercluster-controller", mgr, controller.Options{Reconciler: r})
 	if err != nil {
 		return err
 	}
 
-	err = c.Watch(&source.Kind{Type: &tfv1alpha1.ConfigCluster{}}, &handler.EnqueueRequestForObject{})
+	err = c.Watch(&source.Kind{Type: &tfv1alpha1.KubemanagerCluster{}}, &handler.EnqueueRequestForObject{})
 	if err != nil {
 		return err
 	}
 
 	err = c.Watch(&source.Kind{Type: &corev1.Pod{}}, &handler.EnqueueRequestForOwner{
 		IsController: true,
-		OwnerType:    &tfv1alpha1.ConfigCluster{},
+		OwnerType:    &tfv1alpha1.KubemanagerCluster{},
 	})
 	if err != nil {
 		return err
@@ -50,19 +49,18 @@ func add(mgr manager.Manager, r reconcile.Reconciler) error {
 	return nil
 }
 
-var _ reconcile.Reconciler = &ReconcileConfigCluster{}
+var _ reconcile.Reconciler = &ReconcileKubemanagerCluster{}
 
-type ReconcileConfigCluster struct {
+type ReconcileKubemanagerCluster struct {
 	client client.Client
 	scheme *runtime.Scheme
 }
 
-func (r *ReconcileConfigCluster) Reconcile(request reconcile.Request) (reconcile.Result, error) {
-	resourceType := "config"
+func (r *ReconcileKubemanagerCluster) Reconcile(request reconcile.Request) (reconcile.Result, error) {
 	reqLogger := log.WithValues("Request.Namespace", request.Namespace, "Request.Name", request.Name)
-	reqLogger.Info("Reconciling ConfigCluster")
+	reqLogger.Info("Reconciling KubemanagerCluster")
 
-	instance := &tfv1alpha1.ConfigCluster{}
+	instance := &tfv1alpha1.KubemanagerCluster{}
 	err := r.client.Get(context.TODO(), request.NamespacedName, instance)
 	if err != nil {
 		if errors.IsNotFound(err) {
@@ -70,6 +68,7 @@ func (r *ReconcileConfigCluster) Reconcile(request reconcile.Request) (reconcile
 		}
 		return reconcile.Result{}, err
 	}
+
 	baseInstance := &tfv1alpha1.TungstenfabricConfig{}
 	err = r.client.Get(context.TODO(), types.NamespacedName{Name: instance.Name, Namespace: instance.Namespace}, baseInstance)
 	if err != nil && errors.IsNotFound(err){
@@ -77,15 +76,17 @@ func (r *ReconcileConfigCluster) Reconcile(request reconcile.Request) (reconcile
 	}
 
 	var configMap = make(map[string]string)
-	for k,v := range(baseInstance.Spec.ConfigConfig){
+	for k,v := range(baseInstance.Spec.KubemanagerConfig){
 		configMap[k] = v
 	}
 	cassandraInstance := &tfv1alpha1.CassandraCluster{}
 	rabbitmqInstance := &tfv1alpha1.RabbitmqCluster{}
 	zookeeperInstance := &tfv1alpha1.ZookeeperCluster{}
+	configInstance := &tfv1alpha1.ConfigCluster{}
+
 	var resource tfv1alpha1.TungstenFabricResource
 	clusterResource := &tfv1alpha1.ClusterResource{
-		Name: resourceType,
+		Name: "kubemanager",
 		InstanceName: instance.Name,
 		InstanceNamespace: instance.Namespace,
 		Containers: instance.Spec.Containers,
@@ -94,18 +95,25 @@ func (r *ReconcileConfigCluster) Reconcile(request reconcile.Request) (reconcile
 		BaseInstance: baseInstance,
 		InitContainer: true,
 		NodeInitContainer: true,
-		WaitFor: []string{"cassandra","zookeeper","rabbitmq"},
+		ServiceAccount: true,
+		WaitFor: []string{"cassandra","zookeeper","rabbitmq","config"},
 		CassandraInstance: cassandraInstance,
 		ZookeeperInstance: zookeeperInstance,
 		RabbitmqInstance: rabbitmqInstance,
+		ConfigInstance: configInstance,
 	}
 	resource = clusterResource
 
-	// Create Deployment
 
+	err = resource.CreateRbac(r.client, instance, r.scheme)
+	if err != nil {
+		return reconcile.Result{}, err
+	}
+
+	// Create Deployment
 	err = resource.CreateDeployment(r.client, instance, r.scheme)
 	if err != nil {
-		return reconcile.Result{Requeue: true}, nil
+		return reconcile.Result{}, err
 	}
 	reqLogger.Info(clusterResource.Name + " deployment created")
 
@@ -137,15 +145,14 @@ func (r *ReconcileConfigCluster) Reconcile(request reconcile.Request) (reconcile
 	reqLogger.Info("Init Container running")
 
 	clusterResource.ResourceConfig["CONTROLLER_NODES"] = resource.GetNodeIpList()
-	clusterResource.ResourceConfig["CONFIG_NODES"] = resource.GetNodeIpList()
 
 	// Create ConfigMap
+
 	err = resource.CreateConfigMap(r.client, instance, r.scheme)
 	if err != nil {
 		return reconcile.Result{Requeue: true}, nil
 	}
-
-	reqLogger.Info("Config configmap created")
+	reqLogger.Info("Kubemanager configmap created")
 
 	var labeledPod *corev1.Pod
 	for _, pod := range(podNames){

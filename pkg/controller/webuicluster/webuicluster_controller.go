@@ -10,7 +10,6 @@ import (
 	"k8s.io/apimachinery/pkg/types"
 	"sigs.k8s.io/controller-runtime/pkg/client"
 	"sigs.k8s.io/controller-runtime/pkg/controller"
-	"sigs.k8s.io/controller-runtime/pkg/controller/controllerutil"
 	"sigs.k8s.io/controller-runtime/pkg/handler"
 	"sigs.k8s.io/controller-runtime/pkg/manager"
 	"sigs.k8s.io/controller-runtime/pkg/reconcile"
@@ -82,7 +81,7 @@ func (r *ReconcileWebuiCluster) Reconcile(request reconcile.Request) (reconcile.
 	}
 
 	var resource tfv1alpha1.TungstenFabricResource
-	resource = &tfv1alpha1.ClusterResource{
+	clusterResource := &tfv1alpha1.ClusterResource{
 		Name: "webui",
 		InstanceName: instance.Name,
 		InstanceNamespace: instance.Namespace,
@@ -92,35 +91,21 @@ func (r *ReconcileWebuiCluster) Reconcile(request reconcile.Request) (reconcile.
 		BaseInstance: baseInstance,
 		InitContainer: true,
 	}
-
+	resource = clusterResource
 
 	// Create ConfigMap
-	cm, err := resource.CreateConfigMap(r.client)
+	err = resource.CreateConfigMap(r.client, instance, r.scheme)
 	if err != nil {
 		return reconcile.Result{Requeue: true}, nil
-	}
-	controllerutil.SetControllerReference(instance, cm, r.scheme)
-	err = r.client.Create(context.TODO(), cm)
-	if err != nil && errors.IsAlreadyExists(err){
-		err = r.client.Update(context.TODO(), cm)
-	} else if err != nil {
-		return reconcile.Result{}, err		
 	}
 	reqLogger.Info("Webui configmap created")
 	
 	// Create Deployment
-	dep, err := resource.CreateDeployment(r.client)
+	err = resource.CreateDeployment(r.client, instance, r.scheme)
 	if err != nil {
 		return reconcile.Result{Requeue: true}, nil
 	}
-	controllerutil.SetControllerReference(instance, dep, r.scheme)
-	err = r.client.Create(context.TODO(), dep)
-	if err != nil && errors.IsAlreadyExists(err){
-		err = r.client.Update(context.TODO(), dep)
-	} else if err != nil {
-		return reconcile.Result{}, err		
-	}
-	reqLogger.Info("Webui deployment created")
+	reqLogger.Info(clusterResource.Name + " deployment created")
 
 	return reconcile.Result{}, nil
 }

@@ -8,22 +8,26 @@ import (
 	"k8s.io/apimachinery/pkg/labels"
 	corev1 "k8s.io/api/core/v1"
 	appsv1 "k8s.io/api/apps/v1"
+	rbacv1 "k8s.io/api/rbac/v1"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"sigs.k8s.io/controller-runtime/pkg/client"
 	"k8s.io/apimachinery/pkg/types"
 	logf "sigs.k8s.io/controller-runtime/pkg/runtime/log"
+	"sigs.k8s.io/controller-runtime/pkg/controller/controllerutil"
+	"k8s.io/apimachinery/pkg/runtime"
 )
 var log = logf.Log.WithName("TungstenFabricResource")
 var err error
 
 type TungstenFabricResource interface{
-	CreateConfigMap(client.Client) (*corev1.ConfigMap, error)
-	CreateDeployment(client.Client) (*appsv1.Deployment, error)
+	CreateConfigMap(client.Client, metav1.Object, *runtime.Scheme) error
+	CreateDeployment(client.Client, metav1.Object, *runtime.Scheme) error
 	UpdateDeployment(client.Client, *appsv1.Deployment) error
 	GetPodNames(client.Client) ([]string, error)
 	WaitForInitContainer(client.Client) (bool, error)
 	LabelPod(client.Client, string) (*corev1.Pod, error)
 	GetNodeIpList() string
+	CreateRbac(client.Client, metav1.Object, *runtime.Scheme) error
 }
 
 type ClusterResource struct {
@@ -40,6 +44,9 @@ type ClusterResource struct {
 	RabbitmqInstance *RabbitmqCluster
 	ConfigInstance *ConfigCluster
 	ControlInstance *ControlCluster
+	KubemanagerInstance *KubemanagerCluster
+	WebuiInstance *WebuiCluster
+	VrouterInstance *Vrouter
 	StatusVolume bool
 	LogVolume bool
 	DataVolume bool
@@ -48,26 +55,39 @@ type ClusterResource struct {
 	InitContainer bool
 	NodeInitContainer bool
 	NodeIpList string
+	ServiceAccount bool
 }
 
-func (c *ClusterResource) CreateConfigMap(client client.Client) (*corev1.ConfigMap, error) {
+func (c *ClusterResource) CreateConfigMap(cl client.Client, instance metav1.Object, scheme *runtime.Scheme) error {
 	for _, waitResource := range(c.WaitFor){
-		err = getResourceConfig(c, client, waitResource)
+		err = getResourceConfig(c, cl, waitResource)
 		if err != nil {
-			return nil, err
+			return err
 		}
 	}
-	cm := &corev1.ConfigMap{
+
+	configMap := &corev1.ConfigMap{
 		ObjectMeta: metav1.ObjectMeta{
 			Name: "tf" + c.Name + "cmv1",
 			Namespace: c.InstanceNamespace,
 		},
 		Data: c.ResourceConfig,
 	}
-	return cm, nil
+
+	existingConfigMap := &corev1.ConfigMap{}
+	err = cl.Get(context.TODO(), types.NamespacedName{Name: "tf" + c.Name + "cmv1", Namespace: c.InstanceNamespace}, existingConfigMap)
+	if err != nil && errors.IsNotFound(err) {
+		controllerutil.SetControllerReference(instance, configMap, scheme)
+		err = cl.Create(context.TODO(), configMap)
+		if err != nil {
+			return err
+		}
+	}
+
+	return nil
 }
 
-func (c *ClusterResource) CreateDeployment(client client.Client) (*appsv1.Deployment, error) {
+func (c *ClusterResource) CreateDeployment(cl client.Client, instance metav1.Object, scheme *runtime.Scheme) error {
 
 	for _, container := range(c.Containers){
 		if container.Image == "" {
@@ -99,7 +119,7 @@ func (c *ClusterResource) CreateDeployment(client client.Client) (*appsv1.Deploy
 
 	size64, err := strconv.ParseInt(sizeString, 10, 64)
 	if err != nil {
-		return nil, err
+		return err
 	}
 	size := int32(size64)
 	
@@ -192,9 +212,9 @@ func (c *ClusterResource) CreateDeployment(client client.Client) (*appsv1.Deploy
 	}
 
 	for _, waitResource := range(c.WaitFor){
-		err = getResourceConfig(c, client, waitResource)
+		err = getResourceConfig(c, cl, waitResource)
 		if err != nil {
-			return nil, err
+			return err
 		}
 	}
 
@@ -308,7 +328,6 @@ func (c *ClusterResource) CreateDeployment(client client.Client) (*appsv1.Deploy
 		},
 	}
 
-
 	volumeList = append(volumeList, statusVolume)
 
 	if createLogVolume {
@@ -330,8 +349,13 @@ func (c *ClusterResource) CreateDeployment(client client.Client) (*appsv1.Deploy
 	if createEtcContrailVolume {
 		volumeList = append(volumeList, etcContrailVolume)
 	}
+	var serviceAccountName string
 
-	dep := &appsv1.Deployment{
+	if c.ServiceAccount{
+		serviceAccountName = "contrail-service-account-" + c.Name
+	}
+
+	deployment := &appsv1.Deployment{
 		ObjectMeta: metav1.ObjectMeta{
 			Name: "tf" + c.Name + "-" + c.InstanceName,
 			Namespace: c.InstanceNamespace,
@@ -346,6 +370,7 @@ func (c *ClusterResource) CreateDeployment(client client.Client) (*appsv1.Deploy
 					Labels: map[string]string{"app": c.Name, c.Name + "_cr": c.Name},
 				},
 				Spec: corev1.PodSpec{
+					ServiceAccountName: serviceAccountName,
 					HostNetwork: hostNetworkBool,
 					NodeSelector: map[string]string{
 						"node-role.kubernetes.io/master":"",
@@ -364,25 +389,38 @@ func (c *ClusterResource) CreateDeployment(client client.Client) (*appsv1.Deploy
 			},
 		},		
 	}
-	return dep, nil
+	existingDeployment := &appsv1.Deployment{}
+	err = cl.Get(context.TODO(), types.NamespacedName{Name: "tf" + c.Name + "-" + c.InstanceName, Namespace: c.InstanceNamespace}, existingDeployment)
+	if err != nil && errors.IsNotFound(err) {
+		controllerutil.SetControllerReference(instance, deployment, scheme)
+		err = cl.Create(context.TODO(), deployment)
+		if err != nil {
+			return err
+		}
+	}
+	return nil
 }
 
-func getResourceConfig(c *ClusterResource, client client.Client, resourceType string) error {
+func getResourceConfig(c *ClusterResource, cl client.Client, resourceType string) error {
 	reqLogger := log.WithValues("Request.Namespace", c.InstanceNamespace, "Request.Name", c.InstanceName)
 	reqLogger.Info("getting " + resourceType + " config")
 
 	switch resourceType{
 	case "cassandra":
-		err = client.Get(context.TODO(), types.NamespacedName{Name: c.InstanceName, Namespace: c.InstanceNamespace}, c.CassandraInstance)
+		err = cl.Get(context.TODO(), types.NamespacedName{Name: c.InstanceName, Namespace: c.InstanceNamespace}, c.CassandraInstance)
 
 	case "zookeeper":
-		err = client.Get(context.TODO(), types.NamespacedName{Name: c.InstanceName, Namespace: c.InstanceNamespace}, c.ZookeeperInstance)
+		err = cl.Get(context.TODO(), types.NamespacedName{Name: c.InstanceName, Namespace: c.InstanceNamespace}, c.ZookeeperInstance)
 
 	case "rabbitmq":
-		err = client.Get(context.TODO(), types.NamespacedName{Name: c.InstanceName, Namespace: c.InstanceNamespace}, c.RabbitmqInstance)
+		err = cl.Get(context.TODO(), types.NamespacedName{Name: c.InstanceName, Namespace: c.InstanceNamespace}, c.RabbitmqInstance)
 
 	case "config":
-		err = client.Get(context.TODO(), types.NamespacedName{Name: c.InstanceName, Namespace: c.InstanceNamespace}, c.ConfigInstance)
+		err = cl.Get(context.TODO(), types.NamespacedName{Name: c.InstanceName, Namespace: c.InstanceNamespace}, c.ConfigInstance)
+
+	case "control":
+		err = cl.Get(context.TODO(), types.NamespacedName{Name: c.InstanceName, Namespace: c.InstanceNamespace}, c.ControlInstance)
+
 	}
 
 	if err != nil && errors.IsNotFound(err) {
@@ -391,7 +429,7 @@ func getResourceConfig(c *ClusterResource, client client.Client, resourceType st
 	}
 	reqLogger.Info(resourceType + " instance")
 	configMap := &corev1.ConfigMap{}
-	err = client.Get(context.TODO(), types.NamespacedName{Name: "tf" + resourceType + "cmv1", Namespace: c.InstanceNamespace}, configMap)
+	err = cl.Get(context.TODO(), types.NamespacedName{Name: "tf" + resourceType + "cmv1", Namespace: c.InstanceNamespace}, configMap)
 	if err != nil && errors.IsNotFound(err) {
 		reqLogger.Info(resourceType + " configmap not found")
 		return err
@@ -414,6 +452,9 @@ func getResourceConfig(c *ClusterResource, client client.Client, resourceType st
 	case "config":
 		c.ResourceConfig["CONFIG_NODES"] = configMap.Data["CONTROLLER_NODES"]
 		c.ResourceConfig["ANALYTICS_NODES"] = configMap.Data["CONTROLLER_NODES"]
+
+	case "control":
+		c.ResourceConfig["CONTROL_NODES"] = configMap.Data["CONTROLLER_NODES"]
 	}
 
 	return nil
@@ -538,4 +579,107 @@ func (c ClusterResource) LabelPod(cl client.Client, podName string) (*corev1.Pod
 
 func (c ClusterResource) GetNodeIpList() string {
 	return c.NodeIpList
+}
+
+func (c ClusterResource) CreateRbac(cl client.Client, instance metav1.Object, scheme *runtime.Scheme) error {
+
+
+	//controllerutil.SetControllerReference(instance, dep, r.scheme)
+
+	existingServiceAccount := &corev1.ServiceAccount{}
+	err = cl.Get(context.TODO(), types.NamespacedName{Name: "contrail-service-account-" + c.Name, Namespace: c.InstanceNamespace}, existingServiceAccount)
+	if err != nil && errors.IsNotFound(err) {
+		serviceAccount := createServiceAccount(c.Name, c.InstanceNamespace)
+		controllerutil.SetControllerReference(instance, serviceAccount, scheme)
+		err = cl.Create(context.TODO(), serviceAccount)
+		if err != nil {
+			return err
+		}
+	}
+	
+	existingClusterRole := &rbacv1.ClusterRole{}
+	err = cl.Get(context.TODO(), types.NamespacedName{Name: "contrail-cluster-role-" + c.Name}, existingClusterRole)
+	if err != nil && errors.IsNotFound(err) {
+		clusterRole := createClusterRole(c.Name, c.InstanceNamespace)
+		controllerutil.SetControllerReference(instance, clusterRole, scheme)
+		err = cl.Create(context.TODO(), clusterRole)
+		if err != nil {
+			return err
+		}
+	}
+
+	existingClusterRoleBinding := &rbacv1.ClusterRoleBinding{}
+	err = cl.Get(context.TODO(), types.NamespacedName{Name: "contrail-cluster-role-binding-" + c.Name}, existingClusterRoleBinding)
+	if err != nil && errors.IsNotFound(err) {
+		clusterRoleBinding := createClusterRoleBinding(c.Name, c.InstanceNamespace)
+		controllerutil.SetControllerReference(instance, clusterRoleBinding, scheme)
+		err = cl.Create(context.TODO(), clusterRoleBinding)
+		if err != nil {
+			return err
+		}
+	}
+	return nil
+}
+
+func createServiceAccount(Name string, Namespace string) *corev1.ServiceAccount {
+	sa := &corev1.ServiceAccount {
+		TypeMeta: metav1.TypeMeta{
+			APIVersion: "v1",
+			Kind:       "ServiceAccount",
+		},
+		ObjectMeta: metav1.ObjectMeta{
+			Name:      "contrail-service-account-" + Name,
+			Namespace: Namespace,
+		},
+	}
+	return sa
+}
+
+func createClusterRoleBinding(Name string, Namespace string) *rbacv1.ClusterRoleBinding {
+	crb := &rbacv1.ClusterRoleBinding {
+		TypeMeta: metav1.TypeMeta{
+			APIVersion: "rbac/v1",
+			Kind:       "ClusterRoleBinding",
+		},
+		ObjectMeta: metav1.ObjectMeta{
+			Name:      "contrail-cluster-role-binding-" + Name,
+			Namespace: Namespace,
+		},
+		Subjects: []rbacv1.Subject{{
+			Kind: "ServiceAccount",
+			Name: "contrail-service-account-" + Name,
+			Namespace: Namespace,
+			}},
+		RoleRef: rbacv1.RoleRef{
+			APIGroup: "rbac.authorization.k8s.io",
+			Kind: "ClusterRole",
+			Name: "contrail-cluster-role-" + Name,
+			},
+	}
+	return crb
+}
+
+func createClusterRole(Name string, Namespace string) *rbacv1.ClusterRole {
+	cr := &rbacv1.ClusterRole {
+		TypeMeta: metav1.TypeMeta{
+			APIVersion: "rbac/v1",
+			Kind:       "ClusterRole",
+		},
+		ObjectMeta: metav1.ObjectMeta{
+			Name:      "contrail-cluster-role-" + Name,
+			Namespace: Namespace,
+		},
+		Rules: []rbacv1.PolicyRule{{
+			Verbs: []string{
+				"*",
+			},
+			APIGroups: []string{
+				"*",
+			},
+			Resources: []string{
+				"*",
+			},
+		}},
+	}
+	return cr
 }

@@ -20,9 +20,10 @@ import (
 /*
 
 
-	"github.com/michaelhenkel/tungstenfabric-operator/pkg/controller/kubemanagercluster"
+
 	"github.com/michaelhenkel/tungstenfabric-operator/pkg/controller/vrouter"
 */
+	"github.com/michaelhenkel/tungstenfabric-operator/pkg/controller/kubemanagercluster"
 	"github.com/michaelhenkel/tungstenfabric-operator/pkg/controller/controlcluster"
 	"github.com/michaelhenkel/tungstenfabric-operator/pkg/controller/configcluster"
 	"github.com/michaelhenkel/tungstenfabric-operator/pkg/controller/rabbitmqcluster"
@@ -113,15 +114,18 @@ func (r *ReconcileTungstenfabricConfig) Reconcile(request reconcile.Request) (re
 
 
 
-	functionMap["kubemanagercluster"] = kubemanagercluster.Add
-	crdMap["KubemanagerCluster"] = functionMap
+
 
 	functionMap["vrouter"] = vrouter.Add
 	crdMap["Vrouter"] = functionMap
 */
+
+	functionMap["kubemanagercluster"] = kubemanagercluster.Add
+	crdMap["KubemanagerCluster"] = functionMap
+
 	functionMap["controlcluster"] = controlcluster.Add
 	crdMap["ControlCluster"] = functionMap
-	
+
 	functionMap["configcluster"] = configcluster.Add
 	crdMap["ConfigCluster"] = functionMap
 

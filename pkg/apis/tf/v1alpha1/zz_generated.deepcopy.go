@@ -211,6 +211,21 @@ func (in *ClusterResource) DeepCopyInto(out *ClusterResource) {
 		*out = new(ControlCluster)
 		(*in).DeepCopyInto(*out)
 	}
+	if in.KubemanagerInstance != nil {
+		in, out := &in.KubemanagerInstance, &out.KubemanagerInstance
+		*out = new(KubemanagerCluster)
+		(*in).DeepCopyInto(*out)
+	}
+	if in.WebuiInstance != nil {
+		in, out := &in.WebuiInstance, &out.WebuiInstance
+		*out = new(WebuiCluster)
+		(*in).DeepCopyInto(*out)
+	}
+	if in.VrouterInstance != nil {
+		in, out := &in.VrouterInstance, &out.VrouterInstance
+		*out = new(Vrouter)
+		(*in).DeepCopyInto(*out)
+	}
 	return
 }
 
