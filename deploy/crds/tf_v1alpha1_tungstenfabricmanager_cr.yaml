@@ -4,6 +4,7 @@ metadata:
   name: cluster-1
 spec:
   images:
+    init: "busybox"
     nodemanager: "docker.io/michaelhenkel/contrail-nodemgr:5.1.1-dev3"
     nodemanagerconfig: "docker.io/michaelhenkel/contrail-nodemgr:5.1.1-dev3"
     nodemanageranalytics: "docker.io/michaelhenkel/contrail-nodemgr:5.1.1-dev3"
@@ -36,11 +37,11 @@ spec:
     - "ConfigCluster"
     - "ControlCluster"
     - "KubemanagerCluster"
-#   - "WebuiCluster"
+    - "WebuiCluster"
 #   - "Vrouter"
   general:
     size: "1"
-    hostNetwork: "false"
+    hostNetwork: "true"
     pullPolicy: "Always"
     aaaMode: ""
     authMode: ""
@@ -84,4 +85,3 @@ spec:
     size: "1"
   webuiConfig:
     size: "1"
-    BLA: "BLA"

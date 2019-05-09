@@ -9,3 +9,11 @@ spec:
       logvolumepath: "/var/log/contrail"
     - name: webuijob
       logvolumepath: "/var/log/contrail"
+  initcontainers:
+    - name: init
+      statusvolume: true
+      command: ["sh","-c","until grep ready /tmp/podinfo/pod_labels > /dev/null 2>&1; do sleep 1; done"]   
+    - name: nodeinit
+      privileged: true
+      hostusrbinvolume: true
+

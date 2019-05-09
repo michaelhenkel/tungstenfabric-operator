@@ -83,6 +83,17 @@ func (in *CassandraClusterSpec) DeepCopyInto(out *CassandraClusterSpec) {
 			}
 		}
 	}
+	if in.InitContainers != nil {
+		in, out := &in.InitContainers, &out.InitContainers
+		*out = make([]*Container, len(*in))
+		for i := range *in {
+			if (*in)[i] != nil {
+				in, out := &(*in)[i], &(*out)[i]
+				*out = new(Container)
+				(*in).DeepCopyInto(*out)
+			}
+		}
+	}
 	if in.ConfigParameters != nil {
 		in, out := &in.ConfigParameters, &out.ConfigParameters
 		*out = make(map[string]string, len(*in))
@@ -155,6 +166,17 @@ func (in *ClusterResource) DeepCopyInto(out *ClusterResource) {
 	*out = *in
 	if in.Containers != nil {
 		in, out := &in.Containers, &out.Containers
+		*out = make([]*Container, len(*in))
+		for i := range *in {
+			if (*in)[i] != nil {
+				in, out := &(*in)[i], &(*out)[i]
+				*out = new(Container)
+				(*in).DeepCopyInto(*out)
+			}
+		}
+	}
+	if in.InitContainers != nil {
+		in, out := &in.InitContainers, &out.InitContainers
 		*out = make([]*Container, len(*in))
 		for i := range *in {
 			if (*in)[i] != nil {
@@ -314,6 +336,17 @@ func (in *ConfigClusterSpec) DeepCopyInto(out *ConfigClusterSpec) {
 			}
 		}
 	}
+	if in.InitContainers != nil {
+		in, out := &in.InitContainers, &out.InitContainers
+		*out = make([]*Container, len(*in))
+		for i := range *in {
+			if (*in)[i] != nil {
+				in, out := &(*in)[i], &(*out)[i]
+				*out = new(Container)
+				(*in).DeepCopyInto(*out)
+			}
+		}
+	}
 	if in.ConfigParameters != nil {
 		in, out := &in.ConfigParameters, &out.ConfigParameters
 		*out = make(map[string]string, len(*in))
@@ -390,6 +423,16 @@ func (in *Container) DeepCopyInto(out *Container) {
 		for key, val := range *in {
 			(*out)[key] = val
 		}
+	}
+	if in.Command != nil {
+		in, out := &in.Command, &out.Command
+		*out = make([]string, len(*in))
+		copy(*out, *in)
+	}
+	if in.LifeCycleScript != nil {
+		in, out := &in.LifeCycleScript, &out.LifeCycleScript
+		*out = make([]string, len(*in))
+		copy(*out, *in)
 	}
 	return
 }
@@ -484,6 +527,17 @@ func (in *ControlClusterSpec) DeepCopyInto(out *ControlClusterSpec) {
 		*out = make(map[string]string, len(*in))
 		for key, val := range *in {
 			(*out)[key] = val
+		}
+	}
+	if in.InitContainers != nil {
+		in, out := &in.InitContainers, &out.InitContainers
+		*out = make([]*Container, len(*in))
+		for i := range *in {
+			if (*in)[i] != nil {
+				in, out := &(*in)[i], &(*out)[i]
+				*out = new(Container)
+				(*in).DeepCopyInto(*out)
+			}
 		}
 	}
 	if in.General != nil {
@@ -653,6 +707,17 @@ func (in *KubemanagerClusterSpec) DeepCopyInto(out *KubemanagerClusterSpec) {
 			}
 		}
 	}
+	if in.InitContainers != nil {
+		in, out := &in.InitContainers, &out.InitContainers
+		*out = make([]*Container, len(*in))
+		for i := range *in {
+			if (*in)[i] != nil {
+				in, out := &(*in)[i], &(*out)[i]
+				*out = new(Container)
+				(*in).DeepCopyInto(*out)
+			}
+		}
+	}
 	if in.ConfigParameters != nil {
 		in, out := &in.ConfigParameters, &out.ConfigParameters
 		*out = make(map[string]string, len(*in))
@@ -786,6 +851,17 @@ func (in *RabbitmqClusterSpec) DeepCopyInto(out *RabbitmqClusterSpec) {
 	*out = *in
 	if in.Containers != nil {
 		in, out := &in.Containers, &out.Containers
+		*out = make([]*Container, len(*in))
+		for i := range *in {
+			if (*in)[i] != nil {
+				in, out := &(*in)[i], &(*out)[i]
+				*out = new(Container)
+				(*in).DeepCopyInto(*out)
+			}
+		}
+	}
+	if in.InitContainers != nil {
+		in, out := &in.InitContainers, &out.InitContainers
 		*out = make([]*Container, len(*in))
 		for i := range *in {
 			if (*in)[i] != nil {
@@ -1129,6 +1205,17 @@ func (in *VrouterSpec) DeepCopyInto(out *VrouterSpec) {
 			}
 		}
 	}
+	if in.InitContainers != nil {
+		in, out := &in.InitContainers, &out.InitContainers
+		*out = make([]*Container, len(*in))
+		for i := range *in {
+			if (*in)[i] != nil {
+				in, out := &(*in)[i], &(*out)[i]
+				*out = new(Container)
+				(*in).DeepCopyInto(*out)
+			}
+		}
+	}
 	if in.ConfigParameters != nil {
 		in, out := &in.ConfigParameters, &out.ConfigParameters
 		*out = make(map[string]string, len(*in))
@@ -1241,6 +1328,17 @@ func (in *WebuiClusterSpec) DeepCopyInto(out *WebuiClusterSpec) {
 	*out = *in
 	if in.Containers != nil {
 		in, out := &in.Containers, &out.Containers
+		*out = make([]*Container, len(*in))
+		for i := range *in {
+			if (*in)[i] != nil {
+				in, out := &(*in)[i], &(*out)[i]
+				*out = new(Container)
+				(*in).DeepCopyInto(*out)
+			}
+		}
+	}
+	if in.InitContainers != nil {
+		in, out := &in.InitContainers, &out.InitContainers
 		*out = make([]*Container, len(*in))
 		for i := range *in {
 			if (*in)[i] != nil {
@@ -1383,6 +1481,17 @@ func (in *ZookeeperClusterSpec) DeepCopyInto(out *ZookeeperClusterSpec) {
 	*out = *in
 	if in.Containers != nil {
 		in, out := &in.Containers, &out.Containers
+		*out = make([]*Container, len(*in))
+		for i := range *in {
+			if (*in)[i] != nil {
+				in, out := &(*in)[i], &(*out)[i]
+				*out = new(Container)
+				(*in).DeepCopyInto(*out)
+			}
+		}
+	}
+	if in.InitContainers != nil {
+		in, out := &in.InitContainers, &out.InitContainers
 		*out = make([]*Container, len(*in))
 		for i := range *in {
 			if (*in)[i] != nil {

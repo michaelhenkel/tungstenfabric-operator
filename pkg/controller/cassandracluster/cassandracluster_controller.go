@@ -93,7 +93,7 @@ func (r *ReconcileCassandraCluster) Reconcile(request reconcile.Request) (reconc
 		General: instance.Spec.General,
 		ResourceConfig: configMap,
 		BaseInstance: baseInstance,
-		InitContainer: true,
+		InitContainers: instance.Spec.InitContainers,
 		Type: instance.Spec.Type,
 	}
 	resource = clusterResource

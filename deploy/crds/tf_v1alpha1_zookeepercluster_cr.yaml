@@ -8,3 +8,7 @@ spec:
     - name: zookeeper
       logvolumepath: "/var/log/zookeeker"
       datavolumepath: "/var/lib/zookeeper"
+  initcontainers:
+    - name: init
+      statusvolume: true
+      command: ["sh","-c","until grep ready /tmp/podinfo/pod_labels > /dev/null 2>&1; do sleep 1; done"]   

@@ -32,4 +32,11 @@ spec:
       env:
         "NODE_TYPE": "analytics"
         "DOCKER_HOST": "unix://mnt/docker.sock"
+  initcontainers:
+    - name: init
+      statusvolume: true
+      command: ["sh","-c","until grep ready /tmp/podinfo/pod_labels > /dev/null 2>&1; do sleep 1; done"]   
+    - name: nodeinit
+      privileged: true
+      hostusrbinvolume: true 
 

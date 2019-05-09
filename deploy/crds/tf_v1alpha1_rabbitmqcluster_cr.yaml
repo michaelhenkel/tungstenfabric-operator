@@ -8,3 +8,7 @@ spec:
     - name: rabbitmq
       logvolumepath: "/var/log/rabbitmq"
       datavolumepath: "/var/lib/rabbitmq"
+  initcontainers:
+    - name: init
+      statusvolume: true
+      command: ["sh","-c","until grep ready /tmp/podinfo/pod_labels > /dev/null 2>&1; do sleep 1; done"]   

@@ -5,4 +5,39 @@ metadata:
 spec:
   type: daemonset
   containers:
-    - name: "agent"
+    - name: agent
+      logvolumepath: "/var/log/contrail"
+      devvolume: true
+      networkscriptsvolume: true
+      hostbinvolume: true
+      usrsrcvolume: true
+      libmodulesvolume: true
+      varlibcontrailvolume: true
+      varcrashesvolume: true
+      privileged: true
+      lifecyclescript: ["/cleanup.sh"]
+  initcontainers:  
+    - name: nodeinit
+      privileged: true
+      hostusrbinvolume: true
+    - name: vrouterkernelinit
+      privileged: true
+      hostusrbinvolume: true
+      usrsrcvolume: true
+      libmodulesvolume: true
+      networkscriptsvolume: true
+      hostbinvolume: true
+    - name: vrouternicinit
+      privileged: true
+      hostusrbinvolume: true
+      usrsrcvolume: true
+      networkscriptsvolume: true   
+      hostbinvolume: true  
+    - name: vroutercniinit
+      privileged: true
+      hostusrbinvolume: true
+      varlibcontrailvolume: true
+      etccnivolume: true
+      optcnibinvolume: true
+      varlogcontrailcnivolume: true
+      logvolumepath: "/var/log/contrail"

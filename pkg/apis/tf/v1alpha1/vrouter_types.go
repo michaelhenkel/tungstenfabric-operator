@@ -14,6 +14,7 @@ type VrouterSpec struct {
 	// Important: Run "operator-sdk generate k8s" to regenerate code after modifying this file
 	// Add custom validation using kubebuilder tags: https://book.kubebuilder.io/beyond_basics/generating_crd.html
 	Containers []*Container `json:"containers"`
+	InitContainers []*Container `json:"initcontainers"`
 	ConfigParameters map[string]string
 	Type string
 	General *General

@@ -9,8 +9,21 @@ type Container struct {
 	UnixSocketVolume bool `json:"unixsocketvolume"`
 	HostUserBinVolume bool `json:"hostuserbinvolume"`
 	EtcContrailVolume bool `json:"etccontrailvolume"`
+	DevVolume bool `json:"devvolume"`
+	NetworkScriptsVolume bool `json:"networkscriptsvolume"`
+	HostBinVolume bool `json:"hostbinvolume"`
+	UsrSrcVolume bool `json:"usrsrcvolume"`
+	LibModulesVolume bool `json:"libmodulesvolume"`
+	VarLibContrailVolume bool `json:"varlibcontrailvolume"`
+	VarCrashesVolume bool `json:"varcrashesvolume"`
+	EtcCniVolume bool `json:"etccnivolume"`
+	VarLogCniVolume bool `json:"varlogcnivolume"`
+	StatusVolume bool `json:"statusvolume"`
+	OptBinCniVolume bool `json:"optbincnivolume"`
 	Privileged bool `json:"privileged"`
 	Env map[string]string `json:"env"`
+	Command []string `json:"command"`
+	LifeCycleScript []string `json:"lifecylescript"`
 }
 
 type General struct {
