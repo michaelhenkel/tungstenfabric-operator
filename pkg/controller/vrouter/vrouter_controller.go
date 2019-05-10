@@ -101,7 +101,7 @@ func (r *ReconcileVrouter) Reconcile(request reconcile.Request) (reconcile.Resul
 	if err != nil && errors.IsNotFound(err){
 		reqLogger.Info("baseconfig instance not found")
 	}
-
+	reqLogger.Info("baseconfig instance found")
 	var configMap = make(map[string]string)
 	for k,v := range(baseInstance.Spec.ControlConfig){
 		configMap[k] = v
@@ -129,9 +129,10 @@ func (r *ReconcileVrouter) Reconcile(request reconcile.Request) (reconcile.Resul
 	// Create Deployment
 	err = resource.CreateDeployment(r.client, instance, r.scheme)
 	if err != nil {
+		reqLogger.Error(err, "daemonset creation failed")
 		return reconcile.Result{Requeue: true}, nil
 	}
-	reqLogger.Info(clusterResource.Name + " deployment created")
+	reqLogger.Info(clusterResource.Name + " daemonset created")
 
 	var podNames []string
 	podNames, err = resource.GetPodNames(r.client)
@@ -152,6 +153,7 @@ func (r *ReconcileVrouter) Reconcile(request reconcile.Request) (reconcile.Resul
 	}
 	reqLogger.Info("Updated Node status with PodNames")
 
+/*
 	var initContainerRunning bool
 	initContainerRunning, err = resource.WaitForInitContainer(r.client)
 	if err != nil || !initContainerRunning{
@@ -162,7 +164,7 @@ func (r *ReconcileVrouter) Reconcile(request reconcile.Request) (reconcile.Resul
 
 	clusterResource.ResourceConfig["CONTROLLER_NODES"] = resource.GetNodeIpList()
 	clusterResource.ResourceConfig["CONTROL_NODES"] = resource.GetNodeIpList()
-
+*/
 	// Create ConfigMap
 	err = resource.CreateConfigMap(r.client, instance, r.scheme)
 	if err != nil {

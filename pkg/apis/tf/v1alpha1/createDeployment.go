@@ -150,7 +150,7 @@ func createVolumeMountList(cr *ClusterResource, container *Container) *[]corev1.
 	if container.HostBinVolume{
 		hostBinVolume := corev1.VolumeMount{
 			Name: "host-bin",
-			MountPath: "/bin",
+			MountPath: "/host/bin",
 		}
 		volumeMountList = append(volumeMountList, hostBinVolume)
 		cr.VolumeList["createHostBinVolume"] = true
@@ -197,7 +197,7 @@ func createVolumeMountList(cr *ClusterResource, container *Container) *[]corev1.
 	}
 	if container.OptBinCniVolume{
 		optBinCniVolume := corev1.VolumeMount{
-			Name: "opt-bin-cni",
+			Name: "opt-cni-bin",
 			MountPath: "/host/opt_cni_bin",
 		}
 		volumeMountList = append(volumeMountList, optBinCniVolume)
@@ -610,7 +610,10 @@ func (c *ClusterResource) CreateDeployment(cl client.Client, instance metav1.Obj
 	selector := metav1.LabelSelector{
 		MatchLabels: map[string]string{"app": c.Name, c.Name + "_cr": c.Name},
 	}
-
+	nodeSelector := map[string]string{}
+	if c.Type == "deployment"{
+		nodeSelector["node-role.kubernetes.io/master"] = ""
+	}
 	podTemplateSpec := corev1.PodTemplateSpec{
 		ObjectMeta: metav1.ObjectMeta{
 			Labels: map[string]string{"app": c.Name, c.Name + "_cr": c.Name},
@@ -618,9 +621,7 @@ func (c *ClusterResource) CreateDeployment(cl client.Client, instance metav1.Obj
 		Spec: corev1.PodSpec{
 			ServiceAccountName: serviceAccountName,
 			HostNetwork: hostNetworkBool,
-			NodeSelector: map[string]string{
-				"node-role.kubernetes.io/master":"",
-			},
+			NodeSelector: nodeSelector,
 			Tolerations: []corev1.Toleration{{
 				Operator: corev1.TolerationOpExists,
 				Effect: corev1.TaintEffectNoSchedule,

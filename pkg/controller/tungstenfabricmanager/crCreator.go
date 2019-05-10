@@ -264,7 +264,7 @@ func (r *ReconcileTungstenfabricManager) Vrouter(
 		Type: "daemonset",
 		Containers: []*tfv1alpha1.Container{
 			{
-				Name: "agent",
+				Name: "vrouteragent",
 				Privileged: true,
 				LifeCycleScript: []string{"/cleanup.sh"},
 				LogVolumePath: "/var/log/contrail",
@@ -275,6 +275,15 @@ func (r *ReconcileTungstenfabricManager) Vrouter(
 				LibModulesVolume: true,
 				VarLibContrailVolume: true,
 				VarCrashesVolume: true,
+				ResourceConfigMap: true,
+			},{
+				Name: "nodemanager",
+				LogVolumePath: "/var/log/contrail",
+				UnixSocketVolume: true,
+				Env: map[string]string{
+					"NODE_TYPE": "vrouter",
+					"DOCKER_HOST": "unix://mnt/docker.sock",
+				},
 				ResourceConfigMap: true,
 			},
 		},
@@ -298,11 +307,12 @@ func (r *ReconcileTungstenfabricManager) Vrouter(
 				Privileged: true,
 				HostUserBinVolume: true,
 				UsrSrcVolume: true,
+				LibModulesVolume: true,
 				NetworkScriptsVolume: true,
 				HostBinVolume: true,
 				ResourceConfigMap: true,
 			},{
-				Name: "vroutercniinit",
+				Name: "vroutercni",
 				Privileged: true,
 				HostUserBinVolume: true,
 				VarLibContrailVolume: true,
