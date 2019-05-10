@@ -16,10 +16,12 @@ spec:
       varcrashesvolume: true
       privileged: true
       lifecyclescript: ["/cleanup.sh"]
+      resourceconfigmap: true
   initcontainers:  
     - name: nodeinit
       privileged: true
       hostusrbinvolume: true
+      resourceconfigmap: true
     - name: vrouterkernelinit
       privileged: true
       hostusrbinvolume: true
@@ -27,12 +29,14 @@ spec:
       libmodulesvolume: true
       networkscriptsvolume: true
       hostbinvolume: true
+      resourceconfigmap: true
     - name: vrouternicinit
       privileged: true
       hostusrbinvolume: true
       usrsrcvolume: true
       networkscriptsvolume: true   
       hostbinvolume: true  
+      resourceconfigmap: true
     - name: vroutercniinit
       privileged: true
       hostusrbinvolume: true
@@ -41,3 +45,4 @@ spec:
       optcnibinvolume: true
       varlogcontrailcnivolume: true
       logvolumepath: "/var/log/contrail"
+      resourceconfigmap: true

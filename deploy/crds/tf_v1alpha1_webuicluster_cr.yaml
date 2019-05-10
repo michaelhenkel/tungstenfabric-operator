@@ -7,8 +7,10 @@ spec:
   containers:
     - name: webuiweb
       logvolumepath: "/var/log/contrail"
+      resourceconfigmap: true
     - name: webuijob
       logvolumepath: "/var/log/contrail"
+      resourceconfigmap: true
   initcontainers:
     - name: init
       statusvolume: true
@@ -16,4 +18,5 @@ spec:
     - name: nodeinit
       privileged: true
       hostusrbinvolume: true
+      resourceconfigmap: true
 

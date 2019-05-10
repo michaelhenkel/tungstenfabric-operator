@@ -24,6 +24,7 @@ type Container struct {
 	Env map[string]string `json:"env"`
 	Command []string `json:"command"`
 	LifeCycleScript []string `json:"lifecylescript"`
+	ResourceConfigMap bool `json:"resourceconfigmap"`
 }
 
 type General struct {

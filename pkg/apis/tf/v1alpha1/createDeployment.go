@@ -189,8 +189,8 @@ func createVolumeMountList(cr *ClusterResource, container *Container) *[]corev1.
 	}
 	if container.EtcCniVolume{
 		etcCniVolume := corev1.VolumeMount{
-			Name: "var-crashes",
-			MountPath: "/var/contrail/crashes",
+			Name: "etc-cni",
+			MountPath: "/host/etc_cni",
 		}
 		volumeMountList = append(volumeMountList, etcCniVolume)
 		cr.VolumeList["createEtcCniVolume"] = true
@@ -198,15 +198,15 @@ func createVolumeMountList(cr *ClusterResource, container *Container) *[]corev1.
 	if container.OptBinCniVolume{
 		optBinCniVolume := corev1.VolumeMount{
 			Name: "opt-bin-cni",
-			MountPath: "/opt/bin/cni",
+			MountPath: "/host/opt_cni_bin",
 		}
 		volumeMountList = append(volumeMountList, optBinCniVolume)
 		cr.VolumeList["createOptBinCniVolume"] = true
 	}
 	if container.VarLogCniVolume{
 		varLogCniVolume := corev1.VolumeMount{
-			Name: "var-crashes",
-			MountPath: "/var/contrail/crashes",
+			Name: "var-log-contrail-cni",
+			MountPath: "/host/log_cni",
 		}
 		volumeMountList = append(volumeMountList, varLogCniVolume)
 		cr.VolumeList["createVarLogCniVolume"] = true
@@ -434,16 +434,6 @@ func createVolumesList(cr *ClusterResource) *[]corev1.Volume{
 
 func (c *ClusterResource) CreateDeployment(cl client.Client, instance metav1.Object, scheme *runtime.Scheme) error {
 
-	for _, container := range(c.Containers){
-		if container.Image == "" {
-			container.Image = c.BaseInstance.Spec.Images[container.Name]
-		}
-
-		if container.PullPolicy == "" {
-			container.PullPolicy = c.BaseInstance.Spec.General.PullPolicy
-		}
-		
-	}
 	var sizeString string
 	var hostNetworkString string
 	if c.General != nil {
@@ -479,6 +469,25 @@ func (c *ClusterResource) CreateDeployment(cl client.Client, instance metav1.Obj
 	var containerList []corev1.Container
 	for _, container := range(c.Containers){
 
+		if container.Image == "" {
+			container.Image = c.BaseInstance.Spec.Images[container.Name]
+		}
+
+		if container.PullPolicy == "" {
+			container.PullPolicy = c.BaseInstance.Spec.General.PullPolicy
+		}
+
+		var envFrom []corev1.EnvFromSource
+		if container.ResourceConfigMap{
+			envFrom = []corev1.EnvFromSource{{
+				ConfigMapRef: &corev1.ConfigMapEnvSource{
+					LocalObjectReference: corev1.LocalObjectReference{
+						Name: "tf" + c.Name + "cmv1",
+					},
+				},
+			}}
+		}
+
 		var envList []corev1.EnvVar
 		if len(container.Env) > 0 {
 			for k, v := range(container.Env){
@@ -492,7 +501,7 @@ func (c *ClusterResource) CreateDeployment(cl client.Client, instance metav1.Obj
 
 		volumeMountList := createVolumeMountList(c, container)
 
-		var lifeCycle corev1.Lifecycle
+		lifeCycle := corev1.Lifecycle{}
 		if container.LifeCycleScript != nil {
 			lifeCycle = corev1.Lifecycle{
 				PreStop: &corev1.Handler{
@@ -510,13 +519,7 @@ func (c *ClusterResource) CreateDeployment(cl client.Client, instance metav1.Obj
 			},
 			Lifecycle: &lifeCycle,
 			ImagePullPolicy: corev1.PullPolicy(container.PullPolicy),
-			EnvFrom: []corev1.EnvFromSource{{
-				ConfigMapRef: &corev1.ConfigMapEnvSource{
-					LocalObjectReference: corev1.LocalObjectReference{
-						Name: "tf" + c.Name + "cmv1",
-					},
-				},
-			}},
+			EnvFrom: envFrom,
 			Env: envList,
 			VolumeMounts: *volumeMountList,
 		}
@@ -525,6 +528,14 @@ func (c *ClusterResource) CreateDeployment(cl client.Client, instance metav1.Obj
 
 	var initContainerList []corev1.Container
 	for _, container := range(c.InitContainers){
+
+		if container.Image == "" {
+			container.Image = c.BaseInstance.Spec.Images[container.Name]
+		}
+
+		if container.PullPolicy == "" {
+			container.PullPolicy = c.BaseInstance.Spec.General.PullPolicy
+		}
 
 		var envList []corev1.EnvVar
 		if len(container.Env) > 0 {
@@ -544,16 +555,20 @@ func (c *ClusterResource) CreateDeployment(cl client.Client, instance metav1.Obj
 		envList = append(envList, statusImageEnv)
 
 		volumeMountList := createVolumeMountList(c, container)
-
-		var lifeCycle corev1.Lifecycle
-		if container.LifeCycleScript != nil {
-			lifeCycle = corev1.Lifecycle{
-				PreStop: &corev1.Handler{
-					Exec: &corev1.ExecAction{
-						Command: container.LifeCycleScript,
+		
+		var envFrom []corev1.EnvFromSource
+		if container.ResourceConfigMap{
+			envFrom = []corev1.EnvFromSource{{
+				ConfigMapRef: &corev1.ConfigMapEnvSource{
+					LocalObjectReference: corev1.LocalObjectReference{
+						Name: "tf" + c.Name + "cmv1",
 					},
-				},				
-			}
+				},
+			}}
+		}
+		var command []string
+		if container.Command != nil{
+			command = container.Command
 		}
 
 		initContainer := corev1.Container{
@@ -563,17 +578,12 @@ func (c *ClusterResource) CreateDeployment(cl client.Client, instance metav1.Obj
 				Privileged: &container.Privileged,
 			},
 			ImagePullPolicy: corev1.PullPolicy(container.PullPolicy),
-			Lifecycle: &lifeCycle,
-			EnvFrom: []corev1.EnvFromSource{{
-				ConfigMapRef: &corev1.ConfigMapEnvSource{
-					LocalObjectReference: corev1.LocalObjectReference{
-						Name: "tf" + c.Name + "cmv1",
-					},
-				},
-			}},
+			EnvFrom: envFrom,
+			Command: command,
 			Env: envList,
 			VolumeMounts: *volumeMountList,
 		}
+
 		initContainerList = append(initContainerList, initContainer)
 	}
 

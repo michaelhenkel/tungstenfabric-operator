@@ -152,6 +152,8 @@ spec:
     listKind: TungstenfabricManagerList
     plural: tungstenfabricmanagers
     singular: tungstenfabricmanager
+    shortNames:
+      - tm
   scope: Namespaced
   subresources:
     status: {}

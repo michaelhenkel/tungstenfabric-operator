@@ -5,6 +5,7 @@ metadata:
   name: cluster-1
 spec:
   images:
+    init: "busybox"
     nodemanager: "docker.io/michaelhenkel/contrail-nodemgr:5.1.1-dev3"
     nodemanagerconfig: "docker.io/michaelhenkel/contrail-nodemgr:5.1.1-dev3"
     nodemanageranalytics: "docker.io/michaelhenkel/contrail-nodemgr:5.1.1-dev3"
@@ -28,19 +29,26 @@ spec:
     vrouternicinit: "docker.io/michaelhenkel/contrail-vrouter-nic-init:5.1.1-dev3"
     vroutercni: "docker.io/michaelhenkel/contrail-kubernetes-cni-init:5.1.1-dev3"
     vrouteragent: "docker.io/michaelhenkel/contrail-vrouter-agent:5.1.1-dev3"
-    webuiWeb: "docker.io/michaelhenkel/contrail-controller-webui-web:5.1.1-dev3"
-    webuiJob: "docker.io/michaelhenkel/contrail-controller-webui-job:5.1.1-dev3"
+    webuiweb: "docker.io/michaelhenkel/contrail-controller-webui-web:5.1.1-dev3"
+    webuijob: "docker.io/michaelhenkel/contrail-controller-webui-job:5.1.1-dev3"
+  startResources:
+    - "CassandraCluster"
+    - "ZookeeperCluster"
+    - "RabbitmqCluster"
+    - "ConfigCluster"
+    - "ControlCluster"
+    - "KubemanagerCluster"
+    - "WebuiCluster"
+    - "Vrouter"
   general:
-    size: "1"
-    hostNetwork: "false"
+    size: "3"
+    hostNetwork: "true"
     pullPolicy: "Always"
     aaaMode: ""
     authMode: ""
     cloudAdminRole: ""
     globalReadOnlyRole: ""
   kubemanagerConfig:
-    size: "1"
-    service:
     KUBERNETES_API_SERVER: "10.96.0.1"
     KUBERNETES_API_SECURE_PORT: "443"
     KUBERNETES_POD_SUBNETS: "10.32.0.0/12"
@@ -50,7 +58,6 @@ spec:
     KUBERNETES_IP_FABRIC_SNAT: "true"
     K8S_TOKEN_FILE: "/var/run/secrets/kubernetes.io/serviceaccount/token"
   cassandraConfig:
-    size: "1"
     CASSANDRA_LISTEN_ADDRESS: "auto"
     CASSANDRA_PORT: "9160"
     CASSANDRA_CQL_PORT: "9042"
@@ -61,19 +68,13 @@ spec:
     CASSANDRA_CLUSTER_NAME: "ContrailConfigDB"
     NODE_TYPE: "config-database"
   zookeeperConfig:
-    size: "1"
     ZOOKEEPER_PORT: "2181"
     ZOOKEEPER_PORTS: "2888:3888"
     NODE_TYPE: "config-database"
   rabbitmqConfig:
-    size: "1"
     RABBITMQ_NODE_PORT: "5673"
     RABBITMQ_ERLANG_COOKIE: "47EFF3BB-4786-46E0-A5BB-58455B3C2CB4"
     NODE_TYPE: "config-database"
   configConfig:
-    size: "1"
   controlConfig:
-    size: "1"
   webuiConfig:
-    size: "1"
-    BLA: "BLA"

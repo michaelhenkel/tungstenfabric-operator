@@ -8,6 +8,7 @@ spec:
     - name: zookeeper
       logvolumepath: "/var/log/zookeeker"
       datavolumepath: "/var/lib/zookeeper"
+      resourceconfigmap: true
   initcontainers:
     - name: init
       statusvolume: true

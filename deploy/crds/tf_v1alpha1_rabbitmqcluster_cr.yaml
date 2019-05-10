@@ -8,6 +8,7 @@ spec:
     - name: rabbitmq
       logvolumepath: "/var/log/rabbitmq"
       datavolumepath: "/var/lib/rabbitmq"
+      resourceconfigmap: true
   initcontainers:
     - name: init
       statusvolume: true

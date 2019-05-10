@@ -18,25 +18,32 @@ func (r *ReconcileTungstenfabricManager) ConfigCluster(
 			{
 				Name: "api",
 				LogVolumePath: "/var/log/contrail",
+				ResourceConfigMap: true,
 			},{
 				Name: "devicemanager",
 				LogVolumePath: "/var/log/contrail",
+				ResourceConfigMap: true,
 			},{
 				Name: "schematransformer",
 				LogVolumePath: "/var/log/contrail",
+				ResourceConfigMap: true,
 			},{
 				Name: "servicemonitor",
 				LogVolumePath: "/var/log/contrail",
+				ResourceConfigMap: true,
 			},{
 				Name: "analyticsapi",
 				LogVolumePath: "/var/log/contrail",
+				ResourceConfigMap: true,
 			},{
 				Name: "collector",
 				LogVolumePath: "/var/log/contrail",
+				ResourceConfigMap: true,
 			},{
 				Name: "redis",
 				LogVolumePath: "/var/log/contrail",
 				DataVolumePath: "/var/lib/redis",
+				ResourceConfigMap: true,
 			},{
 				Name: "nodemanagerconfig",
 				LogVolumePath: "/var/log/contrail",
@@ -45,13 +52,28 @@ func (r *ReconcileTungstenfabricManager) ConfigCluster(
 					"NODE_TYPE": "config",
 					"DOCKER_HOST": "unix://mnt/docker.sock",
 				},
+				ResourceConfigMap: true,
 			},{
 				Name: "nodemanageranalytics",
 				LogVolumePath: "/var/log/contrail",
+				UnixSocketVolume: true,
 				Env: map[string]string{
 					"NODE_TYPE": "analytics",
 					"DOCKER_HOST": "unix://mnt/docker.sock",
 				},
+				ResourceConfigMap: true,
+			},
+		},
+		InitContainers: []*tfv1alpha1.Container{
+			{
+				Name: "init",
+				StatusVolume: true,
+				Command: []string{"sh","-c","until grep ready /tmp/podinfo/pod_labels > /dev/null 2>&1; do sleep 1; done"},
+			},{
+				Name: "nodeinit",
+				Privileged: true,
+				HostUserBinVolume: true,
+				ResourceConfigMap: true,
 			},
 		},
 	}
@@ -85,15 +107,18 @@ func (r *ReconcileTungstenfabricManager) ControlCluster(
 			{
 				Name: "control",
 				LogVolumePath: "/var/log/contrail",
+				ResourceConfigMap: true,
 			},{
 				Name: "dns",
 				LogVolumePath: "/var/log/contrail",
 				EtcContrailVolume: true,
+				ResourceConfigMap: true,
 			},{
 				Name: "named",
 				LogVolumePath: "/var/log/contrail",
 				Privileged: true,
 				EtcContrailVolume: true,
+				ResourceConfigMap: true,
 			},{
 				Name: "nodemanager",
 				LogVolumePath: "/var/log/contrail",
@@ -102,6 +127,19 @@ func (r *ReconcileTungstenfabricManager) ControlCluster(
 					"NODE_TYPE": "control",
 					"DOCKER_HOST": "unix://mnt/docker.sock",
 				},
+				ResourceConfigMap: true,
+			},
+		},
+		InitContainers: []*tfv1alpha1.Container{
+			{
+				Name: "init",
+				StatusVolume: true,
+				Command: []string{"sh","-c","until grep ready /tmp/podinfo/pod_labels > /dev/null 2>&1; do sleep 1; done"},
+			},{
+				Name: "nodeinit",
+				Privileged: true,
+				HostUserBinVolume: true,
+				ResourceConfigMap: true,
 			},
 		},
 	}
@@ -135,6 +173,19 @@ func (r *ReconcileTungstenfabricManager) KubemanagerCluster(
 			{
 				Name: "kubemanager",
 				LogVolumePath: "/var/log/contrail",
+				ResourceConfigMap: true,
+			},
+		},
+		InitContainers: []*tfv1alpha1.Container{
+			{
+				Name: "init",
+				StatusVolume: true,
+				Command: []string{"sh","-c","until grep ready /tmp/podinfo/pod_labels > /dev/null 2>&1; do sleep 1; done"},
+			},{
+				Name: "nodeinit",
+				Privileged: true,
+				HostUserBinVolume: true,
+				ResourceConfigMap: true,
 			},
 		},
 	}
@@ -168,10 +219,20 @@ func (r *ReconcileTungstenfabricManager) WebuiCluster(
 			{
 				Name: "webuiweb",
 				LogVolumePath: "/var/log/contrail",
+				ResourceConfigMap: true,
 			},
 			{
 				Name: "webuijob",
 				LogVolumePath: "/var/log/contrail",
+				ResourceConfigMap: true,
+			},
+		},
+		InitContainers: []*tfv1alpha1.Container{
+			{
+				Name: "nodeinit",
+				Privileged: true,
+				HostUserBinVolume: true,
+				ResourceConfigMap: true,
 			},
 		},
 	}
@@ -204,7 +265,52 @@ func (r *ReconcileTungstenfabricManager) Vrouter(
 		Containers: []*tfv1alpha1.Container{
 			{
 				Name: "agent",
+				Privileged: true,
+				LifeCycleScript: []string{"/cleanup.sh"},
 				LogVolumePath: "/var/log/contrail",
+				DevVolume: true,
+				NetworkScriptsVolume: true,
+				HostBinVolume: true,
+				UsrSrcVolume: true,
+				LibModulesVolume: true,
+				VarLibContrailVolume: true,
+				VarCrashesVolume: true,
+				ResourceConfigMap: true,
+			},
+		},
+		InitContainers: []*tfv1alpha1.Container{
+			{
+				Name: "nodeinit",
+				Privileged: true,
+				HostUserBinVolume: true,
+				ResourceConfigMap: true,
+			},{
+				Name: "vrouterkernelinit",
+				Privileged: true,
+				HostUserBinVolume: true,
+				UsrSrcVolume: true,
+				LibModulesVolume: true,
+				NetworkScriptsVolume: true,
+				HostBinVolume: true,
+				ResourceConfigMap: true,
+			},{
+				Name: "vrouternicinit",
+				Privileged: true,
+				HostUserBinVolume: true,
+				UsrSrcVolume: true,
+				NetworkScriptsVolume: true,
+				HostBinVolume: true,
+				ResourceConfigMap: true,
+			},{
+				Name: "vroutercniinit",
+				Privileged: true,
+				HostUserBinVolume: true,
+				VarLibContrailVolume: true,
+				EtcCniVolume: true,
+				OptBinCniVolume: true,
+				VarLogCniVolume: true,
+				LogVolumePath: "/var/log/contrail",
+				ResourceConfigMap: true,
 			},
 		},
 	}
@@ -239,6 +345,14 @@ func (r *ReconcileTungstenfabricManager) CassandraCluster(
 				Name: "cassandra",
 				LogVolumePath: "/var/log/cassandra",
 				DataVolumePath: "/var/lib/cassandra",
+				ResourceConfigMap: true,
+			},
+		},
+		InitContainers: []*tfv1alpha1.Container{
+			{
+				Name: "init",
+				StatusVolume: true,
+				Command: []string{"sh","-c","until grep ready /tmp/podinfo/pod_labels > /dev/null 2>&1; do sleep 1; done"},
 			},
 		},
 	}
@@ -273,6 +387,14 @@ func (r *ReconcileTungstenfabricManager) ZookeeperCluster(
 				Name: "zookeeper",
 				LogVolumePath: "/var/log/zookeeper",
 				DataVolumePath: "/var/lib/zookeeper",
+				ResourceConfigMap: true,
+			},
+		},
+		InitContainers: []*tfv1alpha1.Container{
+			{
+				Name: "init",
+				StatusVolume: true,
+				Command: []string{"sh","-c","until grep ready /tmp/podinfo/pod_labels > /dev/null 2>&1; do sleep 1; done"},
 			},
 		},
 	}
@@ -307,6 +429,14 @@ func (r *ReconcileTungstenfabricManager) RabbitmqCluster(
 				Name: "rabbitmq",
 				LogVolumePath: "/var/log/rabbitmq",
 				DataVolumePath: "/var/lib/rabbitmq",
+				ResourceConfigMap: true,
+			},
+		},
+		InitContainers: []*tfv1alpha1.Container{
+			{
+				Name: "init",
+				StatusVolume: true,
+				Command: []string{"sh","-c","until grep ready /tmp/podinfo/pod_labels > /dev/null 2>&1; do sleep 1; done"},
 			},
 		},
 	}
