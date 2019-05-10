@@ -122,6 +122,7 @@ func (r *ReconcileVrouter) Reconcile(request reconcile.Request) (reconcile.Resul
 		ControlInstance: controlInstance,
 		ConfigInstance: configInstance,
 		Type: instance.Spec.Type,
+		VolumeList: map[string]bool{},
 	}
 	resource = clusterResource
 

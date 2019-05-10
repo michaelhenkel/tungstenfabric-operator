@@ -248,6 +248,13 @@ func (in *ClusterResource) DeepCopyInto(out *ClusterResource) {
 		*out = new(Vrouter)
 		(*in).DeepCopyInto(*out)
 	}
+	if in.VolumeList != nil {
+		in, out := &in.VolumeList, &out.VolumeList
+		*out = make(map[string]bool, len(*in))
+		for key, val := range *in {
+			(*out)[key] = val
+		}
+	}
 	return
 }
 

@@ -98,6 +98,7 @@ func (r *ReconcileConfigCluster) Reconcile(request reconcile.Request) (reconcile
 		ZookeeperInstance: zookeeperInstance,
 		RabbitmqInstance: rabbitmqInstance,
 		Type: instance.Spec.Type,
+		VolumeList: map[string]bool{},
 	}
 	resource = clusterResource
 

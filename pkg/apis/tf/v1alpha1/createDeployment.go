@@ -56,6 +56,7 @@ type ClusterResource struct {
 	NodeIpList string
 	ServiceAccount bool
 	Type string
+	VolumeList map[string]bool
 }
 
 func (c *ClusterResource) CreateConfigMap(cl client.Client, instance metav1.Object, scheme *runtime.Scheme) error {
@@ -85,6 +86,350 @@ func (c *ClusterResource) CreateConfigMap(cl client.Client, instance metav1.Obje
 	}
 
 	return nil
+}
+
+func createVolumeMountList(cr *ClusterResource, container *Container) *[]corev1.VolumeMount {
+	var volumeMountList []corev1.VolumeMount
+
+	if container.LogVolumePath != ""{
+		logVolumeMount := corev1.VolumeMount{
+			Name: cr.Name + "-logs",
+			MountPath: container.LogVolumePath,
+		}
+		volumeMountList = append(volumeMountList, logVolumeMount)
+		cr.VolumeList["createLogVolume"] = true
+	}
+	if container.DataVolumePath != ""{
+		dataVolumeMount := corev1.VolumeMount{
+			Name: cr.Name + "-data",
+			MountPath: container.DataVolumePath,
+		}
+		volumeMountList = append(volumeMountList, dataVolumeMount)
+		cr.VolumeList["createDataVolume"] = true
+	}
+	if container.UnixSocketVolume{
+		unixSocketVolume := corev1.VolumeMount{
+			Name: "docker-unix-socket",
+			MountPath: "/mnt",
+		}
+		volumeMountList = append(volumeMountList, unixSocketVolume)
+		cr.VolumeList["createUnixSocketVolume"] = true
+	}
+	if container.HostUserBinVolume{
+		hostUserBinVolume := corev1.VolumeMount{
+			Name: "host-usr-bin",
+			MountPath: "/host/usr/bin",
+		}
+		volumeMountList = append(volumeMountList, hostUserBinVolume)
+		cr.VolumeList["createHostUserBinVolume"] = true
+	}
+	if container.EtcContrailVolume{
+		etcContrailVolume := corev1.VolumeMount{
+			Name: "etc-contrail",
+			MountPath: "/etc/contrail",
+		}
+		volumeMountList = append(volumeMountList, etcContrailVolume)
+		cr.VolumeList["createEtcContrailVolume"] = true
+	}
+	if container.DevVolume{
+		devVolume := corev1.VolumeMount{
+			Name: "dev",
+			MountPath: "/dev",
+		}
+		volumeMountList = append(volumeMountList, devVolume)
+		cr.VolumeList["createDevVolume"] = true
+	}
+	if container.NetworkScriptsVolume{
+		networkScriptsVolume := corev1.VolumeMount{
+			Name: "network-scripts",
+			MountPath: "/etc/sysconfig/network-scripts",
+		}
+		volumeMountList = append(volumeMountList, networkScriptsVolume)
+		cr.VolumeList["createNetworkScriptsVolume"] = true
+	}
+	if container.HostBinVolume{
+		hostBinVolume := corev1.VolumeMount{
+			Name: "host-bin",
+			MountPath: "/bin",
+		}
+		volumeMountList = append(volumeMountList, hostBinVolume)
+		cr.VolumeList["createHostBinVolume"] = true
+	}
+	if container.UsrSrcVolume{
+		usrSrcVolume := corev1.VolumeMount{
+			Name: "usr-src",
+			MountPath: "/usr/src",
+		}
+		volumeMountList = append(volumeMountList, usrSrcVolume)
+		cr.VolumeList["createUsrSrcVolume"] = true
+	}
+	if container.LibModulesVolume{
+		libModulesVolume := corev1.VolumeMount{
+			Name: "lib-modules",
+			MountPath: "/lib/modules",
+		}
+		volumeMountList = append(volumeMountList, libModulesVolume)
+		cr.VolumeList["createLibModulesVolume"] = true
+	}
+	if container.VarLibContrailVolume{
+		varLibContrailVolume := corev1.VolumeMount{
+			Name: "var-lib-contrail",
+			MountPath: "/var/lib/contrail",
+		}
+		volumeMountList = append(volumeMountList, varLibContrailVolume)
+		cr.VolumeList["createVarLibContrailVolume"] = true
+	}
+	if container.VarCrashesVolume{
+		varCrashesVolume := corev1.VolumeMount{
+			Name: "var-crashes",
+			MountPath: "/var/contrail/crashes",
+		}
+		volumeMountList = append(volumeMountList, varCrashesVolume)
+		cr.VolumeList["createVarCrashesVolume"] = true
+	}
+	if container.EtcCniVolume{
+		etcCniVolume := corev1.VolumeMount{
+			Name: "var-crashes",
+			MountPath: "/var/contrail/crashes",
+		}
+		volumeMountList = append(volumeMountList, etcCniVolume)
+		cr.VolumeList["createEtcCniVolume"] = true
+	}
+	if container.OptBinCniVolume{
+		optBinCniVolume := corev1.VolumeMount{
+			Name: "opt-bin-cni",
+			MountPath: "/opt/bin/cni",
+		}
+		volumeMountList = append(volumeMountList, optBinCniVolume)
+		cr.VolumeList["createOptBinCniVolume"] = true
+	}
+	if container.VarLogCniVolume{
+		varLogCniVolume := corev1.VolumeMount{
+			Name: "var-crashes",
+			MountPath: "/var/contrail/crashes",
+		}
+		volumeMountList = append(volumeMountList, varLogCniVolume)
+		cr.VolumeList["createVarLogCniVolume"] = true
+	}
+	if container.StatusVolume{
+		statusVolume := corev1.VolumeMount{
+			Name: "status",
+			MountPath: "/tmp/podinfo",
+		}
+		volumeMountList = append(volumeMountList, statusVolume)
+		cr.VolumeList["createStatusVolume"] = true
+	}
+
+	return &volumeMountList
+}
+
+func createVolumesList(cr *ClusterResource) *[]corev1.Volume{
+	
+	var volumeList []corev1.Volume
+	if cr.VolumeList["createLogVolume"] {
+		logVolume := corev1.Volume{
+			Name: cr.Name + "-logs",
+			VolumeSource: corev1.VolumeSource{
+				HostPath: &corev1.HostPathVolumeSource{
+					Path: "/var/log/contrail/" + cr.Name,
+				},
+			},
+		}
+		volumeList = append(volumeList, logVolume)
+	}
+
+	if cr.VolumeList["createDataVolume"] {
+		dataVolume := corev1.Volume{
+			Name: cr.Name + "-data",
+			VolumeSource: corev1.VolumeSource{
+				HostPath: &corev1.HostPathVolumeSource{
+					Path: "/var/lib/contrail/" + cr.Name,
+				},
+			},
+		}
+		volumeList = append(volumeList, dataVolume)
+	}
+
+	if cr.VolumeList["createUnixSocketVolume"] {
+		unixSocketVolume := corev1.Volume{
+			Name: "docker-unix-socket",
+			VolumeSource: corev1.VolumeSource{
+				HostPath: &corev1.HostPathVolumeSource{
+					Path: "/var/run",
+				},
+			},
+		}
+		volumeList = append(volumeList, unixSocketVolume)
+	}
+
+	if cr.VolumeList["createHostUserBinVolume"] {
+		hostUserBinVolume := corev1.Volume{
+			Name: "host-usr-bin",
+			VolumeSource: corev1.VolumeSource{
+				HostPath: &corev1.HostPathVolumeSource{
+					Path: "/usr/bin",
+				},
+			},
+		}
+		volumeList = append(volumeList, hostUserBinVolume)
+	}
+
+	if cr.VolumeList["createEtcContrailVolume"] {
+		etcContrailVolume := corev1.Volume{
+			Name: "etc-contrail",
+			VolumeSource: corev1.VolumeSource{
+				EmptyDir: &corev1.EmptyDirVolumeSource{
+				},
+			},
+		}
+		volumeList = append(volumeList, etcContrailVolume)
+	}
+
+	if cr.VolumeList["createStatusVolume"] {
+		statusVolume := corev1.Volume{
+			Name: "status",
+			VolumeSource: corev1.VolumeSource{
+				DownwardAPI: &corev1.DownwardAPIVolumeSource{
+					Items: []corev1.DownwardAPIVolumeFile{
+						corev1.DownwardAPIVolumeFile{
+							Path: "pod_labels",
+							FieldRef: &corev1.ObjectFieldSelector{
+								FieldPath: "metadata.labels",
+							},
+						},
+						corev1.DownwardAPIVolumeFile{
+							Path: "pod_labelsx",
+							FieldRef: &corev1.ObjectFieldSelector{
+								FieldPath: "metadata.labels",
+							},
+						},
+					},
+				},
+			},
+		}
+		volumeList = append(volumeList, statusVolume)
+	}
+
+	if cr.VolumeList["createVarLogCniVolume"] {
+		varLogCniVolume := corev1.Volume{
+			Name: "var-log-contrail-cni",
+			VolumeSource: corev1.VolumeSource{
+				HostPath: &corev1.HostPathVolumeSource{
+					Path: "/var/log/contrail/cni",
+				},
+			},
+		}
+		volumeList = append(volumeList, varLogCniVolume)
+	}
+
+	if cr.VolumeList["createEtcCniVolume"] {
+		etcCniVolume := corev1.Volume{
+			Name: "etc-cni",
+			VolumeSource: corev1.VolumeSource{
+				HostPath: &corev1.HostPathVolumeSource{
+					Path: "/etc/cni",
+				},
+			},
+		}
+		volumeList = append(volumeList, etcCniVolume)
+	}
+
+	if cr.VolumeList["createVarCrashesVolume"] {
+		varCrashesVolume := corev1.Volume{
+			Name: "var-crashes",
+			VolumeSource: corev1.VolumeSource{
+				HostPath: &corev1.HostPathVolumeSource{
+					Path: "/var/contrail/crashes",
+				},
+			},
+		}
+		volumeList = append(volumeList, varCrashesVolume)
+	}
+
+	if cr.VolumeList["createVarLibContrailVolume"] {
+		varLibContrailVolume := corev1.Volume{
+			Name: "var-lib-contrail",
+			VolumeSource: corev1.VolumeSource{
+				HostPath: &corev1.HostPathVolumeSource{
+					Path: "/var/lib/contrail",
+				},
+			},
+		}
+		volumeList = append(volumeList, varLibContrailVolume)
+	}
+
+	if cr.VolumeList["createLibModulesVolume"] {
+		libModulesVolume := corev1.Volume{
+			Name: "lib-modules",
+			VolumeSource: corev1.VolumeSource{
+				HostPath: &corev1.HostPathVolumeSource{
+					Path: "/lib/modules",
+				},
+			},
+		}
+		volumeList = append(volumeList, libModulesVolume)
+	}
+
+	if cr.VolumeList["createUsrSrcVolume"] {
+		usrSrcVolume := corev1.Volume{
+			Name: "usr-src",
+			VolumeSource: corev1.VolumeSource{
+				HostPath: &corev1.HostPathVolumeSource{
+					Path: "/usr/src",
+				},
+			},
+		}
+		volumeList = append(volumeList, usrSrcVolume)
+	}
+
+	if cr.VolumeList["createHostBinVolume"] {
+		hostBinVolume := corev1.Volume{
+			Name: "host-bin",
+			VolumeSource: corev1.VolumeSource{
+				HostPath: &corev1.HostPathVolumeSource{
+					Path: "/bin",
+				},
+			},
+		}
+		volumeList = append(volumeList, hostBinVolume)
+	}
+
+	if cr.VolumeList["createNetworkScriptsVolume"] {
+		networkScriptsVolume := corev1.Volume{
+			Name: "network-scripts",
+			VolumeSource: corev1.VolumeSource{
+				HostPath: &corev1.HostPathVolumeSource{
+					Path: "/etc/sysconfig/network-scripts",
+				},
+			},
+		}
+		volumeList = append(volumeList, networkScriptsVolume)
+	}
+
+	if cr.VolumeList["createDevVolume"] {
+		devVolume := corev1.Volume{
+			Name: "dev",
+			VolumeSource: corev1.VolumeSource{
+				HostPath: &corev1.HostPathVolumeSource{
+					Path: "/dev",
+				},
+			},
+		}
+		volumeList = append(volumeList, devVolume)
+	}
+
+	if cr.VolumeList["createOptBinCniVolume"] {
+		optBinCniVolume := corev1.Volume {
+			Name: "opt-cni-bin",
+			VolumeSource: corev1.VolumeSource{
+				HostPath: &corev1.HostPathVolumeSource{
+					Path: "/opt/cni/bin",
+				},
+			},
+		}
+		volumeList = append(volumeList, optBinCniVolume)
+	}
+	return &volumeList
 }
 
 func (c *ClusterResource) CreateDeployment(cl client.Client, instance metav1.Object, scheme *runtime.Scheme) error {
@@ -131,24 +476,6 @@ func (c *ClusterResource) CreateDeployment(cl client.Client, instance metav1.Obj
 		hostNetworkBool = false
 	}
 
-
-	createStatusVolume := false
-	createVarLogCniVolume := false
-	createEtcCniVolume := false
-	createVarCrashesVolume := false
-	createVarLibContrailVolume := false
-	createLibModulesVolume := false
-	createUsrSrcVolume := false
-	createHostBinVolume := false
-	createNetworkScriptsVolume := false
-	createDevVolume := false
-	createEtcContrailVolume := false
-	createHostUserBinVolume := false
-	createUnixSocketVolume := false
-	createDataVolume := false
-	createLogVolume := false
-	createOptBinCniVolume := false
-
 	var containerList []corev1.Container
 	for _, container := range(c.Containers){
 
@@ -162,136 +489,8 @@ func (c *ClusterResource) CreateDeployment(cl client.Client, instance metav1.Obj
 				envList = append(envList, env)
 			}
 		}
-		var volumeMountList []corev1.VolumeMount
-		if container.LogVolumePath != ""{
-			logVolumeMount := corev1.VolumeMount{
-				Name: c.Name + "-logs",
-				MountPath: container.LogVolumePath,
-			}
-			volumeMountList = append(volumeMountList, logVolumeMount)
-			createLogVolume = true
-		}
-		if container.DataVolumePath != ""{
-			dataVolumeMount := corev1.VolumeMount{
-				Name: c.Name + "-data",
-				MountPath: container.DataVolumePath,
-			}
-			volumeMountList = append(volumeMountList, dataVolumeMount)
-			createDataVolume = true
-		}
-		if container.UnixSocketVolume{
-			unixSocketVolume := corev1.VolumeMount{
-				Name: "docker-unix-socket",
-				MountPath: "/mnt",
-			}
-			volumeMountList = append(volumeMountList, unixSocketVolume)
-			createUnixSocketVolume = true
-		}
-		if container.HostUserBinVolume{
-			hostUserBinVolume := corev1.VolumeMount{
-				Name: "host-usr-bin",
-				MountPath: "/host/usr/bin",
-			}
-			volumeMountList = append(volumeMountList, hostUserBinVolume)
-			createHostUserBinVolume = true
-		}
-		if container.EtcContrailVolume{
-			etcContrailVolume := corev1.VolumeMount{
-				Name: "etc-contrail",
-				MountPath: "/etc/contrail",
-			}
-			volumeMountList = append(volumeMountList, etcContrailVolume)
-			createEtcContrailVolume = true
-		}
-		if container.DevVolume{
-			devVolume := corev1.VolumeMount{
-				Name: "dev",
-				MountPath: "/dev",
-			}
-			volumeMountList = append(volumeMountList, devVolume)
-			createDevVolume = true
-		}
-		if container.NetworkScriptsVolume{
-			networkScriptsVolume := corev1.VolumeMount{
-				Name: "network-scripts",
-				MountPath: "/etc/sysconfig/network-scripts",
-			}
-			volumeMountList = append(volumeMountList, networkScriptsVolume)
-			createNetworkScriptsVolume = true
-		}
-		if container.HostBinVolume{
-			hostBinVolume := corev1.VolumeMount{
-				Name: "host-bin",
-				MountPath: "/bin",
-			}
-			volumeMountList = append(volumeMountList, hostBinVolume)
-			createHostBinVolume = true
-		}
-		if container.UsrSrcVolume{
-			usrSrcVolume := corev1.VolumeMount{
-				Name: "usr-src",
-				MountPath: "/usr/src",
-			}
-			volumeMountList = append(volumeMountList, usrSrcVolume)
-			createUsrSrcVolume = true
-		}
-		if container.LibModulesVolume{
-			libModulesVolume := corev1.VolumeMount{
-				Name: "lib-modules",
-				MountPath: "/lib/modules",
-			}
-			volumeMountList = append(volumeMountList, libModulesVolume)
-			createLibModulesVolume = true
-		}
-		if container.VarLibContrailVolume{
-			varLibContrailVolume := corev1.VolumeMount{
-				Name: "var-lib-contrail",
-				MountPath: "/var/lib/contrail",
-			}
-			volumeMountList = append(volumeMountList, varLibContrailVolume)
-			createVarLibContrailVolume = true
-		}
-		if container.VarCrashesVolume{
-			varCrashesVolume := corev1.VolumeMount{
-				Name: "var-crashes",
-				MountPath: "/var/contrail/crashes",
-			}
-			volumeMountList = append(volumeMountList, varCrashesVolume)
-			createVarCrashesVolume = true
-		}
-		if container.EtcCniVolume{
-			etcCniVolume := corev1.VolumeMount{
-				Name: "var-crashes",
-				MountPath: "/var/contrail/crashes",
-			}
-			volumeMountList = append(volumeMountList, etcCniVolume)
-			createEtcCniVolume = true
-		}
-		if container.OptBinCniVolume{
-			optBinCniVolume := corev1.VolumeMount{
-				Name: "opt-bin-cni",
-				MountPath: "/opt/bin/cni",
-			}
-			volumeMountList = append(volumeMountList, optBinCniVolume)
-			createOptBinCniVolume = true
-		}
-		if container.VarLogCniVolume{
-			varLogCniVolume := corev1.VolumeMount{
-				Name: "var-crashes",
-				MountPath: "/var/contrail/crashes",
-			}
-			volumeMountList = append(volumeMountList, varLogCniVolume)
-			createVarLogCniVolume = true
-		}
-		if container.StatusVolume{
-			statusVolume := corev1.VolumeMount{
-				Name: "status",
-				MountPath: "/tmp/podinfo",
-			}
-			volumeMountList = append(volumeMountList, statusVolume)
-			createStatusVolume = true
-		}
 
+		volumeMountList := createVolumeMountList(c, container)
 
 		var lifeCycle corev1.Lifecycle
 		if container.LifeCycleScript != nil {
@@ -319,7 +518,7 @@ func (c *ClusterResource) CreateDeployment(cl client.Client, instance metav1.Obj
 				},
 			}},
 			Env: envList,
-			VolumeMounts: volumeMountList,
+			VolumeMounts: *volumeMountList,
 		}
 		containerList = append(containerList, deploymentContainer)
 	}
@@ -337,141 +536,14 @@ func (c *ClusterResource) CreateDeployment(cl client.Client, instance metav1.Obj
 				envList = append(envList, env)
 			}
 		}
-		var volumeMountList []corev1.VolumeMount
-		if container.LogVolumePath != ""{
-			logVolumeMount := corev1.VolumeMount{
-				Name: c.Name + "-logs",
-				MountPath: container.LogVolumePath,
-			}
-			volumeMountList = append(volumeMountList, logVolumeMount)
-			createLogVolume = true
-		}
-		if container.DataVolumePath != ""{
-			dataVolumeMount := corev1.VolumeMount{
-				Name: c.Name + "-data",
-				MountPath: container.DataVolumePath,
-			}
-			volumeMountList = append(volumeMountList, dataVolumeMount)
-			createDataVolume = true
-		}
-		if container.UnixSocketVolume{
-			unixSocketVolume := corev1.VolumeMount{
-				Name: "docker-unix-socket",
-				MountPath: "/mnt",
-			}
-			volumeMountList = append(volumeMountList, unixSocketVolume)
-			createUnixSocketVolume = true
-		}
-		if container.HostUserBinVolume{
-			hostUserBinVolume := corev1.VolumeMount{
-				Name: "host-usr-bin",
-				MountPath: "/host/usr/bin",
-			}
-			volumeMountList = append(volumeMountList, hostUserBinVolume)
-			createHostUserBinVolume = true
-		}
-		if container.EtcContrailVolume{
-			etcContrailVolume := corev1.VolumeMount{
-				Name: "etc-contrail",
-				MountPath: "/etc/contrail",
-			}
-			volumeMountList = append(volumeMountList, etcContrailVolume)
-			createEtcContrailVolume = true
-		}
-		if container.DevVolume{
-			devVolume := corev1.VolumeMount{
-				Name: "dev",
-				MountPath: "/dev",
-			}
-			volumeMountList = append(volumeMountList, devVolume)
-			createDevVolume = true
-		}
-		if container.NetworkScriptsVolume{
-			networkScriptsVolume := corev1.VolumeMount{
-				Name: "network-scripts",
-				MountPath: "/etc/sysconfig/network-scripts",
-			}
-			volumeMountList = append(volumeMountList, networkScriptsVolume)
-			createNetworkScriptsVolume = true
-		}
-		if container.HostBinVolume{
-			hostBinVolume := corev1.VolumeMount{
-				Name: "host-bin",
-				MountPath: "/bin",
-			}
-			volumeMountList = append(volumeMountList, hostBinVolume)
-			createHostBinVolume = true
-		}
-		if container.UsrSrcVolume{
-			usrSrcVolume := corev1.VolumeMount{
-				Name: "usr-src",
-				MountPath: "/usr/src",
-			}
-			volumeMountList = append(volumeMountList, usrSrcVolume)
-			createUsrSrcVolume = true
-		}
-		if container.LibModulesVolume{
-			libModulesVolume := corev1.VolumeMount{
-				Name: "lib-modules",
-				MountPath: "/lib/modules",
-			}
-			volumeMountList = append(volumeMountList, libModulesVolume)
-			createLibModulesVolume = true
-		}
-		if container.VarLibContrailVolume{
-			varLibContrailVolume := corev1.VolumeMount{
-				Name: "var-lib-contrail",
-				MountPath: "/var/lib/contrail",
-			}
-			volumeMountList = append(volumeMountList, varLibContrailVolume)
-			createVarLibContrailVolume = true
-		}
-		if container.VarCrashesVolume{
-			varCrashesVolume := corev1.VolumeMount{
-				Name: "var-crashes",
-				MountPath: "/var/contrail/crashes",
-			}
-			volumeMountList = append(volumeMountList, varCrashesVolume)
-			createVarCrashesVolume = true
-		}
-		if container.EtcCniVolume{
-			etcCniVolume := corev1.VolumeMount{
-				Name: "var-crashes",
-				MountPath: "/var/contrail/crashes",
-			}
-			volumeMountList = append(volumeMountList, etcCniVolume)
-			createEtcCniVolume = true
-		}
-		if container.VarLogCniVolume{
-			varLogCniVolume := corev1.VolumeMount{
-				Name: "var-crashes",
-				MountPath: "/var/contrail/crashes",
-			}
-			volumeMountList = append(volumeMountList, varLogCniVolume)
-			createVarLogCniVolume = true
-		}
-		if container.OptBinCniVolume{
-			optBinCniVolume := corev1.VolumeMount{
-				Name: "opt-bin-cni",
-				MountPath: "/opt/bin/cni",
-			}
-			volumeMountList = append(volumeMountList, optBinCniVolume)
-			createOptBinCniVolume = true
-		}
-		if container.StatusVolume{
-			statusVolume := corev1.VolumeMount{
-				Name: "status",
-				MountPath: "/tmp/podinfo",
-			}
-			volumeMountList = append(volumeMountList, statusVolume)
-			createStatusVolume = true
-		}
 
 		statusImageEnv := corev1.EnvVar{
 			Name: "CONTRAIL_STATUS_IMAGE",
 			Value: c.BaseInstance.Spec.Images["status"],
 		}
 		envList = append(envList, statusImageEnv)
+
+		volumeMountList := createVolumeMountList(c, container)
 
 		var lifeCycle corev1.Lifecycle
 		if container.LifeCycleScript != nil {
@@ -500,7 +572,7 @@ func (c *ClusterResource) CreateDeployment(cl client.Client, instance metav1.Obj
 				},
 			}},
 			Env: envList,
-			VolumeMounts: volumeMountList,
+			VolumeMounts: *volumeMountList,
 		}
 		initContainerList = append(initContainerList, initContainer)
 	}
@@ -512,233 +584,7 @@ func (c *ClusterResource) CreateDeployment(cl client.Client, instance metav1.Obj
 		}
 	}
 
-	var volumeList []corev1.Volume
-
-	statusVolume := corev1.Volume{
-		Name: "status",
-		VolumeSource: corev1.VolumeSource{
-			DownwardAPI: &corev1.DownwardAPIVolumeSource{
-				Items: []corev1.DownwardAPIVolumeFile{
-					corev1.DownwardAPIVolumeFile{
-						Path: "pod_labels",
-						FieldRef: &corev1.ObjectFieldSelector{
-							FieldPath: "metadata.labels",
-						},
-					},
-					corev1.DownwardAPIVolumeFile{
-						Path: "pod_labelsx",
-						FieldRef: &corev1.ObjectFieldSelector{
-							FieldPath: "metadata.labels",
-						},
-					},
-				},
-			},
-		},
-	}
-
-
-	devVolume := corev1.Volume{
-		Name: "dev",
-		VolumeSource: corev1.VolumeSource{
-			HostPath: &corev1.HostPathVolumeSource{
-				Path: "/dev",
-			},
-		},
-	}
-
-	varLibContrailVolume := corev1.Volume{
-		Name: "var-lib-contrail",
-		VolumeSource: corev1.VolumeSource{
-			HostPath: &corev1.HostPathVolumeSource{
-				Path: "/var/lib/contrail",
-			},
-		},
-	}
-
-	varCrashesVolume := corev1.Volume{
-		Name: "var-crashes",
-		VolumeSource: corev1.VolumeSource{
-			HostPath: &corev1.HostPathVolumeSource{
-				Path: "/var/contrail/crashes",
-			},
-		},
-	}
-	
-	etcCniVolume := corev1.Volume{
-		Name: "etc-cni",
-		VolumeSource: corev1.VolumeSource{
-			HostPath: &corev1.HostPathVolumeSource{
-				Path: "/etc/cni",
-			},
-		},
-	}
-
-	optBinCniVolume := corev1.Volume {
-		Name: "opt-cni-bin",
-		VolumeSource: corev1.VolumeSource{
-			HostPath: &corev1.HostPathVolumeSource{
-				Path: "/opt/cni/bin",
-			},
-		},
-	}
-
-	varLogCniVolume := corev1.Volume{
-		Name: "var-log-contrail-cni",
-		VolumeSource: corev1.VolumeSource{
-			HostPath: &corev1.HostPathVolumeSource{
-				Path: "/var/log/contrail/cni",
-			},
-		},
-	}
-
-
-
-	usrSrcVolume := corev1.Volume{
-		Name: "usr-src",
-		VolumeSource: corev1.VolumeSource{
-			HostPath: &corev1.HostPathVolumeSource{
-				Path: "/usr/src",
-			},
-		},
-	}
-
-	libModulesVolume := corev1.Volume{
-		Name: "lib-modules",
-		VolumeSource: corev1.VolumeSource{
-			HostPath: &corev1.HostPathVolumeSource{
-				Path: "/lib/modules",
-			},
-		},
-	}
-
-	networkScriptsVolume := corev1.Volume{
-		Name: "network-scripts",
-		VolumeSource: corev1.VolumeSource{
-			HostPath: &corev1.HostPathVolumeSource{
-				Path: "/etc/sysconfig/network-scripts",
-			},
-		},
-	}
-
-	hostBinVolume := corev1.Volume{
-		Name: "host-bin",
-		VolumeSource: corev1.VolumeSource{
-			HostPath: &corev1.HostPathVolumeSource{
-				Path: "/bin",
-			},
-		},
-	}
-
-	logVolume := corev1.Volume{
-		Name: c.Name + "-logs",
-		VolumeSource: corev1.VolumeSource{
-			HostPath: &corev1.HostPathVolumeSource{
-				Path: "/var/log/contrail/" + c.Name,
-			},
-		},
-	}
-
-	dataVolume := corev1.Volume{
-		Name: c.Name + "-data",
-		VolumeSource: corev1.VolumeSource{
-			HostPath: &corev1.HostPathVolumeSource{
-				Path: "/var/lib/contrail/" + c.Name,
-			},
-		},
-	}
-
-	unixSocketVolume := corev1.Volume{
-		Name: "docker-unix-socket",
-		VolumeSource: corev1.VolumeSource{
-			HostPath: &corev1.HostPathVolumeSource{
-				Path: "/var/run",
-			},
-		},
-	}
-
-	hostUserBinVolume := corev1.Volume{
-		Name: "host-usr-bin",
-		VolumeSource: corev1.VolumeSource{
-			HostPath: &corev1.HostPathVolumeSource{
-				Path: "/usr/bin",
-			},
-		},
-	}
-
-	etcContrailVolume := corev1.Volume{
-		Name: "etc-contrail",
-		VolumeSource: corev1.VolumeSource{
-			EmptyDir: &corev1.EmptyDirVolumeSource{
-			},
-		},
-	}
-
-
-	volumeList = append(volumeList, statusVolume)
-
-	if createLogVolume {
-		volumeList = append(volumeList, logVolume)
-	}
-
-	if createDataVolume {
-		volumeList = append(volumeList, dataVolume)
-	}
-
-	if createUnixSocketVolume {
-		volumeList = append(volumeList, unixSocketVolume)
-	}
-
-	if createHostUserBinVolume {
-		volumeList = append(volumeList, hostUserBinVolume)
-	}
-
-	if createEtcContrailVolume {
-		volumeList = append(volumeList, etcContrailVolume)
-	}
-
-	if createStatusVolume {
-		volumeList = append(volumeList, statusVolume)
-	}
-
-	if createVarLogCniVolume {
-		volumeList = append(volumeList, varLogCniVolume)
-	}
-
-	if createEtcCniVolume {
-		volumeList = append(volumeList, etcCniVolume)
-	}
-
-	if createVarCrashesVolume {
-		volumeList = append(volumeList, varCrashesVolume)
-	}
-
-	if createVarLibContrailVolume {
-		volumeList = append(volumeList, varLibContrailVolume)
-	}
-
-	if createLibModulesVolume {
-		volumeList = append(volumeList, libModulesVolume)
-	}
-
-	if createUsrSrcVolume {
-		volumeList = append(volumeList, usrSrcVolume)
-	}
-
-	if createHostBinVolume {
-		volumeList = append(volumeList, hostBinVolume)
-	}
-
-	if createNetworkScriptsVolume {
-		volumeList = append(volumeList, networkScriptsVolume)
-	}
-
-	if createDevVolume {
-		volumeList = append(volumeList, devVolume)
-	}
-
-	if createOptBinCniVolume {
-		volumeList = append(volumeList, optBinCniVolume)
-	}
+	volumeList := createVolumesList(c)
 
 	var serviceAccountName string
 
@@ -774,7 +620,7 @@ func (c *ClusterResource) CreateDeployment(cl client.Client, instance metav1.Obj
 			}},
 			InitContainers: initContainerList,
 			Containers: containerList,
-			Volumes: volumeList,
+			Volumes: *volumeList,
 		},
 	}
 

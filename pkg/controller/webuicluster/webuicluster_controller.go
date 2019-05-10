@@ -91,6 +91,7 @@ func (r *ReconcileWebuiCluster) Reconcile(request reconcile.Request) (reconcile.
 		BaseInstance: baseInstance,
 		InitContainers: instance.Spec.InitContainers,
 		Type: instance.Spec.Type,
+		VolumeList: map[string]bool{},
 	}
 	resource = clusterResource
 

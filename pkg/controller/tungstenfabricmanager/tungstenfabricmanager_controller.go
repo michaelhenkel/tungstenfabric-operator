@@ -147,6 +147,17 @@ func (r *ReconcileTungstenfabricManager) Reconcile(request reconcile.Request) (r
 		
 	}
 
+	var clusterResourceMap = make(map[string]bool)
+	clusterResourceMap["CassandraCluster"] = false
+	clusterResourceMap["ZookeeperCluster"] = false
+	clusterResourceMap["RabbitmqCluster"] = false
+	clusterResourceMap["ConfigCluster"] = false
+	clusterResourceMap["ControlCluster"] = false
+	clusterResourceMap["KubemanagerCluster"] = false
+	clusterResourceMap["WebuiCluster"] = false
+	clusterResourceMap["Vrouter"] = false
+
+
 	for _, resource := range(instance.Spec.StartResources){
 		switch resource{
 		case "CassandraCluster":
@@ -155,50 +166,147 @@ func (r *ReconcileTungstenfabricManager) Reconcile(request reconcile.Request) (r
 				reqLogger.Error(err, "Failed to create resource " + resource)
 				return reconcile.Result{}, err
 			}
+			clusterResourceMap["CassandraCluster"] = true
 		case "ZookeeperCluster":
 			err = r.ZookeeperCluster(instance.Name, instance.Namespace)
 			if err != nil {
 				reqLogger.Error(err, "Failed to create resource " + resource)
 				return reconcile.Result{}, err
 			}
+			clusterResourceMap["ZookeeperCluster"] = true
 		case "RabbitmqCluster":
 			err = r.RabbitmqCluster(instance.Name, instance.Namespace)
 			if err != nil {
 				reqLogger.Error(err, "Failed to create resource " + resource)
 				return reconcile.Result{}, err
 			}
+			clusterResourceMap["RabbitmqCluster"] = true
 		case "ConfigCluster":
 			err = r.ConfigCluster(instance.Name, instance.Namespace)
 			if err != nil {
 				reqLogger.Error(err, "Failed to create resource " + resource)
 				return reconcile.Result{}, err
 			}
+			clusterResourceMap["ConfigCluster"] = true
 		case "ControlCluster":
 			err = r.ControlCluster(instance.Name, instance.Namespace)
 			if err != nil {
 				reqLogger.Error(err, "Failed to create resource " + resource)
 				return reconcile.Result{}, err
 			}
+			clusterResourceMap["ControlCluster"] = true
 		case "KubemanagerCluster":
 			err = r.KubemanagerCluster(instance.Name, instance.Namespace)
 			if err != nil {
 				reqLogger.Error(err, "Failed to create resource " + resource)
 				return reconcile.Result{}, err
 			}
+			clusterResourceMap["KubemanagerCluster"] = true
 		case "WebuiCluster":
 			err = r.WebuiCluster(instance.Name, instance.Namespace)
 			if err != nil {
 				reqLogger.Error(err, "Failed to create resource " + resource)
 				return reconcile.Result{}, err
 			}
+			clusterResourceMap["WebuiCluster"] = true
 		case "Vrouter":
 			err = r.Vrouter(instance.Name, instance.Namespace)
 			if err != nil {
 				reqLogger.Error(err, "Failed to create resource " + resource)
 				return reconcile.Result{}, err
 			}
+			clusterResourceMap["Vrouter"] = true
 		}
 	}
+
+	if !clusterResourceMap["CassandraCluster"] {
+		resource := tfv1alpha1.CassandraCluster{}
+		err := r.client.Get(context.TODO(), types.NamespacedName{Name: instance.Name, Namespace: instance.Namespace}, &resource)
+		if err == nil {
+			err = r.client.Delete(context.TODO(), &resource)
+			if err != nil{
+				return reconcile.Result{}, err
+			}
+		}
+	}
+
+	if !clusterResourceMap["ZookeeperCluster"] {
+		resource := tfv1alpha1.ZookeeperCluster{}
+		err := r.client.Get(context.TODO(), types.NamespacedName{Name: instance.Name, Namespace: instance.Namespace}, &resource)
+		if err == nil {
+			err = r.client.Delete(context.TODO(), &resource)
+			if err != nil{
+				return reconcile.Result{}, err
+			}
+		}		
+	}
+
+	if !clusterResourceMap["RabbitmqCluster"] {
+		resource := tfv1alpha1.RabbitmqCluster{}
+		err := r.client.Get(context.TODO(), types.NamespacedName{Name: instance.Name, Namespace: instance.Namespace}, &resource)
+		if err == nil {
+			err = r.client.Delete(context.TODO(), &resource)
+			if err != nil{
+				return reconcile.Result{}, err
+			}
+		}	
+	}
+
+	if !clusterResourceMap["ConfigCluster"] {
+		resource := tfv1alpha1.ConfigCluster{}
+		err := r.client.Get(context.TODO(), types.NamespacedName{Name: instance.Name, Namespace: instance.Namespace}, &resource)
+		if err == nil {
+			err = r.client.Delete(context.TODO(), &resource)
+			if err != nil{
+				return reconcile.Result{}, err
+			}
+		}			
+	}
+
+	if !clusterResourceMap["ControlCluster"] {
+		resource := tfv1alpha1.ControlCluster{}
+		err := r.client.Get(context.TODO(), types.NamespacedName{Name: instance.Name, Namespace: instance.Namespace}, &resource)
+		if err == nil {
+			err = r.client.Delete(context.TODO(), &resource)
+			if err != nil{
+				return reconcile.Result{}, err
+			}
+		}			
+	}
+
+	if !clusterResourceMap["KubemanagerCluster"] {
+		resource := tfv1alpha1.KubemanagerCluster{}
+		err := r.client.Get(context.TODO(), types.NamespacedName{Name: instance.Name, Namespace: instance.Namespace}, &resource)
+		if err == nil {
+			err = r.client.Delete(context.TODO(), &resource)
+			if err != nil{
+				return reconcile.Result{}, err
+			}
+		}			
+	}
+
+	if !clusterResourceMap["WebuiCluster"] {
+		resource := tfv1alpha1.WebuiCluster{}
+		err := r.client.Get(context.TODO(), types.NamespacedName{Name: instance.Name, Namespace: instance.Namespace}, &resource)
+		if err == nil {
+			err = r.client.Delete(context.TODO(), &resource)
+			if err != nil{
+				return reconcile.Result{}, err
+			}
+		}			
+	}
+
+	if !clusterResourceMap["Vrouter"] {
+		resource := tfv1alpha1.Vrouter{}
+		err := r.client.Get(context.TODO(), types.NamespacedName{Name: instance.Name, Namespace: instance.Namespace}, &resource)
+		if err == nil {
+			err = r.client.Delete(context.TODO(), &resource)
+			if err != nil{
+				return reconcile.Result{}, err
+			}
+		}			
+	}
+
 
 	return  reconcile.Result{},nil
 }

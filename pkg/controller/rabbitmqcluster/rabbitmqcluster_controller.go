@@ -96,6 +96,7 @@ func (r *ReconcileRabbitmqCluster) Reconcile(request reconcile.Request) (reconci
 		BaseInstance: baseInstance,
 		InitContainers: instance.Spec.InitContainers,
 		Type: instance.Spec.Type,
+		VolumeList: map[string]bool{},
 	}
 	resource = clusterResource
 

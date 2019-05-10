@@ -99,6 +99,7 @@ func (r *ReconcileControlCluster) Reconcile(request reconcile.Request) (reconcil
 		ConfigInstance: configInstance,
 		ControlInstance: instance,
 		Type: instance.Spec.Type,
+		VolumeList: map[string]bool{},
 	}
 	resource = clusterResource
 
