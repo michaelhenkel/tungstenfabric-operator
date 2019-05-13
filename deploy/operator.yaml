@@ -23,8 +23,7 @@ spec:
       serviceAccountName: tungstenfabric-operator
       containers:
         - name: tungstenfabric-operator
-          # Replace this with the built image name
-          image: docker.io/michaelhenkel/tungstenfabric-operator:v0.0.1
+          image: docker.io/michaelhenkel/tungstenfabric-operator:v0.0.3
           command:
           - tungstenfabric-operator
           imagePullPolicy: Always
