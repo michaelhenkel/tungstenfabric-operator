@@ -207,7 +207,7 @@ spec:
       hostNetwork: true
       containers:
         - name: tungstenfabric-operator
-          image: docker.io/michaelhenkel/tungstenfabric-operator:v0.0.1
+          image: docker.io/michaelhenkel/tungstenfabric-operator:v0.0.3
           command:
           - tungstenfabric-operator
           imagePullPolicy: Always

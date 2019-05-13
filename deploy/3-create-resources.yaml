@@ -143,7 +143,7 @@ metadata:
 spec:
   type: daemonset
   containers:
-    - name: agent
+    - name: vrouteragent
       logvolumepath: "/var/log/contrail"
       devvolume: true
       networkscriptsvolume: true
@@ -155,6 +155,13 @@ spec:
       privileged: true
       lifecyclescript: ["/cleanup.sh"]
       resourceconfigmap: true
+    - name: nodemanager
+      logvolumepath: "/var/log/contrail"
+      unixsocketvolume: true
+      resourceconfigmap: true
+      env:
+        "NODE_TYPE": "vrouter"
+        "DOCKER_HOST": "unix://mnt/docker.sock"
   initcontainers:  
     - name: nodeinit
       privileged: true
@@ -175,7 +182,7 @@ spec:
       networkscriptsvolume: true   
       hostbinvolume: true  
       resourceconfigmap: true
-    - name: vroutercniinit
+    - name: vroutercni
       privileged: true
       hostusrbinvolume: true
       varlibcontrailvolume: true
