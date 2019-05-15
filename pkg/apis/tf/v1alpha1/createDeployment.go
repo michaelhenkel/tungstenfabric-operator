@@ -1,6 +1,7 @@
 package v1alpha1
 
 import (
+	"net"
 	"context"
 	"strconv"
 	"strings"
@@ -15,6 +16,9 @@ import (
 	logf "sigs.k8s.io/controller-runtime/pkg/runtime/log"
 	"sigs.k8s.io/controller-runtime/pkg/controller/controllerutil"
 	"k8s.io/apimachinery/pkg/runtime"
+	"k8s.io/client-go/rest"
+	"k8s.io/client-go/kubernetes"
+	"gopkg.in/yaml.v2"
 )
 var log = logf.Log.WithName("TungstenFabricResource")
 var err error
@@ -65,6 +69,42 @@ func (c *ClusterResource) CreateConfigMap(cl client.Client, instance metav1.Obje
 		if err != nil {
 			return err
 		}
+	}
+	if c.ResourceConfig["USE_KUBEADM_CONFIG"] == "true"{
+		controlPlaneEndpoint := ""
+		clusterName := ""
+		podSubnet := ""
+		serviceSubnet := ""
+		controlPlaneEndpointHost := ""
+		controlPlaneEndpointPort := ""
+
+		config, err := rest.InClusterConfig()
+		if err == nil {
+			clientset, err := kubernetes.NewForConfig(config)
+			if err == nil {
+				kubeadmConfigMapClient := clientset.CoreV1().ConfigMaps("kube-system")
+				kcm, _ := kubeadmConfigMapClient.Get("kubeadm-config", metav1.GetOptions{})
+				clusterConfig := kcm.Data["ClusterConfiguration"]
+				clusterConfigByte := []byte(clusterConfig)
+				clusterConfigMap := make(map[interface{}]interface{})
+				err = yaml.Unmarshal(clusterConfigByte, &clusterConfigMap)
+				if err != nil {
+					return err
+				}
+				controlPlaneEndpoint = clusterConfigMap["controlPlaneEndpoint"].(string)
+				controlPlaneEndpointHost, controlPlaneEndpointPort, _ = net.SplitHostPort(controlPlaneEndpoint)
+				clusterName = clusterConfigMap["clusterName"].(string)
+				networkConfig := make(map[interface{}]interface{})
+				networkConfig = clusterConfigMap["networking"].(map[interface{}]interface{})
+				podSubnet = networkConfig["podSubnet"].(string)
+				serviceSubnet = networkConfig["serviceSubnet"].(string)
+			}
+		}
+		c.ResourceConfig["KUBERNETES_API_SERVER"] = controlPlaneEndpointHost
+		c.ResourceConfig["KUBERNETES_API_SECURE_PORT"] = controlPlaneEndpointPort
+		c.ResourceConfig["KUBERNETES_POD_SUBNETS"] = podSubnet
+		c.ResourceConfig["KUBERNETES_SERVICE_SUBNETS"] = serviceSubnet
+		c.ResourceConfig["KUBERNETES_CLUSTER_NAME"] = clusterName
 	}
 
 	configMap := &corev1.ConfigMap{
