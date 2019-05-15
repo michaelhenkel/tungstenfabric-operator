@@ -7,7 +7,11 @@ package bidi
 import "log"
 
 // This implementation is a port based on the reference implementation found at:
+<<<<<<< HEAD
 // http://www.unicode.org/Public/PROGRAMS/BidiReferenceJava/
+=======
+// https://www.unicode.org/Public/PROGRAMS/BidiReferenceJava/
+>>>>>>> v0.0.4
 //
 // described in Unicode Bidirectional Algorithm (UAX #9).
 //

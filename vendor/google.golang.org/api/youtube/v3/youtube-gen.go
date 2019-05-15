@@ -1394,7 +1394,11 @@ type CdnSettings struct {
 	//
 	// Possible values:
 	//   "dash"
+<<<<<<< HEAD
 	//   "http"
+=======
+	//   "hls"
+>>>>>>> v0.0.4
 	//   "rtmp"
 	//   "webrtc"
 	IngestionType string `json:"ingestionType,omitempty"`

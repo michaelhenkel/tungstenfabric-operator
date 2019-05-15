@@ -49,7 +49,11 @@ func (m *CreateApplicationRequest) Reset()         { *m = CreateApplicationReque
 func (m *CreateApplicationRequest) String() string { return proto.CompactTextString(m) }
 func (*CreateApplicationRequest) ProtoMessage()    {}
 func (*CreateApplicationRequest) Descriptor() ([]byte, []int) {
+<<<<<<< HEAD
 	return fileDescriptor_application_service_acd363b06474d9e0, []int{0}
+=======
+	return fileDescriptor_application_service_e04dbebf8790837c, []int{0}
+>>>>>>> v0.0.4
 }
 func (m *CreateApplicationRequest) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_CreateApplicationRequest.Unmarshal(m, b)
@@ -103,7 +107,11 @@ func (m *GetApplicationRequest) Reset()         { *m = GetApplicationRequest{} }
 func (m *GetApplicationRequest) String() string { return proto.CompactTextString(m) }
 func (*GetApplicationRequest) ProtoMessage()    {}
 func (*GetApplicationRequest) Descriptor() ([]byte, []int) {
+<<<<<<< HEAD
 	return fileDescriptor_application_service_acd363b06474d9e0, []int{1}
+=======
+	return fileDescriptor_application_service_e04dbebf8790837c, []int{1}
+>>>>>>> v0.0.4
 }
 func (m *GetApplicationRequest) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_GetApplicationRequest.Unmarshal(m, b)
@@ -139,6 +147,7 @@ type UpdateApplicationRequest struct {
 	// Optional but strongly recommended for the best service
 	// experience.
 	//
+<<<<<<< HEAD
 	// If
 	// [update_mask][google.cloud.talent.v4beta1.UpdateApplicationRequest.update_mask]
 	// is provided, only the specified fields in
@@ -148,6 +157,13 @@ type UpdateApplicationRequest struct {
 	// A field mask to specify the application fields to be updated. Only
 	// top level fields of [Application][google.cloud.talent.v4beta1.Application]
 	// are supported.
+=======
+	// If [update_mask][google.cloud.talent.v4beta1.UpdateApplicationRequest.update_mask] is provided, only the specified fields in
+	// [application][google.cloud.talent.v4beta1.UpdateApplicationRequest.application] are updated. Otherwise all the fields are updated.
+	//
+	// A field mask to specify the application fields to be updated. Only
+	// top level fields of [Application][google.cloud.talent.v4beta1.Application] are supported.
+>>>>>>> v0.0.4
 	UpdateMask           *field_mask.FieldMask `protobuf:"bytes,2,opt,name=update_mask,json=updateMask,proto3" json:"update_mask,omitempty"`
 	XXX_NoUnkeyedLiteral struct{}              `json:"-"`
 	XXX_unrecognized     []byte                `json:"-"`
@@ -158,7 +174,11 @@ func (m *UpdateApplicationRequest) Reset()         { *m = UpdateApplicationReque
 func (m *UpdateApplicationRequest) String() string { return proto.CompactTextString(m) }
 func (*UpdateApplicationRequest) ProtoMessage()    {}
 func (*UpdateApplicationRequest) Descriptor() ([]byte, []int) {
+<<<<<<< HEAD
 	return fileDescriptor_application_service_acd363b06474d9e0, []int{2}
+=======
+	return fileDescriptor_application_service_e04dbebf8790837c, []int{2}
+>>>>>>> v0.0.4
 }
 func (m *UpdateApplicationRequest) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_UpdateApplicationRequest.Unmarshal(m, b)
@@ -212,7 +232,11 @@ func (m *DeleteApplicationRequest) Reset()         { *m = DeleteApplicationReque
 func (m *DeleteApplicationRequest) String() string { return proto.CompactTextString(m) }
 func (*DeleteApplicationRequest) ProtoMessage()    {}
 func (*DeleteApplicationRequest) Descriptor() ([]byte, []int) {
+<<<<<<< HEAD
 	return fileDescriptor_application_service_acd363b06474d9e0, []int{3}
+=======
+	return fileDescriptor_application_service_e04dbebf8790837c, []int{3}
+>>>>>>> v0.0.4
 }
 func (m *DeleteApplicationRequest) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_DeleteApplicationRequest.Unmarshal(m, b)
@@ -267,7 +291,11 @@ func (m *ListApplicationsRequest) Reset()         { *m = ListApplicationsRequest
 func (m *ListApplicationsRequest) String() string { return proto.CompactTextString(m) }
 func (*ListApplicationsRequest) ProtoMessage()    {}
 func (*ListApplicationsRequest) Descriptor() ([]byte, []int) {
+<<<<<<< HEAD
 	return fileDescriptor_application_service_acd363b06474d9e0, []int{4}
+=======
+	return fileDescriptor_application_service_e04dbebf8790837c, []int{4}
+>>>>>>> v0.0.4
 }
 func (m *ListApplicationsRequest) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_ListApplicationsRequest.Unmarshal(m, b)
@@ -328,7 +356,11 @@ func (m *ListApplicationsResponse) Reset()         { *m = ListApplicationsRespon
 func (m *ListApplicationsResponse) String() string { return proto.CompactTextString(m) }
 func (*ListApplicationsResponse) ProtoMessage()    {}
 func (*ListApplicationsResponse) Descriptor() ([]byte, []int) {
+<<<<<<< HEAD
 	return fileDescriptor_application_service_acd363b06474d9e0, []int{5}
+=======
+	return fileDescriptor_application_service_e04dbebf8790837c, []int{5}
+>>>>>>> v0.0.4
 }
 func (m *ListApplicationsResponse) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_ListApplicationsResponse.Unmarshal(m, b)
@@ -593,10 +625,17 @@ var _ApplicationService_serviceDesc = grpc.ServiceDesc{
 }
 
 func init() {
+<<<<<<< HEAD
 	proto.RegisterFile("google/cloud/talent/v4beta1/application_service.proto", fileDescriptor_application_service_acd363b06474d9e0)
 }
 
 var fileDescriptor_application_service_acd363b06474d9e0 = []byte{
+=======
+	proto.RegisterFile("google/cloud/talent/v4beta1/application_service.proto", fileDescriptor_application_service_e04dbebf8790837c)
+}
+
+var fileDescriptor_application_service_e04dbebf8790837c = []byte{
+>>>>>>> v0.0.4
 	// 665 bytes of a gzipped FileDescriptorProto
 	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xa4, 0x95, 0x4f, 0x4f, 0xd4, 0x40,
 	0x18, 0xc6, 0x33, 0xa0, 0x08, 0xef, 0xfa, 0x8f, 0x49, 0x84, 0x66, 0xd1, 0xb8, 0xe9, 0xc1, 0x6c,

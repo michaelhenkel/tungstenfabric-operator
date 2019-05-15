@@ -13,17 +13,29 @@ spec:
         name: tungstenfabric-operator
     spec:
       nodeSelector:
+<<<<<<< HEAD
           node-role.kubernetes.io/master: ''
+=======
+        node-role.kubernetes.io/master: ''
+>>>>>>> v0.0.4
       tolerations:
       - operator: Exists
         effect: NoSchedule
       - operator: Exists
         effect: NoExecute
+<<<<<<< HEAD
       hostNetwork: true
       serviceAccountName: tungstenfabric-operator
       containers:
         - name: tungstenfabric-operator
           image: docker.io/michaelhenkel/tungstenfabric-operator:v0.0.3
+=======
+      serviceAccountName: tungstenfabric-operator
+      hostNetwork: true
+      containers:
+        - name: tungstenfabric-operator
+          image: docker.io/michaelhenkel/tungstenfabric-operator:v0.0.4
+>>>>>>> v0.0.4
           command:
           - tungstenfabric-operator
           imagePullPolicy: Always

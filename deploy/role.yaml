@@ -14,6 +14,7 @@ rules:
   - events
   - configmaps
   - secrets
+<<<<<<< HEAD
   verbs:
   - '*'
 - apiGroups:
@@ -23,6 +24,12 @@ rules:
   verbs:
   - get
 - apiGroups:
+=======
+  - serviceaccounts
+  verbs:
+  - '*'
+- apiGroups:
+>>>>>>> v0.0.4
   - apps
   resources:
   - deployments
@@ -47,6 +54,7 @@ rules:
   verbs:
   - update
 - apiGroups:
+<<<<<<< HEAD
   - cassandra.tungstenfabric.io
   resources:
   - '*'
@@ -80,13 +88,26 @@ rules:
   - tf.tungstenfabric.io
   resources:
   - '*'
+=======
+  - tf.tungstenfabric.io
+  resources:
+  - '*'
+  - vrouters
+>>>>>>> v0.0.4
   - cassandraclusters
   - zookeeperclusters
   - rabbitmqclusters
   - configclusters
+<<<<<<< HEAD
   - analyticsclusters
   - controlclusters
   - kubemanagerclusters
   - vrouters
+=======
+  - controlclusters
+  - kubemanagerclusters
+  - webuiclusters
+  - tungstenfabricmanagers
+>>>>>>> v0.0.4
   verbs:
   - '*'

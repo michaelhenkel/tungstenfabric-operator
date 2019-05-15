@@ -156,9 +156,13 @@ type ProjectsLocationsService struct {
 
 func NewProjectsLocationsDatasetsService(s *Service) *ProjectsLocationsDatasetsService {
 	rs := &ProjectsLocationsDatasetsService{s: s}
+<<<<<<< HEAD
 	rs.AnnotationStores = NewProjectsLocationsDatasetsAnnotationStoresService(s)
 	rs.DicomStores = NewProjectsLocationsDatasetsDicomStoresService(s)
 	rs.FhirStores = NewProjectsLocationsDatasetsFhirStoresService(s)
+=======
+	rs.DicomStores = NewProjectsLocationsDatasetsDicomStoresService(s)
+>>>>>>> v0.0.4
 	rs.Hl7V2Stores = NewProjectsLocationsDatasetsHl7V2StoresService(s)
 	rs.Operations = NewProjectsLocationsDatasetsOperationsService(s)
 	return rs
@@ -167,17 +171,23 @@ func NewProjectsLocationsDatasetsService(s *Service) *ProjectsLocationsDatasetsS
 type ProjectsLocationsDatasetsService struct {
 	s *Service
 
+<<<<<<< HEAD
 	AnnotationStores *ProjectsLocationsDatasetsAnnotationStoresService
 
 	DicomStores *ProjectsLocationsDatasetsDicomStoresService
 
 	FhirStores *ProjectsLocationsDatasetsFhirStoresService
 
+=======
+	DicomStores *ProjectsLocationsDatasetsDicomStoresService
+
+>>>>>>> v0.0.4
 	Hl7V2Stores *ProjectsLocationsDatasetsHl7V2StoresService
 
 	Operations *ProjectsLocationsDatasetsOperationsService
 }
 
+<<<<<<< HEAD
 func NewProjectsLocationsDatasetsAnnotationStoresService(s *Service) *ProjectsLocationsDatasetsAnnotationStoresService {
 	rs := &ProjectsLocationsDatasetsAnnotationStoresService{s: s}
 	rs.Annotations = NewProjectsLocationsDatasetsAnnotationStoresAnnotationsService(s)
@@ -202,11 +212,16 @@ type ProjectsLocationsDatasetsAnnotationStoresAnnotationsService struct {
 func NewProjectsLocationsDatasetsDicomStoresService(s *Service) *ProjectsLocationsDatasetsDicomStoresService {
 	rs := &ProjectsLocationsDatasetsDicomStoresService{s: s}
 	rs.DicomWeb = NewProjectsLocationsDatasetsDicomStoresDicomWebService(s)
+=======
+func NewProjectsLocationsDatasetsDicomStoresService(s *Service) *ProjectsLocationsDatasetsDicomStoresService {
+	rs := &ProjectsLocationsDatasetsDicomStoresService{s: s}
+>>>>>>> v0.0.4
 	return rs
 }
 
 type ProjectsLocationsDatasetsDicomStoresService struct {
 	s *Service
+<<<<<<< HEAD
 
 	DicomWeb *ProjectsLocationsDatasetsDicomStoresDicomWebService
 }
@@ -275,16 +290,22 @@ func NewProjectsLocationsDatasetsFhirStoresSecurityLabelsService(s *Service) *Pr
 
 type ProjectsLocationsDatasetsFhirStoresSecurityLabelsService struct {
 	s *Service
+=======
+>>>>>>> v0.0.4
 }
 
 func NewProjectsLocationsDatasetsHl7V2StoresService(s *Service) *ProjectsLocationsDatasetsHl7V2StoresService {
 	rs := &ProjectsLocationsDatasetsHl7V2StoresService{s: s}
+<<<<<<< HEAD
 	rs.Messages = NewProjectsLocationsDatasetsHl7V2StoresMessagesService(s)
+=======
+>>>>>>> v0.0.4
 	return rs
 }
 
 type ProjectsLocationsDatasetsHl7V2StoresService struct {
 	s *Service
+<<<<<<< HEAD
 
 	Messages *ProjectsLocationsDatasetsHl7V2StoresMessagesService
 }
@@ -296,6 +317,8 @@ func NewProjectsLocationsDatasetsHl7V2StoresMessagesService(s *Service) *Project
 
 type ProjectsLocationsDatasetsHl7V2StoresMessagesService struct {
 	s *Service
+=======
+>>>>>>> v0.0.4
 }
 
 func NewProjectsLocationsDatasetsOperationsService(s *Service) *ProjectsLocationsDatasetsOperationsService {
@@ -307,6 +330,7 @@ type ProjectsLocationsDatasetsOperationsService struct {
 	s *Service
 }
 
+<<<<<<< HEAD
 // Annotation: An annotation record.
 type Annotation struct {
 	// AnnotationSource: Details of the source.
@@ -444,6 +468,8 @@ func (s *AnnotationStore) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+=======
+>>>>>>> v0.0.4
 // AuditConfig: Specifies the audit configuration for a service.
 // The configuration determines which permission types are logged, and
 // what
@@ -598,6 +624,7 @@ func (s *AuditLogConfig) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+<<<<<<< HEAD
 // BigQueryDestination: The BigQuery table to which the output should be
 // written.
 type BigQueryDestination struct {
@@ -682,6 +709,12 @@ func (s *BigQueryLocation) MarshalJSON() ([]byte, error) {
 type Binding struct {
 	// Condition: The condition that is associated with this binding.
 	// NOTE: an unsatisfied condition will not allow user access via
+=======
+// Binding: Associates `members` with a `role`.
+type Binding struct {
+	// Condition: The condition that is associated with this binding.
+	// NOTE: An unsatisfied condition will not allow user access via
+>>>>>>> v0.0.4
 	// current
 	// binding. Different bindings, including their conditions, are
 	// examined
@@ -750,6 +783,7 @@ func (s *Binding) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+<<<<<<< HEAD
 // BoundingPoly: A bounding polygon for the detected image annotation.
 type BoundingPoly struct {
 	Label string `json:"label,omitempty"`
@@ -757,6 +791,40 @@ type BoundingPoly struct {
 	Vertices []*Vertex `json:"vertices,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Label") to
+=======
+// Expr: Represents an expression text. Example:
+//
+//     title: "User account presence"
+//     description: "Determines whether the request has a user account"
+//     expression: "size(request.user) > 0"
+type Expr struct {
+	// Description: An optional description of the expression. This is a
+	// longer text which
+	// describes the expression, e.g. when hovered over it in a UI.
+	Description string `json:"description,omitempty"`
+
+	// Expression: Textual representation of an expression in
+	// Common Expression Language syntax.
+	//
+	// The application context of the containing message determines
+	// which
+	// well-known feature set of CEL is supported.
+	Expression string `json:"expression,omitempty"`
+
+	// Location: An optional string indicating the location of the
+	// expression for error
+	// reporting, e.g. a file name and a position in the file.
+	Location string `json:"location,omitempty"`
+
+	// Title: An optional title for the expression, i.e. a short string
+	// describing
+	// its purpose. This can be used e.g. in UIs which allow to enter
+	// the
+	// expression.
+	Title string `json:"title,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Description") to
+>>>>>>> v0.0.4
 	// unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,
 	// non-interface field appearing in ForceSendFields will be sent to the
@@ -764,27 +832,57 @@ type BoundingPoly struct {
 	// used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
+<<<<<<< HEAD
 	// NullFields is a list of field names (e.g. "Label") to include in API
 	// requests with the JSON null value. By default, fields with empty
 	// values are omitted from API requests. However, any field with an
 	// empty value appearing in NullFields will be sent to the server as
+=======
+	// NullFields is a list of field names (e.g. "Description") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+>>>>>>> v0.0.4
 	// null. It is an error if a field in this list has a non-empty value.
 	// This may be used to include null fields in Patch requests.
 	NullFields []string `json:"-"`
 }
 
+<<<<<<< HEAD
 func (s *BoundingPoly) MarshalJSON() ([]byte, error) {
 	type NoMethod BoundingPoly
+=======
+func (s *Expr) MarshalJSON() ([]byte, error) {
+	type NoMethod Expr
+>>>>>>> v0.0.4
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+<<<<<<< HEAD
 // CloudHealthcareSource: Cloud Healthcare API resource.
 type CloudHealthcareSource struct {
 	// Name: Full path of a Cloud Healthcare API resource.
 	Name string `json:"name,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Name") to
+=======
+// ListLocationsResponse: The response message for
+// Locations.ListLocations.
+type ListLocationsResponse struct {
+	// Locations: A list of locations that matches the specified filter in
+	// the request.
+	Locations []*Location `json:"locations,omitempty"`
+
+	// NextPageToken: The standard List next-page token.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "Locations") to
+>>>>>>> v0.0.4
 	// unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,
 	// non-interface field appearing in ForceSendFields will be sent to the
@@ -792,8 +890,13 @@ type CloudHealthcareSource struct {
 	// used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
+<<<<<<< HEAD
 	// NullFields is a list of field names (e.g. "Name") to include in API
 	// requests with the JSON null value. By default, fields with empty
+=======
+	// NullFields is a list of field names (e.g. "Locations") to include in
+	// API requests with the JSON null value. By default, fields with empty
+>>>>>>> v0.0.4
 	// values are omitted from API requests. However, any field with an
 	// empty value appearing in NullFields will be sent to the server as
 	// null. It is an error if a field in this list has a non-empty value.
@@ -801,18 +904,41 @@ type CloudHealthcareSource struct {
 	NullFields []string `json:"-"`
 }
 
+<<<<<<< HEAD
 func (s *CloudHealthcareSource) MarshalJSON() ([]byte, error) {
 	type NoMethod CloudHealthcareSource
+=======
+func (s *ListLocationsResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod ListLocationsResponse
+>>>>>>> v0.0.4
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+<<<<<<< HEAD
 // CreateMessageRequest: Creates a new message.
 type CreateMessageRequest struct {
 	// Message: HL7v2 message.
 	Message *Message `json:"message,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Message") to
+=======
+// ListOperationsResponse: The response message for
+// Operations.ListOperations.
+type ListOperationsResponse struct {
+	// NextPageToken: The standard List next-page token.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// Operations: A list of operations that matches the specified filter in
+	// the request.
+	Operations []*Operation `json:"operations,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "NextPageToken") to
+>>>>>>> v0.0.4
 	// unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,
 	// non-interface field appearing in ForceSendFields will be sent to the
@@ -820,21 +946,34 @@ type CreateMessageRequest struct {
 	// used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
+<<<<<<< HEAD
 	// NullFields is a list of field names (e.g. "Message") to include in
 	// API requests with the JSON null value. By default, fields with empty
 	// values are omitted from API requests. However, any field with an
 	// empty value appearing in NullFields will be sent to the server as
+=======
+	// NullFields is a list of field names (e.g. "NextPageToken") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+>>>>>>> v0.0.4
 	// null. It is an error if a field in this list has a non-empty value.
 	// This may be used to include null fields in Patch requests.
 	NullFields []string `json:"-"`
 }
 
+<<<<<<< HEAD
 func (s *CreateMessageRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod CreateMessageRequest
+=======
+func (s *ListOperationsResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod ListOperationsResponse
+>>>>>>> v0.0.4
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+<<<<<<< HEAD
 // Dataset: A message representing a health dataset.
 //
 // A health dataset represents a collection of healthcare data
@@ -857,12 +996,43 @@ type Dataset struct {
 	// where no
 	// explicit timezone is specified.
 	TimeZone string `json:"timeZone,omitempty"`
+=======
+// Location: A resource that represents Google Cloud Platform location.
+type Location struct {
+	// DisplayName: The friendly name for this location, typically a nearby
+	// city name.
+	// For example, "Tokyo".
+	DisplayName string `json:"displayName,omitempty"`
+
+	// Labels: Cross-service attributes for the location. For example
+	//
+	//     {"cloud.googleapis.com/region": "us-east1"}
+	Labels map[string]string `json:"labels,omitempty"`
+
+	// LocationId: The canonical id for this location. For example:
+	// "us-east1".
+	LocationId string `json:"locationId,omitempty"`
+
+	// Metadata: Service-specific metadata. For example the available
+	// capacity at the given
+	// location.
+	Metadata googleapi.RawMessage `json:"metadata,omitempty"`
+
+	// Name: Resource name for the location, which may vary between
+	// implementations.
+	// For example: "projects/example-project/locations/us-east1"
+	Name string `json:"name,omitempty"`
+>>>>>>> v0.0.4
 
 	// ServerResponse contains the HTTP response code and headers from the
 	// server.
 	googleapi.ServerResponse `json:"-"`
 
+<<<<<<< HEAD
 	// ForceSendFields is a list of field names (e.g. "Name") to
+=======
+	// ForceSendFields is a list of field names (e.g. "DisplayName") to
+>>>>>>> v0.0.4
 	// unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,
 	// non-interface field appearing in ForceSendFields will be sent to the
@@ -870,21 +1040,34 @@ type Dataset struct {
 	// used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
+<<<<<<< HEAD
 	// NullFields is a list of field names (e.g. "Name") to include in API
 	// requests with the JSON null value. By default, fields with empty
 	// values are omitted from API requests. However, any field with an
 	// empty value appearing in NullFields will be sent to the server as
+=======
+	// NullFields is a list of field names (e.g. "DisplayName") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+>>>>>>> v0.0.4
 	// null. It is an error if a field in this list has a non-empty value.
 	// This may be used to include null fields in Patch requests.
 	NullFields []string `json:"-"`
 }
 
+<<<<<<< HEAD
 func (s *Dataset) MarshalJSON() ([]byte, error) {
 	type NoMethod Dataset
+=======
+func (s *Location) MarshalJSON() ([]byte, error) {
+	type NoMethod Location
+>>>>>>> v0.0.4
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+<<<<<<< HEAD
 // DeidentifyConfig: Configures de-id options specific to different
 // types of content.
 // Each submessage customizes the handling of
@@ -943,6 +1126,61 @@ type DeidentifyDatasetRequest struct {
 	DestinationDataset string `json:"destinationDataset,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Config") to
+=======
+// Operation: This resource represents a long-running operation that is
+// the result of a
+// network API call.
+type Operation struct {
+	// Done: If the value is `false`, it means the operation is still in
+	// progress.
+	// If `true`, the operation is completed, and either `error` or
+	// `response` is
+	// available.
+	Done bool `json:"done,omitempty"`
+
+	// Error: The error result of the operation in case of failure or
+	// cancellation.
+	Error *Status `json:"error,omitempty"`
+
+	// Metadata: Service-specific metadata associated with the operation.
+	// It typically
+	// contains progress information and common metadata such as create
+	// time.
+	// Some services might not provide such metadata.  Any method that
+	// returns a
+	// long-running operation should document the metadata type, if any.
+	Metadata googleapi.RawMessage `json:"metadata,omitempty"`
+
+	// Name: The server-assigned name, which is only unique within the same
+	// service that
+	// originally returns it. If you use the default HTTP mapping,
+	// the
+	// `name` should have the format of `operations/some/unique/name`.
+	Name string `json:"name,omitempty"`
+
+	// Response: The normal response of the operation in case of success.
+	// If the original
+	// method returns no data on success, such as `Delete`, the response
+	// is
+	// `google.protobuf.Empty`.  If the original method is
+	// standard
+	// `Get`/`Create`/`Update`, the response should be the resource.  For
+	// other
+	// methods, the response should have the type `XxxResponse`, where
+	// `Xxx`
+	// is the original method name.  For example, if the original method
+	// name
+	// is `TakeSnapshot()`, the inferred response type
+	// is
+	// `TakeSnapshotResponse`.
+	Response googleapi.RawMessage `json:"response,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "Done") to
+>>>>>>> v0.0.4
 	// unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,
 	// non-interface field appearing in ForceSendFields will be sent to the
@@ -950,7 +1188,11 @@ type DeidentifyDatasetRequest struct {
 	// used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
+<<<<<<< HEAD
 	// NullFields is a list of field names (e.g. "Config") to include in API
+=======
+	// NullFields is a list of field names (e.g. "Done") to include in API
+>>>>>>> v0.0.4
 	// requests with the JSON null value. By default, fields with empty
 	// values are omitted from API requests. However, any field with an
 	// empty value appearing in NullFields will be sent to the server as
@@ -959,12 +1201,18 @@ type DeidentifyDatasetRequest struct {
 	NullFields []string `json:"-"`
 }
 
+<<<<<<< HEAD
 func (s *DeidentifyDatasetRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod DeidentifyDatasetRequest
+=======
+func (s *Operation) MarshalJSON() ([]byte, error) {
+	type NoMethod Operation
+>>>>>>> v0.0.4
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+<<<<<<< HEAD
 // Detail: Contains multiple sensitive information findings for each
 // resource slice.
 type Detail struct {
@@ -1003,6 +1251,95 @@ type DicomConfig struct {
 	WhitelistTags []string `json:"whitelistTags,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "WhitelistTags") to
+=======
+// Policy: Defines an Identity and Access Management (IAM) policy. It is
+// used to
+// specify access control policies for Cloud Platform resources.
+//
+//
+// A `Policy` consists of a list of `bindings`. A `binding` binds a list
+// of
+// `members` to a `role`, where the members can be user accounts, Google
+// groups,
+// Google domains, and service accounts. A `role` is a named list of
+// permissions
+// defined by IAM.
+//
+// **JSON Example**
+//
+//     {
+//       "bindings": [
+//         {
+//           "role": "roles/owner",
+//           "members": [
+//             "user:mike@example.com",
+//             "group:admins@example.com",
+//             "domain:google.com",
+//
+// "serviceAccount:my-other-app@appspot.gserviceaccount.com"
+//           ]
+//         },
+//         {
+//           "role": "roles/viewer",
+//           "members": ["user:sean@example.com"]
+//         }
+//       ]
+//     }
+//
+// **YAML Example**
+//
+//     bindings:
+//     - members:
+//       - user:mike@example.com
+//       - group:admins@example.com
+//       - domain:google.com
+//       - serviceAccount:my-other-app@appspot.gserviceaccount.com
+//       role: roles/owner
+//     - members:
+//       - user:sean@example.com
+//       role: roles/viewer
+//
+//
+// For a description of IAM and its features, see the
+// [IAM developer's guide](https://cloud.google.com/iam/docs).
+type Policy struct {
+	// AuditConfigs: Specifies cloud audit logging configuration for this
+	// policy.
+	AuditConfigs []*AuditConfig `json:"auditConfigs,omitempty"`
+
+	// Bindings: Associates a list of `members` to a `role`.
+	// `bindings` with no members will result in an error.
+	Bindings []*Binding `json:"bindings,omitempty"`
+
+	// Etag: `etag` is used for optimistic concurrency control as a way to
+	// help
+	// prevent simultaneous updates of a policy from overwriting each
+	// other.
+	// It is strongly suggested that systems make use of the `etag` in
+	// the
+	// read-modify-write cycle to perform policy updates in order to avoid
+	// race
+	// conditions: An `etag` is returned in the response to `getIamPolicy`,
+	// and
+	// systems are expected to put that etag in the request to
+	// `setIamPolicy` to
+	// ensure that their change will be applied to the same version of the
+	// policy.
+	//
+	// If no `etag` is provided in the call to `setIamPolicy`, then the
+	// existing
+	// policy is overwritten blindly.
+	Etag string `json:"etag,omitempty"`
+
+	// Version: Deprecated.
+	Version int64 `json:"version,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "AuditConfigs") to
+>>>>>>> v0.0.4
 	// unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,
 	// non-interface field appearing in ForceSendFields will be sent to the
@@ -1010,7 +1347,11 @@ type DicomConfig struct {
 	// used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
+<<<<<<< HEAD
 	// NullFields is a list of field names (e.g. "WhitelistTags") to include
+=======
+	// NullFields is a list of field names (e.g. "AuditConfigs") to include
+>>>>>>> v0.0.4
 	// in API requests with the JSON null value. By default, fields with
 	// empty values are omitted from API requests. However, any field with
 	// an empty value appearing in NullFields will be sent to the server as
@@ -1019,12 +1360,18 @@ type DicomConfig struct {
 	NullFields []string `json:"-"`
 }
 
+<<<<<<< HEAD
 func (s *DicomConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod DicomConfig
+=======
+func (s *Policy) MarshalJSON() ([]byte, error) {
+	type NoMethod Policy
+>>>>>>> v0.0.4
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+<<<<<<< HEAD
 // DicomStore: Represents a DICOM store.
 type DicomStore struct {
 	// Name: Output only. Resource name of the DICOM store, of the
@@ -1043,6 +1390,28 @@ type DicomStore struct {
 	googleapi.ServerResponse `json:"-"`
 
 	// ForceSendFields is a list of field names (e.g. "Name") to
+=======
+// SetIamPolicyRequest: Request message for `SetIamPolicy` method.
+type SetIamPolicyRequest struct {
+	// Policy: REQUIRED: The complete policy to be applied to the
+	// `resource`. The size of
+	// the policy is limited to a few 10s of KB. An empty policy is a
+	// valid policy but certain Cloud Platform services (such as
+	// Projects)
+	// might reject them.
+	Policy *Policy `json:"policy,omitempty"`
+
+	// UpdateMask: OPTIONAL: A FieldMask specifying which fields of the
+	// policy to modify. Only
+	// the fields in the mask will be modified. If no mask is provided,
+	// the
+	// following default mask is used:
+	// paths: "bindings, etag"
+	// This field is only used by Cloud IAM.
+	UpdateMask string `json:"updateMask,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Policy") to
+>>>>>>> v0.0.4
 	// unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,
 	// non-interface field appearing in ForceSendFields will be sent to the
@@ -1050,7 +1419,11 @@ type DicomStore struct {
 	// used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
+<<<<<<< HEAD
 	// NullFields is a list of field names (e.g. "Name") to include in API
+=======
+	// NullFields is a list of field names (e.g. "Policy") to include in API
+>>>>>>> v0.0.4
 	// requests with the JSON null value. By default, fields with empty
 	// values are omitted from API requests. However, any field with an
 	// empty value appearing in NullFields will be sent to the server as
@@ -1059,12 +1432,18 @@ type DicomStore struct {
 	NullFields []string `json:"-"`
 }
 
+<<<<<<< HEAD
 func (s *DicomStore) MarshalJSON() ([]byte, error) {
 	type NoMethod DicomStore
+=======
+func (s *SetIamPolicyRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod SetIamPolicyRequest
+>>>>>>> v0.0.4
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+<<<<<<< HEAD
 // Empty: A generic empty message that you can re-use to avoid defining
 // duplicated
 // empty messages in your APIs. A typical example is to use it as the
@@ -1469,6 +1848,105 @@ type GoogleCloudHealthcareV1alphaFhirRestExportResourcesResponse struct {
 	ResourceCount int64 `json:"resourceCount,omitempty,string"`
 
 	// ForceSendFields is a list of field names (e.g. "Name") to
+=======
+// Status: The `Status` type defines a logical error model that is
+// suitable for
+// different programming environments, including REST APIs and RPC APIs.
+// It is
+// used by [gRPC](https://github.com/grpc). The error model is designed
+// to be:
+//
+// - Simple to use and understand for most users
+// - Flexible enough to meet unexpected needs
+//
+// # Overview
+//
+// The `Status` message contains three pieces of data: error code,
+// error
+// message, and error details. The error code should be an enum value
+// of
+// google.rpc.Code, but it may accept additional error codes if needed.
+// The
+// error message should be a developer-facing English message that
+// helps
+// developers *understand* and *resolve* the error. If a localized
+// user-facing
+// error message is needed, put the localized message in the error
+// details or
+// localize it in the client. The optional error details may contain
+// arbitrary
+// information about the error. There is a predefined set of error
+// detail types
+// in the package `google.rpc` that can be used for common error
+// conditions.
+//
+// # Language mapping
+//
+// The `Status` message is the logical representation of the error
+// model, but it
+// is not necessarily the actual wire format. When the `Status` message
+// is
+// exposed in different client libraries and different wire protocols,
+// it can be
+// mapped differently. For example, it will likely be mapped to some
+// exceptions
+// in Java, but more likely mapped to some error codes in C.
+//
+// # Other uses
+//
+// The error model and the `Status` message can be used in a variety
+// of
+// environments, either with or without APIs, to provide a
+// consistent developer experience across different
+// environments.
+//
+// Example uses of this error model include:
+//
+// - Partial errors. If a service needs to return partial errors to the
+// client,
+//     it may embed the `Status` in the normal response to indicate the
+// partial
+//     errors.
+//
+// - Workflow errors. A typical workflow has multiple steps. Each step
+// may
+//     have a `Status` message for error reporting.
+//
+// - Batch operations. If a client uses batch request and batch
+// response, the
+//     `Status` message should be used directly inside batch response,
+// one for
+//     each error sub-response.
+//
+// - Asynchronous operations. If an API call embeds asynchronous
+// operation
+//     results in its response, the status of those operations should
+// be
+//     represented directly using the `Status` message.
+//
+// - Logging. If some API errors are stored in logs, the message
+// `Status` could
+//     be used directly after any stripping needed for security/privacy
+// reasons.
+type Status struct {
+	// Code: The status code, which should be an enum value of
+	// google.rpc.Code.
+	Code int64 `json:"code,omitempty"`
+
+	// Details: A list of messages that carry the error details.  There is a
+	// common set of
+	// message types for APIs to use.
+	Details []googleapi.RawMessage `json:"details,omitempty"`
+
+	// Message: A developer-facing error message, which should be in
+	// English. Any
+	// user-facing error message should be localized and sent in
+	// the
+	// google.rpc.Status.details field, or localized by the client.
+	Message string `json:"message,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Code") to
+>>>>>>> v0.0.4
 	// unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,
 	// non-interface field appearing in ForceSendFields will be sent to the
@@ -1476,7 +1954,11 @@ type GoogleCloudHealthcareV1alphaFhirRestExportResourcesResponse struct {
 	// used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
+<<<<<<< HEAD
 	// NullFields is a list of field names (e.g. "Name") to include in API
+=======
+	// NullFields is a list of field names (e.g. "Code") to include in API
+>>>>>>> v0.0.4
 	// requests with the JSON null value. By default, fields with empty
 	// values are omitted from API requests. However, any field with an
 	// empty value appearing in NullFields will be sent to the server as
@@ -1485,12 +1967,18 @@ type GoogleCloudHealthcareV1alphaFhirRestExportResourcesResponse struct {
 	NullFields []string `json:"-"`
 }
 
+<<<<<<< HEAD
 func (s *GoogleCloudHealthcareV1alphaFhirRestExportResourcesResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudHealthcareV1alphaFhirRestExportResourcesResponse
+=======
+func (s *Status) MarshalJSON() ([]byte, error) {
+	type NoMethod Status
+>>>>>>> v0.0.4
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+<<<<<<< HEAD
 // GoogleCloudHealthcareV1alphaFhirRestImportResourcesResponse: Final
 // response of importing resources.
 // This structure will be included in the
@@ -14002,12 +14490,90 @@ func (c *ProjectsLocationsDatasetsHl7V2StoresGetCall) Do(opts ...googleapi.CallO
 type ProjectsLocationsDatasetsHl7V2StoresGetIamPolicyCall struct {
 	s            *Service
 	resource     string
+=======
+// TestIamPermissionsRequest: Request message for `TestIamPermissions`
+// method.
+type TestIamPermissionsRequest struct {
+	// Permissions: The set of permissions to check for the `resource`.
+	// Permissions with
+	// wildcards (such as '*' or 'storage.*') are not allowed. For
+	// more
+	// information see
+	// [IAM
+	// Overview](https://cloud.google.com/iam/docs/overview#permissions).
+	Permissions []string `json:"permissions,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Permissions") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Permissions") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *TestIamPermissionsRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod TestIamPermissionsRequest
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// TestIamPermissionsResponse: Response message for `TestIamPermissions`
+// method.
+type TestIamPermissionsResponse struct {
+	// Permissions: A subset of `TestPermissionsRequest.permissions` that
+	// the caller is
+	// allowed.
+	Permissions []string `json:"permissions,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "Permissions") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Permissions") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *TestIamPermissionsResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod TestIamPermissionsResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// method id "healthcare.projects.locations.get":
+
+type ProjectsLocationsGetCall struct {
+	s            *Service
+	name         string
+>>>>>>> v0.0.4
 	urlParams_   gensupport.URLParams
 	ifNoneMatch_ string
 	ctx_         context.Context
 	header_      http.Header
 }
 
+<<<<<<< HEAD
 // GetIamPolicy: Gets the access control policy for a resource.
 // Returns an empty policy if the resource exists and does not have a
 // policy
@@ -14015,13 +14581,23 @@ type ProjectsLocationsDatasetsHl7V2StoresGetIamPolicyCall struct {
 func (r *ProjectsLocationsDatasetsHl7V2StoresService) GetIamPolicy(resource string) *ProjectsLocationsDatasetsHl7V2StoresGetIamPolicyCall {
 	c := &ProjectsLocationsDatasetsHl7V2StoresGetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
+=======
+// Get: Gets information about a location.
+func (r *ProjectsLocationsService) Get(name string) *ProjectsLocationsGetCall {
+	c := &ProjectsLocationsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+>>>>>>> v0.0.4
 	return c
 }
 
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
+<<<<<<< HEAD
 func (c *ProjectsLocationsDatasetsHl7V2StoresGetIamPolicyCall) Fields(s ...googleapi.Field) *ProjectsLocationsDatasetsHl7V2StoresGetIamPolicyCall {
+=======
+func (c *ProjectsLocationsGetCall) Fields(s ...googleapi.Field) *ProjectsLocationsGetCall {
+>>>>>>> v0.0.4
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
@@ -14031,7 +14607,11 @@ func (c *ProjectsLocationsDatasetsHl7V2StoresGetIamPolicyCall) Fields(s ...googl
 // getting updates only after the object has changed since the last
 // request. Use googleapi.IsNotModified to check whether the response
 // error from Do is the result of In-None-Match.
+<<<<<<< HEAD
 func (c *ProjectsLocationsDatasetsHl7V2StoresGetIamPolicyCall) IfNoneMatch(entityTag string) *ProjectsLocationsDatasetsHl7V2StoresGetIamPolicyCall {
+=======
+func (c *ProjectsLocationsGetCall) IfNoneMatch(entityTag string) *ProjectsLocationsGetCall {
+>>>>>>> v0.0.4
 	c.ifNoneMatch_ = entityTag
 	return c
 }
@@ -14039,21 +14619,33 @@ func (c *ProjectsLocationsDatasetsHl7V2StoresGetIamPolicyCall) IfNoneMatch(entit
 // Context sets the context to be used in this call's Do method. Any
 // pending HTTP request will be aborted if the provided context is
 // canceled.
+<<<<<<< HEAD
 func (c *ProjectsLocationsDatasetsHl7V2StoresGetIamPolicyCall) Context(ctx context.Context) *ProjectsLocationsDatasetsHl7V2StoresGetIamPolicyCall {
+=======
+func (c *ProjectsLocationsGetCall) Context(ctx context.Context) *ProjectsLocationsGetCall {
+>>>>>>> v0.0.4
 	c.ctx_ = ctx
 	return c
 }
 
 // Header returns an http.Header that can be modified by the caller to
 // add HTTP headers to the request.
+<<<<<<< HEAD
 func (c *ProjectsLocationsDatasetsHl7V2StoresGetIamPolicyCall) Header() http.Header {
+=======
+func (c *ProjectsLocationsGetCall) Header() http.Header {
+>>>>>>> v0.0.4
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
 	}
 	return c.header_
 }
 
+<<<<<<< HEAD
 func (c *ProjectsLocationsDatasetsHl7V2StoresGetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
+=======
+func (c *ProjectsLocationsGetCall) doRequest(alt string) (*http.Response, error) {
+>>>>>>> v0.0.4
 	reqHeaders := make(http.Header)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
@@ -14065,7 +14657,11 @@ func (c *ProjectsLocationsDatasetsHl7V2StoresGetIamPolicyCall) doRequest(alt str
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
+<<<<<<< HEAD
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha/{+resource}:getIamPolicy")
+=======
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha/{+name}")
+>>>>>>> v0.0.4
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("GET", urls, body)
 	if err != nil {
@@ -14073,11 +14669,16 @@ func (c *ProjectsLocationsDatasetsHl7V2StoresGetIamPolicyCall) doRequest(alt str
 	}
 	req.Header = reqHeaders
 	googleapi.Expand(req.URL, map[string]string{
+<<<<<<< HEAD
 		"resource": c.resource,
+=======
+		"name": c.name,
+>>>>>>> v0.0.4
 	})
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
+<<<<<<< HEAD
 // Do executes the "healthcare.projects.locations.datasets.hl7V2Stores.getIamPolicy" call.
 // Exactly one of *Policy or error will be non-nil. Any non-2xx status
 // code is an error. Response headers are in either
@@ -14086,6 +14687,16 @@ func (c *ProjectsLocationsDatasetsHl7V2StoresGetIamPolicyCall) doRequest(alt str
 // check whether the returned error was because http.StatusNotModified
 // was returned.
 func (c *ProjectsLocationsDatasetsHl7V2StoresGetIamPolicyCall) Do(opts ...googleapi.CallOption) (*Policy, error) {
+=======
+// Do executes the "healthcare.projects.locations.get" call.
+// Exactly one of *Location or error will be non-nil. Any non-2xx status
+// code is an error. Response headers are in either
+// *Location.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsGetCall) Do(opts ...googleapi.CallOption) (*Location, error) {
+>>>>>>> v0.0.4
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {
@@ -14104,7 +14715,11 @@ func (c *ProjectsLocationsDatasetsHl7V2StoresGetIamPolicyCall) Do(opts ...google
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
+<<<<<<< HEAD
 	ret := &Policy{
+=======
+	ret := &Location{
+>>>>>>> v0.0.4
 		ServerResponse: googleapi.ServerResponse{
 			Header:         res.Header,
 			HTTPStatusCode: res.StatusCode,
@@ -14116,6 +14731,7 @@ func (c *ProjectsLocationsDatasetsHl7V2StoresGetIamPolicyCall) Do(opts ...google
 	}
 	return ret, nil
 	// {
+<<<<<<< HEAD
 	//   "description": "Gets the access control policy for a resource.\nReturns an empty policy if the resource exists and does not have a policy\nset.",
 	//   "flatPath": "v1alpha/projects/{projectsId}/locations/{locationsId}/datasets/{datasetsId}/hl7V2Stores/{hl7V2StoresId}:getIamPolicy",
 	//   "httpMethod": "GET",
@@ -14128,13 +14744,33 @@ func (c *ProjectsLocationsDatasetsHl7V2StoresGetIamPolicyCall) Do(opts ...google
 	//       "description": "REQUIRED: The resource for which the policy is being requested.\nSee the operation documentation for the appropriate value for this field.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/datasets/[^/]+/hl7V2Stores/[^/]+$",
+=======
+	//   "description": "Gets information about a location.",
+	//   "flatPath": "v1alpha/projects/{projectsId}/locations/{locationsId}",
+	//   "httpMethod": "GET",
+	//   "id": "healthcare.projects.locations.get",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Resource name for the location.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+$",
+>>>>>>> v0.0.4
 	//       "required": true,
 	//       "type": "string"
 	//     }
 	//   },
+<<<<<<< HEAD
 	//   "path": "v1alpha/{+resource}:getIamPolicy",
 	//   "response": {
 	//     "$ref": "Policy"
+=======
+	//   "path": "v1alpha/{+name}",
+	//   "response": {
+	//     "$ref": "Location"
+>>>>>>> v0.0.4
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/cloud-platform"
@@ -14143,17 +14779,26 @@ func (c *ProjectsLocationsDatasetsHl7V2StoresGetIamPolicyCall) Do(opts ...google
 
 }
 
+<<<<<<< HEAD
 // method id "healthcare.projects.locations.datasets.hl7V2Stores.list":
 
 type ProjectsLocationsDatasetsHl7V2StoresListCall struct {
 	s            *Service
 	parent       string
+=======
+// method id "healthcare.projects.locations.list":
+
+type ProjectsLocationsListCall struct {
+	s            *Service
+	name         string
+>>>>>>> v0.0.4
 	urlParams_   gensupport.URLParams
 	ifNoneMatch_ string
 	ctx_         context.Context
 	header_      http.Header
 }
 
+<<<<<<< HEAD
 // List: Lists the HL7v2 stores in the given dataset.
 func (r *ProjectsLocationsDatasetsHl7V2StoresService) List(parent string) *ProjectsLocationsDatasetsHl7V2StoresListCall {
 	c := &ProjectsLocationsDatasetsHl7V2StoresListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -14165,14 +14810,40 @@ func (r *ProjectsLocationsDatasetsHl7V2StoresService) List(parent string) *Proje
 // of HL7v2 stores to return in a single response.
 // If zero the default page size of 100 is used.
 func (c *ProjectsLocationsDatasetsHl7V2StoresListCall) PageSize(pageSize int64) *ProjectsLocationsDatasetsHl7V2StoresListCall {
+=======
+// List: Lists information about the supported locations for this
+// service.
+func (r *ProjectsLocationsService) List(name string) *ProjectsLocationsListCall {
+	c := &ProjectsLocationsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Filter sets the optional parameter "filter": The standard list
+// filter.
+func (c *ProjectsLocationsListCall) Filter(filter string) *ProjectsLocationsListCall {
+	c.urlParams_.Set("filter", filter)
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": The standard list
+// page size.
+func (c *ProjectsLocationsListCall) PageSize(pageSize int64) *ProjectsLocationsListCall {
+>>>>>>> v0.0.4
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
+<<<<<<< HEAD
 // PageToken sets the optional parameter "pageToken": The
 // next_page_token value returned from the previous List request, if
 // any.
 func (c *ProjectsLocationsDatasetsHl7V2StoresListCall) PageToken(pageToken string) *ProjectsLocationsDatasetsHl7V2StoresListCall {
+=======
+// PageToken sets the optional parameter "pageToken": The standard list
+// page token.
+func (c *ProjectsLocationsListCall) PageToken(pageToken string) *ProjectsLocationsListCall {
+>>>>>>> v0.0.4
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
 }
@@ -14180,7 +14851,11 @@ func (c *ProjectsLocationsDatasetsHl7V2StoresListCall) PageToken(pageToken strin
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
+<<<<<<< HEAD
 func (c *ProjectsLocationsDatasetsHl7V2StoresListCall) Fields(s ...googleapi.Field) *ProjectsLocationsDatasetsHl7V2StoresListCall {
+=======
+func (c *ProjectsLocationsListCall) Fields(s ...googleapi.Field) *ProjectsLocationsListCall {
+>>>>>>> v0.0.4
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
@@ -14190,7 +14865,11 @@ func (c *ProjectsLocationsDatasetsHl7V2StoresListCall) Fields(s ...googleapi.Fie
 // getting updates only after the object has changed since the last
 // request. Use googleapi.IsNotModified to check whether the response
 // error from Do is the result of In-None-Match.
+<<<<<<< HEAD
 func (c *ProjectsLocationsDatasetsHl7V2StoresListCall) IfNoneMatch(entityTag string) *ProjectsLocationsDatasetsHl7V2StoresListCall {
+=======
+func (c *ProjectsLocationsListCall) IfNoneMatch(entityTag string) *ProjectsLocationsListCall {
+>>>>>>> v0.0.4
 	c.ifNoneMatch_ = entityTag
 	return c
 }
@@ -14198,21 +14877,33 @@ func (c *ProjectsLocationsDatasetsHl7V2StoresListCall) IfNoneMatch(entityTag str
 // Context sets the context to be used in this call's Do method. Any
 // pending HTTP request will be aborted if the provided context is
 // canceled.
+<<<<<<< HEAD
 func (c *ProjectsLocationsDatasetsHl7V2StoresListCall) Context(ctx context.Context) *ProjectsLocationsDatasetsHl7V2StoresListCall {
+=======
+func (c *ProjectsLocationsListCall) Context(ctx context.Context) *ProjectsLocationsListCall {
+>>>>>>> v0.0.4
 	c.ctx_ = ctx
 	return c
 }
 
 // Header returns an http.Header that can be modified by the caller to
 // add HTTP headers to the request.
+<<<<<<< HEAD
 func (c *ProjectsLocationsDatasetsHl7V2StoresListCall) Header() http.Header {
+=======
+func (c *ProjectsLocationsListCall) Header() http.Header {
+>>>>>>> v0.0.4
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
 	}
 	return c.header_
 }
 
+<<<<<<< HEAD
 func (c *ProjectsLocationsDatasetsHl7V2StoresListCall) doRequest(alt string) (*http.Response, error) {
+=======
+func (c *ProjectsLocationsListCall) doRequest(alt string) (*http.Response, error) {
+>>>>>>> v0.0.4
 	reqHeaders := make(http.Header)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
@@ -14224,7 +14915,11 @@ func (c *ProjectsLocationsDatasetsHl7V2StoresListCall) doRequest(alt string) (*h
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
+<<<<<<< HEAD
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha/{+parent}/hl7V2Stores")
+=======
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha/{+name}/locations")
+>>>>>>> v0.0.4
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("GET", urls, body)
 	if err != nil {
@@ -14232,11 +14927,16 @@ func (c *ProjectsLocationsDatasetsHl7V2StoresListCall) doRequest(alt string) (*h
 	}
 	req.Header = reqHeaders
 	googleapi.Expand(req.URL, map[string]string{
+<<<<<<< HEAD
 		"parent": c.parent,
+=======
+		"name": c.name,
+>>>>>>> v0.0.4
 	})
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
+<<<<<<< HEAD
 // Do executes the "healthcare.projects.locations.datasets.hl7V2Stores.list" call.
 // Exactly one of *ListHl7V2StoresResponse or error will be non-nil. Any
 // non-2xx status code is an error. Response headers are in either
@@ -14245,6 +14945,16 @@ func (c *ProjectsLocationsDatasetsHl7V2StoresListCall) doRequest(alt string) (*h
 // googleapi.IsNotModified to check whether the returned error was
 // because http.StatusNotModified was returned.
 func (c *ProjectsLocationsDatasetsHl7V2StoresListCall) Do(opts ...googleapi.CallOption) (*ListHl7V2StoresResponse, error) {
+=======
+// Do executes the "healthcare.projects.locations.list" call.
+// Exactly one of *ListLocationsResponse or error will be non-nil. Any
+// non-2xx status code is an error. Response headers are in either
+// *ListLocationsResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsLocationsListCall) Do(opts ...googleapi.CallOption) (*ListLocationsResponse, error) {
+>>>>>>> v0.0.4
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {
@@ -14263,7 +14973,11 @@ func (c *ProjectsLocationsDatasetsHl7V2StoresListCall) Do(opts ...googleapi.Call
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
+<<<<<<< HEAD
 	ret := &ListHl7V2StoresResponse{
+=======
+	ret := &ListLocationsResponse{
+>>>>>>> v0.0.4
 		ServerResponse: googleapi.ServerResponse{
 			Header:         res.Header,
 			HTTPStatusCode: res.StatusCode,
@@ -14275,6 +14989,7 @@ func (c *ProjectsLocationsDatasetsHl7V2StoresListCall) Do(opts ...googleapi.Call
 	}
 	return ret, nil
 	// {
+<<<<<<< HEAD
 	//   "description": "Lists the HL7v2 stores in the given dataset.",
 	//   "flatPath": "v1alpha/projects/{projectsId}/locations/{locationsId}/datasets/{datasetsId}/hl7V2Stores",
 	//   "httpMethod": "GET",
@@ -14285,11 +15000,36 @@ func (c *ProjectsLocationsDatasetsHl7V2StoresListCall) Do(opts ...googleapi.Call
 	//   "parameters": {
 	//     "pageSize": {
 	//       "description": "Limit on the number of HL7v2 stores to return in a single response.\nIf zero the default page size of 100 is used.",
+=======
+	//   "description": "Lists information about the supported locations for this service.",
+	//   "flatPath": "v1alpha/projects/{projectsId}/locations",
+	//   "httpMethod": "GET",
+	//   "id": "healthcare.projects.locations.list",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "filter": {
+	//       "description": "The standard list filter.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "name": {
+	//       "description": "The resource that owns the locations collection, if applicable.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "pageSize": {
+	//       "description": "The standard list page size.",
+>>>>>>> v0.0.4
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
+<<<<<<< HEAD
 	//       "description": "The next_page_token value returned from the previous List request, if any.",
 	//       "location": "query",
 	//       "type": "string"
@@ -14305,6 +15045,16 @@ func (c *ProjectsLocationsDatasetsHl7V2StoresListCall) Do(opts ...googleapi.Call
 	//   "path": "v1alpha/{+parent}/hl7V2Stores",
 	//   "response": {
 	//     "$ref": "ListHl7V2StoresResponse"
+=======
+	//       "description": "The standard list page token.",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1alpha/{+name}/locations",
+	//   "response": {
+	//     "$ref": "ListLocationsResponse"
+>>>>>>> v0.0.4
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/cloud-platform"
@@ -14316,7 +15066,11 @@ func (c *ProjectsLocationsDatasetsHl7V2StoresListCall) Do(opts ...googleapi.Call
 // Pages invokes f for each page of results.
 // A non-nil error returned from f will halt the iteration.
 // The provided context supersedes any context provided to the Context method.
+<<<<<<< HEAD
 func (c *ProjectsLocationsDatasetsHl7V2StoresListCall) Pages(ctx context.Context, f func(*ListHl7V2StoresResponse) error) error {
+=======
+func (c *ProjectsLocationsListCall) Pages(ctx context.Context, f func(*ListLocationsResponse) error) error {
+>>>>>>> v0.0.4
 	c.ctx_ = ctx
 	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
 	for {
@@ -14334,6 +15088,7 @@ func (c *ProjectsLocationsDatasetsHl7V2StoresListCall) Pages(ctx context.Context
 	}
 }
 
+<<<<<<< HEAD
 // method id "healthcare.projects.locations.datasets.hl7V2Stores.patch":
 
 type ProjectsLocationsDatasetsHl7V2StoresPatchCall struct {
@@ -14361,40 +15116,90 @@ func (r *ProjectsLocationsDatasetsHl7V2StoresService) Patch(name string, hl7v2st
 // ference/google.protobuf#fieldmask
 func (c *ProjectsLocationsDatasetsHl7V2StoresPatchCall) UpdateMask(updateMask string) *ProjectsLocationsDatasetsHl7V2StoresPatchCall {
 	c.urlParams_.Set("updateMask", updateMask)
+=======
+// method id "healthcare.projects.locations.datasets.getIamPolicy":
+
+type ProjectsLocationsDatasetsGetIamPolicyCall struct {
+	s            *Service
+	resource     string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// GetIamPolicy: Gets the access control policy for a resource.
+// Returns an empty policy if the resource exists and does not have a
+// policy
+// set.
+func (r *ProjectsLocationsDatasetsService) GetIamPolicy(resource string) *ProjectsLocationsDatasetsGetIamPolicyCall {
+	c := &ProjectsLocationsDatasetsGetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.resource = resource
+>>>>>>> v0.0.4
 	return c
 }
 
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
+<<<<<<< HEAD
 func (c *ProjectsLocationsDatasetsHl7V2StoresPatchCall) Fields(s ...googleapi.Field) *ProjectsLocationsDatasetsHl7V2StoresPatchCall {
+=======
+func (c *ProjectsLocationsDatasetsGetIamPolicyCall) Fields(s ...googleapi.Field) *ProjectsLocationsDatasetsGetIamPolicyCall {
+>>>>>>> v0.0.4
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+<<<<<<< HEAD
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsDatasetsHl7V2StoresPatchCall) Context(ctx context.Context) *ProjectsLocationsDatasetsHl7V2StoresPatchCall {
+=======
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ProjectsLocationsDatasetsGetIamPolicyCall) IfNoneMatch(entityTag string) *ProjectsLocationsDatasetsGetIamPolicyCall {
+	c.ifNoneMatch_ = entityTag
 	return c
 }
 
 // Context sets the context to be used in this call's Do method. Any
 // pending HTTP request will be aborted if the provided context is
 // canceled.
-func (c *ProjectsLocationsDatasetsHl7V2StoresPatchCall) Context(ctx context.Context) *ProjectsLocationsDatasetsHl7V2StoresPatchCall {
+func (c *ProjectsLocationsDatasetsGetIamPolicyCall) Context(ctx context.Context) *ProjectsLocationsDatasetsGetIamPolicyCall {
+>>>>>>> v0.0.4
 	c.ctx_ = ctx
 	return c
 }
 
 // Header returns an http.Header that can be modified by the caller to
 // add HTTP headers to the request.
+<<<<<<< HEAD
 func (c *ProjectsLocationsDatasetsHl7V2StoresPatchCall) Header() http.Header {
+=======
+func (c *ProjectsLocationsDatasetsGetIamPolicyCall) Header() http.Header {
+>>>>>>> v0.0.4
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
 	}
 	return c.header_
 }
 
+<<<<<<< HEAD
 func (c *ProjectsLocationsDatasetsHl7V2StoresPatchCall) doRequest(alt string) (*http.Response, error) {
+=======
+func (c *ProjectsLocationsDatasetsGetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
+>>>>>>> v0.0.4
 	reqHeaders := make(http.Header)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
+<<<<<<< HEAD
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.hl7v2store)
 	if err != nil {
@@ -14406,16 +15211,32 @@ func (c *ProjectsLocationsDatasetsHl7V2StoresPatchCall) doRequest(alt string) (*
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha/{+name}")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("PATCH", urls, body)
+=======
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha/{+resource}:getIamPolicy")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+>>>>>>> v0.0.4
 	if err != nil {
 		return nil, err
 	}
 	req.Header = reqHeaders
 	googleapi.Expand(req.URL, map[string]string{
+<<<<<<< HEAD
 		"name": c.name,
+=======
+		"resource": c.resource,
+>>>>>>> v0.0.4
 	})
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
+<<<<<<< HEAD
 // Do executes the "healthcare.projects.locations.datasets.hl7V2Stores.patch" call.
 // Exactly one of *Hl7V2Store or error will be non-nil. Any non-2xx
 // status code is an error. Response headers are in either
@@ -14424,6 +15245,16 @@ func (c *ProjectsLocationsDatasetsHl7V2StoresPatchCall) doRequest(alt string) (*
 // to check whether the returned error was because
 // http.StatusNotModified was returned.
 func (c *ProjectsLocationsDatasetsHl7V2StoresPatchCall) Do(opts ...googleapi.CallOption) (*Hl7V2Store, error) {
+=======
+// Do executes the "healthcare.projects.locations.datasets.getIamPolicy" call.
+// Exactly one of *Policy or error will be non-nil. Any non-2xx status
+// code is an error. Response headers are in either
+// *Policy.ServerResponse.Header or (if a response was returned at all)
+// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified
+// was returned.
+func (c *ProjectsLocationsDatasetsGetIamPolicyCall) Do(opts ...googleapi.CallOption) (*Policy, error) {
+>>>>>>> v0.0.4
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {
@@ -14442,7 +15273,11 @@ func (c *ProjectsLocationsDatasetsHl7V2StoresPatchCall) Do(opts ...googleapi.Cal
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
+<<<<<<< HEAD
 	ret := &Hl7V2Store{
+=======
+	ret := &Policy{
+>>>>>>> v0.0.4
 		ServerResponse: googleapi.ServerResponse{
 			Header:         res.Header,
 			HTTPStatusCode: res.StatusCode,
@@ -14454,6 +15289,7 @@ func (c *ProjectsLocationsDatasetsHl7V2StoresPatchCall) Do(opts ...googleapi.Cal
 	}
 	return ret, nil
 	// {
+<<<<<<< HEAD
 	//   "description": "Updates the HL7v2 store.",
 	//   "flatPath": "v1alpha/projects/{projectsId}/locations/{locationsId}/datasets/{datasetsId}/hl7V2Stores/{hl7V2StoresId}",
 	//   "httpMethod": "PATCH",
@@ -14482,6 +15318,27 @@ func (c *ProjectsLocationsDatasetsHl7V2StoresPatchCall) Do(opts ...googleapi.Cal
 	//   },
 	//   "response": {
 	//     "$ref": "Hl7V2Store"
+=======
+	//   "description": "Gets the access control policy for a resource.\nReturns an empty policy if the resource exists and does not have a policy\nset.",
+	//   "flatPath": "v1alpha/projects/{projectsId}/locations/{locationsId}/datasets/{datasetsId}:getIamPolicy",
+	//   "httpMethod": "GET",
+	//   "id": "healthcare.projects.locations.datasets.getIamPolicy",
+	//   "parameterOrder": [
+	//     "resource"
+	//   ],
+	//   "parameters": {
+	//     "resource": {
+	//       "description": "REQUIRED: The resource for which the policy is being requested.\nSee the operation documentation for the appropriate value for this field.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/datasets/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1alpha/{+resource}:getIamPolicy",
+	//   "response": {
+	//     "$ref": "Policy"
+>>>>>>> v0.0.4
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/cloud-platform"
@@ -14490,9 +15347,15 @@ func (c *ProjectsLocationsDatasetsHl7V2StoresPatchCall) Do(opts ...googleapi.Cal
 
 }
 
+<<<<<<< HEAD
 // method id "healthcare.projects.locations.datasets.hl7V2Stores.setIamPolicy":
 
 type ProjectsLocationsDatasetsHl7V2StoresSetIamPolicyCall struct {
+=======
+// method id "healthcare.projects.locations.datasets.setIamPolicy":
+
+type ProjectsLocationsDatasetsSetIamPolicyCall struct {
+>>>>>>> v0.0.4
 	s                   *Service
 	resource            string
 	setiampolicyrequest *SetIamPolicyRequest
@@ -14504,8 +15367,13 @@ type ProjectsLocationsDatasetsHl7V2StoresSetIamPolicyCall struct {
 // SetIamPolicy: Sets the access control policy on the specified
 // resource. Replaces any
 // existing policy.
+<<<<<<< HEAD
 func (r *ProjectsLocationsDatasetsHl7V2StoresService) SetIamPolicy(resource string, setiampolicyrequest *SetIamPolicyRequest) *ProjectsLocationsDatasetsHl7V2StoresSetIamPolicyCall {
 	c := &ProjectsLocationsDatasetsHl7V2StoresSetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+=======
+func (r *ProjectsLocationsDatasetsService) SetIamPolicy(resource string, setiampolicyrequest *SetIamPolicyRequest) *ProjectsLocationsDatasetsSetIamPolicyCall {
+	c := &ProjectsLocationsDatasetsSetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+>>>>>>> v0.0.4
 	c.resource = resource
 	c.setiampolicyrequest = setiampolicyrequest
 	return c
@@ -14514,7 +15382,11 @@ func (r *ProjectsLocationsDatasetsHl7V2StoresService) SetIamPolicy(resource stri
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
+<<<<<<< HEAD
 func (c *ProjectsLocationsDatasetsHl7V2StoresSetIamPolicyCall) Fields(s ...googleapi.Field) *ProjectsLocationsDatasetsHl7V2StoresSetIamPolicyCall {
+=======
+func (c *ProjectsLocationsDatasetsSetIamPolicyCall) Fields(s ...googleapi.Field) *ProjectsLocationsDatasetsSetIamPolicyCall {
+>>>>>>> v0.0.4
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
@@ -14522,21 +15394,33 @@ func (c *ProjectsLocationsDatasetsHl7V2StoresSetIamPolicyCall) Fields(s ...googl
 // Context sets the context to be used in this call's Do method. Any
 // pending HTTP request will be aborted if the provided context is
 // canceled.
+<<<<<<< HEAD
 func (c *ProjectsLocationsDatasetsHl7V2StoresSetIamPolicyCall) Context(ctx context.Context) *ProjectsLocationsDatasetsHl7V2StoresSetIamPolicyCall {
+=======
+func (c *ProjectsLocationsDatasetsSetIamPolicyCall) Context(ctx context.Context) *ProjectsLocationsDatasetsSetIamPolicyCall {
+>>>>>>> v0.0.4
 	c.ctx_ = ctx
 	return c
 }
 
 // Header returns an http.Header that can be modified by the caller to
 // add HTTP headers to the request.
+<<<<<<< HEAD
 func (c *ProjectsLocationsDatasetsHl7V2StoresSetIamPolicyCall) Header() http.Header {
+=======
+func (c *ProjectsLocationsDatasetsSetIamPolicyCall) Header() http.Header {
+>>>>>>> v0.0.4
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
 	}
 	return c.header_
 }
 
+<<<<<<< HEAD
 func (c *ProjectsLocationsDatasetsHl7V2StoresSetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
+=======
+func (c *ProjectsLocationsDatasetsSetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
+>>>>>>> v0.0.4
 	reqHeaders := make(http.Header)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
@@ -14563,14 +15447,22 @@ func (c *ProjectsLocationsDatasetsHl7V2StoresSetIamPolicyCall) doRequest(alt str
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
+<<<<<<< HEAD
 // Do executes the "healthcare.projects.locations.datasets.hl7V2Stores.setIamPolicy" call.
+=======
+// Do executes the "healthcare.projects.locations.datasets.setIamPolicy" call.
+>>>>>>> v0.0.4
 // Exactly one of *Policy or error will be non-nil. Any non-2xx status
 // code is an error. Response headers are in either
 // *Policy.ServerResponse.Header or (if a response was returned at all)
 // in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
 // check whether the returned error was because http.StatusNotModified
 // was returned.
+<<<<<<< HEAD
 func (c *ProjectsLocationsDatasetsHl7V2StoresSetIamPolicyCall) Do(opts ...googleapi.CallOption) (*Policy, error) {
+=======
+func (c *ProjectsLocationsDatasetsSetIamPolicyCall) Do(opts ...googleapi.CallOption) (*Policy, error) {
+>>>>>>> v0.0.4
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {
@@ -14602,9 +15494,15 @@ func (c *ProjectsLocationsDatasetsHl7V2StoresSetIamPolicyCall) Do(opts ...google
 	return ret, nil
 	// {
 	//   "description": "Sets the access control policy on the specified resource. Replaces any\nexisting policy.",
+<<<<<<< HEAD
 	//   "flatPath": "v1alpha/projects/{projectsId}/locations/{locationsId}/datasets/{datasetsId}/hl7V2Stores/{hl7V2StoresId}:setIamPolicy",
 	//   "httpMethod": "POST",
 	//   "id": "healthcare.projects.locations.datasets.hl7V2Stores.setIamPolicy",
+=======
+	//   "flatPath": "v1alpha/projects/{projectsId}/locations/{locationsId}/datasets/{datasetsId}:setIamPolicy",
+	//   "httpMethod": "POST",
+	//   "id": "healthcare.projects.locations.datasets.setIamPolicy",
+>>>>>>> v0.0.4
 	//   "parameterOrder": [
 	//     "resource"
 	//   ],
@@ -14612,7 +15510,11 @@ func (c *ProjectsLocationsDatasetsHl7V2StoresSetIamPolicyCall) Do(opts ...google
 	//     "resource": {
 	//       "description": "REQUIRED: The resource for which the policy is being specified.\nSee the operation documentation for the appropriate value for this field.",
 	//       "location": "path",
+<<<<<<< HEAD
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/datasets/[^/]+/hl7V2Stores/[^/]+$",
+=======
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/datasets/[^/]+$",
+>>>>>>> v0.0.4
 	//       "required": true,
 	//       "type": "string"
 	//     }
@@ -14631,9 +15533,15 @@ func (c *ProjectsLocationsDatasetsHl7V2StoresSetIamPolicyCall) Do(opts ...google
 
 }
 
+<<<<<<< HEAD
 // method id "healthcare.projects.locations.datasets.hl7V2Stores.testIamPermissions":
 
 type ProjectsLocationsDatasetsHl7V2StoresTestIamPermissionsCall struct {
+=======
+// method id "healthcare.projects.locations.datasets.testIamPermissions":
+
+type ProjectsLocationsDatasetsTestIamPermissionsCall struct {
+>>>>>>> v0.0.4
 	s                         *Service
 	resource                  string
 	testiampermissionsrequest *TestIamPermissionsRequest
@@ -14653,8 +15561,13 @@ type ProjectsLocationsDatasetsHl7V2StoresTestIamPermissionsCall struct {
 // UIs and command-line tools, not for authorization checking. This
 // operation
 // may "fail open" without warning.
+<<<<<<< HEAD
 func (r *ProjectsLocationsDatasetsHl7V2StoresService) TestIamPermissions(resource string, testiampermissionsrequest *TestIamPermissionsRequest) *ProjectsLocationsDatasetsHl7V2StoresTestIamPermissionsCall {
 	c := &ProjectsLocationsDatasetsHl7V2StoresTestIamPermissionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+=======
+func (r *ProjectsLocationsDatasetsService) TestIamPermissions(resource string, testiampermissionsrequest *TestIamPermissionsRequest) *ProjectsLocationsDatasetsTestIamPermissionsCall {
+	c := &ProjectsLocationsDatasetsTestIamPermissionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+>>>>>>> v0.0.4
 	c.resource = resource
 	c.testiampermissionsrequest = testiampermissionsrequest
 	return c
@@ -14663,7 +15576,11 @@ func (r *ProjectsLocationsDatasetsHl7V2StoresService) TestIamPermissions(resourc
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
+<<<<<<< HEAD
 func (c *ProjectsLocationsDatasetsHl7V2StoresTestIamPermissionsCall) Fields(s ...googleapi.Field) *ProjectsLocationsDatasetsHl7V2StoresTestIamPermissionsCall {
+=======
+func (c *ProjectsLocationsDatasetsTestIamPermissionsCall) Fields(s ...googleapi.Field) *ProjectsLocationsDatasetsTestIamPermissionsCall {
+>>>>>>> v0.0.4
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
@@ -14671,21 +15588,33 @@ func (c *ProjectsLocationsDatasetsHl7V2StoresTestIamPermissionsCall) Fields(s ..
 // Context sets the context to be used in this call's Do method. Any
 // pending HTTP request will be aborted if the provided context is
 // canceled.
+<<<<<<< HEAD
 func (c *ProjectsLocationsDatasetsHl7V2StoresTestIamPermissionsCall) Context(ctx context.Context) *ProjectsLocationsDatasetsHl7V2StoresTestIamPermissionsCall {
+=======
+func (c *ProjectsLocationsDatasetsTestIamPermissionsCall) Context(ctx context.Context) *ProjectsLocationsDatasetsTestIamPermissionsCall {
+>>>>>>> v0.0.4
 	c.ctx_ = ctx
 	return c
 }
 
 // Header returns an http.Header that can be modified by the caller to
 // add HTTP headers to the request.
+<<<<<<< HEAD
 func (c *ProjectsLocationsDatasetsHl7V2StoresTestIamPermissionsCall) Header() http.Header {
+=======
+func (c *ProjectsLocationsDatasetsTestIamPermissionsCall) Header() http.Header {
+>>>>>>> v0.0.4
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
 	}
 	return c.header_
 }
 
+<<<<<<< HEAD
 func (c *ProjectsLocationsDatasetsHl7V2StoresTestIamPermissionsCall) doRequest(alt string) (*http.Response, error) {
+=======
+func (c *ProjectsLocationsDatasetsTestIamPermissionsCall) doRequest(alt string) (*http.Response, error) {
+>>>>>>> v0.0.4
 	reqHeaders := make(http.Header)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
@@ -14712,14 +15641,22 @@ func (c *ProjectsLocationsDatasetsHl7V2StoresTestIamPermissionsCall) doRequest(a
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
+<<<<<<< HEAD
 // Do executes the "healthcare.projects.locations.datasets.hl7V2Stores.testIamPermissions" call.
+=======
+// Do executes the "healthcare.projects.locations.datasets.testIamPermissions" call.
+>>>>>>> v0.0.4
 // Exactly one of *TestIamPermissionsResponse or error will be non-nil.
 // Any non-2xx status code is an error. Response headers are in either
 // *TestIamPermissionsResponse.ServerResponse.Header or (if a response
 // was returned at all) in error.(*googleapi.Error).Header. Use
 // googleapi.IsNotModified to check whether the returned error was
 // because http.StatusNotModified was returned.
+<<<<<<< HEAD
 func (c *ProjectsLocationsDatasetsHl7V2StoresTestIamPermissionsCall) Do(opts ...googleapi.CallOption) (*TestIamPermissionsResponse, error) {
+=======
+func (c *ProjectsLocationsDatasetsTestIamPermissionsCall) Do(opts ...googleapi.CallOption) (*TestIamPermissionsResponse, error) {
+>>>>>>> v0.0.4
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {
@@ -14751,9 +15688,15 @@ func (c *ProjectsLocationsDatasetsHl7V2StoresTestIamPermissionsCall) Do(opts ...
 	return ret, nil
 	// {
 	//   "description": "Returns permissions that a caller has on the specified resource.\nIf the resource does not exist, this will return an empty set of\npermissions, not a NOT_FOUND error.\n\nNote: This operation is designed to be used for building permission-aware\nUIs and command-line tools, not for authorization checking. This operation\nmay \"fail open\" without warning.",
+<<<<<<< HEAD
 	//   "flatPath": "v1alpha/projects/{projectsId}/locations/{locationsId}/datasets/{datasetsId}/hl7V2Stores/{hl7V2StoresId}:testIamPermissions",
 	//   "httpMethod": "POST",
 	//   "id": "healthcare.projects.locations.datasets.hl7V2Stores.testIamPermissions",
+=======
+	//   "flatPath": "v1alpha/projects/{projectsId}/locations/{locationsId}/datasets/{datasetsId}:testIamPermissions",
+	//   "httpMethod": "POST",
+	//   "id": "healthcare.projects.locations.datasets.testIamPermissions",
+>>>>>>> v0.0.4
 	//   "parameterOrder": [
 	//     "resource"
 	//   ],
@@ -14761,7 +15704,11 @@ func (c *ProjectsLocationsDatasetsHl7V2StoresTestIamPermissionsCall) Do(opts ...
 	//     "resource": {
 	//       "description": "REQUIRED: The resource for which the policy detail is being requested.\nSee the operation documentation for the appropriate value for this field.",
 	//       "location": "path",
+<<<<<<< HEAD
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/datasets/[^/]+/hl7V2Stores/[^/]+$",
+=======
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/datasets/[^/]+$",
+>>>>>>> v0.0.4
 	//       "required": true,
 	//       "type": "string"
 	//     }
@@ -14780,6 +15727,7 @@ func (c *ProjectsLocationsDatasetsHl7V2StoresTestIamPermissionsCall) Do(opts ...
 
 }
 
+<<<<<<< HEAD
 // method id "healthcare.projects.locations.datasets.hl7V2Stores.messages.create":
 
 type ProjectsLocationsDatasetsHl7V2StoresMessagesCreateCall struct {
@@ -14806,40 +15754,90 @@ func (r *ProjectsLocationsDatasetsHl7V2StoresMessagesService) Create(parent stri
 	c := &ProjectsLocationsDatasetsHl7V2StoresMessagesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
 	c.createmessagerequest = createmessagerequest
+=======
+// method id "healthcare.projects.locations.datasets.dicomStores.getIamPolicy":
+
+type ProjectsLocationsDatasetsDicomStoresGetIamPolicyCall struct {
+	s            *Service
+	resource     string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// GetIamPolicy: Gets the access control policy for a resource.
+// Returns an empty policy if the resource exists and does not have a
+// policy
+// set.
+func (r *ProjectsLocationsDatasetsDicomStoresService) GetIamPolicy(resource string) *ProjectsLocationsDatasetsDicomStoresGetIamPolicyCall {
+	c := &ProjectsLocationsDatasetsDicomStoresGetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.resource = resource
+>>>>>>> v0.0.4
 	return c
 }
 
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
+<<<<<<< HEAD
 func (c *ProjectsLocationsDatasetsHl7V2StoresMessagesCreateCall) Fields(s ...googleapi.Field) *ProjectsLocationsDatasetsHl7V2StoresMessagesCreateCall {
+=======
+func (c *ProjectsLocationsDatasetsDicomStoresGetIamPolicyCall) Fields(s ...googleapi.Field) *ProjectsLocationsDatasetsDicomStoresGetIamPolicyCall {
+>>>>>>> v0.0.4
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+<<<<<<< HEAD
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsDatasetsHl7V2StoresMessagesCreateCall) Context(ctx context.Context) *ProjectsLocationsDatasetsHl7V2StoresMessagesCreateCall {
+=======
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ProjectsLocationsDatasetsDicomStoresGetIamPolicyCall) IfNoneMatch(entityTag string) *ProjectsLocationsDatasetsDicomStoresGetIamPolicyCall {
+	c.ifNoneMatch_ = entityTag
 	return c
 }
 
 // Context sets the context to be used in this call's Do method. Any
 // pending HTTP request will be aborted if the provided context is
 // canceled.
-func (c *ProjectsLocationsDatasetsHl7V2StoresMessagesCreateCall) Context(ctx context.Context) *ProjectsLocationsDatasetsHl7V2StoresMessagesCreateCall {
+func (c *ProjectsLocationsDatasetsDicomStoresGetIamPolicyCall) Context(ctx context.Context) *ProjectsLocationsDatasetsDicomStoresGetIamPolicyCall {
+>>>>>>> v0.0.4
 	c.ctx_ = ctx
 	return c
 }
 
 // Header returns an http.Header that can be modified by the caller to
 // add HTTP headers to the request.
+<<<<<<< HEAD
 func (c *ProjectsLocationsDatasetsHl7V2StoresMessagesCreateCall) Header() http.Header {
+=======
+func (c *ProjectsLocationsDatasetsDicomStoresGetIamPolicyCall) Header() http.Header {
+>>>>>>> v0.0.4
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
 	}
 	return c.header_
 }
 
+<<<<<<< HEAD
 func (c *ProjectsLocationsDatasetsHl7V2StoresMessagesCreateCall) doRequest(alt string) (*http.Response, error) {
+=======
+func (c *ProjectsLocationsDatasetsDicomStoresGetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
+>>>>>>> v0.0.4
 	reqHeaders := make(http.Header)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
+<<<<<<< HEAD
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.createmessagerequest)
 	if err != nil {
@@ -14851,16 +15849,32 @@ func (c *ProjectsLocationsDatasetsHl7V2StoresMessagesCreateCall) doRequest(alt s
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha/{+parent}/messages")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("POST", urls, body)
+=======
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha/{+resource}:getIamPolicy")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+>>>>>>> v0.0.4
 	if err != nil {
 		return nil, err
 	}
 	req.Header = reqHeaders
 	googleapi.Expand(req.URL, map[string]string{
+<<<<<<< HEAD
 		"parent": c.parent,
+=======
+		"resource": c.resource,
+>>>>>>> v0.0.4
 	})
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
+<<<<<<< HEAD
 // Do executes the "healthcare.projects.locations.datasets.hl7V2Stores.messages.create" call.
 // Exactly one of *Message or error will be non-nil. Any non-2xx status
 // code is an error. Response headers are in either
@@ -14869,6 +15883,16 @@ func (c *ProjectsLocationsDatasetsHl7V2StoresMessagesCreateCall) doRequest(alt s
 // check whether the returned error was because http.StatusNotModified
 // was returned.
 func (c *ProjectsLocationsDatasetsHl7V2StoresMessagesCreateCall) Do(opts ...googleapi.CallOption) (*Message, error) {
+=======
+// Do executes the "healthcare.projects.locations.datasets.dicomStores.getIamPolicy" call.
+// Exactly one of *Policy or error will be non-nil. Any non-2xx status
+// code is an error. Response headers are in either
+// *Policy.ServerResponse.Header or (if a response was returned at all)
+// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified
+// was returned.
+func (c *ProjectsLocationsDatasetsDicomStoresGetIamPolicyCall) Do(opts ...googleapi.CallOption) (*Policy, error) {
+>>>>>>> v0.0.4
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {
@@ -14887,7 +15911,11 @@ func (c *ProjectsLocationsDatasetsHl7V2StoresMessagesCreateCall) Do(opts ...goog
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
+<<<<<<< HEAD
 	ret := &Message{
+=======
+	ret := &Policy{
+>>>>>>> v0.0.4
 		ServerResponse: googleapi.ServerResponse{
 			Header:         res.Header,
 			HTTPStatusCode: res.StatusCode,
@@ -14899,6 +15927,7 @@ func (c *ProjectsLocationsDatasetsHl7V2StoresMessagesCreateCall) Do(opts ...goog
 	}
 	return ret, nil
 	// {
+<<<<<<< HEAD
 	//   "description": "Creates a message and sends a notification to the Cloud Pub/Sub topic. If\nconfigured, the MLLP adapter listens to messages created by this method and\nsends those back to the hospital. A successful response indicates the\nmessage has been persisted to storage and a Cloud Pub/Sub notification has\nbeen sent. Sending to the hospital by the MLLP adapter happens\nasynchronously.",
 	//   "flatPath": "v1alpha/projects/{projectsId}/locations/{locationsId}/datasets/{datasetsId}/hl7V2Stores/{hl7V2StoresId}/messages",
 	//   "httpMethod": "POST",
@@ -14911,16 +15940,36 @@ func (c *ProjectsLocationsDatasetsHl7V2StoresMessagesCreateCall) Do(opts ...goog
 	//       "description": "The name of the dataset this message belongs to.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/datasets/[^/]+/hl7V2Stores/[^/]+$",
+=======
+	//   "description": "Gets the access control policy for a resource.\nReturns an empty policy if the resource exists and does not have a policy\nset.",
+	//   "flatPath": "v1alpha/projects/{projectsId}/locations/{locationsId}/datasets/{datasetsId}/dicomStores/{dicomStoresId}:getIamPolicy",
+	//   "httpMethod": "GET",
+	//   "id": "healthcare.projects.locations.datasets.dicomStores.getIamPolicy",
+	//   "parameterOrder": [
+	//     "resource"
+	//   ],
+	//   "parameters": {
+	//     "resource": {
+	//       "description": "REQUIRED: The resource for which the policy is being requested.\nSee the operation documentation for the appropriate value for this field.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/datasets/[^/]+/dicomStores/[^/]+$",
+>>>>>>> v0.0.4
 	//       "required": true,
 	//       "type": "string"
 	//     }
 	//   },
+<<<<<<< HEAD
 	//   "path": "v1alpha/{+parent}/messages",
 	//   "request": {
 	//     "$ref": "CreateMessageRequest"
 	//   },
 	//   "response": {
 	//     "$ref": "Message"
+=======
+	//   "path": "v1alpha/{+resource}:getIamPolicy",
+	//   "response": {
+	//     "$ref": "Policy"
+>>>>>>> v0.0.4
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/cloud-platform"
@@ -14929,6 +15978,7 @@ func (c *ProjectsLocationsDatasetsHl7V2StoresMessagesCreateCall) Do(opts ...goog
 
 }
 
+<<<<<<< HEAD
 // method id "healthcare.projects.locations.datasets.hl7V2Stores.messages.delete":
 
 type ProjectsLocationsDatasetsHl7V2StoresMessagesDeleteCall struct {
@@ -14943,13 +15993,37 @@ type ProjectsLocationsDatasetsHl7V2StoresMessagesDeleteCall struct {
 func (r *ProjectsLocationsDatasetsHl7V2StoresMessagesService) Delete(name string) *ProjectsLocationsDatasetsHl7V2StoresMessagesDeleteCall {
 	c := &ProjectsLocationsDatasetsHl7V2StoresMessagesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
+=======
+// method id "healthcare.projects.locations.datasets.dicomStores.setIamPolicy":
+
+type ProjectsLocationsDatasetsDicomStoresSetIamPolicyCall struct {
+	s                   *Service
+	resource            string
+	setiampolicyrequest *SetIamPolicyRequest
+	urlParams_          gensupport.URLParams
+	ctx_                context.Context
+	header_             http.Header
+}
+
+// SetIamPolicy: Sets the access control policy on the specified
+// resource. Replaces any
+// existing policy.
+func (r *ProjectsLocationsDatasetsDicomStoresService) SetIamPolicy(resource string, setiampolicyrequest *SetIamPolicyRequest) *ProjectsLocationsDatasetsDicomStoresSetIamPolicyCall {
+	c := &ProjectsLocationsDatasetsDicomStoresSetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.resource = resource
+	c.setiampolicyrequest = setiampolicyrequest
+>>>>>>> v0.0.4
 	return c
 }
 
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
+<<<<<<< HEAD
 func (c *ProjectsLocationsDatasetsHl7V2StoresMessagesDeleteCall) Fields(s ...googleapi.Field) *ProjectsLocationsDatasetsHl7V2StoresMessagesDeleteCall {
+=======
+func (c *ProjectsLocationsDatasetsDicomStoresSetIamPolicyCall) Fields(s ...googleapi.Field) *ProjectsLocationsDatasetsDicomStoresSetIamPolicyCall {
+>>>>>>> v0.0.4
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
@@ -14957,42 +16031,72 @@ func (c *ProjectsLocationsDatasetsHl7V2StoresMessagesDeleteCall) Fields(s ...goo
 // Context sets the context to be used in this call's Do method. Any
 // pending HTTP request will be aborted if the provided context is
 // canceled.
+<<<<<<< HEAD
 func (c *ProjectsLocationsDatasetsHl7V2StoresMessagesDeleteCall) Context(ctx context.Context) *ProjectsLocationsDatasetsHl7V2StoresMessagesDeleteCall {
+=======
+func (c *ProjectsLocationsDatasetsDicomStoresSetIamPolicyCall) Context(ctx context.Context) *ProjectsLocationsDatasetsDicomStoresSetIamPolicyCall {
+>>>>>>> v0.0.4
 	c.ctx_ = ctx
 	return c
 }
 
 // Header returns an http.Header that can be modified by the caller to
 // add HTTP headers to the request.
+<<<<<<< HEAD
 func (c *ProjectsLocationsDatasetsHl7V2StoresMessagesDeleteCall) Header() http.Header {
+=======
+func (c *ProjectsLocationsDatasetsDicomStoresSetIamPolicyCall) Header() http.Header {
+>>>>>>> v0.0.4
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
 	}
 	return c.header_
 }
 
+<<<<<<< HEAD
 func (c *ProjectsLocationsDatasetsHl7V2StoresMessagesDeleteCall) doRequest(alt string) (*http.Response, error) {
+=======
+func (c *ProjectsLocationsDatasetsDicomStoresSetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
+>>>>>>> v0.0.4
 	reqHeaders := make(http.Header)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	var body io.Reader = nil
+<<<<<<< HEAD
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha/{+name}")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("DELETE", urls, body)
+=======
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.setiampolicyrequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha/{+resource}:setIamPolicy")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+>>>>>>> v0.0.4
 	if err != nil {
 		return nil, err
 	}
 	req.Header = reqHeaders
 	googleapi.Expand(req.URL, map[string]string{
+<<<<<<< HEAD
 		"name": c.name,
+=======
+		"resource": c.resource,
+>>>>>>> v0.0.4
 	})
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
+<<<<<<< HEAD
 // Do executes the "healthcare.projects.locations.datasets.hl7V2Stores.messages.delete" call.
 // Exactly one of *Empty or error will be non-nil. Any non-2xx status
 // code is an error. Response headers are in either
@@ -15001,6 +16105,16 @@ func (c *ProjectsLocationsDatasetsHl7V2StoresMessagesDeleteCall) doRequest(alt s
 // check whether the returned error was because http.StatusNotModified
 // was returned.
 func (c *ProjectsLocationsDatasetsHl7V2StoresMessagesDeleteCall) Do(opts ...googleapi.CallOption) (*Empty, error) {
+=======
+// Do executes the "healthcare.projects.locations.datasets.dicomStores.setIamPolicy" call.
+// Exactly one of *Policy or error will be non-nil. Any non-2xx status
+// code is an error. Response headers are in either
+// *Policy.ServerResponse.Header or (if a response was returned at all)
+// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified
+// was returned.
+func (c *ProjectsLocationsDatasetsDicomStoresSetIamPolicyCall) Do(opts ...googleapi.CallOption) (*Policy, error) {
+>>>>>>> v0.0.4
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {
@@ -15019,7 +16133,11 @@ func (c *ProjectsLocationsDatasetsHl7V2StoresMessagesDeleteCall) Do(opts ...goog
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
+<<<<<<< HEAD
 	ret := &Empty{
+=======
+	ret := &Policy{
+>>>>>>> v0.0.4
 		ServerResponse: googleapi.ServerResponse{
 			Header:         res.Header,
 			HTTPStatusCode: res.StatusCode,
@@ -15031,6 +16149,7 @@ func (c *ProjectsLocationsDatasetsHl7V2StoresMessagesDeleteCall) Do(opts ...goog
 	}
 	return ret, nil
 	// {
+<<<<<<< HEAD
 	//   "description": "Deletes an HL7v2 message.",
 	//   "flatPath": "v1alpha/projects/{projectsId}/locations/{locationsId}/datasets/{datasetsId}/hl7V2Stores/{hl7V2StoresId}/messages/{messagesId}",
 	//   "httpMethod": "DELETE",
@@ -15043,13 +16162,36 @@ func (c *ProjectsLocationsDatasetsHl7V2StoresMessagesDeleteCall) Do(opts ...goog
 	//       "description": "The resource name of the HL7v2 message to delete.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/datasets/[^/]+/hl7V2Stores/[^/]+/messages/[^/]+$",
+=======
+	//   "description": "Sets the access control policy on the specified resource. Replaces any\nexisting policy.",
+	//   "flatPath": "v1alpha/projects/{projectsId}/locations/{locationsId}/datasets/{datasetsId}/dicomStores/{dicomStoresId}:setIamPolicy",
+	//   "httpMethod": "POST",
+	//   "id": "healthcare.projects.locations.datasets.dicomStores.setIamPolicy",
+	//   "parameterOrder": [
+	//     "resource"
+	//   ],
+	//   "parameters": {
+	//     "resource": {
+	//       "description": "REQUIRED: The resource for which the policy is being specified.\nSee the operation documentation for the appropriate value for this field.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/datasets/[^/]+/dicomStores/[^/]+$",
+>>>>>>> v0.0.4
 	//       "required": true,
 	//       "type": "string"
 	//     }
 	//   },
+<<<<<<< HEAD
 	//   "path": "v1alpha/{+name}",
 	//   "response": {
 	//     "$ref": "Empty"
+=======
+	//   "path": "v1alpha/{+resource}:setIamPolicy",
+	//   "request": {
+	//     "$ref": "SetIamPolicyRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "Policy"
+>>>>>>> v0.0.4
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/cloud-platform"
@@ -15058,6 +16200,7 @@ func (c *ProjectsLocationsDatasetsHl7V2StoresMessagesDeleteCall) Do(opts ...goog
 
 }
 
+<<<<<<< HEAD
 // method id "healthcare.projects.locations.datasets.hl7V2Stores.messages.get":
 
 type ProjectsLocationsDatasetsHl7V2StoresMessagesGetCall struct {
@@ -15087,17 +16230,50 @@ func (r *ProjectsLocationsDatasetsHl7V2StoresMessagesService) Get(name string) *
 //   "FULL"
 func (c *ProjectsLocationsDatasetsHl7V2StoresMessagesGetCall) View(view string) *ProjectsLocationsDatasetsHl7V2StoresMessagesGetCall {
 	c.urlParams_.Set("view", view)
+=======
+// method id "healthcare.projects.locations.datasets.dicomStores.testIamPermissions":
+
+type ProjectsLocationsDatasetsDicomStoresTestIamPermissionsCall struct {
+	s                         *Service
+	resource                  string
+	testiampermissionsrequest *TestIamPermissionsRequest
+	urlParams_                gensupport.URLParams
+	ctx_                      context.Context
+	header_                   http.Header
+}
+
+// TestIamPermissions: Returns permissions that a caller has on the
+// specified resource.
+// If the resource does not exist, this will return an empty set
+// of
+// permissions, not a NOT_FOUND error.
+//
+// Note: This operation is designed to be used for building
+// permission-aware
+// UIs and command-line tools, not for authorization checking. This
+// operation
+// may "fail open" without warning.
+func (r *ProjectsLocationsDatasetsDicomStoresService) TestIamPermissions(resource string, testiampermissionsrequest *TestIamPermissionsRequest) *ProjectsLocationsDatasetsDicomStoresTestIamPermissionsCall {
+	c := &ProjectsLocationsDatasetsDicomStoresTestIamPermissionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.resource = resource
+	c.testiampermissionsrequest = testiampermissionsrequest
+>>>>>>> v0.0.4
 	return c
 }
 
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
+<<<<<<< HEAD
 func (c *ProjectsLocationsDatasetsHl7V2StoresMessagesGetCall) Fields(s ...googleapi.Field) *ProjectsLocationsDatasetsHl7V2StoresMessagesGetCall {
+=======
+func (c *ProjectsLocationsDatasetsDicomStoresTestIamPermissionsCall) Fields(s ...googleapi.Field) *ProjectsLocationsDatasetsDicomStoresTestIamPermissionsCall {
+>>>>>>> v0.0.4
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
+<<<<<<< HEAD
 // IfNoneMatch sets the optional parameter which makes the operation
 // fail if the object's ETag matches the given value. This is useful for
 // getting updates only after the object has changed since the last
@@ -15112,25 +16288,40 @@ func (c *ProjectsLocationsDatasetsHl7V2StoresMessagesGetCall) IfNoneMatch(entity
 // pending HTTP request will be aborted if the provided context is
 // canceled.
 func (c *ProjectsLocationsDatasetsHl7V2StoresMessagesGetCall) Context(ctx context.Context) *ProjectsLocationsDatasetsHl7V2StoresMessagesGetCall {
+=======
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsDatasetsDicomStoresTestIamPermissionsCall) Context(ctx context.Context) *ProjectsLocationsDatasetsDicomStoresTestIamPermissionsCall {
+>>>>>>> v0.0.4
 	c.ctx_ = ctx
 	return c
 }
 
 // Header returns an http.Header that can be modified by the caller to
 // add HTTP headers to the request.
+<<<<<<< HEAD
 func (c *ProjectsLocationsDatasetsHl7V2StoresMessagesGetCall) Header() http.Header {
+=======
+func (c *ProjectsLocationsDatasetsDicomStoresTestIamPermissionsCall) Header() http.Header {
+>>>>>>> v0.0.4
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
 	}
 	return c.header_
 }
 
+<<<<<<< HEAD
 func (c *ProjectsLocationsDatasetsHl7V2StoresMessagesGetCall) doRequest(alt string) (*http.Response, error) {
+=======
+func (c *ProjectsLocationsDatasetsDicomStoresTestIamPermissionsCall) doRequest(alt string) (*http.Response, error) {
+>>>>>>> v0.0.4
 	reqHeaders := make(http.Header)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
+<<<<<<< HEAD
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -15140,16 +16331,34 @@ func (c *ProjectsLocationsDatasetsHl7V2StoresMessagesGetCall) doRequest(alt stri
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha/{+name}")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("GET", urls, body)
+=======
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.testiampermissionsrequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha/{+resource}:testIamPermissions")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+>>>>>>> v0.0.4
 	if err != nil {
 		return nil, err
 	}
 	req.Header = reqHeaders
 	googleapi.Expand(req.URL, map[string]string{
+<<<<<<< HEAD
 		"name": c.name,
+=======
+		"resource": c.resource,
+>>>>>>> v0.0.4
 	})
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
+<<<<<<< HEAD
 // Do executes the "healthcare.projects.locations.datasets.hl7V2Stores.messages.get" call.
 // Exactly one of *Message or error will be non-nil. Any non-2xx status
 // code is an error. Response headers are in either
@@ -15158,6 +16367,16 @@ func (c *ProjectsLocationsDatasetsHl7V2StoresMessagesGetCall) doRequest(alt stri
 // check whether the returned error was because http.StatusNotModified
 // was returned.
 func (c *ProjectsLocationsDatasetsHl7V2StoresMessagesGetCall) Do(opts ...googleapi.CallOption) (*Message, error) {
+=======
+// Do executes the "healthcare.projects.locations.datasets.dicomStores.testIamPermissions" call.
+// Exactly one of *TestIamPermissionsResponse or error will be non-nil.
+// Any non-2xx status code is an error. Response headers are in either
+// *TestIamPermissionsResponse.ServerResponse.Header or (if a response
+// was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsLocationsDatasetsDicomStoresTestIamPermissionsCall) Do(opts ...googleapi.CallOption) (*TestIamPermissionsResponse, error) {
+>>>>>>> v0.0.4
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {
@@ -15176,7 +16395,11 @@ func (c *ProjectsLocationsDatasetsHl7V2StoresMessagesGetCall) Do(opts ...googlea
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
+<<<<<<< HEAD
 	ret := &Message{
+=======
+	ret := &TestIamPermissionsResponse{
+>>>>>>> v0.0.4
 		ServerResponse: googleapi.ServerResponse{
 			Header:         res.Header,
 			HTTPStatusCode: res.StatusCode,
@@ -15188,6 +16411,7 @@ func (c *ProjectsLocationsDatasetsHl7V2StoresMessagesGetCall) Do(opts ...googlea
 	}
 	return ret, nil
 	// {
+<<<<<<< HEAD
 	//   "description": "Gets an HL7v2 message.",
 	//   "flatPath": "v1alpha/projects/{projectsId}/locations/{locationsId}/datasets/{datasetsId}/hl7V2Stores/{hl7V2StoresId}/messages/{messagesId}",
 	//   "httpMethod": "GET",
@@ -15218,6 +16442,30 @@ func (c *ProjectsLocationsDatasetsHl7V2StoresMessagesGetCall) Do(opts ...googlea
 	//   "path": "v1alpha/{+name}",
 	//   "response": {
 	//     "$ref": "Message"
+=======
+	//   "description": "Returns permissions that a caller has on the specified resource.\nIf the resource does not exist, this will return an empty set of\npermissions, not a NOT_FOUND error.\n\nNote: This operation is designed to be used for building permission-aware\nUIs and command-line tools, not for authorization checking. This operation\nmay \"fail open\" without warning.",
+	//   "flatPath": "v1alpha/projects/{projectsId}/locations/{locationsId}/datasets/{datasetsId}/dicomStores/{dicomStoresId}:testIamPermissions",
+	//   "httpMethod": "POST",
+	//   "id": "healthcare.projects.locations.datasets.dicomStores.testIamPermissions",
+	//   "parameterOrder": [
+	//     "resource"
+	//   ],
+	//   "parameters": {
+	//     "resource": {
+	//       "description": "REQUIRED: The resource for which the policy detail is being requested.\nSee the operation documentation for the appropriate value for this field.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/datasets/[^/]+/dicomStores/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1alpha/{+resource}:testIamPermissions",
+	//   "request": {
+	//     "$ref": "TestIamPermissionsRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "TestIamPermissionsResponse"
+>>>>>>> v0.0.4
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/cloud-platform"
@@ -15226,6 +16474,7 @@ func (c *ProjectsLocationsDatasetsHl7V2StoresMessagesGetCall) Do(opts ...googlea
 
 }
 
+<<<<<<< HEAD
 // method id "healthcare.projects.locations.datasets.hl7V2Stores.messages.ingest":
 
 type ProjectsLocationsDatasetsHl7V2StoresMessagesIngestCall struct {
@@ -15250,40 +16499,90 @@ func (r *ProjectsLocationsDatasetsHl7V2StoresMessagesService) Ingest(parent stri
 	c := &ProjectsLocationsDatasetsHl7V2StoresMessagesIngestCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
 	c.ingestmessagerequest = ingestmessagerequest
+=======
+// method id "healthcare.projects.locations.datasets.hl7V2Stores.getIamPolicy":
+
+type ProjectsLocationsDatasetsHl7V2StoresGetIamPolicyCall struct {
+	s            *Service
+	resource     string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// GetIamPolicy: Gets the access control policy for a resource.
+// Returns an empty policy if the resource exists and does not have a
+// policy
+// set.
+func (r *ProjectsLocationsDatasetsHl7V2StoresService) GetIamPolicy(resource string) *ProjectsLocationsDatasetsHl7V2StoresGetIamPolicyCall {
+	c := &ProjectsLocationsDatasetsHl7V2StoresGetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.resource = resource
+>>>>>>> v0.0.4
 	return c
 }
 
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
+<<<<<<< HEAD
 func (c *ProjectsLocationsDatasetsHl7V2StoresMessagesIngestCall) Fields(s ...googleapi.Field) *ProjectsLocationsDatasetsHl7V2StoresMessagesIngestCall {
+=======
+func (c *ProjectsLocationsDatasetsHl7V2StoresGetIamPolicyCall) Fields(s ...googleapi.Field) *ProjectsLocationsDatasetsHl7V2StoresGetIamPolicyCall {
+>>>>>>> v0.0.4
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+<<<<<<< HEAD
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsDatasetsHl7V2StoresMessagesIngestCall) Context(ctx context.Context) *ProjectsLocationsDatasetsHl7V2StoresMessagesIngestCall {
+=======
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ProjectsLocationsDatasetsHl7V2StoresGetIamPolicyCall) IfNoneMatch(entityTag string) *ProjectsLocationsDatasetsHl7V2StoresGetIamPolicyCall {
+	c.ifNoneMatch_ = entityTag
 	return c
 }
 
 // Context sets the context to be used in this call's Do method. Any
 // pending HTTP request will be aborted if the provided context is
 // canceled.
-func (c *ProjectsLocationsDatasetsHl7V2StoresMessagesIngestCall) Context(ctx context.Context) *ProjectsLocationsDatasetsHl7V2StoresMessagesIngestCall {
+func (c *ProjectsLocationsDatasetsHl7V2StoresGetIamPolicyCall) Context(ctx context.Context) *ProjectsLocationsDatasetsHl7V2StoresGetIamPolicyCall {
+>>>>>>> v0.0.4
 	c.ctx_ = ctx
 	return c
 }
 
 // Header returns an http.Header that can be modified by the caller to
 // add HTTP headers to the request.
+<<<<<<< HEAD
 func (c *ProjectsLocationsDatasetsHl7V2StoresMessagesIngestCall) Header() http.Header {
+=======
+func (c *ProjectsLocationsDatasetsHl7V2StoresGetIamPolicyCall) Header() http.Header {
+>>>>>>> v0.0.4
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
 	}
 	return c.header_
 }
 
+<<<<<<< HEAD
 func (c *ProjectsLocationsDatasetsHl7V2StoresMessagesIngestCall) doRequest(alt string) (*http.Response, error) {
+=======
+func (c *ProjectsLocationsDatasetsHl7V2StoresGetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
+>>>>>>> v0.0.4
 	reqHeaders := make(http.Header)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
+<<<<<<< HEAD
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.ingestmessagerequest)
 	if err != nil {
@@ -15295,16 +16594,32 @@ func (c *ProjectsLocationsDatasetsHl7V2StoresMessagesIngestCall) doRequest(alt s
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha/{+parent}/messages:ingest")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("POST", urls, body)
+=======
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha/{+resource}:getIamPolicy")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+>>>>>>> v0.0.4
 	if err != nil {
 		return nil, err
 	}
 	req.Header = reqHeaders
 	googleapi.Expand(req.URL, map[string]string{
+<<<<<<< HEAD
 		"parent": c.parent,
+=======
+		"resource": c.resource,
+>>>>>>> v0.0.4
 	})
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
+<<<<<<< HEAD
 // Do executes the "healthcare.projects.locations.datasets.hl7V2Stores.messages.ingest" call.
 // Exactly one of *IngestMessageResponse or error will be non-nil. Any
 // non-2xx status code is an error. Response headers are in either
@@ -15313,6 +16628,16 @@ func (c *ProjectsLocationsDatasetsHl7V2StoresMessagesIngestCall) doRequest(alt s
 // googleapi.IsNotModified to check whether the returned error was
 // because http.StatusNotModified was returned.
 func (c *ProjectsLocationsDatasetsHl7V2StoresMessagesIngestCall) Do(opts ...googleapi.CallOption) (*IngestMessageResponse, error) {
+=======
+// Do executes the "healthcare.projects.locations.datasets.hl7V2Stores.getIamPolicy" call.
+// Exactly one of *Policy or error will be non-nil. Any non-2xx status
+// code is an error. Response headers are in either
+// *Policy.ServerResponse.Header or (if a response was returned at all)
+// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified
+// was returned.
+func (c *ProjectsLocationsDatasetsHl7V2StoresGetIamPolicyCall) Do(opts ...googleapi.CallOption) (*Policy, error) {
+>>>>>>> v0.0.4
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {
@@ -15331,7 +16656,11 @@ func (c *ProjectsLocationsDatasetsHl7V2StoresMessagesIngestCall) Do(opts ...goog
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
+<<<<<<< HEAD
 	ret := &IngestMessageResponse{
+=======
+	ret := &Policy{
+>>>>>>> v0.0.4
 		ServerResponse: googleapi.ServerResponse{
 			Header:         res.Header,
 			HTTPStatusCode: res.StatusCode,
@@ -15343,6 +16672,7 @@ func (c *ProjectsLocationsDatasetsHl7V2StoresMessagesIngestCall) Do(opts ...goog
 	}
 	return ret, nil
 	// {
+<<<<<<< HEAD
 	//   "description": "Ingests a new HL7v2 message from the hospital and sends a notification to\nthe Cloud Pub/Sub topic. Return is an HL7v2 ACK message if the message was\nsuccessfully stored. Otherwise an error is returned.  If an identical\nHL7v2 message is created twice only one resource is created on the server\nand no error is reported.",
 	//   "flatPath": "v1alpha/projects/{projectsId}/locations/{locationsId}/datasets/{datasetsId}/hl7V2Stores/{hl7V2StoresId}/messages:ingest",
 	//   "httpMethod": "POST",
@@ -15353,18 +16683,36 @@ func (c *ProjectsLocationsDatasetsHl7V2StoresMessagesIngestCall) Do(opts ...goog
 	//   "parameters": {
 	//     "parent": {
 	//       "description": "The name of the HL7v2 store this message belongs to.",
+=======
+	//   "description": "Gets the access control policy for a resource.\nReturns an empty policy if the resource exists and does not have a policy\nset.",
+	//   "flatPath": "v1alpha/projects/{projectsId}/locations/{locationsId}/datasets/{datasetsId}/hl7V2Stores/{hl7V2StoresId}:getIamPolicy",
+	//   "httpMethod": "GET",
+	//   "id": "healthcare.projects.locations.datasets.hl7V2Stores.getIamPolicy",
+	//   "parameterOrder": [
+	//     "resource"
+	//   ],
+	//   "parameters": {
+	//     "resource": {
+	//       "description": "REQUIRED: The resource for which the policy is being requested.\nSee the operation documentation for the appropriate value for this field.",
+>>>>>>> v0.0.4
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/datasets/[^/]+/hl7V2Stores/[^/]+$",
 	//       "required": true,
 	//       "type": "string"
 	//     }
 	//   },
+<<<<<<< HEAD
 	//   "path": "v1alpha/{+parent}/messages:ingest",
 	//   "request": {
 	//     "$ref": "IngestMessageRequest"
 	//   },
 	//   "response": {
 	//     "$ref": "IngestMessageResponse"
+=======
+	//   "path": "v1alpha/{+resource}:getIamPolicy",
+	//   "response": {
+	//     "$ref": "Policy"
+>>>>>>> v0.0.4
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/cloud-platform"
@@ -15373,6 +16721,7 @@ func (c *ProjectsLocationsDatasetsHl7V2StoresMessagesIngestCall) Do(opts ...goog
 
 }
 
+<<<<<<< HEAD
 // method id "healthcare.projects.locations.datasets.hl7V2Stores.messages.list":
 
 type ProjectsLocationsDatasetsHl7V2StoresMessagesListCall struct {
@@ -15476,17 +16825,42 @@ func (c *ProjectsLocationsDatasetsHl7V2StoresMessagesListCall) PageSize(pageSize
 // any.
 func (c *ProjectsLocationsDatasetsHl7V2StoresMessagesListCall) PageToken(pageToken string) *ProjectsLocationsDatasetsHl7V2StoresMessagesListCall {
 	c.urlParams_.Set("pageToken", pageToken)
+=======
+// method id "healthcare.projects.locations.datasets.hl7V2Stores.setIamPolicy":
+
+type ProjectsLocationsDatasetsHl7V2StoresSetIamPolicyCall struct {
+	s                   *Service
+	resource            string
+	setiampolicyrequest *SetIamPolicyRequest
+	urlParams_          gensupport.URLParams
+	ctx_                context.Context
+	header_             http.Header
+}
+
+// SetIamPolicy: Sets the access control policy on the specified
+// resource. Replaces any
+// existing policy.
+func (r *ProjectsLocationsDatasetsHl7V2StoresService) SetIamPolicy(resource string, setiampolicyrequest *SetIamPolicyRequest) *ProjectsLocationsDatasetsHl7V2StoresSetIamPolicyCall {
+	c := &ProjectsLocationsDatasetsHl7V2StoresSetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.resource = resource
+	c.setiampolicyrequest = setiampolicyrequest
+>>>>>>> v0.0.4
 	return c
 }
 
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
+<<<<<<< HEAD
 func (c *ProjectsLocationsDatasetsHl7V2StoresMessagesListCall) Fields(s ...googleapi.Field) *ProjectsLocationsDatasetsHl7V2StoresMessagesListCall {
+=======
+func (c *ProjectsLocationsDatasetsHl7V2StoresSetIamPolicyCall) Fields(s ...googleapi.Field) *ProjectsLocationsDatasetsHl7V2StoresSetIamPolicyCall {
+>>>>>>> v0.0.4
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
+<<<<<<< HEAD
 // IfNoneMatch sets the optional parameter which makes the operation
 // fail if the object's ETag matches the given value. This is useful for
 // getting updates only after the object has changed since the last
@@ -15501,25 +16875,40 @@ func (c *ProjectsLocationsDatasetsHl7V2StoresMessagesListCall) IfNoneMatch(entit
 // pending HTTP request will be aborted if the provided context is
 // canceled.
 func (c *ProjectsLocationsDatasetsHl7V2StoresMessagesListCall) Context(ctx context.Context) *ProjectsLocationsDatasetsHl7V2StoresMessagesListCall {
+=======
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsDatasetsHl7V2StoresSetIamPolicyCall) Context(ctx context.Context) *ProjectsLocationsDatasetsHl7V2StoresSetIamPolicyCall {
+>>>>>>> v0.0.4
 	c.ctx_ = ctx
 	return c
 }
 
 // Header returns an http.Header that can be modified by the caller to
 // add HTTP headers to the request.
+<<<<<<< HEAD
 func (c *ProjectsLocationsDatasetsHl7V2StoresMessagesListCall) Header() http.Header {
+=======
+func (c *ProjectsLocationsDatasetsHl7V2StoresSetIamPolicyCall) Header() http.Header {
+>>>>>>> v0.0.4
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
 	}
 	return c.header_
 }
 
+<<<<<<< HEAD
 func (c *ProjectsLocationsDatasetsHl7V2StoresMessagesListCall) doRequest(alt string) (*http.Response, error) {
+=======
+func (c *ProjectsLocationsDatasetsHl7V2StoresSetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
+>>>>>>> v0.0.4
 	reqHeaders := make(http.Header)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
+<<<<<<< HEAD
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -15529,16 +16918,34 @@ func (c *ProjectsLocationsDatasetsHl7V2StoresMessagesListCall) doRequest(alt str
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha/{+parent}/messages")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("GET", urls, body)
+=======
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.setiampolicyrequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha/{+resource}:setIamPolicy")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+>>>>>>> v0.0.4
 	if err != nil {
 		return nil, err
 	}
 	req.Header = reqHeaders
 	googleapi.Expand(req.URL, map[string]string{
+<<<<<<< HEAD
 		"parent": c.parent,
+=======
+		"resource": c.resource,
+>>>>>>> v0.0.4
 	})
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
+<<<<<<< HEAD
 // Do executes the "healthcare.projects.locations.datasets.hl7V2Stores.messages.list" call.
 // Exactly one of *ListMessagesResponse or error will be non-nil. Any
 // non-2xx status code is an error. Response headers are in either
@@ -15547,6 +16954,16 @@ func (c *ProjectsLocationsDatasetsHl7V2StoresMessagesListCall) doRequest(alt str
 // googleapi.IsNotModified to check whether the returned error was
 // because http.StatusNotModified was returned.
 func (c *ProjectsLocationsDatasetsHl7V2StoresMessagesListCall) Do(opts ...googleapi.CallOption) (*ListMessagesResponse, error) {
+=======
+// Do executes the "healthcare.projects.locations.datasets.hl7V2Stores.setIamPolicy" call.
+// Exactly one of *Policy or error will be non-nil. Any non-2xx status
+// code is an error. Response headers are in either
+// *Policy.ServerResponse.Header or (if a response was returned at all)
+// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified
+// was returned.
+func (c *ProjectsLocationsDatasetsHl7V2StoresSetIamPolicyCall) Do(opts ...googleapi.CallOption) (*Policy, error) {
+>>>>>>> v0.0.4
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {
@@ -15565,7 +16982,11 @@ func (c *ProjectsLocationsDatasetsHl7V2StoresMessagesListCall) Do(opts ...google
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
+<<<<<<< HEAD
 	ret := &ListMessagesResponse{
+=======
+	ret := &Policy{
+>>>>>>> v0.0.4
 		ServerResponse: googleapi.ServerResponse{
 			Header:         res.Header,
 			HTTPStatusCode: res.StatusCode,
@@ -15577,6 +16998,7 @@ func (c *ProjectsLocationsDatasetsHl7V2StoresMessagesListCall) Do(opts ...google
 	}
 	return ret, nil
 	// {
+<<<<<<< HEAD
 	//   "description": "Lists all the messages in the given HL7v2 store with support for filtering.",
 	//   "flatPath": "v1alpha/projects/{projectsId}/locations/{locationsId}/datasets/{datasetsId}/hl7V2Stores/{hl7V2StoresId}/messages",
 	//   "httpMethod": "GET",
@@ -15608,15 +17030,36 @@ func (c *ProjectsLocationsDatasetsHl7V2StoresMessagesListCall) Do(opts ...google
 	//     },
 	//     "parent": {
 	//       "description": "Name of the HL7v2 store to retrieve messages from.",
+=======
+	//   "description": "Sets the access control policy on the specified resource. Replaces any\nexisting policy.",
+	//   "flatPath": "v1alpha/projects/{projectsId}/locations/{locationsId}/datasets/{datasetsId}/hl7V2Stores/{hl7V2StoresId}:setIamPolicy",
+	//   "httpMethod": "POST",
+	//   "id": "healthcare.projects.locations.datasets.hl7V2Stores.setIamPolicy",
+	//   "parameterOrder": [
+	//     "resource"
+	//   ],
+	//   "parameters": {
+	//     "resource": {
+	//       "description": "REQUIRED: The resource for which the policy is being specified.\nSee the operation documentation for the appropriate value for this field.",
+>>>>>>> v0.0.4
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/datasets/[^/]+/hl7V2Stores/[^/]+$",
 	//       "required": true,
 	//       "type": "string"
 	//     }
 	//   },
+<<<<<<< HEAD
 	//   "path": "v1alpha/{+parent}/messages",
 	//   "response": {
 	//     "$ref": "ListMessagesResponse"
+=======
+	//   "path": "v1alpha/{+resource}:setIamPolicy",
+	//   "request": {
+	//     "$ref": "SetIamPolicyRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "Policy"
+>>>>>>> v0.0.4
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/cloud-platform"
@@ -15625,6 +17068,7 @@ func (c *ProjectsLocationsDatasetsHl7V2StoresMessagesListCall) Do(opts ...google
 
 }
 
+<<<<<<< HEAD
 // Pages invokes f for each page of results.
 // A non-nil error returned from f will halt the iteration.
 // The provided context supersedes any context provided to the Context method.
@@ -15677,13 +17121,45 @@ func (r *ProjectsLocationsDatasetsHl7V2StoresMessagesService) Patch(name string,
 // Existing labels with the same keys will be updated.
 func (c *ProjectsLocationsDatasetsHl7V2StoresMessagesPatchCall) UpdateMask(updateMask string) *ProjectsLocationsDatasetsHl7V2StoresMessagesPatchCall {
 	c.urlParams_.Set("updateMask", updateMask)
+=======
+// method id "healthcare.projects.locations.datasets.hl7V2Stores.testIamPermissions":
+
+type ProjectsLocationsDatasetsHl7V2StoresTestIamPermissionsCall struct {
+	s                         *Service
+	resource                  string
+	testiampermissionsrequest *TestIamPermissionsRequest
+	urlParams_                gensupport.URLParams
+	ctx_                      context.Context
+	header_                   http.Header
+}
+
+// TestIamPermissions: Returns permissions that a caller has on the
+// specified resource.
+// If the resource does not exist, this will return an empty set
+// of
+// permissions, not a NOT_FOUND error.
+//
+// Note: This operation is designed to be used for building
+// permission-aware
+// UIs and command-line tools, not for authorization checking. This
+// operation
+// may "fail open" without warning.
+func (r *ProjectsLocationsDatasetsHl7V2StoresService) TestIamPermissions(resource string, testiampermissionsrequest *TestIamPermissionsRequest) *ProjectsLocationsDatasetsHl7V2StoresTestIamPermissionsCall {
+	c := &ProjectsLocationsDatasetsHl7V2StoresTestIamPermissionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.resource = resource
+	c.testiampermissionsrequest = testiampermissionsrequest
+>>>>>>> v0.0.4
 	return c
 }
 
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
+<<<<<<< HEAD
 func (c *ProjectsLocationsDatasetsHl7V2StoresMessagesPatchCall) Fields(s ...googleapi.Field) *ProjectsLocationsDatasetsHl7V2StoresMessagesPatchCall {
+=======
+func (c *ProjectsLocationsDatasetsHl7V2StoresTestIamPermissionsCall) Fields(s ...googleapi.Field) *ProjectsLocationsDatasetsHl7V2StoresTestIamPermissionsCall {
+>>>>>>> v0.0.4
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
@@ -15691,47 +17167,74 @@ func (c *ProjectsLocationsDatasetsHl7V2StoresMessagesPatchCall) Fields(s ...goog
 // Context sets the context to be used in this call's Do method. Any
 // pending HTTP request will be aborted if the provided context is
 // canceled.
+<<<<<<< HEAD
 func (c *ProjectsLocationsDatasetsHl7V2StoresMessagesPatchCall) Context(ctx context.Context) *ProjectsLocationsDatasetsHl7V2StoresMessagesPatchCall {
+=======
+func (c *ProjectsLocationsDatasetsHl7V2StoresTestIamPermissionsCall) Context(ctx context.Context) *ProjectsLocationsDatasetsHl7V2StoresTestIamPermissionsCall {
+>>>>>>> v0.0.4
 	c.ctx_ = ctx
 	return c
 }
 
 // Header returns an http.Header that can be modified by the caller to
 // add HTTP headers to the request.
+<<<<<<< HEAD
 func (c *ProjectsLocationsDatasetsHl7V2StoresMessagesPatchCall) Header() http.Header {
+=======
+func (c *ProjectsLocationsDatasetsHl7V2StoresTestIamPermissionsCall) Header() http.Header {
+>>>>>>> v0.0.4
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
 	}
 	return c.header_
 }
 
+<<<<<<< HEAD
 func (c *ProjectsLocationsDatasetsHl7V2StoresMessagesPatchCall) doRequest(alt string) (*http.Response, error) {
+=======
+func (c *ProjectsLocationsDatasetsHl7V2StoresTestIamPermissionsCall) doRequest(alt string) (*http.Response, error) {
+>>>>>>> v0.0.4
 	reqHeaders := make(http.Header)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	var body io.Reader = nil
+<<<<<<< HEAD
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.message)
+=======
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.testiampermissionsrequest)
+>>>>>>> v0.0.4
 	if err != nil {
 		return nil, err
 	}
 	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
+<<<<<<< HEAD
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha/{+name}")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("PATCH", urls, body)
+=======
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha/{+resource}:testIamPermissions")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+>>>>>>> v0.0.4
 	if err != nil {
 		return nil, err
 	}
 	req.Header = reqHeaders
 	googleapi.Expand(req.URL, map[string]string{
+<<<<<<< HEAD
 		"name": c.name,
+=======
+		"resource": c.resource,
+>>>>>>> v0.0.4
 	})
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
+<<<<<<< HEAD
 // Do executes the "healthcare.projects.locations.datasets.hl7V2Stores.messages.patch" call.
 // Exactly one of *Message or error will be non-nil. Any non-2xx status
 // code is an error. Response headers are in either
@@ -15740,6 +17243,16 @@ func (c *ProjectsLocationsDatasetsHl7V2StoresMessagesPatchCall) doRequest(alt st
 // check whether the returned error was because http.StatusNotModified
 // was returned.
 func (c *ProjectsLocationsDatasetsHl7V2StoresMessagesPatchCall) Do(opts ...googleapi.CallOption) (*Message, error) {
+=======
+// Do executes the "healthcare.projects.locations.datasets.hl7V2Stores.testIamPermissions" call.
+// Exactly one of *TestIamPermissionsResponse or error will be non-nil.
+// Any non-2xx status code is an error. Response headers are in either
+// *TestIamPermissionsResponse.ServerResponse.Header or (if a response
+// was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsLocationsDatasetsHl7V2StoresTestIamPermissionsCall) Do(opts ...googleapi.CallOption) (*TestIamPermissionsResponse, error) {
+>>>>>>> v0.0.4
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {
@@ -15758,7 +17271,11 @@ func (c *ProjectsLocationsDatasetsHl7V2StoresMessagesPatchCall) Do(opts ...googl
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
+<<<<<<< HEAD
 	ret := &Message{
+=======
+	ret := &TestIamPermissionsResponse{
+>>>>>>> v0.0.4
 		ServerResponse: googleapi.ServerResponse{
 			Header:         res.Header,
 			HTTPStatusCode: res.StatusCode,
@@ -15770,6 +17287,7 @@ func (c *ProjectsLocationsDatasetsHl7V2StoresMessagesPatchCall) Do(opts ...googl
 	}
 	return ret, nil
 	// {
+<<<<<<< HEAD
 	//   "description": "Update the message.",
 	//   "flatPath": "v1alpha/projects/{projectsId}/locations/{locationsId}/datasets/{datasetsId}/hl7V2Stores/{hl7V2StoresId}/messages/{messagesId}",
 	//   "httpMethod": "PATCH",
@@ -15798,6 +17316,30 @@ func (c *ProjectsLocationsDatasetsHl7V2StoresMessagesPatchCall) Do(opts ...googl
 	//   },
 	//   "response": {
 	//     "$ref": "Message"
+=======
+	//   "description": "Returns permissions that a caller has on the specified resource.\nIf the resource does not exist, this will return an empty set of\npermissions, not a NOT_FOUND error.\n\nNote: This operation is designed to be used for building permission-aware\nUIs and command-line tools, not for authorization checking. This operation\nmay \"fail open\" without warning.",
+	//   "flatPath": "v1alpha/projects/{projectsId}/locations/{locationsId}/datasets/{datasetsId}/hl7V2Stores/{hl7V2StoresId}:testIamPermissions",
+	//   "httpMethod": "POST",
+	//   "id": "healthcare.projects.locations.datasets.hl7V2Stores.testIamPermissions",
+	//   "parameterOrder": [
+	//     "resource"
+	//   ],
+	//   "parameters": {
+	//     "resource": {
+	//       "description": "REQUIRED: The resource for which the policy detail is being requested.\nSee the operation documentation for the appropriate value for this field.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/datasets/[^/]+/hl7V2Stores/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1alpha/{+resource}:testIamPermissions",
+	//   "request": {
+	//     "$ref": "TestIamPermissionsRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "TestIamPermissionsResponse"
+>>>>>>> v0.0.4
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/cloud-platform"

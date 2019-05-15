@@ -17,6 +17,11 @@
 //
 // Their purpose it to provide an example of the kind of thing
 // (request, RPC, trace span, etc.) that resulted in that measurement.
+<<<<<<< HEAD
+=======
+//
+// Deprecated: Use go.opencensus.io/metric/metricdata instead.
+>>>>>>> v0.0.4
 package exemplar
 
 import (
@@ -33,6 +38,11 @@ const (
 
 // Exemplar is an example data point associated with each bucket of a
 // distribution type aggregation.
+<<<<<<< HEAD
+=======
+//
+// Deprecated: Use go.opencensus.io/metric/metricdata/exemplar instead.
+>>>>>>> v0.0.4
 type Exemplar struct {
 	Value       float64     // the value that was recorded
 	Timestamp   time.Time   // the time the value was recorded

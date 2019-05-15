@@ -20,7 +20,11 @@ type Server interface {
 	DidChangeWorkspaceFolders(context.Context, *DidChangeWorkspaceFoldersParams) error
 	DidChangeConfiguration(context.Context, *DidChangeConfigurationParams) error
 	DidChangeWatchedFiles(context.Context, *DidChangeWatchedFilesParams) error
+<<<<<<< HEAD
 	Symbols(context.Context, *WorkspaceSymbolParams) ([]SymbolInformation, error)
+=======
+	Symbol(context.Context, *WorkspaceSymbolParams) ([]SymbolInformation, error)
+>>>>>>> v0.0.4
 	ExecuteCommand(context.Context, *ExecuteCommandParams) (interface{}, error)
 	DidOpen(context.Context, *DidOpenTextDocumentParams) error
 	DidChange(context.Context, *DidChangeTextDocumentParams) error
@@ -49,7 +53,11 @@ type Server interface {
 	RangeFormatting(context.Context, *DocumentRangeFormattingParams) ([]TextEdit, error)
 	OnTypeFormatting(context.Context, *DocumentOnTypeFormattingParams) ([]TextEdit, error)
 	Rename(context.Context, *RenameParams) ([]WorkspaceEdit, error)
+<<<<<<< HEAD
 	FoldingRanges(context.Context, *FoldingRangeParams) ([]FoldingRange, error)
+=======
+	FoldingRange(context.Context, *FoldingRangeParams) ([]FoldingRange, error)
+>>>>>>> v0.0.4
 }
 
 func serverHandler(log xlog.Logger, server Server) jsonrpc2.Handler {
@@ -81,7 +89,13 @@ func serverHandler(log xlog.Logger, server Server) jsonrpc2.Handler {
 				conn.Reply(ctx, r, nil, jsonrpc2.NewErrorf(jsonrpc2.CodeInvalidParams, "Expected no params"))
 				return
 			}
+<<<<<<< HEAD
 			if err := server.Shutdown(ctx); err != nil {
+=======
+			if err := server.Shutdown(ctx); err == nil {
+				conn.Reply(ctx, r, nil, nil)
+			} else {
+>>>>>>> v0.0.4
 				log.Errorf(ctx, "%v", err)
 			}
 
@@ -138,7 +152,11 @@ func serverHandler(log xlog.Logger, server Server) jsonrpc2.Handler {
 				sendParseError(ctx, log, conn, r, err)
 				return
 			}
+<<<<<<< HEAD
 			resp, err := server.Symbols(ctx, &params)
+=======
+			resp, err := server.Symbol(ctx, &params)
+>>>>>>> v0.0.4
 			if err := conn.Reply(ctx, r, resp, err); err != nil {
 				log.Errorf(ctx, "%v", err)
 			}
@@ -452,7 +470,11 @@ func serverHandler(log xlog.Logger, server Server) jsonrpc2.Handler {
 				sendParseError(ctx, log, conn, r, err)
 				return
 			}
+<<<<<<< HEAD
 			resp, err := server.FoldingRanges(ctx, &params)
+=======
+			resp, err := server.FoldingRange(ctx, &params)
+>>>>>>> v0.0.4
 			if err := conn.Reply(ctx, r, resp, err); err != nil {
 				log.Errorf(ctx, "%v", err)
 			}
@@ -500,7 +522,11 @@ func (s *serverDispatcher) DidChangeWatchedFiles(ctx context.Context, params *Di
 	return s.Conn.Notify(ctx, "workspace/didChangeWatchedFiles", params)
 }
 
+<<<<<<< HEAD
 func (s *serverDispatcher) Symbols(ctx context.Context, params *WorkspaceSymbolParams) ([]SymbolInformation, error) {
+=======
+func (s *serverDispatcher) Symbol(ctx context.Context, params *WorkspaceSymbolParams) ([]SymbolInformation, error) {
+>>>>>>> v0.0.4
 	var result []SymbolInformation
 	if err := s.Conn.Call(ctx, "workspace/symbol", params, &result); err != nil {
 		return nil, err
@@ -712,9 +738,15 @@ func (s *serverDispatcher) Rename(ctx context.Context, params *RenameParams) ([]
 	return result, nil
 }
 
+<<<<<<< HEAD
 func (s *serverDispatcher) FoldingRanges(ctx context.Context, params *FoldingRangeParams) ([]FoldingRange, error) {
 	var result []FoldingRange
 	if err := s.Conn.Call(ctx, "textDocument/foldingRanges", params, &result); err != nil {
+=======
+func (s *serverDispatcher) FoldingRange(ctx context.Context, params *FoldingRangeParams) ([]FoldingRange, error) {
+	var result []FoldingRange
+	if err := s.Conn.Call(ctx, "textDocument/foldingRange", params, &result); err != nil {
+>>>>>>> v0.0.4
 		return nil, err
 	}
 	return result, nil

@@ -45,8 +45,14 @@ Example to Update a Network
 
 	networkID := "484cda0e-106f-4f4b-bb3f-d413710bbe78"
 
+<<<<<<< HEAD
 	updateOpts := networks.UpdateOpts{
 		Name: "new_name",
+=======
+	name := "new_name"
+	updateOpts := networks.UpdateOpts{
+		Name: &name,
+>>>>>>> v0.0.4
 	}
 
 	network, err := networks.Update(networkClient, networkID, updateOpts).Extract()

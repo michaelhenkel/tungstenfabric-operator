@@ -103,4 +103,8 @@ func versionGo() string {
 	return "UNKNOWN"
 }
 
+<<<<<<< HEAD
 const versionClient = "20190322"
+=======
+const versionClient = "20190404"
+>>>>>>> v0.0.4

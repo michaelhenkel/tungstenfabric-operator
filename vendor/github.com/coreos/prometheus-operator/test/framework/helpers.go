@@ -49,7 +49,11 @@ func PathToOSFile(relativPath string) (*os.File, error) {
 // container to pass its readiness check.
 func WaitForPodsReady(kubeClient kubernetes.Interface, namespace string, timeout time.Duration, expectedReplicas int, opts metav1.ListOptions) error {
 	return wait.Poll(time.Second, timeout, func() (bool, error) {
+<<<<<<< HEAD
 		pl, err := kubeClient.Core().Pods(namespace).List(opts)
+=======
+		pl, err := kubeClient.CoreV1().Pods(namespace).List(opts)
+>>>>>>> v0.0.4
 		if err != nil {
 			return false, err
 		}
@@ -75,7 +79,11 @@ func WaitForPodsReady(kubeClient kubernetes.Interface, namespace string, timeout
 
 func WaitForPodsRunImage(kubeClient kubernetes.Interface, namespace string, expectedReplicas int, image string, opts metav1.ListOptions) error {
 	return wait.Poll(time.Second, time.Minute*5, func() (bool, error) {
+<<<<<<< HEAD
 		pl, err := kubeClient.Core().Pods(namespace).List(opts)
+=======
+		pl, err := kubeClient.CoreV1().Pods(namespace).List(opts)
+>>>>>>> v0.0.4
 		if err != nil {
 			return false, err
 		}
@@ -123,7 +131,11 @@ func podRunsImage(p v1.Pod, image string) bool {
 }
 
 func GetLogs(kubeClient kubernetes.Interface, namespace string, podName, containerName string) (string, error) {
+<<<<<<< HEAD
 	logs, err := kubeClient.Core().RESTClient().Get().
+=======
+	logs, err := kubeClient.CoreV1().RESTClient().Get().
+>>>>>>> v0.0.4
 		Resource("pods").
 		Namespace(namespace).
 		Name(podName).SubResource("log").
@@ -157,7 +169,11 @@ func (f *Framework) Poll(timeout, pollInterval time.Duration, pollFunc func() (b
 	}
 }
 
+<<<<<<< HEAD
 func ProxyGetPod(kubeClient kubernetes.Interface, namespace, podName, port, path string) *rest.Request {
+=======
+func ProxyGetPod(kubeClient kubernetes.Interface, namespace, podName, path string) *rest.Request {
+>>>>>>> v0.0.4
 	return kubeClient.
 		CoreV1().
 		RESTClient().
@@ -169,7 +185,11 @@ func ProxyGetPod(kubeClient kubernetes.Interface, namespace, podName, port, path
 		Suffix(path)
 }
 
+<<<<<<< HEAD
 func ProxyPostPod(kubeClient kubernetes.Interface, namespace, podName, port, path, body string) *rest.Request {
+=======
+func ProxyPostPod(kubeClient kubernetes.Interface, namespace, podName, path, body string) *rest.Request {
+>>>>>>> v0.0.4
 	return kubeClient.
 		CoreV1().
 		RESTClient().

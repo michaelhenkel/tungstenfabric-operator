@@ -241,5 +241,9 @@
 // IncludeSourceSpecificGroup may return an error.
 package ipv4 // import "golang.org/x/net/ipv4"
 
+<<<<<<< HEAD
 // BUG(mikio): This package is not implemented on AIX, JS, NaCl and
 // Plan 9.
+=======
+// BUG(mikio): This package is not implemented on JS, NaCl and Plan 9.
+>>>>>>> v0.0.4

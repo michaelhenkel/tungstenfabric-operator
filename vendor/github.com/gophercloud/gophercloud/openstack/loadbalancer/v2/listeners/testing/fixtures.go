@@ -42,6 +42,11 @@ const ListenersListBody = `
 			"sni_container_refs": ["3d328d82-2547-4921-ac2f-61c3b452b5ff", "b3cfd7e3-8c19-455c-8ebb-d78dfd8f7e7d"],
 			"timeout_client_data": 50000,
 			"timeout_member_data": 50000,
+<<<<<<< HEAD
+=======
+			"timeout_member_connect": 5000,
+			"timeout_tcp_inspect": 0,
+>>>>>>> v0.0.4
 			"insert_headers": {
 				"X-Forwarded-For": "true"
 			}
@@ -68,6 +73,11 @@ const SingleListenerBody = `
 		"sni_container_refs": ["3d328d82-2547-4921-ac2f-61c3b452b5ff", "b3cfd7e3-8c19-455c-8ebb-d78dfd8f7e7d"],
 		"timeout_client_data": 50000,
 		"timeout_member_data": 50000,
+<<<<<<< HEAD
+=======
+		"timeout_member_connect": 5000,
+		"timeout_tcp_inspect": 0,
+>>>>>>> v0.0.4
         	"insert_headers": {
             		"X-Forwarded-For": "true"
         	}
@@ -92,7 +102,13 @@ const PostUpdateListenerBody = `
 		"default_tls_container_ref": "2c433435-20de-4411-84ae-9cc8917def76",
 		"sni_container_refs": ["3d328d82-2547-4921-ac2f-61c3b452b5ff", "b3cfd7e3-8c19-455c-8ebb-d78dfd8f7e7d"],
 		"timeout_client_data": 181000,
+<<<<<<< HEAD
 		"timeout_member_data": 181000
+=======
+		"timeout_member_data": 181000,
+		"timeout_member_connect": 181000,
+		"timeout_tcp_inspect": 181000
+>>>>>>> v0.0.4
 
 	}
 }
@@ -140,6 +156,11 @@ var (
 		SniContainerRefs:       []string{"3d328d82-2547-4921-ac2f-61c3b452b5ff", "b3cfd7e3-8c19-455c-8ebb-d78dfd8f7e7d"},
 		TimeoutClientData:      50000,
 		TimeoutMemberData:      50000,
+<<<<<<< HEAD
+=======
+		TimeoutMemberConnect:   5000,
+		TimeoutTCPInspect:      0,
+>>>>>>> v0.0.4
 		InsertHeaders:          map[string]string{"X-Forwarded-For": "true"},
 	}
 	ListenerUpdated = listeners.Listener{
@@ -157,6 +178,11 @@ var (
 		SniContainerRefs:       []string{"3d328d82-2547-4921-ac2f-61c3b452b5ff", "b3cfd7e3-8c19-455c-8ebb-d78dfd8f7e7d"},
 		TimeoutClientData:      181000,
 		TimeoutMemberData:      181000,
+<<<<<<< HEAD
+=======
+		TimeoutMemberConnect:   181000,
+		TimeoutTCPInspect:      181000,
+>>>>>>> v0.0.4
 	}
 	ListenerStatsTree = listeners.Stats{
 		ActiveConnections: 0,
@@ -248,7 +274,13 @@ func HandleListenerUpdateSuccessfully(t *testing.T) {
 				"default_pool_id": null,
 				"connection_limit": 1001,
 				"timeout_client_data": 181000,
+<<<<<<< HEAD
 				"timeout_member_data": 181000
+=======
+				"timeout_member_data": 181000,
+				"timeout_member_connect": 181000,
+				"timeout_tcp_inspect": 181000
+>>>>>>> v0.0.4
 			}
 		}`)
 

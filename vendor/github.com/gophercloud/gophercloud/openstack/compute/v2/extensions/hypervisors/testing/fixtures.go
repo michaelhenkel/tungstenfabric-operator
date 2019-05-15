@@ -221,6 +221,42 @@ const HypervisorGetBody = `
 }
 `
 
+<<<<<<< HEAD
+=======
+// HypervisorGetEmptyCPUInfoBody represents a raw hypervisor GET result with
+// no cpu_info
+const HypervisorGetEmptyCPUInfoBody = `
+{
+    "hypervisor":{
+        "cpu_info": "",
+        "current_workload":0,
+        "status":"enabled",
+        "state":"up",
+        "disk_available_least":0,
+        "host_ip":"1.1.1.1",
+        "free_disk_gb":1028,
+        "free_ram_mb":7680,
+        "hypervisor_hostname":"fake-mini",
+        "hypervisor_type":"fake",
+        "hypervisor_version":2002000,
+        "id":"c48f6247-abe4-4a24-824e-ea39e108874f",
+        "local_gb":1028,
+        "local_gb_used":0,
+        "memory_mb":8192,
+        "memory_mb_used":512,
+        "running_vms":0,
+        "service":{
+            "host":"e6a37ee802d74863ab8b91ade8f12a67",
+            "id":"9c2566e7-7a54-4777-a1ae-c2662f0c407c",
+            "disabled_reason":null
+        },
+        "vcpus":1,
+        "vcpus_used":0
+    }
+}
+`
+
+>>>>>>> v0.0.4
 // HypervisorUptimeBody represents a raw hypervisor uptime request result with
 // Pike+ release.
 const HypervisorUptimeBody = `
@@ -275,6 +311,10 @@ var (
 		VCPUs:     1,
 		VCPUsUsed: 0,
 	}
+<<<<<<< HEAD
+=======
+
+>>>>>>> v0.0.4
 	HypervisorFake = hypervisors.Hypervisor{
 		CPUInfo: hypervisors.CPUInfo{
 			Arch:   "x86_64",
@@ -314,6 +354,36 @@ var (
 		VCPUs:     1,
 		VCPUsUsed: 0,
 	}
+<<<<<<< HEAD
+=======
+
+	HypervisorEmptyCPUInfo = hypervisors.Hypervisor{
+		CurrentWorkload:    0,
+		Status:             "enabled",
+		State:              "up",
+		DiskAvailableLeast: 0,
+		HostIP:             "1.1.1.1",
+		FreeDiskGB:         1028,
+		FreeRamMB:          7680,
+		HypervisorHostname: "fake-mini",
+		HypervisorType:     "fake",
+		HypervisorVersion:  2002000,
+		ID:                 "c48f6247-abe4-4a24-824e-ea39e108874f",
+		LocalGB:            1028,
+		LocalGBUsed:        0,
+		MemoryMB:           8192,
+		MemoryMBUsed:       512,
+		RunningVMs:         0,
+		Service: hypervisors.Service{
+			Host:           "e6a37ee802d74863ab8b91ade8f12a67",
+			ID:             "9c2566e7-7a54-4777-a1ae-c2662f0c407c",
+			DisabledReason: "",
+		},
+		VCPUs:     1,
+		VCPUsUsed: 0,
+	}
+
+>>>>>>> v0.0.4
 	HypervisorsStatisticsExpected = hypervisors.Statistics{
 		Count:              1,
 		CurrentWorkload:    0,
@@ -328,6 +398,10 @@ var (
 		VCPUs:              2,
 		VCPUsUsed:          0,
 	}
+<<<<<<< HEAD
+=======
+
+>>>>>>> v0.0.4
 	HypervisorUptimeExpected = hypervisors.Uptime{
 		HypervisorHostname: "fake-mini",
 		ID:                 "c48f6247-abe4-4a24-824e-ea39e108874f",
@@ -377,6 +451,19 @@ func HandleHypervisorGetSuccessfully(t *testing.T) {
 	})
 }
 
+<<<<<<< HEAD
+=======
+func HandleHypervisorGetEmptyCPUInfoSuccessfully(t *testing.T) {
+	testhelper.Mux.HandleFunc("/os-hypervisors/"+HypervisorFake.ID, func(w http.ResponseWriter, r *http.Request) {
+		testhelper.TestMethod(t, r, "GET")
+		testhelper.TestHeader(t, r, "X-Auth-Token", client.TokenID)
+
+		w.Header().Add("Content-Type", "application/json")
+		fmt.Fprintf(w, HypervisorGetEmptyCPUInfoBody)
+	})
+}
+
+>>>>>>> v0.0.4
 func HandleHypervisorUptimeSuccessfully(t *testing.T) {
 	testhelper.Mux.HandleFunc("/os-hypervisors/"+HypervisorFake.ID+"/uptime", func(w http.ResponseWriter, r *http.Request) {
 		testhelper.TestMethod(t, r, "GET")

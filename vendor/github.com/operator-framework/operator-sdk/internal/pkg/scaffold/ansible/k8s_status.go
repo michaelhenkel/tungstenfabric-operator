@@ -16,15 +16,22 @@ package ansible
 
 import (
 	"github.com/operator-framework/operator-sdk/internal/pkg/scaffold/input"
+<<<<<<< HEAD
 
 	"github.com/spf13/afero"
+=======
+>>>>>>> v0.0.4
 )
 
 const K8sStatusPythonFile = "library/k8s_status.py"
 
 // K8sStatus - the k8s status module tmpl wrapper
 type K8sStatus struct {
+<<<<<<< HEAD
 	input.Input
+=======
+	StaticInput
+>>>>>>> v0.0.4
 }
 
 // GetInput - gets the input
@@ -32,6 +39,7 @@ func (k *K8sStatus) GetInput() (input.Input, error) {
 	if k.Path == "" {
 		k.Path = K8sStatusPythonFile
 	}
+<<<<<<< HEAD
 	return k.Input, nil
 }
 
@@ -39,6 +47,12 @@ func (s K8sStatus) SetFS(_ afero.Fs) {}
 
 func (k K8sStatus) CustomRender() ([]byte, error) {
 	return []byte(k8sStatusTmpl), nil
+=======
+
+	k.TemplateBody = k8sStatusTmpl
+
+	return k.Input, nil
+>>>>>>> v0.0.4
 }
 
 const k8sStatusTmpl = `#!/usr/bin/python

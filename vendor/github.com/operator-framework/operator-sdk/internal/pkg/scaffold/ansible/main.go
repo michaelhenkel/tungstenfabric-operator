@@ -22,7 +22,11 @@ import (
 
 // Main - main source file for ansible operator
 type Main struct {
+<<<<<<< HEAD
 	input.Input
+=======
+	StaticInput
+>>>>>>> v0.0.4
 }
 
 func (m *Main) GetInput() (input.Input, error) {

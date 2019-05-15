@@ -581,8 +581,11 @@ func (c *Client) Run(ctx context.Context, q *Query) *Iterator {
 		},
 	}
 
+<<<<<<< HEAD
 	ctx = trace.StartSpan(ctx, "cloud.google.com/go/datastore.Query.Run")
 	defer func() { trace.EndSpan(ctx, t.err) }()
+=======
+>>>>>>> v0.0.4
 	if q.namespace != "" {
 		t.req.PartitionId = &pb.PartitionId{
 			NamespaceId: q.namespace,

@@ -11,7 +11,11 @@ import (
 	"fmt"
 	"reflect"
 
+<<<<<<< HEAD
 	"github.com/apache/thrift/lib/go/thrift"
+=======
+	"git.apache.org/thrift.git/lib/go/thrift"
+>>>>>>> v0.0.4
 )
 
 // (needed to ensure safety because of naive import list construction.)

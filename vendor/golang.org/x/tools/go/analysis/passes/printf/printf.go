@@ -856,20 +856,43 @@ func recursiveStringer(pass *analysis.Pass, e ast.Expr) bool {
 		return false
 	}
 
+<<<<<<< HEAD
 	// Is it the receiver r, or &r?
 	recv := stringMethod.Type().(*types.Signature).Recv()
 	if recv == nil {
 		return false
 	}
+=======
+	sig := stringMethod.Type().(*types.Signature)
+	if !isStringer(sig) {
+		return false
+	}
+
+	// Is it the receiver r, or &r?
+>>>>>>> v0.0.4
 	if u, ok := e.(*ast.UnaryExpr); ok && u.Op == token.AND {
 		e = u.X // strip off & from &r
 	}
 	if id, ok := e.(*ast.Ident); ok {
+<<<<<<< HEAD
 		return pass.TypesInfo.Uses[id] == recv
+=======
+		return pass.TypesInfo.Uses[id] == sig.Recv()
+>>>>>>> v0.0.4
 	}
 	return false
 }
 
+<<<<<<< HEAD
+=======
+// isStringer reports whether the method signature matches the String() definition in fmt.Stringer.
+func isStringer(sig *types.Signature) bool {
+	return sig.Params().Len() == 0 &&
+		sig.Results().Len() == 1 &&
+		sig.Results().At(0).Type() == types.Typ[types.String]
+}
+
+>>>>>>> v0.0.4
 // isFunctionValue reports whether the expression is a function as opposed to a function call.
 // It is almost always a mistake to print a function value.
 func isFunctionValue(pass *analysis.Pass, e ast.Expr) bool {

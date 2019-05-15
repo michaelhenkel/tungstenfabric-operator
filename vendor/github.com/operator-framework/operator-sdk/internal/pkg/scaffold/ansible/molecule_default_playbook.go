@@ -35,24 +35,45 @@ func (m *MoleculeDefaultPlaybook) GetInput() (input.Input, error) {
 		m.Path = filepath.Join(MoleculeDefaultDir, MoleculeDefaultPlaybookFile)
 	}
 	m.TemplateBody = moleculeDefaultPlaybookAnsibleTmpl
+<<<<<<< HEAD
+=======
+	m.Delims = AnsibleDelims
+>>>>>>> v0.0.4
 
 	return m.Input, nil
 }
 
 const moleculeDefaultPlaybookAnsibleTmpl = `---
+<<<<<<< HEAD
 {{- if .GeneratePlaybook }}
 - import_playbook: '{{"{{ playbook_dir }}/../../playbook.yml"}}'
 {{- end }}
 
   {{- if not .GeneratePlaybook }}
+=======
+[[- if .GeneratePlaybook ]]
+- import_playbook: '{{ playbook_dir }}/../../playbook.yml'
+[[- end ]]
+
+  [[- if not .GeneratePlaybook ]]
+>>>>>>> v0.0.4
 - name: Converge
   hosts: localhost
   connection: local
   vars:
+<<<<<<< HEAD
     ansible_python_interpreter: '{{ "{{ ansible_playbook_python }}" }}'
   roles:
     - {{.Resource.LowerKind}}
   {{- end }}
 
 - import_playbook: '{{"{{ playbook_dir }}/asserts.yml"}}'
+=======
+    ansible_python_interpreter: '{{ ansible_playbook_python }}'
+  roles:
+    - [[.Resource.LowerKind]]
+  [[- end ]]
+
+- import_playbook: '{{ playbook_dir }}/asserts.yml'
+>>>>>>> v0.0.4
 `

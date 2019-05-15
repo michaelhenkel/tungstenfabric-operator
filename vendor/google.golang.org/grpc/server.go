@@ -614,12 +614,22 @@ func (s *Server) handleRawConn(rawConn net.Conn) {
 	rawConn.SetDeadline(time.Now().Add(s.opts.connectionTimeout))
 	conn, authInfo, err := s.useTransportAuthenticator(rawConn)
 	if err != nil {
+<<<<<<< HEAD
 		s.mu.Lock()
 		s.errorf("ServerHandshake(%q) failed: %v", rawConn.RemoteAddr(), err)
 		s.mu.Unlock()
 		grpclog.Warningf("grpc: Server.Serve failed to complete security handshake from %q: %v", rawConn.RemoteAddr(), err)
 		// If serverHandshake returns ErrConnDispatched, keep rawConn open.
 		if err != credentials.ErrConnDispatched {
+=======
+		// ErrConnDispatched means that the connection was dispatched away from
+		// gRPC; those connections should be left open.
+		if err != credentials.ErrConnDispatched {
+			s.mu.Lock()
+			s.errorf("ServerHandshake(%q) failed: %v", rawConn.RemoteAddr(), err)
+			s.mu.Unlock()
+			grpclog.Warningf("grpc: Server.Serve failed to complete security handshake from %q: %v", rawConn.RemoteAddr(), err)
+>>>>>>> v0.0.4
 			rawConn.Close()
 		}
 		rawConn.SetDeadline(time.Time{})
@@ -748,10 +758,18 @@ func (s *Server) traceInfo(st transport.ServerTransport, stream *transport.Strea
 
 	trInfo = &traceInfo{
 		tr: tr,
+<<<<<<< HEAD
 	}
 	trInfo.firstLine.client = false
 	trInfo.firstLine.remoteAddr = st.RemoteAddr()
 
+=======
+		firstLine: firstLine{
+			client:     false,
+			remoteAddr: st.RemoteAddr(),
+		},
+	}
+>>>>>>> v0.0.4
 	if dl, ok := stream.Context().Deadline(); ok {
 		trInfo.firstLine.deadline = time.Until(dl)
 	}
@@ -859,7 +877,10 @@ func (s *Server) processUnaryRPC(t transport.ServerTransport, stream *transport.
 	}
 	if trInfo != nil {
 		defer trInfo.tr.Finish()
+<<<<<<< HEAD
 		trInfo.firstLine.client = false
+=======
+>>>>>>> v0.0.4
 		trInfo.tr.LazyLog(&trInfo.firstLine, false)
 		defer func() {
 			if err != nil && err != io.EOF {
@@ -1245,7 +1266,12 @@ func (s *Server) handleStream(t transport.ServerTransport, stream *transport.Str
 	service := sm[:pos]
 	method := sm[pos+1:]
 
+<<<<<<< HEAD
 	if srv, ok := s.m[service]; ok {
+=======
+	srv, knownService := s.m[service]
+	if knownService {
+>>>>>>> v0.0.4
 		if md, ok := srv.md[method]; ok {
 			s.processUnaryRPC(t, stream, srv, md, trInfo)
 			return
@@ -1260,11 +1286,24 @@ func (s *Server) handleStream(t transport.ServerTransport, stream *transport.Str
 		s.processStreamingRPC(t, stream, nil, unknownDesc, trInfo)
 		return
 	}
+<<<<<<< HEAD
 	if trInfo != nil {
 		trInfo.tr.LazyLog(&fmtStringer{"Unknown service %v", []interface{}{service}}, true)
 		trInfo.tr.SetError()
 	}
 	errDesc := fmt.Sprintf("unknown service %v", service)
+=======
+	var errDesc string
+	if !knownService {
+		errDesc = fmt.Sprintf("unknown service %v", service)
+	} else {
+		errDesc = fmt.Sprintf("unknown method %v for service %v", method, service)
+	}
+	if trInfo != nil {
+		trInfo.tr.LazyPrintf("%s", errDesc)
+		trInfo.tr.SetError()
+	}
+>>>>>>> v0.0.4
 	if err := t.WriteStatus(stream, status.New(codes.Unimplemented, errDesc)); err != nil {
 		if trInfo != nil {
 			trInfo.tr.LazyLog(&fmtStringer{"%v", []interface{}{err}}, true)

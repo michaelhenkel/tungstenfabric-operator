@@ -189,15 +189,33 @@ func amImage(version string) string {
 }
 
 func (f *Framework) WaitForAlertmanagerInitializedMesh(ns, name string, amountPeers int) error {
+<<<<<<< HEAD
 	return wait.Poll(time.Second, time.Minute*5, func() (bool, error) {
 		amStatus, err := f.GetAlertmanagerConfig(ns, name)
 		if err != nil {
 			return false, err
 		}
+=======
+	var pollError error
+	err := wait.Poll(time.Second, time.Minute*5, func() (bool, error) {
+		amStatus, err := f.GetAlertmanagerStatus(ns, name)
+		if err != nil {
+			return false, err
+		}
+
+		// Starting from AM v0.15.0 'MeshStatus' is called 'ClusterStatus'.
+		// Therefor we need to check for both.
+		if amStatus.Data.MeshStatus == nil && amStatus.Data.ClusterStatus == nil {
+			pollError = fmt.Errorf("do not have a cluster / mesh status")
+			return false, nil
+		}
+
+>>>>>>> v0.0.4
 		if amStatus.Data.getAmountPeers() == amountPeers {
 			return true, nil
 		}
 
+<<<<<<< HEAD
 		return false, nil
 	})
 }
@@ -205,6 +223,35 @@ func (f *Framework) WaitForAlertmanagerInitializedMesh(ns, name string, amountPe
 func (f *Framework) GetAlertmanagerConfig(ns, n string) (amAPIStatusResp, error) {
 	var amStatus amAPIStatusResp
 	request := ProxyGetPod(f.KubeClient, ns, n, "web", "/api/v1/status")
+=======
+		var addresses []string
+		// Starting from AM v0.15.0 'MeshStatus' is called 'ClusterStatus'. This
+		// is abstracted via `getPeers()`.
+		for _, p := range amStatus.Data.getPeers() {
+			addresses = append(addresses, p.Address)
+		}
+
+		pollError = fmt.Errorf(
+			"failed to get correct amount of peers, expected %d, got %d, addresses %v",
+			amountPeers,
+			amStatus.Data.getAmountPeers(),
+			strings.Join(addresses, ","),
+		)
+
+		return false, nil
+	})
+
+	if err != nil {
+		return fmt.Errorf("failed to wait for initialized alertmanager mesh: %v: %v", err, pollError)
+	}
+
+	return nil
+}
+
+func (f *Framework) GetAlertmanagerStatus(ns, n string) (amAPIStatusResp, error) {
+	var amStatus amAPIStatusResp
+	request := ProxyGetPod(f.KubeClient, ns, n, "/api/v1/status")
+>>>>>>> v0.0.4
 	resp, err := request.DoRaw()
 	if err != nil {
 		return amStatus, err
@@ -222,7 +269,11 @@ func (f *Framework) CreateSilence(ns, n string) (string, error) {
 
 	request := ProxyPostPod(
 		f.KubeClient, ns, n,
+<<<<<<< HEAD
 		"web", "/api/v1/silences",
+=======
+		"/api/v1/silences",
+>>>>>>> v0.0.4
 		`{"id":"","createdBy":"Max Mustermann","comment":"1234","startsAt":"2030-04-09T09:16:15.114Z","endsAt":"2031-04-09T11:16:15.114Z","matchers":[{"name":"test","value":"123","isRegex":false}]}`,
 	)
 	resp, err := request.DoRaw()
@@ -278,7 +329,11 @@ func (f *Framework) SendAlertToAlertmanager(ns, n string, start time.Time) error
 	}
 
 	var postAlertResp amAPIPostAlertResp
+<<<<<<< HEAD
 	request := ProxyPostPod(f.KubeClient, ns, n, "web", "api/v1/alerts", string(b))
+=======
+	request := ProxyPostPod(f.KubeClient, ns, n, "api/v1/alerts", string(b))
+>>>>>>> v0.0.4
 	resp, err := request.DoRaw()
 	if err != nil {
 		return err
@@ -298,7 +353,11 @@ func (f *Framework) SendAlertToAlertmanager(ns, n string, start time.Time) error
 func (f *Framework) GetSilences(ns, n string) ([]amAPISil, error) {
 	var getSilencesResponse amAPIGetSilResp
 
+<<<<<<< HEAD
 	request := ProxyGetPod(f.KubeClient, ns, n, "web", "/api/v1/silences")
+=======
+	request := ProxyGetPod(f.KubeClient, ns, n, "/api/v1/silences")
+>>>>>>> v0.0.4
 	resp, err := request.DoRaw()
 	if err != nil {
 		return getSilencesResponse.Data, err
@@ -322,9 +381,14 @@ func (f *Framework) GetSilences(ns, n string) ([]amAPISil, error) {
 // configuration via the Alertmanager's API and checks if it contains the given
 // string.
 func (f *Framework) WaitForAlertmanagerConfigToContainString(ns, amName, expectedString string) error {
+<<<<<<< HEAD
 	var pollError error
 	err := wait.Poll(10*time.Second, time.Minute*5, func() (bool, error) {
 		config, err := f.GetAlertmanagerConfig(ns, "alertmanager-"+amName+"-0")
+=======
+	err := wait.Poll(10*time.Second, time.Minute*5, func() (bool, error) {
+		config, err := f.GetAlertmanagerStatus(ns, "alertmanager-"+amName+"-0")
+>>>>>>> v0.0.4
 		if err != nil {
 			return false, err
 		}
@@ -337,7 +401,11 @@ func (f *Framework) WaitForAlertmanagerConfigToContainString(ns, amName, expecte
 	})
 
 	if err != nil {
+<<<<<<< HEAD
 		return fmt.Errorf("failed to wait for alertmanager config to contain %q: %v: %v", expectedString, err, pollError)
+=======
+		return fmt.Errorf("failed to wait for alertmanager config to contain %q: %v", expectedString, err)
+>>>>>>> v0.0.4
 	}
 
 	return nil
@@ -377,6 +445,7 @@ type amAPIStatusData struct {
 }
 
 // Starting from AM v0.15.0 'MeshStatus' is called 'ClusterStatus'
+<<<<<<< HEAD
 func (s *amAPIStatusData) getAmountPeers() int {
 	if s.MeshStatus != nil {
 		return len(s.MeshStatus.Peers)
@@ -386,4 +455,24 @@ func (s *amAPIStatusData) getAmountPeers() int {
 
 type clusterStatus struct {
 	Peers []interface{} `json:"peers"`
+=======
+func (s *amAPIStatusData) getPeers() []peer {
+	if s.MeshStatus != nil {
+		return s.MeshStatus.Peers
+	}
+	return s.ClusterStatus.Peers
+}
+
+func (s *amAPIStatusData) getAmountPeers() int {
+	return len(s.getPeers())
+}
+
+type peer struct {
+	Name    string `json:"name"`
+	Address string `json:"address"`
+}
+
+type clusterStatus struct {
+	Peers []peer `json:"peers"`
+>>>>>>> v0.0.4
 }

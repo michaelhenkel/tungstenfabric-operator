@@ -153,7 +153,11 @@ var comments = map[string]string{
 // Dates contains information regarding the format and parsing of dates and times.
 `,
 	"localeDisplayNames": `
+<<<<<<< HEAD
 // LocaleDisplayNames specifies localized display names for for scripts, languages,
+=======
+// LocaleDisplayNames specifies localized display names for scripts, languages,
+>>>>>>> v0.0.4
 // countries, currencies, and variants.
 `,
 	"numbers": `

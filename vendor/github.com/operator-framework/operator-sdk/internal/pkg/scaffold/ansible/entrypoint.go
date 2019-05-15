@@ -22,7 +22,11 @@ import (
 
 // Entrypoint - entrypoint script
 type Entrypoint struct {
+<<<<<<< HEAD
 	input.Input
+=======
+	StaticInput
+>>>>>>> v0.0.4
 }
 
 func (e *Entrypoint) GetInput() (input.Input, error) {

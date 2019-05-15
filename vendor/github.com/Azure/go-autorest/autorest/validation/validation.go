@@ -398,6 +398,7 @@ func toInt64(v interface{}) (int64, bool) {
 	}
 	return 0, false
 }
+<<<<<<< HEAD
 
 // NewErrorWithValidationError appends package type and method name in
 // validation error.
@@ -406,3 +407,5 @@ func toInt64(v interface{}) (int64, bool) {
 func NewErrorWithValidationError(err error, packageType, method string) error {
 	return NewError(packageType, method, err.Error())
 }
+=======
+>>>>>>> v0.0.4

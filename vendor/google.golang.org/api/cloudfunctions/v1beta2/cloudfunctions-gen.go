@@ -292,9 +292,13 @@ type CloudFunction struct {
 
 	// MaxInstances: The limit on the maximum number of function instances
 	// that may coexist at a
+<<<<<<< HEAD
 	// given time. This feature is currently in alpha, available only
 	// for
 	// whitelisted users.
+=======
+	// given time.
+>>>>>>> v0.0.4
 	MaxInstances int64 `json:"maxInstances,omitempty"`
 
 	// Name: A user-defined name of the function. Function names must be
@@ -330,9 +334,20 @@ type CloudFunction struct {
 	// users.
 	Network string `json:"network,omitempty"`
 
+<<<<<<< HEAD
 	// Runtime: The runtime in which the function is going to run. If empty,
 	// defaults to
 	// Node.js 6.
+=======
+	// Runtime: Required. The runtime in which the function is going to run.
+	// Choices:
+	//
+	// * `nodejs6`: Node.js 6
+	// * `nodejs8`: Node.js 8
+	// * `nodejs10`: Node.js 10
+	// * `python37`: Python 3.7
+	// * `go111`: Go 1.11
+>>>>>>> v0.0.4
 	Runtime string `json:"runtime,omitempty"`
 
 	// ServiceAccount: The email of the function's service account. If
@@ -1102,20 +1117,34 @@ func (s *SourceRepository) MarshalJSON() ([]byte, error) {
 }
 
 // Status: The `Status` type defines a logical error model that is
+<<<<<<< HEAD
 // suitable for different
 // programming environments, including REST APIs and RPC APIs. It is
 // used by
 // [gRPC](https://github.com/grpc). The error model is designed to
 // be:
+=======
+// suitable for
+// different programming environments, including REST APIs and RPC APIs.
+// It is
+// used by [gRPC](https://github.com/grpc). The error model is designed
+// to be:
+>>>>>>> v0.0.4
 //
 // - Simple to use and understand for most users
 // - Flexible enough to meet unexpected needs
 //
 // # Overview
 //
+<<<<<<< HEAD
 // The `Status` message contains three pieces of data: error code, error
 // message,
 // and error details. The error code should be an enum value
+=======
+// The `Status` message contains three pieces of data: error code,
+// error
+// message, and error details. The error code should be an enum value
+>>>>>>> v0.0.4
 // of
 // google.rpc.Code, but it may accept additional error codes if needed.
 // The

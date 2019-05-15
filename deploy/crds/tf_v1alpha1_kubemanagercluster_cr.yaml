@@ -1,6 +1,7 @@
 apiVersion: tf.tungstenfabric.io/v1alpha1
 kind: KubemanagerCluster
 metadata:
+<<<<<<< HEAD
   name: kubemanager-cluster-1
 spec:
   # Add fields here
@@ -22,3 +23,21 @@ spec:
   kubernetesIpFabricForwarding: "true"
   kubernetesIpFabricSnat: "true"
   kubernetesTokenFile: "/var/run/secrets/kubernetes.io/serviceaccount/token"
+=======
+  name: cluster-1
+spec:
+  type: deployment
+  containers:
+    - name: kubemanager
+      logvolumepath: "/var/log/contrail"
+      resourceconfigmap: true
+  initcontainers:
+    - name: init
+      statusvolume: true
+      command: ["sh","-c","until grep ready /tmp/podinfo/pod_labels > /dev/null 2>&1; do sleep 1; done"]   
+    - name: nodeinit
+      privileged: true
+      hostusrbinvolume: true
+      resourceconfigmap: true
+
+>>>>>>> v0.0.4

@@ -1,5 +1,10 @@
 package a
 
+<<<<<<< HEAD
+=======
+import "fmt"
+
+>>>>>>> v0.0.4
 type Thing struct { //@Thing
 	Member string //@Member
 }
@@ -33,7 +38,11 @@ definition(aVar, "", Other, "$file:$line:$col-$ecol: defined here as var Other T
 definition(aVar, "-emulate=guru", Other, "$file:$line:$col: defined here as var Other")
 
 definition(aFunc, "", Things, "$file:$line:$col-$ecol: defined here as func Things(val []string) []Thing")
+<<<<<<< HEAD
 definition(aFunc, "-emulate=guru", Things, "$file:$line:$col: defined here as func Things(val []string) []Thing")
+=======
+definition(aFunc, "-emulate=guru", Things, "$file:$line:$col: defined here as func Things")
+>>>>>>> v0.0.4
 
 definition(aMethod, "", Method, "$file:$line:$col-$ecol: defined here as func (Thing).Method(i int) string")
 definition(aMethod, "-emulate=guru", Method, "$file:$line:$col: defined here as func (Thing).Method(i int) string")
@@ -63,6 +72,10 @@ definition(aStructType, "-json", Thing, `{
 }`)
 definition(aStructType, "-json -emulate=guru", Thing, `{
 	"objpos": "$efile:$line:$col",
+<<<<<<< HEAD
 	"desc": "type Thing"
+=======
+	"desc": "type Thing$$"
+>>>>>>> v0.0.4
 }`)
 */

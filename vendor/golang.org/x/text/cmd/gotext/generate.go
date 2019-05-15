@@ -5,6 +5,7 @@
 package main
 
 import (
+<<<<<<< HEAD
 	"encoding/json"
 	"fmt"
 	"io/ioutil"
@@ -15,22 +16,29 @@ import (
 
 	"golang.org/x/text/message/pipeline"
 	"golang.org/x/tools/go/loader"
+=======
+	"golang.org/x/text/message/pipeline"
+>>>>>>> v0.0.4
 )
 
 func init() {
 	out = cmdGenerate.Flag.String("out", "", "output file to write to")
 }
 
+<<<<<<< HEAD
 var (
 	out *string
 )
 
+=======
+>>>>>>> v0.0.4
 var cmdGenerate = &Command{
 	Run:       runGenerate,
 	UsageLine: "generate <package>",
 	Short:     "generates code to insert translated messages",
 }
 
+<<<<<<< HEAD
 var transRe = regexp.MustCompile(`messages\.(.*)\.json`)
 
 func runGenerate(cmd *Command, args []string) error {
@@ -101,4 +109,16 @@ func runGenerate(cmd *Command, args []string) error {
 
 	_, err = pipeline.Generate(w, pkg, &extracted, translations...)
 	return err
+=======
+func runGenerate(cmd *Command, config *pipeline.Config, args []string) error {
+	config.Packages = args
+	s, err := pipeline.Extract(config)
+	if err != nil {
+		return wrap(err, "extraction failed")
+	}
+	if err := s.Import(); err != nil {
+		return wrap(err, "import failed")
+	}
+	return wrap(s.Generate(), "generation failed")
+>>>>>>> v0.0.4
 }

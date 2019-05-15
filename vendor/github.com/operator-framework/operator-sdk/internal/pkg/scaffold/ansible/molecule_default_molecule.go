@@ -23,7 +23,11 @@ import (
 const MoleculeDefaultMoleculeFile = "molecule.yml"
 
 type MoleculeDefaultMolecule struct {
+<<<<<<< HEAD
 	input.Input
+=======
+	StaticInput
+>>>>>>> v0.0.4
 }
 
 // GetInput - gets the input

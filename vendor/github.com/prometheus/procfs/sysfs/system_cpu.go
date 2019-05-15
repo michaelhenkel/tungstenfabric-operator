@@ -70,10 +70,17 @@ func (fs FS) NewSystemCpufreq() ([]SystemCPUCpufreqStats, error) {
 		cpuName := strings.TrimPrefix(filepath.Base(cpu), "cpu")
 
 		cpuCpufreqPath := filepath.Join(cpu, "cpufreq")
+<<<<<<< HEAD
 		if _, err := os.Stat(cpuCpufreqPath); os.IsNotExist(err) {
 			continue
 		}
 		if err != nil {
+=======
+		_, err = os.Stat(cpuCpufreqPath)
+		if os.IsNotExist(err) {
+			continue
+		} else if err != nil {
+>>>>>>> v0.0.4
 			return nil, err
 		}
 

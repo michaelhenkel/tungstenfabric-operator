@@ -74,16 +74,25 @@ func (x Queue_State) String() string {
 	return proto.EnumName(Queue_State_name, int32(x))
 }
 func (Queue_State) EnumDescriptor() ([]byte, []int) {
+<<<<<<< HEAD
 	return fileDescriptor_queue_cccfd8bc7cb113bc, []int{0, 0}
+=======
+	return fileDescriptor_queue_2809b10079c46221, []int{0, 0}
+>>>>>>> v0.0.4
 }
 
 // A queue is a container of related tasks. Queues are configured to manage
 // how those tasks are dispatched. Configurable properties include rate limits,
 // retry options, queue types, and others.
 type Queue struct {
+<<<<<<< HEAD
 	// Caller-specified and required in
 	// [CreateQueue][google.cloud.tasks.v2beta3.CloudTasks.CreateQueue], after
 	// which it becomes output only.
+=======
+	// Caller-specified and required in [CreateQueue][google.cloud.tasks.v2beta3.CloudTasks.CreateQueue],
+	// after which it becomes output only.
+>>>>>>> v0.0.4
 	//
 	// The queue name.
 	//
@@ -107,6 +116,7 @@ type Queue struct {
 	QueueType isQueue_QueueType `protobuf_oneof:"queue_type"`
 	// Rate limits for task dispatches.
 	//
+<<<<<<< HEAD
 	// [rate_limits][google.cloud.tasks.v2beta3.Queue.rate_limits] and
 	// [retry_config][google.cloud.tasks.v2beta3.Queue.retry_config] are related
 	// because they both control task attempts. However they control task attempts
@@ -122,12 +132,31 @@ type Queue struct {
 	//   particular a task after its first attempt fails. That is,
 	//   [retry_config][google.cloud.tasks.v2beta3.Queue.retry_config] controls
 	//   task retries (the second attempt, third attempt, etc).
+=======
+	// [rate_limits][google.cloud.tasks.v2beta3.Queue.rate_limits] and [retry_config][google.cloud.tasks.v2beta3.Queue.retry_config] are
+	// related because they both control task attempts. However they control task
+	// attempts in different ways:
+	//
+	// * [rate_limits][google.cloud.tasks.v2beta3.Queue.rate_limits] controls the total rate of
+	//   dispatches from a queue (i.e. all traffic dispatched from the
+	//   queue, regardless of whether the dispatch is from a first
+	//   attempt or a retry).
+	// * [retry_config][google.cloud.tasks.v2beta3.Queue.retry_config] controls what happens to
+	//   particular a task after its first attempt fails. That is,
+	//   [retry_config][google.cloud.tasks.v2beta3.Queue.retry_config] controls task retries (the
+	//   second attempt, third attempt, etc).
+>>>>>>> v0.0.4
 	//
 	// The queue's actual dispatch rate is the result of:
 	//
 	// * Number of tasks in the queue
+<<<<<<< HEAD
 	// * User-specified throttling: [rate limits][Queue.RateLimits]
 	//   [retry configuration][Queue.RetryConfig], and the
+=======
+	// * User-specified throttling: [rate_limits][google.cloud.tasks.v2beta3.Queue.rate_limits],
+	//   [retry_config][google.cloud.tasks.v2beta3.Queue.retry_config], and the
+>>>>>>> v0.0.4
 	//   [queue's state][google.cloud.tasks.v2beta3.Queue.state].
 	// * System throttling due to `429` (Too Many Requests) or `503` (Service
 	//   Unavailable) responses from the worker, high error rates, or to smooth
@@ -148,6 +177,7 @@ type Queue struct {
 	//
 	// `state` can only be changed by called
 	// [PauseQueue][google.cloud.tasks.v2beta3.CloudTasks.PauseQueue],
+<<<<<<< HEAD
 	// [ResumeQueue][google.cloud.tasks.v2beta3.CloudTasks.ResumeQueue], or
 	// uploading
 	// [queue.yaml/xml](https://cloud.google.com/appengine/docs/python/config/queueref).
@@ -162,21 +192,50 @@ type Queue struct {
 	// A queue can be purged using
 	// [PurgeQueue][google.cloud.tasks.v2beta3.CloudTasks.PurgeQueue], the [App
 	// Engine Task Queue SDK, or the Cloud
+=======
+	// [ResumeQueue][google.cloud.tasks.v2beta3.CloudTasks.ResumeQueue], or uploading
+	// [queue.yaml/xml](https://cloud.google.com/appengine/docs/python/config/queueref).
+	// [UpdateQueue][google.cloud.tasks.v2beta3.CloudTasks.UpdateQueue] cannot be used to change `state`.
+	State Queue_State `protobuf:"varint,6,opt,name=state,proto3,enum=google.cloud.tasks.v2beta3.Queue_State" json:"state,omitempty"`
+	// Output only. The last time this queue was purged.
+	//
+	// All tasks that were [created][google.cloud.tasks.v2beta3.Task.create_time] before this time
+	// were purged.
+	//
+	// A queue can be purged using [PurgeQueue][google.cloud.tasks.v2beta3.CloudTasks.PurgeQueue], the
+	// [App Engine Task Queue SDK, or the Cloud
+>>>>>>> v0.0.4
 	// Console](https://cloud.google.com/appengine/docs/standard/python/taskqueue/push/deleting-tasks-and-queues#purging_all_tasks_from_a_queue).
 	//
 	// Purge time will be truncated to the nearest microsecond. Purge
 	// time will be unset if the queue has never been purged.
+<<<<<<< HEAD
 	PurgeTime            *timestamp.Timestamp `protobuf:"bytes,7,opt,name=purge_time,json=purgeTime,proto3" json:"purge_time,omitempty"`
 	XXX_NoUnkeyedLiteral struct{}             `json:"-"`
 	XXX_unrecognized     []byte               `json:"-"`
 	XXX_sizecache        int32                `json:"-"`
+=======
+	PurgeTime *timestamp.Timestamp `protobuf:"bytes,7,opt,name=purge_time,json=purgeTime,proto3" json:"purge_time,omitempty"`
+	// Specifies the fraction of operations to write to
+	// [Stackdriver Logging](https://cloud.google.com/logging/docs/).
+	// This field may contain any value between 0.0 and 1.0, inclusive.
+	// 0.0 is the default and means that no operations are logged.
+	LogSamplingRatio     float64  `protobuf:"fixed64,10,opt,name=log_sampling_ratio,json=logSamplingRatio,proto3" json:"log_sampling_ratio,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
+>>>>>>> v0.0.4
 }
 
 func (m *Queue) Reset()         { *m = Queue{} }
 func (m *Queue) String() string { return proto.CompactTextString(m) }
 func (*Queue) ProtoMessage()    {}
 func (*Queue) Descriptor() ([]byte, []int) {
+<<<<<<< HEAD
 	return fileDescriptor_queue_cccfd8bc7cb113bc, []int{0}
+=======
+	return fileDescriptor_queue_2809b10079c46221, []int{0}
+>>>>>>> v0.0.4
 }
 func (m *Queue) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_Queue.Unmarshal(m, b)
@@ -255,6 +314,16 @@ func (m *Queue) GetPurgeTime() *timestamp.Timestamp {
 	return nil
 }
 
+<<<<<<< HEAD
+=======
+func (m *Queue) GetLogSamplingRatio() float64 {
+	if m != nil {
+		return m.LogSamplingRatio
+	}
+	return 0
+}
+
+>>>>>>> v0.0.4
 // XXX_OneofFuncs is for the internal use of the proto package.
 func (*Queue) XXX_OneofFuncs() (func(msg proto.Message, b *proto.Buffer) error, func(msg proto.Message, tag, wire int, b *proto.Buffer) (bool, error), func(msg proto.Message) (n int), []interface{}) {
 	return _Queue_OneofMarshaler, _Queue_OneofUnmarshaler, _Queue_OneofSizer, []interface{}{
@@ -315,18 +384,27 @@ func _Queue_OneofSizer(msg proto.Message) (n int) {
 // This message determines the maximum rate that tasks can be dispatched by a
 // queue, regardless of whether the dispatch is a first task attempt or a retry.
 //
+<<<<<<< HEAD
 // Note: The debugging command,
 // [RunTask][google.cloud.tasks.v2beta3.CloudTasks.RunTask], will run a task
 // even if the queue has reached its
 // [RateLimits][google.cloud.tasks.v2beta3.RateLimits].
+=======
+// Note: The debugging command, [RunTask][google.cloud.tasks.v2beta3.CloudTasks.RunTask], will run a task
+// even if the queue has reached its [RateLimits][google.cloud.tasks.v2beta3.RateLimits].
+>>>>>>> v0.0.4
 type RateLimits struct {
 	// The maximum rate at which tasks are dispatched from this queue.
 	//
 	// If unspecified when the queue is created, Cloud Tasks will pick the
 	// default.
 	//
+<<<<<<< HEAD
 	// * For [App Engine queues][google.cloud.tasks.v2beta3.AppEngineHttpQueue],
 	// the maximum allowed value
+=======
+	// * For [App Engine queues][google.cloud.tasks.v2beta3.AppEngineHttpQueue], the maximum allowed value
+>>>>>>> v0.0.4
 	//   is 500.
 	//
 	//
@@ -359,9 +437,15 @@ type RateLimits struct {
 	// `queue.yaml/xml`, `max_burst_size` is equal to
 	// [bucket_size](https://cloud.google.com/appengine/docs/standard/python/config/queueref#bucket_size).
 	// Since `max_burst_size` is output only, if
+<<<<<<< HEAD
 	// [UpdateQueue][google.cloud.tasks.v2beta3.CloudTasks.UpdateQueue] is called
 	// on a queue created by `queue.yaml/xml`, `max_burst_size` will be reset
 	// based on the value of
+=======
+	// [UpdateQueue][google.cloud.tasks.v2beta3.CloudTasks.UpdateQueue] is called on a queue
+	// created by `queue.yaml/xml`, `max_burst_size` will be reset based
+	// on the value of
+>>>>>>> v0.0.4
 	// [max_dispatches_per_second][google.cloud.tasks.v2beta3.RateLimits.max_dispatches_per_second],
 	// regardless of whether
 	// [max_dispatches_per_second][google.cloud.tasks.v2beta3.RateLimits.max_dispatches_per_second]
@@ -393,7 +477,11 @@ func (m *RateLimits) Reset()         { *m = RateLimits{} }
 func (m *RateLimits) String() string { return proto.CompactTextString(m) }
 func (*RateLimits) ProtoMessage()    {}
 func (*RateLimits) Descriptor() ([]byte, []int) {
+<<<<<<< HEAD
 	return fileDescriptor_queue_cccfd8bc7cb113bc, []int{1}
+=======
+	return fileDescriptor_queue_2809b10079c46221, []int{1}
+>>>>>>> v0.0.4
 }
 func (m *RateLimits) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_RateLimits.Unmarshal(m, b)
@@ -456,9 +544,15 @@ type RetryConfig struct {
 	// If positive, `max_retry_duration` specifies the time limit for
 	// retrying a failed task, measured from when the task was first
 	// attempted. Once `max_retry_duration` time has passed *and* the
+<<<<<<< HEAD
 	// task has been attempted
 	// [max_attempts][google.cloud.tasks.v2beta3.RetryConfig.max_attempts] times,
 	// no further attempts will be made and the task will be deleted.
+=======
+	// task has been attempted [max_attempts][google.cloud.tasks.v2beta3.RetryConfig.max_attempts]
+	// times, no further attempts will be made and the task will be
+	// deleted.
+>>>>>>> v0.0.4
 	//
 	// If zero, then the task age is unlimited.
 	//
@@ -472,6 +566,7 @@ type RetryConfig struct {
 	// [task_age_limit in
 	// queue.yaml/xml](https://cloud.google.com/appengine/docs/standard/python/config/queueref#retry_parameters).
 	MaxRetryDuration *duration.Duration `protobuf:"bytes,2,opt,name=max_retry_duration,json=maxRetryDuration,proto3" json:"max_retry_duration,omitempty"`
+<<<<<<< HEAD
 	// A task will be [scheduled][google.cloud.tasks.v2beta3.Task.schedule_time]
 	// for retry between
 	// [min_backoff][google.cloud.tasks.v2beta3.RetryConfig.min_backoff] and
@@ -479,6 +574,13 @@ type RetryConfig struct {
 	// after it fails, if the queue's
 	// [RetryConfig][google.cloud.tasks.v2beta3.RetryConfig] specifies that the
 	// task should be retried.
+=======
+	// A task will be [scheduled][google.cloud.tasks.v2beta3.Task.schedule_time] for retry between
+	// [min_backoff][google.cloud.tasks.v2beta3.RetryConfig.min_backoff] and
+	// [max_backoff][google.cloud.tasks.v2beta3.RetryConfig.max_backoff] duration after it fails,
+	// if the queue's [RetryConfig][google.cloud.tasks.v2beta3.RetryConfig] specifies that the task should be
+	// retried.
+>>>>>>> v0.0.4
 	//
 	// If unspecified when the queue is created, Cloud Tasks will pick the
 	// default.
@@ -490,6 +592,7 @@ type RetryConfig struct {
 	// [min_backoff_seconds in
 	// queue.yaml/xml](https://cloud.google.com/appengine/docs/standard/python/config/queueref#retry_parameters).
 	MinBackoff *duration.Duration `protobuf:"bytes,3,opt,name=min_backoff,json=minBackoff,proto3" json:"min_backoff,omitempty"`
+<<<<<<< HEAD
 	// A task will be [scheduled][google.cloud.tasks.v2beta3.Task.schedule_time]
 	// for retry between
 	// [min_backoff][google.cloud.tasks.v2beta3.RetryConfig.min_backoff] and
@@ -497,6 +600,13 @@ type RetryConfig struct {
 	// after it fails, if the queue's
 	// [RetryConfig][google.cloud.tasks.v2beta3.RetryConfig] specifies that the
 	// task should be retried.
+=======
+	// A task will be [scheduled][google.cloud.tasks.v2beta3.Task.schedule_time] for retry between
+	// [min_backoff][google.cloud.tasks.v2beta3.RetryConfig.min_backoff] and
+	// [max_backoff][google.cloud.tasks.v2beta3.RetryConfig.max_backoff] duration after it fails,
+	// if the queue's [RetryConfig][google.cloud.tasks.v2beta3.RetryConfig] specifies that the task should be
+	// retried.
+>>>>>>> v0.0.4
 	//
 	// If unspecified when the queue is created, Cloud Tasks will pick the
 	// default.
@@ -511,6 +621,7 @@ type RetryConfig struct {
 	// The time between retries will double `max_doublings` times.
 	//
 	// A task's retry interval starts at
+<<<<<<< HEAD
 	// [min_backoff][google.cloud.tasks.v2beta3.RetryConfig.min_backoff], then
 	// doubles `max_doublings` times, then increases linearly, and finally retries
 	// retries at intervals of
@@ -528,6 +639,23 @@ type RetryConfig struct {
 	// [max_attempts][google.cloud.tasks.v2beta3.RetryConfig.max_attempts] times.
 	// Thus, the requests will retry at 10s, 20s, 40s, 80s, 160s, 240s, 300s,
 	// 300s, ....
+=======
+	// [min_backoff][google.cloud.tasks.v2beta3.RetryConfig.min_backoff], then doubles
+	// `max_doublings` times, then increases linearly, and finally
+	// retries retries at intervals of
+	// [max_backoff][google.cloud.tasks.v2beta3.RetryConfig.max_backoff] up to
+	// [max_attempts][google.cloud.tasks.v2beta3.RetryConfig.max_attempts] times.
+	//
+	// For example, if [min_backoff][google.cloud.tasks.v2beta3.RetryConfig.min_backoff] is 10s,
+	// [max_backoff][google.cloud.tasks.v2beta3.RetryConfig.max_backoff] is 300s, and
+	// `max_doublings` is 3, then the a task will first be retried in
+	// 10s. The retry interval will double three times, and then
+	// increase linearly by 2^3 * 10s.  Finally, the task will retry at
+	// intervals of [max_backoff][google.cloud.tasks.v2beta3.RetryConfig.max_backoff] until the
+	// task has been attempted [max_attempts][google.cloud.tasks.v2beta3.RetryConfig.max_attempts]
+	// times. Thus, the requests will retry at 10s, 20s, 40s, 80s, 160s,
+	// 240s, 300s, 300s, ....
+>>>>>>> v0.0.4
 	//
 	// If unspecified when the queue is created, Cloud Tasks will pick the
 	// default.
@@ -546,7 +674,11 @@ func (m *RetryConfig) Reset()         { *m = RetryConfig{} }
 func (m *RetryConfig) String() string { return proto.CompactTextString(m) }
 func (*RetryConfig) ProtoMessage()    {}
 func (*RetryConfig) Descriptor() ([]byte, []int) {
+<<<<<<< HEAD
 	return fileDescriptor_queue_cccfd8bc7cb113bc, []int{2}
+=======
+	return fileDescriptor_queue_2809b10079c46221, []int{2}
+>>>>>>> v0.0.4
 }
 func (m *RetryConfig) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_RetryConfig.Unmarshal(m, b)
@@ -609,6 +741,7 @@ func init() {
 }
 
 func init() {
+<<<<<<< HEAD
 	proto.RegisterFile("google/cloud/tasks/v2beta3/queue.proto", fileDescriptor_queue_cccfd8bc7cb113bc)
 }
 
@@ -655,4 +788,54 @@ var fileDescriptor_queue_cccfd8bc7cb113bc = []byte{
 	0xa7, 0x22, 0xf6, 0xa4, 0x8e, 0xfd, 0x98, 0x09, 0x6c, 0xc4, 0xcf, 0x43, 0x54, 0x25, 0xe6, 0x4f,
 	0x7f, 0x32, 0xef, 0xd0, 0x9a, 0x6c, 0x20, 0x7b, 0xf4, 0x2b, 0x00, 0x00, 0xff, 0xff, 0xdd, 0x0d,
 	0x1e, 0x57, 0xf1, 0x04, 0x00, 0x00,
+=======
+	proto.RegisterFile("google/cloud/tasks/v2beta3/queue.proto", fileDescriptor_queue_2809b10079c46221)
+}
+
+var fileDescriptor_queue_2809b10079c46221 = []byte{
+	// 683 bytes of a gzipped FileDescriptorProto
+	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0x84, 0x94, 0x51, 0x4f, 0xdb, 0x30,
+	0x10, 0xc7, 0x09, 0xb4, 0x30, 0x2e, 0x1d, 0xea, 0x2c, 0xb1, 0x85, 0x6a, 0x62, 0x5d, 0x37, 0x41,
+	0x1f, 0xa6, 0x44, 0x82, 0x27, 0x98, 0xa6, 0xa9, 0xa5, 0x1d, 0x74, 0x42, 0x55, 0x97, 0xc0, 0xcb,
+	0x5e, 0x2c, 0x37, 0x75, 0x43, 0x44, 0x13, 0x7b, 0xb6, 0x33, 0x15, 0x3e, 0xc6, 0x1e, 0xf6, 0x1d,
+	0xf6, 0x2d, 0xa7, 0x5c, 0x52, 0x40, 0x63, 0xeb, 0xde, 0xe2, 0xbb, 0xdf, 0xfd, 0xff, 0xb6, 0xef,
+	0x1c, 0xd8, 0x8b, 0x84, 0x88, 0x66, 0xdc, 0x0b, 0x67, 0x22, 0x9b, 0x78, 0x86, 0xe9, 0x6b, 0xed,
+	0x7d, 0x3f, 0x18, 0x73, 0xc3, 0x0e, 0xbd, 0x6f, 0x19, 0xcf, 0xb8, 0x2b, 0x95, 0x30, 0x82, 0x34,
+	0x0a, 0xce, 0x45, 0xce, 0x45, 0xce, 0x2d, 0xb9, 0xc6, 0xcb, 0x52, 0x83, 0xc9, 0xd8, 0x63, 0x69,
+	0x2a, 0x0c, 0x33, 0xb1, 0x48, 0x75, 0x51, 0xd9, 0xd8, 0x79, 0x90, 0x55, 0x5c, 0x8b, 0x4c, 0x85,
+	0xa5, 0x68, 0x63, 0x7f, 0x89, 0xb9, 0x61, 0x2a, 0xe2, 0xa6, 0x04, 0x77, 0x4b, 0x10, 0x57, 0xe3,
+	0x6c, 0xea, 0x4d, 0x32, 0x85, 0x26, 0x65, 0xfe, 0xd5, 0x9f, 0x79, 0x13, 0x27, 0x5c, 0x1b, 0x96,
+	0xc8, 0x02, 0x68, 0xfd, 0xa8, 0x40, 0xf5, 0x4b, 0x7e, 0x1c, 0x42, 0xa0, 0x92, 0xb2, 0x84, 0x3b,
+	0x56, 0xd3, 0x6a, 0x6f, 0xfa, 0xf8, 0x4d, 0x42, 0xd8, 0x66, 0x52, 0x52, 0x9e, 0x46, 0x71, 0xca,
+	0xe9, 0x95, 0x31, 0x92, 0xe2, 0xd9, 0x9d, 0xb5, 0xa6, 0xd5, 0xb6, 0x0f, 0x5c, 0xf7, 0xdf, 0x87,
+	0x77, 0x3b, 0x52, 0xf6, 0xb1, 0xee, 0xcc, 0x18, 0x89, 0x16, 0x67, 0x2b, 0x3e, 0x61, 0x8f, 0xa2,
+	0xe4, 0x14, 0x6c, 0xc5, 0x0c, 0xa7, 0xb3, 0x38, 0x89, 0x8d, 0x76, 0x2a, 0x28, 0xbd, 0xb7, 0x4c,
+	0xda, 0x67, 0x86, 0x9f, 0x23, 0xed, 0x83, 0xba, 0xfb, 0x26, 0x9f, 0xa1, 0xa6, 0xb8, 0x51, 0x37,
+	0x34, 0x14, 0xe9, 0x34, 0x8e, 0x9c, 0x2a, 0x2a, 0xed, 0x2f, 0x55, 0xca, 0xf9, 0x13, 0xc4, 0x7d,
+	0x5b, 0xdd, 0x2f, 0xc8, 0x07, 0xa8, 0x6a, 0xc3, 0x0c, 0x77, 0xd6, 0x9b, 0x56, 0x7b, 0x6b, 0xb9,
+	0x08, 0x1e, 0xc3, 0x0d, 0x72, 0xdc, 0x2f, 0xaa, 0xc8, 0x11, 0x80, 0xcc, 0x54, 0xc4, 0x69, 0x7e,
+	0xdf, 0xce, 0x06, 0x6e, 0xa4, 0xb1, 0xd0, 0x58, 0x34, 0xc3, 0xbd, 0x58, 0x34, 0xc3, 0xdf, 0x44,
+	0x3a, 0x5f, 0x93, 0x77, 0x40, 0x66, 0x22, 0xa2, 0x9a, 0x25, 0x72, 0x16, 0xa7, 0x11, 0xc5, 0x7e,
+	0x3a, 0xd0, 0xb4, 0xda, 0x96, 0x5f, 0x9f, 0x89, 0x28, 0x28, 0x13, 0x7e, 0x1e, 0x6f, 0xf5, 0xa1,
+	0x8a, 0xc6, 0x64, 0x1b, 0x9e, 0x05, 0x17, 0x9d, 0x8b, 0x3e, 0xbd, 0x1c, 0x06, 0xa3, 0xfe, 0xc9,
+	0xe0, 0xd3, 0xa0, 0xdf, 0xab, 0xaf, 0x10, 0x1b, 0x36, 0xfc, 0xcb, 0xe1, 0x70, 0x30, 0x3c, 0xad,
+	0x5b, 0x04, 0x60, 0x7d, 0xd4, 0xb9, 0x0c, 0xfa, 0xbd, 0xfa, 0x2a, 0xa9, 0xc1, 0x93, 0xde, 0x20,
+	0xe8, 0x74, 0xcf, 0xfb, 0xbd, 0xfa, 0x5a, 0xb7, 0x06, 0x80, 0x8d, 0xa5, 0xe6, 0x46, 0xf2, 0xd6,
+	0x2f, 0x0b, 0xe0, 0xfe, 0x8e, 0xc9, 0x11, 0xec, 0x24, 0x6c, 0x4e, 0x27, 0xb1, 0x96, 0xcc, 0x84,
+	0x57, 0x5c, 0x53, 0xc9, 0x15, 0xd5, 0x3c, 0x14, 0xe9, 0x04, 0xc7, 0xc5, 0xf2, 0x9f, 0x27, 0x6c,
+	0xde, 0xbb, 0xcb, 0x8f, 0xb8, 0x0a, 0x30, 0x4b, 0xde, 0xc2, 0x56, 0x5e, 0x3a, 0xce, 0x94, 0x36,
+	0x54, 0xc7, 0xb7, 0xdc, 0x59, 0x6d, 0x5a, 0xed, 0xaa, 0x5f, 0x4b, 0xd8, 0xbc, 0x9b, 0x07, 0x83,
+	0xf8, 0x96, 0x93, 0xe3, 0xc2, 0x20, 0x14, 0x69, 0x98, 0x29, 0xc5, 0x53, 0xf3, 0xc0, 0x0b, 0x47,
+	0xad, 0xea, 0xbf, 0x48, 0xd8, 0xfc, 0xe4, 0x2e, 0x7f, 0x6f, 0xd5, 0xfa, 0xb9, 0x0a, 0xf6, 0x83,
+	0x2e, 0x92, 0xd7, 0x90, 0x6b, 0x53, 0x66, 0x0c, 0x4f, 0xa4, 0xd1, 0xb8, 0xbf, 0xaa, 0x6f, 0x27,
+	0x6c, 0xde, 0x29, 0x43, 0xe4, 0x14, 0x48, 0x8e, 0x14, 0xb3, 0xb2, 0x78, 0x30, 0xb8, 0x31, 0xfb,
+	0x60, 0xe7, 0x51, 0x93, 0x7a, 0x25, 0xe0, 0xd7, 0x13, 0x36, 0x47, 0xa7, 0x45, 0x84, 0x1c, 0x83,
+	0x9d, 0xc4, 0x29, 0x1d, 0xb3, 0xf0, 0x5a, 0x4c, 0xa7, 0xe5, 0xa3, 0x58, 0xa2, 0x00, 0x49, 0x9c,
+	0x76, 0x0b, 0x18, 0x6b, 0xf3, 0x9b, 0x29, 0x6b, 0x2b, 0xff, 0xaf, 0x65, 0xf3, 0x45, 0xed, 0x1b,
+	0x78, 0x8a, 0x0d, 0x11, 0xd9, 0x38, 0x9f, 0x04, 0x8d, 0x93, 0x5e, 0x5c, 0x6a, 0x6f, 0x11, 0xeb,
+	0x0a, 0xd8, 0x0d, 0x45, 0xb2, 0x64, 0x6e, 0xbb, 0x80, 0x83, 0x3b, 0xca, 0xad, 0x46, 0xd6, 0xd7,
+	0x8f, 0x25, 0x19, 0x89, 0x19, 0x4b, 0x23, 0x57, 0xa8, 0xc8, 0x8b, 0x78, 0x8a, 0x1b, 0xf1, 0x8a,
+	0x14, 0x93, 0xb1, 0xfe, 0xdb, 0x2f, 0xe9, 0x3d, 0xae, 0xc6, 0xeb, 0xc8, 0x1e, 0xfe, 0x0e, 0x00,
+	0x00, 0xff, 0xff, 0xa5, 0xce, 0xef, 0x87, 0x3a, 0x05, 0x00, 0x00,
+>>>>>>> v0.0.4
 }

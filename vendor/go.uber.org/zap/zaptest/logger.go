@@ -33,7 +33,12 @@ type LoggerOption interface {
 }
 
 type loggerOptions struct {
+<<<<<<< HEAD
 	Level zapcore.LevelEnabler
+=======
+	Level      zapcore.LevelEnabler
+	zapOptions []zap.Option
+>>>>>>> v0.0.4
 }
 
 type loggerOptionFunc func(*loggerOptions)
@@ -50,6 +55,16 @@ func Level(enab zapcore.LevelEnabler) LoggerOption {
 	})
 }
 
+<<<<<<< HEAD
+=======
+// WrapOptions adds zap.Option's to a test Logger built by NewLogger.
+func WrapOptions(zapOpts ...zap.Option) LoggerOption {
+	return loggerOptionFunc(func(opts *loggerOptions) {
+		opts.zapOptions = zapOpts
+	})
+}
+
+>>>>>>> v0.0.4
 // NewLogger builds a new Logger that logs all messages to the given
 // testing.TB.
 //
@@ -59,9 +74,19 @@ func Level(enab zapcore.LevelEnabler) LoggerOption {
 // if a test fails or if you ran go test -v.
 //
 // The returned logger defaults to logging debug level messages and above.
+<<<<<<< HEAD
 // This may be changd by passing a zaptest.Level during construction.
 //
 //   logger := zaptest.NewLogger(t, zaptest.Level(zap.WarnLevel))
+=======
+// This may be changed by passing a zaptest.Level during construction.
+//
+//   logger := zaptest.NewLogger(t, zaptest.Level(zap.WarnLevel))
+//
+// You may also pass zap.Option's to customize test logger.
+//
+//   logger := zaptest.NewLogger(t, zaptest.WrapOptions(zap.AddCaller()))
+>>>>>>> v0.0.4
 func NewLogger(t TestingT, opts ...LoggerOption) *zap.Logger {
 	cfg := loggerOptions{
 		Level: zapcore.DebugLevel,
@@ -71,16 +96,30 @@ func NewLogger(t TestingT, opts ...LoggerOption) *zap.Logger {
 	}
 
 	writer := newTestingWriter(t)
+<<<<<<< HEAD
+=======
+	zapOptions := []zap.Option{
+		// Send zap errors to the same writer and mark the test as failed if
+		// that happens.
+		zap.ErrorOutput(writer.WithMarkFailed(true)),
+	}
+	zapOptions = append(zapOptions, cfg.zapOptions...)
+
+>>>>>>> v0.0.4
 	return zap.New(
 		zapcore.NewCore(
 			zapcore.NewConsoleEncoder(zap.NewDevelopmentEncoderConfig()),
 			writer,
 			cfg.Level,
 		),
+<<<<<<< HEAD
 
 		// Send zap errors to the same writer and mark the test as failed if
 		// that happens.
 		zap.ErrorOutput(writer.WithMarkFailed(true)),
+=======
+		zapOptions...,
+>>>>>>> v0.0.4
 	)
 }
 

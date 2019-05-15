@@ -313,6 +313,13 @@ type BucketAttrs struct {
 
 	// The website configuration.
 	Website *BucketWebsite
+<<<<<<< HEAD
+=======
+
+	// Etag is the HTTP/1.1 Entity tag for the bucket.
+	// This field is read-only.
+	Etag string
+>>>>>>> v0.0.4
 }
 
 // BucketPolicyOnly configures access checks to use only bucket-level IAM
@@ -501,6 +508,10 @@ func newBucket(b *raw.Bucket) (*BucketAttrs, error) {
 		Logging:               toBucketLogging(b.Logging),
 		Website:               toBucketWebsite(b.Website),
 		BucketPolicyOnly:      toBucketPolicyOnly(b.IamConfiguration),
+<<<<<<< HEAD
+=======
+		Etag:                  b.Etag,
+>>>>>>> v0.0.4
 	}, nil
 }
 

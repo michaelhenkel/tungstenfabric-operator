@@ -128,8 +128,14 @@ func (i *Iter) Next() []byte {
 func nextASCIIBytes(i *Iter) []byte {
 	p := i.p + 1
 	if p >= i.rb.nsrc {
+<<<<<<< HEAD
 		i.setDone()
 		return i.rb.src.bytes[i.p:p]
+=======
+		p0 := i.p
+		i.setDone()
+		return i.rb.src.bytes[p0:p]
+>>>>>>> v0.0.4
 	}
 	if i.rb.src.bytes[p] < utf8.RuneSelf {
 		p0 := i.p

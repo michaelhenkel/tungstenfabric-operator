@@ -22,18 +22,35 @@ package syscall
 
 import (
 	"net"
+<<<<<<< HEAD
+=======
+	"sync"
+>>>>>>> v0.0.4
 	"time"
 
 	"google.golang.org/grpc/grpclog"
 )
 
+<<<<<<< HEAD
 func init() {
 	grpclog.Info("CPU time info is unavailable on non-linux or appengine environment.")
+=======
+var once sync.Once
+
+func log() {
+	once.Do(func() {
+		grpclog.Info("CPU time info is unavailable on non-linux or appengine environment.")
+	})
+>>>>>>> v0.0.4
 }
 
 // GetCPUTime returns the how much CPU time has passed since the start of this process.
 // It always returns 0 under non-linux or appengine environment.
 func GetCPUTime() int64 {
+<<<<<<< HEAD
+=======
+	log()
+>>>>>>> v0.0.4
 	return 0
 }
 
@@ -42,22 +59,38 @@ type Rusage struct{}
 
 // GetRusage is a no-op function under non-linux or appengine environment.
 func GetRusage() (rusage *Rusage) {
+<<<<<<< HEAD
+=======
+	log()
+>>>>>>> v0.0.4
 	return nil
 }
 
 // CPUTimeDiff returns the differences of user CPU time and system CPU time used
 // between two Rusage structs. It a no-op function for non-linux or appengine environment.
 func CPUTimeDiff(first *Rusage, latest *Rusage) (float64, float64) {
+<<<<<<< HEAD
+=======
+	log()
+>>>>>>> v0.0.4
 	return 0, 0
 }
 
 // SetTCPUserTimeout is a no-op function under non-linux or appengine environments
 func SetTCPUserTimeout(conn net.Conn, timeout time.Duration) error {
+<<<<<<< HEAD
+=======
+	log()
+>>>>>>> v0.0.4
 	return nil
 }
 
 // GetTCPUserTimeout is a no-op function under non-linux or appengine environments
 // a negative return value indicates the operation is not supported
 func GetTCPUserTimeout(conn net.Conn) (int, error) {
+<<<<<<< HEAD
+=======
+	log()
+>>>>>>> v0.0.4
 	return -1, nil
 }

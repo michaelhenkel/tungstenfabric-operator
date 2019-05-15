@@ -5,9 +5,13 @@
 // Package diff implements the Myers diff algorithm.
 package diff
 
+<<<<<<< HEAD
 import (
 	"strings"
 )
+=======
+import "strings"
+>>>>>>> v0.0.4
 
 // Sources:
 // https://blog.jcoglan.com/2017/02/17/the-myers-diff-algorithm-part-3/
@@ -15,9 +19,15 @@ import (
 
 type Op struct {
 	Kind    OpKind
+<<<<<<< HEAD
 	Content string
 	I1, I2  int // indices of the line in a
 	J1, J2  int // indices of the line in b
+=======
+	Content []string // content from b
+	I1, I2  int      // indices of the line in a
+	J1      int      // indices of the line in b, J2 implied by len(Content)
+>>>>>>> v0.0.4
 }
 
 type OpKind int
@@ -53,7 +63,11 @@ func ApplyEdits(a []string, operations []*Op) []string {
 		}
 		switch op.Kind {
 		case Equal, Insert:
+<<<<<<< HEAD
 			b = append(b, op.Content)
+=======
+			b = append(b, op.Content...)
+>>>>>>> v0.0.4
 		}
 		prevI2 = op.I2
 	}
@@ -82,9 +96,14 @@ func Operations(a, b []string) []*Op {
 			return
 		}
 		op.I2 = i2
+<<<<<<< HEAD
 		op.J2 = j2
 		if op.Kind == Insert {
 			op.Content = strings.Join(b[op.J1:op.J2], "")
+=======
+		if op.Kind == Insert {
+			op.Content = b[op.J1:j2]
+>>>>>>> v0.0.4
 		}
 		solution[i] = op
 		i++
@@ -213,3 +232,14 @@ func shortestEditSequence(a, b []string) ([][]int, int) {
 	}
 	return nil, 0
 }
+<<<<<<< HEAD
+=======
+
+func SplitLines(text string) []string {
+	lines := strings.SplitAfter(text, "\n")
+	if lines[len(lines)-1] == "" {
+		lines = lines[:len(lines)-1]
+	}
+	return lines
+}
+>>>>>>> v0.0.4

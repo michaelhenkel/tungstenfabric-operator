@@ -45,7 +45,11 @@ type passthroughResolver struct {
 }
 
 func (r *passthroughResolver) start() {
+<<<<<<< HEAD
 	r.cc.NewAddress([]resolver.Address{{Addr: r.target.Endpoint}})
+=======
+	r.cc.UpdateState(resolver.State{Addresses: []resolver.Address{{Addr: r.target.Endpoint}}})
+>>>>>>> v0.0.4
 }
 
 func (*passthroughResolver) ResolveNow(o resolver.ResolveNowOption) {}

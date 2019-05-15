@@ -583,6 +583,7 @@ func (s *AdministratorWebTokenSpecWebApps) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+<<<<<<< HEAD
 // AndroidDevicePolicyConfig: Deprecated and unused.
 type AndroidDevicePolicyConfig struct {
 	// Kind: Identifies what kind of resource this is. Value: the fixed
@@ -619,6 +620,8 @@ func (s *AndroidDevicePolicyConfig) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+=======
+>>>>>>> v0.0.4
 // AppRestrictionsSchema: Represents the list of app restrictions
 // available to be pre-configured for the product.
 type AppRestrictionsSchema struct {
@@ -3722,9 +3725,29 @@ func (s *VariableSet) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+<<<<<<< HEAD
 // WebApp: WebApp resource info.
 type WebApp struct {
 	// DisplayMode: The display mode of the web app.
+=======
+// WebApp: A WebApps resource represents a web app created for an
+// enterprise. Web apps are published to managed Google Play and can be
+// distributed like other Android apps. On a user's device, a web app
+// opens its specified URL.
+type WebApp struct {
+	// DisplayMode: The display mode of the web app.
+	//
+	// Possible values include:
+	// - "minimalUi", the device's status bar, navigation bar, the app's
+	// URL, and a refresh button are visible when the app is open. For HTTP
+	// URLs, you can only select this option.
+	// - "standalone", the device's status bar and navigation bar are
+	// visible when the app is open.
+	// - "fullScreen", the app opens in full screen mode, hiding the
+	// device's status and navigation bars. All browser UI elements, page
+	// URL, system status bar and back button are not visible, and the web
+	// app takes up the entirety of the available display area.
+>>>>>>> v0.0.4
 	DisplayMode string `json:"displayMode,omitempty"`
 
 	// Icons: A list of icons representing this website. If absent, a
@@ -3740,9 +3763,14 @@ type WebApp struct {
 	// opens the application.
 	StartUrl string `json:"startUrl,omitempty"`
 
+<<<<<<< HEAD
 	// Title: The title of the web application as displayed to the user
 	// (e.g., amongst a list of other applications, or as a label for an
 	// icon).
+=======
+	// Title: The title of the web app as displayed to the user (e.g.,
+	// amongst a list of other applications, or as a label for an icon).
+>>>>>>> v0.0.4
 	Title string `json:"title,omitempty"`
 
 	// VersionCode: The current version of the app.
@@ -3753,7 +3781,13 @@ type WebApp struct {
 	// web app up-to-date.
 	VersionCode int64 `json:"versionCode,omitempty,string"`
 
+<<<<<<< HEAD
 	// WebAppId: The ID of the application.
+=======
+	// WebAppId: The ID of the application. A string of the form
+	// "app:<package name>" where the package name always starts with the
+	// prefix "com.google.enterprise.webapp." followed by a random id.
+>>>>>>> v0.0.4
 	WebAppId string `json:"webAppId,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -6521,6 +6555,7 @@ func (c *EnterprisesSetAccountCall) Do(opts ...googleapi.CallOption) (*Enterpris
 
 }
 
+<<<<<<< HEAD
 // method id "androidenterprise.enterprises.setAndroidDevicePolicyConfig":
 
 type EnterprisesSetAndroidDevicePolicyConfigCall struct {
@@ -6658,6 +6693,8 @@ func (c *EnterprisesSetAndroidDevicePolicyConfigCall) Do(opts ...googleapi.CallO
 
 }
 
+=======
+>>>>>>> v0.0.4
 // method id "androidenterprise.enterprises.setStoreLayout":
 
 type EnterprisesSetStoreLayoutCall struct {

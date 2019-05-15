@@ -2127,9 +2127,17 @@ func (s *GoogleDevtoolsRemotebuildexecutionAdminV1alphaListWorkerPoolsResponse) 
 //  The request used for UpdateWorkerPool.
 type GoogleDevtoolsRemotebuildexecutionAdminV1alphaUpdateWorkerPoolRequest struct {
 	// UpdateMask: The update mask applies to worker_pool. For the
+<<<<<<< HEAD
 	// `FieldMask` definition,
 	// see
 	// https://developers.google.com/protocol-buffers/docs/reference/google.protobuf#fieldmask
+=======
+	// `FieldMask`
+	// definition,
+	// see
+	// https://developers.google.com/protocol-buffers/docs/re
+	// ference/google.protobuf#fieldmask
+>>>>>>> v0.0.4
 	// If an empty update_mask is provided, only the non-default valued
 	// field in
 	// the worker pool field will be updated. Note that in order to update a
@@ -2175,10 +2183,18 @@ type GoogleDevtoolsRemotebuildexecutionAdminV1alphaWorkerConfig struct {
 	DiskSizeGb int64 `json:"diskSizeGb,omitempty,string"`
 
 	// DiskType: Required. Disk Type to use for the worker.
+<<<<<<< HEAD
 	// See [Storage
 	// options](https://cloud.google.com/compute/docs/disks/#introduction).
 	// C
 	// urrently only `pd-standard` is supported.
+=======
+	// See
+	// [Storage
+	// options](https://cloud.google.com/compute/docs/disks/#introdu
+	// ction).
+	// Currently only `pd-standard` is supported.
+>>>>>>> v0.0.4
 	DiskType string `json:"diskType,omitempty"`
 
 	// MachineType: Required. Machine type of the worker, such as
@@ -4181,9 +4197,16 @@ type GoogleWatcherV1Change struct {
 	// a
 	// sequence number or a multi-part timestamp/version vector. This marker
 	// can
+<<<<<<< HEAD
 	// be provided in the Request message, allowing the caller to resume the
 	// stream
 	// watching at a specific point without fetching the initial state.
+=======
+	// be provided in the Request message, allowing the caller to resume
+	// the
+	// stream watching at a specific point without fetching the initial
+	// state.
+>>>>>>> v0.0.4
 	ResumeMarker string `json:"resumeMarker,omitempty"`
 
 	// State: The state of the `element`.

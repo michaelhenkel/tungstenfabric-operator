@@ -16,7 +16,10 @@ package genutil
 
 import (
 	"fmt"
+<<<<<<< HEAD
 	"io/ioutil"
+=======
+>>>>>>> v0.0.4
 	"os/exec"
 	"path/filepath"
 	"strings"
@@ -114,6 +117,7 @@ func openAPIGen(binDir, hf string, fqApis []string) (err error) {
 			"--go-header-file", hf,
 		}
 		cmd := exec.Command(cgPath, args...)
+<<<<<<< HEAD
 		if projutil.IsGoVerbose() {
 			err = projutil.ExecCmd(cmd)
 		} else {
@@ -122,6 +126,9 @@ func openAPIGen(binDir, hf string, fqApis []string) (err error) {
 			err = cmd.Run()
 		}
 		if err != nil {
+=======
+		if err = projutil.ExecCmd(cmd); err != nil {
+>>>>>>> v0.0.4
 			return fmt.Errorf("failed to perform openapi code-generation: %v", err)
 		}
 	}

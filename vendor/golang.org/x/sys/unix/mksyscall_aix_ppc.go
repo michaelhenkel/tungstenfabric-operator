@@ -214,6 +214,14 @@ func main() {
 			}
 
 			if funct != "fcntl" && funct != "FcntlInt" && funct != "readlen" && funct != "writelen" {
+<<<<<<< HEAD
+=======
+				if sysname == "select" {
+					// select is a keyword of Go. Its name is
+					// changed to c_select.
+					cExtern += "#define c_select select\n"
+				}
+>>>>>>> v0.0.4
 				// Imports of system calls from libc
 				cExtern += fmt.Sprintf("%s %s", cRettype, sysname)
 				cIn := strings.Join(cIn, ", ")
@@ -328,7 +336,17 @@ func main() {
 			} else {
 				call += ""
 			}
+<<<<<<< HEAD
 			call += fmt.Sprintf("C.%s(%s)", sysname, arglist)
+=======
+			if sysname == "select" {
+				// select is a keyword of Go. Its name is
+				// changed to c_select.
+				call += fmt.Sprintf("C.c_%s(%s)", sysname, arglist)
+			} else {
+				call += fmt.Sprintf("C.%s(%s)", sysname, arglist)
+			}
+>>>>>>> v0.0.4
 
 			// Assign return values.
 			body := ""

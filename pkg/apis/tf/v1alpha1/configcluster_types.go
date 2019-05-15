@@ -2,7 +2,10 @@ package v1alpha1
 
 import (
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
+<<<<<<< HEAD
 	basev1 "github.com/michaelhenkel/tungstenfabric-operator/pkg/apis/base/v1alpha1"
+=======
+>>>>>>> v0.0.4
 )
 
 // EDIT THIS FILE!  THIS IS SCAFFOLDING FOR YOU TO OWN!
@@ -14,6 +17,7 @@ type ConfigClusterSpec struct {
 	// INSERT ADDITIONAL SPEC FIELDS - desired state of cluster
 	// Important: Run "operator-sdk generate k8s" to regenerate code after modifying this file
 	// Add custom validation using kubebuilder tags: https://book.kubebuilder.io/beyond_basics/generating_crd.html
+<<<<<<< HEAD
 	basev1.BaseParameter `json:",inline"`
 	ApiImage string `json:"apiImage,omitempty"`
 	DeviceManagerImage string `json:"deviceManagerImage,omitempty"`
@@ -35,6 +39,13 @@ type ConfigClusterSpec struct {
 	ZookeeperClusterName string `json:"zookeeperClusterName,omitempty"`
 	RabbitmqClusterName string `json:"rabbitmqClusterName,omitempty"`
 	ConfigClusterName string `json:"configClusterName,omitempty"`
+=======
+	Containers []*Container `json:"containers"`
+	InitContainers []*Container `json:"initcontainers"`
+	ConfigParameters map[string]string
+	Type string
+	General *General
+>>>>>>> v0.0.4
 }
 
 // ConfigClusterStatus defines the observed state of ConfigCluster

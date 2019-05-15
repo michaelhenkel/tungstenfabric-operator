@@ -43,7 +43,11 @@
 //		Logs are written to standard error instead of to files.
 //	-alsologtostderr=false
 //		Logs are written to standard error as well as to files.
+<<<<<<< HEAD
 //	-stderrthreshold=INFO
+=======
+//	-stderrthreshold=ERROR
+>>>>>>> v0.0.4
 //		Log events at or above this severity are logged to standard
 //		error as well as to files.
 //	-log_dir=""
@@ -78,6 +82,10 @@ import (
 	"fmt"
 	"io"
 	stdLog "log"
+<<<<<<< HEAD
+=======
+	"math"
+>>>>>>> v0.0.4
 	"os"
 	"path/filepath"
 	"runtime"
@@ -396,8 +404,13 @@ type flushSyncWriter interface {
 }
 
 func init() {
+<<<<<<< HEAD
 	// Default stderrThreshold is INFO.
 	logging.stderrThreshold = infoLog
+=======
+	// Default stderrThreshold is ERROR.
+	logging.stderrThreshold = errorLog
+>>>>>>> v0.0.4
 
 	logging.setVState(0, nil, false)
 	go logging.flushDaemon()
@@ -410,10 +423,20 @@ func InitFlags(flagset *flag.FlagSet) {
 	}
 	flagset.StringVar(&logging.logDir, "log_dir", "", "If non-empty, write log files in this directory")
 	flagset.StringVar(&logging.logFile, "log_file", "", "If non-empty, use this log file")
+<<<<<<< HEAD
+=======
+	flagset.Uint64Var(&logging.logFileMaxSizeMB, "log_file_max_size", 1800,
+		"Defines the maximum size a log file can grow to. Unit is megabytes. "+
+			"If the value is 0, the maximum file size is unlimited.")
+>>>>>>> v0.0.4
 	flagset.BoolVar(&logging.toStderr, "logtostderr", true, "log to standard error instead of files")
 	flagset.BoolVar(&logging.alsoToStderr, "alsologtostderr", false, "log to standard error as well as files")
 	flagset.Var(&logging.verbosity, "v", "number for the log level verbosity")
 	flagset.BoolVar(&logging.skipHeaders, "skip_headers", false, "If true, avoid header prefixes in the log messages")
+<<<<<<< HEAD
+=======
+	flagset.BoolVar(&logging.skipLogHeaders, "skip_log_headers", false, "If true, avoid headers when openning log files")
+>>>>>>> v0.0.4
 	flagset.Var(&logging.stderrThreshold, "stderrthreshold", "logs at or above this threshold go to stderr")
 	flagset.Var(&logging.vmodule, "vmodule", "comma-separated list of pattern=N settings for file-filtered logging")
 	flagset.Var(&logging.traceLocation, "log_backtrace_at", "when logging hits line file:N, emit a stack trace")
@@ -471,8 +494,20 @@ type loggingT struct {
 	// with the log-dir option.
 	logFile string
 
+<<<<<<< HEAD
 	// If true, do not add the prefix headers, useful when used with SetOutput
 	skipHeaders bool
+=======
+	// When logFile is specified, this limiter makes sure the logFile won't exceeds a certain size. When exceeds, the
+	// logFile will be cleaned up. If this value is 0, no size limitation will be applied to logFile.
+	logFileMaxSizeMB uint64
+
+	// If true, do not add the prefix headers, useful when used with SetOutput
+	skipHeaders bool
+
+	// If true, do not add the headers to log files
+	skipLogHeaders bool
+>>>>>>> v0.0.4
 }
 
 // buffer holds a byte Buffer for reuse. The zero value is ready for use.
@@ -739,9 +774,13 @@ func (l *loggingT) output(s severity, buf *buffer, file string, line int, alsoTo
 	}
 	data := buf.Bytes()
 	if l.toStderr {
+<<<<<<< HEAD
 		if s >= l.stderrThreshold.get() {
 			os.Stderr.Write(data)
 		}
+=======
+		os.Stderr.Write(data)
+>>>>>>> v0.0.4
 	} else {
 		if alsoToStderr || l.alsoToStderr || s >= l.stderrThreshold.get() {
 			os.Stderr.Write(data)
@@ -863,18 +902,45 @@ func (l *loggingT) exit(err error) {
 type syncBuffer struct {
 	logger *loggingT
 	*bufio.Writer
+<<<<<<< HEAD
 	file   *os.File
 	sev    severity
 	nbytes uint64 // The number of bytes written to this file
+=======
+	file     *os.File
+	sev      severity
+	nbytes   uint64 // The number of bytes written to this file
+	maxbytes uint64 // The max number of bytes this syncBuffer.file can hold before cleaning up.
+>>>>>>> v0.0.4
 }
 
 func (sb *syncBuffer) Sync() error {
 	return sb.file.Sync()
 }
 
+<<<<<<< HEAD
 func (sb *syncBuffer) Write(p []byte) (n int, err error) {
 	if sb.nbytes+uint64(len(p)) >= MaxSize {
 		if err := sb.rotateFile(time.Now()); err != nil {
+=======
+// CalculateMaxSize returns the real max size in bytes after considering the default max size and the flag options.
+func CalculateMaxSize() uint64 {
+	if logging.logFile != "" {
+		if logging.logFileMaxSizeMB == 0 {
+			// If logFileMaxSizeMB is zero, we don't have limitations on the log size.
+			return math.MaxUint64
+		}
+		// Flag logFileMaxSizeMB is in MB for user convenience.
+		return logging.logFileMaxSizeMB * 1024 * 1024
+	}
+	// If "log_file" flag is not specified, the target file (sb.file) will be cleaned up when reaches a fixed size.
+	return MaxSize
+}
+
+func (sb *syncBuffer) Write(p []byte) (n int, err error) {
+	if sb.nbytes+uint64(len(p)) >= sb.maxbytes {
+		if err := sb.rotateFile(time.Now(), false); err != nil {
+>>>>>>> v0.0.4
 			sb.logger.exit(err)
 		}
 	}
@@ -887,13 +953,23 @@ func (sb *syncBuffer) Write(p []byte) (n int, err error) {
 }
 
 // rotateFile closes the syncBuffer's file and starts a new one.
+<<<<<<< HEAD
 func (sb *syncBuffer) rotateFile(now time.Time) error {
+=======
+// The startup argument indicates whether this is the initial startup of klog.
+// If startup is true, existing files are opened for appending instead of truncated.
+func (sb *syncBuffer) rotateFile(now time.Time, startup bool) error {
+>>>>>>> v0.0.4
 	if sb.file != nil {
 		sb.Flush()
 		sb.file.Close()
 	}
 	var err error
+<<<<<<< HEAD
 	sb.file, _, err = create(severityName[sb.sev], now)
+=======
+	sb.file, _, err = create(severityName[sb.sev], now, startup)
+>>>>>>> v0.0.4
 	sb.nbytes = 0
 	if err != nil {
 		return err
@@ -901,6 +977,13 @@ func (sb *syncBuffer) rotateFile(now time.Time) error {
 
 	sb.Writer = bufio.NewWriterSize(sb.file, bufferSize)
 
+<<<<<<< HEAD
+=======
+	if sb.logger.skipLogHeaders {
+		return nil
+	}
+
+>>>>>>> v0.0.4
 	// Write header.
 	var buf bytes.Buffer
 	fmt.Fprintf(&buf, "Log file created at: %s\n", now.Format("2006/01/02 15:04:05"))
@@ -925,10 +1008,18 @@ func (l *loggingT) createFiles(sev severity) error {
 	// has already been created, we can stop.
 	for s := sev; s >= infoLog && l.file[s] == nil; s-- {
 		sb := &syncBuffer{
+<<<<<<< HEAD
 			logger: l,
 			sev:    s,
 		}
 		if err := sb.rotateFile(now); err != nil {
+=======
+			logger:   l,
+			sev:      s,
+			maxbytes: CalculateMaxSize(),
+		}
+		if err := sb.rotateFile(now, true); err != nil {
+>>>>>>> v0.0.4
 			return err
 		}
 		l.file[s] = sb

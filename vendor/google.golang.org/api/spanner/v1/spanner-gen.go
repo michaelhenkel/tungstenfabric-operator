@@ -291,7 +291,11 @@ type Binding struct {
 	//    For example, `admins@example.com`.
 	//
 	//
+<<<<<<< HEAD
 	// * `domain:{domain}`: A Google Apps domain name that represents all
+=======
+	// * `domain:{domain}`: The G Suite domain (primary) that represents all
+>>>>>>> v0.0.4
 	// the
 	//    users of that domain. For example, `google.com` or
 	// `example.com`.
@@ -591,7 +595,11 @@ type CreateInstanceRequest struct {
 
 	// InstanceId: Required. The ID of the instance to create.  Valid
 	// identifiers are of the
+<<<<<<< HEAD
 	// form `a-z*[a-z0-9]` and must be between 6 and 30 characters
+=======
+	// form `a-z*[a-z0-9]` and must be between 2 and 64 characters
+>>>>>>> v0.0.4
 	// in
 	// length.
 	InstanceId string `json:"instanceId,omitempty"`
@@ -1199,7 +1207,11 @@ type Instance struct {
 	// after the instance is created. Values are of the
 	// form
 	// `projects/<project>/instances/a-z*[a-z0-9]`. The final
+<<<<<<< HEAD
 	// segment of the name must be between 6 and 30 characters in length.
+=======
+	// segment of the name must be between 2 and 64 characters in length.
+>>>>>>> v0.0.4
 	Name string `json:"name,omitempty"`
 
 	// NodeCount: Required. The number of nodes allocated to this instance.
@@ -1307,7 +1319,12 @@ func (s *InstanceConfig) MarshalJSON() ([]byte, error) {
 // list
 // corresponds to the ith component of the table or index primary
 // key.
+<<<<<<< HEAD
 // Individual values are encoded as described here.
+=======
+// Individual values are encoded as described
+// here.
+>>>>>>> v0.0.4
 //
 // For example, consider the following table definition:
 //
@@ -3032,20 +3049,34 @@ func (s *Statement) MarshalJSON() ([]byte, error) {
 }
 
 // Status: The `Status` type defines a logical error model that is
+<<<<<<< HEAD
 // suitable for different
 // programming environments, including REST APIs and RPC APIs. It is
 // used by
 // [gRPC](https://github.com/grpc). The error model is designed to
 // be:
+=======
+// suitable for
+// different programming environments, including REST APIs and RPC APIs.
+// It is
+// used by [gRPC](https://github.com/grpc). The error model is designed
+// to be:
+>>>>>>> v0.0.4
 //
 // - Simple to use and understand for most users
 // - Flexible enough to meet unexpected needs
 //
 // # Overview
 //
+<<<<<<< HEAD
 // The `Status` message contains three pieces of data: error code, error
 // message,
 // and error details. The error code should be an enum value
+=======
+// The `Status` message contains three pieces of data: error code,
+// error
+// message, and error details. The error code should be an enum value
+>>>>>>> v0.0.4
 // of
 // google.rpc.Code, but it may accept additional error codes if needed.
 // The
@@ -3819,7 +3850,12 @@ type Type struct {
 	// section 4.
 	//   "ARRAY" - Encoded as `list`, where the list elements are
 	// represented
+<<<<<<< HEAD
 	// according to array_element_type.
+=======
+	// according to
+	// array_element_type.
+>>>>>>> v0.0.4
 	//   "STRUCT" - Encoded as `list`, where list element `i` is represented
 	// according
 	// to [struct_type.fields[i]][google.spanner.v1.StructType.fields].
@@ -5449,7 +5485,11 @@ func (c *ProjectsInstancesPatchCall) Do(opts ...googleapi.CallOption) (*Operatio
 	//   ],
 	//   "parameters": {
 	//     "name": {
+<<<<<<< HEAD
 	//       "description": "Required. A unique identifier for the instance, which cannot be changed\nafter the instance is created. Values are of the form\n`projects/\u003cproject\u003e/instances/a-z*[a-z0-9]`. The final\nsegment of the name must be between 6 and 30 characters in length.",
+=======
+	//       "description": "Required. A unique identifier for the instance, which cannot be changed\nafter the instance is created. Values are of the form\n`projects/\u003cproject\u003e/instances/a-z*[a-z0-9]`. The final\nsegment of the name must be between 2 and 64 characters in length.",
+>>>>>>> v0.0.4
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/instances/[^/]+$",
 	//       "required": true,

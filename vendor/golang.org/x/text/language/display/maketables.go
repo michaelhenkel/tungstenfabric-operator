@@ -414,7 +414,11 @@ func (b *builder) writeGroup(name string) {
 		index = index[:n]
 
 		// Workaround for a bug in CLDR 26.
+<<<<<<< HEAD
 		// See http://unicode.org/cldr/trac/ticket/8042.
+=======
+		// See https://unicode.org/cldr/trac/ticket/8042.
+>>>>>>> v0.0.4
 		if cldr.Version == "26" && sup.String() == "hsb" {
 			data = bytes.Replace(data, []byte{'"'}, nil, 1)
 		}

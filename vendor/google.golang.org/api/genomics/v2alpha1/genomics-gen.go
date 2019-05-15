@@ -1069,6 +1069,7 @@ func (s *FailedEvent) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+<<<<<<< HEAD
 // ImportReadGroupSetsResponse: The read group set import response.
 type ImportReadGroupSetsResponse struct {
 	// ReadGroupSetIds: IDs of the read group sets that were created.
@@ -1126,6 +1127,8 @@ func (s *ImportVariantsResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+=======
+>>>>>>> v0.0.4
 // ListOperationsResponse: The response message for
 // Operations.ListOperations.
 type ListOperationsResponse struct {
@@ -1334,9 +1337,13 @@ type Operation struct {
 	// `operations/CJHU7Oi_ChDrveSpBRjfuL-qzoWAgEw`
 	Name string `json:"name,omitempty"`
 
+<<<<<<< HEAD
 	// Response: If importing ReadGroupSets, an ImportReadGroupSetsResponse
 	// is returned. If importing Variants, an ImportVariantsResponse is
 	// returned. For pipelines and exports, an Empty response is returned.
+=======
+	// Response: An Empty object.
+>>>>>>> v0.0.4
 	Response googleapi.RawMessage `json:"response,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the

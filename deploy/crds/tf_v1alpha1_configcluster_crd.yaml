@@ -29,6 +29,7 @@ spec:
           type: object
         spec:
           properties:
+<<<<<<< HEAD
             aaamode:
               type: string
             apiImage:
@@ -74,6 +75,51 @@ spec:
           - size
           - hostnetwork
           - imagepullpolicy
+=======
+            containers:
+              description: 'INSERT ADDITIONAL SPEC FIELDS - desired state of cluster
+                Important: Run "operator-sdk generate k8s" to regenerate code after
+                modifying this file Add custom validation using kubebuilder tags:
+                https://book.kubebuilder.io/beyond_basics/generating_crd.html'
+              items:
+                properties:
+                  datavolumepath:
+                    type: string
+                  env:
+                    additionalProperties:
+                      type: string
+                    type: object
+                  etccontrailvolume:
+                    type: boolean
+                  hostuserbinvolume:
+                    type: boolean
+                  image:
+                    type: string
+                  imagepullpolicy:
+                    type: string
+                  logvolumepath:
+                    type: string
+                  name:
+                    type: string
+                  privileged:
+                    type: boolean
+                  unixsocketvolume:
+                    type: boolean
+                required:
+                - name
+                - imagepullpolicy
+                - logvolumepath
+                - datavolumepath
+                - unixsocketvolume
+                - hostuserbinvolume
+                - etccontrailvolume
+                - privileged
+                - env
+                type: object
+              type: array
+          required:
+          - containers
+>>>>>>> v0.0.4
           type: object
         status:
           properties:

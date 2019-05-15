@@ -17,8 +17,12 @@ package view
 
 import (
 	"sort"
+<<<<<<< HEAD
 
 	"go.opencensus.io/exemplar"
+=======
+	"time"
+>>>>>>> v0.0.4
 
 	"go.opencensus.io/internal/tagencoding"
 	"go.opencensus.io/tag"
@@ -33,13 +37,21 @@ type collector struct {
 	a *Aggregation
 }
 
+<<<<<<< HEAD
 func (c *collector) addSample(s string, e *exemplar.Exemplar) {
+=======
+func (c *collector) addSample(s string, v float64, attachments map[string]interface{}, t time.Time) {
+>>>>>>> v0.0.4
 	aggregator, ok := c.signatures[s]
 	if !ok {
 		aggregator = c.a.newData()
 		c.signatures[s] = aggregator
 	}
+<<<<<<< HEAD
 	aggregator.addSample(e)
+=======
+	aggregator.addSample(v, attachments, t)
+>>>>>>> v0.0.4
 }
 
 // collectRows returns a snapshot of the collected Row values.

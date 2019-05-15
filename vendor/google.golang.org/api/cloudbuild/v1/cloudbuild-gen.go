@@ -1113,6 +1113,12 @@ func (s *Hash) MarshalJSON() ([]byte, error) {
 // ListBuildTriggersResponse: Response containing existing
 // `BuildTriggers`.
 type ListBuildTriggersResponse struct {
+<<<<<<< HEAD
+=======
+	// NextPageToken: Token to receive the next page of results.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+>>>>>>> v0.0.4
 	// Triggers: `BuildTriggers` for the project, sorted by `create_time`
 	// descending.
 	Triggers []*BuildTrigger `json:"triggers,omitempty"`
@@ -1121,7 +1127,11 @@ type ListBuildTriggersResponse struct {
 	// server.
 	googleapi.ServerResponse `json:"-"`
 
+<<<<<<< HEAD
 	// ForceSendFields is a list of field names (e.g. "Triggers") to
+=======
+	// ForceSendFields is a list of field names (e.g. "NextPageToken") to
+>>>>>>> v0.0.4
 	// unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,
 	// non-interface field appearing in ForceSendFields will be sent to the
@@ -1129,10 +1139,17 @@ type ListBuildTriggersResponse struct {
 	// used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
+<<<<<<< HEAD
 	// NullFields is a list of field names (e.g. "Triggers") to include in
 	// API requests with the JSON null value. By default, fields with empty
 	// values are omitted from API requests. However, any field with an
 	// empty value appearing in NullFields will be sent to the server as
+=======
+	// NullFields is a list of field names (e.g. "NextPageToken") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+>>>>>>> v0.0.4
 	// null. It is an error if a field in this list has a non-empty value.
 	// This may be used to include null fields in Patch requests.
 	NullFields []string `json:"-"`
@@ -3670,6 +3687,23 @@ func (r *ProjectsTriggersService) List(projectId string) *ProjectsTriggersListCa
 	return c
 }
 
+<<<<<<< HEAD
+=======
+// PageSize sets the optional parameter "pageSize": Number of results to
+// return in the list.
+func (c *ProjectsTriggersListCall) PageSize(pageSize int64) *ProjectsTriggersListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": Token to provide
+// to skip to a particular spot in the list.
+func (c *ProjectsTriggersListCall) PageToken(pageToken string) *ProjectsTriggersListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+>>>>>>> v0.0.4
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -3776,6 +3810,20 @@ func (c *ProjectsTriggersListCall) Do(opts ...googleapi.CallOption) (*ListBuildT
 	//     "projectId"
 	//   ],
 	//   "parameters": {
+<<<<<<< HEAD
+=======
+	//     "pageSize": {
+	//       "description": "Number of results to return in the list.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "Token to provide to skip to a particular spot in the list.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+>>>>>>> v0.0.4
 	//     "projectId": {
 	//       "description": "ID of the project for which to list BuildTriggers.",
 	//       "location": "path",
@@ -3794,6 +3842,30 @@ func (c *ProjectsTriggersListCall) Do(opts ...googleapi.CallOption) (*ListBuildT
 
 }
 
+<<<<<<< HEAD
+=======
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *ProjectsTriggersListCall) Pages(ctx context.Context, f func(*ListBuildTriggersResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+>>>>>>> v0.0.4
 // method id "cloudbuild.projects.triggers.patch":
 
 type ProjectsTriggersPatchCall struct {

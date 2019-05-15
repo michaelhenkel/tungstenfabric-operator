@@ -24,7 +24,11 @@ import (
 const BuildTestFrameworkDockerfileFile = "Dockerfile"
 
 type BuildTestFrameworkDockerfile struct {
+<<<<<<< HEAD
 	input.Input
+=======
+	StaticInput
+>>>>>>> v0.0.4
 }
 
 // GetInput - gets the input
@@ -40,7 +44,14 @@ func (b *BuildTestFrameworkDockerfile) GetInput() (input.Input, error) {
 const buildTestFrameworkDockerfileAnsibleTmpl = `ARG BASEIMAGE
 FROM ${BASEIMAGE}
 USER 0
+<<<<<<< HEAD
 RUN yum install -y python-devel gcc libffi-devel && pip install molecule
+=======
+
+RUN yum install -y python-devel gcc libffi-devel
+RUN pip install molecule==2.20.1
+
+>>>>>>> v0.0.4
 ARG NAMESPACEDMAN
 ADD $NAMESPACEDMAN /namespaced.yaml
 ADD build/test-framework/ansible-test.sh /ansible-test.sh

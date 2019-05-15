@@ -17,7 +17,11 @@
 package fake
 
 import (
+<<<<<<< HEAD
 	monitoring_v1 "github.com/coreos/prometheus-operator/pkg/apis/monitoring/v1"
+=======
+	monitoringv1 "github.com/coreos/prometheus-operator/pkg/apis/monitoring/v1"
+>>>>>>> v0.0.4
 	v1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	labels "k8s.io/apimachinery/pkg/labels"
 	schema "k8s.io/apimachinery/pkg/runtime/schema"
@@ -37,13 +41,20 @@ var alertmanagersResource = schema.GroupVersionResource{Group: "monitoring.coreo
 var alertmanagersKind = schema.GroupVersionKind{Group: "monitoring.coreos.com", Version: "v1", Kind: "Alertmanager"}
 
 // Get takes name of the alertmanager, and returns the corresponding alertmanager object, and an error if there is any.
+<<<<<<< HEAD
 func (c *FakeAlertmanagers) Get(name string, options v1.GetOptions) (result *monitoring_v1.Alertmanager, err error) {
 	obj, err := c.Fake.
 		Invokes(testing.NewGetAction(alertmanagersResource, c.ns, name), &monitoring_v1.Alertmanager{})
+=======
+func (c *FakeAlertmanagers) Get(name string, options v1.GetOptions) (result *monitoringv1.Alertmanager, err error) {
+	obj, err := c.Fake.
+		Invokes(testing.NewGetAction(alertmanagersResource, c.ns, name), &monitoringv1.Alertmanager{})
+>>>>>>> v0.0.4
 
 	if obj == nil {
 		return nil, err
 	}
+<<<<<<< HEAD
 	return obj.(*monitoring_v1.Alertmanager), err
 }
 
@@ -51,6 +62,15 @@ func (c *FakeAlertmanagers) Get(name string, options v1.GetOptions) (result *mon
 func (c *FakeAlertmanagers) List(opts v1.ListOptions) (result *monitoring_v1.AlertmanagerList, err error) {
 	obj, err := c.Fake.
 		Invokes(testing.NewListAction(alertmanagersResource, alertmanagersKind, c.ns, opts), &monitoring_v1.AlertmanagerList{})
+=======
+	return obj.(*monitoringv1.Alertmanager), err
+}
+
+// List takes label and field selectors, and returns the list of Alertmanagers that match those selectors.
+func (c *FakeAlertmanagers) List(opts v1.ListOptions) (result *monitoringv1.AlertmanagerList, err error) {
+	obj, err := c.Fake.
+		Invokes(testing.NewListAction(alertmanagersResource, alertmanagersKind, c.ns, opts), &monitoringv1.AlertmanagerList{})
+>>>>>>> v0.0.4
 
 	if obj == nil {
 		return nil, err
@@ -60,8 +80,13 @@ func (c *FakeAlertmanagers) List(opts v1.ListOptions) (result *monitoring_v1.Ale
 	if label == nil {
 		label = labels.Everything()
 	}
+<<<<<<< HEAD
 	list := &monitoring_v1.AlertmanagerList{ListMeta: obj.(*monitoring_v1.AlertmanagerList).ListMeta}
 	for _, item := range obj.(*monitoring_v1.AlertmanagerList).Items {
+=======
+	list := &monitoringv1.AlertmanagerList{ListMeta: obj.(*monitoringv1.AlertmanagerList).ListMeta}
+	for _, item := range obj.(*monitoringv1.AlertmanagerList).Items {
+>>>>>>> v0.0.4
 		if label.Matches(labels.Set(item.Labels)) {
 			list.Items = append(list.Items, item)
 		}
@@ -77,13 +102,20 @@ func (c *FakeAlertmanagers) Watch(opts v1.ListOptions) (watch.Interface, error) 
 }
 
 // Create takes the representation of a alertmanager and creates it.  Returns the server's representation of the alertmanager, and an error, if there is any.
+<<<<<<< HEAD
 func (c *FakeAlertmanagers) Create(alertmanager *monitoring_v1.Alertmanager) (result *monitoring_v1.Alertmanager, err error) {
 	obj, err := c.Fake.
 		Invokes(testing.NewCreateAction(alertmanagersResource, c.ns, alertmanager), &monitoring_v1.Alertmanager{})
+=======
+func (c *FakeAlertmanagers) Create(alertmanager *monitoringv1.Alertmanager) (result *monitoringv1.Alertmanager, err error) {
+	obj, err := c.Fake.
+		Invokes(testing.NewCreateAction(alertmanagersResource, c.ns, alertmanager), &monitoringv1.Alertmanager{})
+>>>>>>> v0.0.4
 
 	if obj == nil {
 		return nil, err
 	}
+<<<<<<< HEAD
 	return obj.(*monitoring_v1.Alertmanager), err
 }
 
@@ -91,29 +123,56 @@ func (c *FakeAlertmanagers) Create(alertmanager *monitoring_v1.Alertmanager) (re
 func (c *FakeAlertmanagers) Update(alertmanager *monitoring_v1.Alertmanager) (result *monitoring_v1.Alertmanager, err error) {
 	obj, err := c.Fake.
 		Invokes(testing.NewUpdateAction(alertmanagersResource, c.ns, alertmanager), &monitoring_v1.Alertmanager{})
+=======
+	return obj.(*monitoringv1.Alertmanager), err
+}
+
+// Update takes the representation of a alertmanager and updates it. Returns the server's representation of the alertmanager, and an error, if there is any.
+func (c *FakeAlertmanagers) Update(alertmanager *monitoringv1.Alertmanager) (result *monitoringv1.Alertmanager, err error) {
+	obj, err := c.Fake.
+		Invokes(testing.NewUpdateAction(alertmanagersResource, c.ns, alertmanager), &monitoringv1.Alertmanager{})
+>>>>>>> v0.0.4
 
 	if obj == nil {
 		return nil, err
 	}
+<<<<<<< HEAD
 	return obj.(*monitoring_v1.Alertmanager), err
+=======
+	return obj.(*monitoringv1.Alertmanager), err
+>>>>>>> v0.0.4
 }
 
 // UpdateStatus was generated because the type contains a Status member.
 // Add a +genclient:noStatus comment above the type to avoid generating UpdateStatus().
+<<<<<<< HEAD
 func (c *FakeAlertmanagers) UpdateStatus(alertmanager *monitoring_v1.Alertmanager) (*monitoring_v1.Alertmanager, error) {
 	obj, err := c.Fake.
 		Invokes(testing.NewUpdateSubresourceAction(alertmanagersResource, "status", c.ns, alertmanager), &monitoring_v1.Alertmanager{})
+=======
+func (c *FakeAlertmanagers) UpdateStatus(alertmanager *monitoringv1.Alertmanager) (*monitoringv1.Alertmanager, error) {
+	obj, err := c.Fake.
+		Invokes(testing.NewUpdateSubresourceAction(alertmanagersResource, "status", c.ns, alertmanager), &monitoringv1.Alertmanager{})
+>>>>>>> v0.0.4
 
 	if obj == nil {
 		return nil, err
 	}
+<<<<<<< HEAD
 	return obj.(*monitoring_v1.Alertmanager), err
+=======
+	return obj.(*monitoringv1.Alertmanager), err
+>>>>>>> v0.0.4
 }
 
 // Delete takes name of the alertmanager and deletes it. Returns an error if one occurs.
 func (c *FakeAlertmanagers) Delete(name string, options *v1.DeleteOptions) error {
 	_, err := c.Fake.
+<<<<<<< HEAD
 		Invokes(testing.NewDeleteAction(alertmanagersResource, c.ns, name), &monitoring_v1.Alertmanager{})
+=======
+		Invokes(testing.NewDeleteAction(alertmanagersResource, c.ns, name), &monitoringv1.Alertmanager{})
+>>>>>>> v0.0.4
 
 	return err
 }
@@ -122,17 +181,31 @@ func (c *FakeAlertmanagers) Delete(name string, options *v1.DeleteOptions) error
 func (c *FakeAlertmanagers) DeleteCollection(options *v1.DeleteOptions, listOptions v1.ListOptions) error {
 	action := testing.NewDeleteCollectionAction(alertmanagersResource, c.ns, listOptions)
 
+<<<<<<< HEAD
 	_, err := c.Fake.Invokes(action, &monitoring_v1.AlertmanagerList{})
+=======
+	_, err := c.Fake.Invokes(action, &monitoringv1.AlertmanagerList{})
+>>>>>>> v0.0.4
 	return err
 }
 
 // Patch applies the patch and returns the patched alertmanager.
+<<<<<<< HEAD
 func (c *FakeAlertmanagers) Patch(name string, pt types.PatchType, data []byte, subresources ...string) (result *monitoring_v1.Alertmanager, err error) {
 	obj, err := c.Fake.
 		Invokes(testing.NewPatchSubresourceAction(alertmanagersResource, c.ns, name, data, subresources...), &monitoring_v1.Alertmanager{})
+=======
+func (c *FakeAlertmanagers) Patch(name string, pt types.PatchType, data []byte, subresources ...string) (result *monitoringv1.Alertmanager, err error) {
+	obj, err := c.Fake.
+		Invokes(testing.NewPatchSubresourceAction(alertmanagersResource, c.ns, name, pt, data, subresources...), &monitoringv1.Alertmanager{})
+>>>>>>> v0.0.4
 
 	if obj == nil {
 		return nil, err
 	}
+<<<<<<< HEAD
 	return obj.(*monitoring_v1.Alertmanager), err
+=======
+	return obj.(*monitoringv1.Alertmanager), err
+>>>>>>> v0.0.4
 }

@@ -680,6 +680,37 @@ func (s *Comment) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+<<<<<<< HEAD
+=======
+type CountryTargeting struct {
+	Countries []string `json:"countries,omitempty"`
+
+	IncludeRestOfWorld bool `json:"includeRestOfWorld,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Countries") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Countries") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *CountryTargeting) MarshalJSON() ([]byte, error) {
+	type NoMethod CountryTargeting
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+>>>>>>> v0.0.4
 // DeobfuscationFile: Represents a deobfuscation file.
 type DeobfuscationFile struct {
 	// SymbolType: The type of the deobfuscation file.
@@ -2237,6 +2268,11 @@ func (s *Track) MarshalJSON() ([]byte, error) {
 }
 
 type TrackRelease struct {
+<<<<<<< HEAD
+=======
+	CountryTargeting *CountryTargeting `json:"countryTargeting,omitempty"`
+
+>>>>>>> v0.0.4
 	// Name: The release name, used to identify this release in the Play
 	// Console UI. Not required to be unique. This is optional, if not set
 	// it will be generated from the version_name in the APKs.
@@ -2260,7 +2296,11 @@ type TrackRelease struct {
 	// active, including those you wish to retain from previous releases.
 	VersionCodes googleapi.Int64s `json:"versionCodes,omitempty"`
 
+<<<<<<< HEAD
 	// ForceSendFields is a list of field names (e.g. "Name") to
+=======
+	// ForceSendFields is a list of field names (e.g. "CountryTargeting") to
+>>>>>>> v0.0.4
 	// unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,
 	// non-interface field appearing in ForceSendFields will be sent to the
@@ -2268,12 +2308,22 @@ type TrackRelease struct {
 	// used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
+<<<<<<< HEAD
 	// NullFields is a list of field names (e.g. "Name") to include in API
 	// requests with the JSON null value. By default, fields with empty
 	// values are omitted from API requests. However, any field with an
 	// empty value appearing in NullFields will be sent to the server as
 	// null. It is an error if a field in this list has a non-empty value.
 	// This may be used to include null fields in Patch requests.
+=======
+	// NullFields is a list of field names (e.g. "CountryTargeting") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+>>>>>>> v0.0.4
 	NullFields []string `json:"-"`
 }
 
@@ -7349,9 +7399,14 @@ func (c *EditsTestersGetCall) Do(opts ...googleapi.CallOption) (*Testers, error)
 	//       "type": "string"
 	//     },
 	//     "track": {
+<<<<<<< HEAD
 	//       "description": "The track to read or modify. Acceptable values are: \"alpha\", \"beta\", \"production\", \"rollout\" or \"internal\".",
 	//       "location": "path",
 	//       "pattern": "(alpha|beta|production|rollout|internal)",
+=======
+	//       "description": "The track to read or modify.",
+	//       "location": "path",
+>>>>>>> v0.0.4
 	//       "required": true,
 	//       "type": "string"
 	//     }
@@ -7503,9 +7558,14 @@ func (c *EditsTestersPatchCall) Do(opts ...googleapi.CallOption) (*Testers, erro
 	//       "type": "string"
 	//     },
 	//     "track": {
+<<<<<<< HEAD
 	//       "description": "The track to read or modify. Acceptable values are: \"alpha\", \"beta\", \"production\", \"rollout\" or \"internal\".",
 	//       "location": "path",
 	//       "pattern": "(alpha|beta|production|rollout|internal)",
+=======
+	//       "description": "The track to read or modify.",
+	//       "location": "path",
+>>>>>>> v0.0.4
 	//       "required": true,
 	//       "type": "string"
 	//     }
@@ -7660,9 +7720,14 @@ func (c *EditsTestersUpdateCall) Do(opts ...googleapi.CallOption) (*Testers, err
 	//       "type": "string"
 	//     },
 	//     "track": {
+<<<<<<< HEAD
 	//       "description": "The track to read or modify. Acceptable values are: \"alpha\", \"beta\", \"production\", \"rollout\" or \"internal\".",
 	//       "location": "path",
 	//       "pattern": "(alpha|beta|production|rollout|internal)",
+=======
+	//       "description": "The track to read or modify.",
+	//       "location": "path",
+>>>>>>> v0.0.4
 	//       "required": true,
 	//       "type": "string"
 	//     }
@@ -8008,9 +8073,13 @@ type EditsTracksPatchCall struct {
 }
 
 // Patch: Updates the track configuration for the specified track type.
+<<<<<<< HEAD
 // When halted, the rollout track cannot be updated without adding new
 // APKs, and adding new APKs will cause it to resume. This method
 // supports patch semantics.
+=======
+// This method supports patch semantics.
+>>>>>>> v0.0.4
 func (r *EditsTracksService) Patch(packageNameid string, editId string, track string, track2 *Track) *EditsTracksPatchCall {
 	c := &EditsTracksPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.packageNameid = packageNameid
@@ -8112,7 +8181,11 @@ func (c *EditsTracksPatchCall) Do(opts ...googleapi.CallOption) (*Track, error) 
 	}
 	return ret, nil
 	// {
+<<<<<<< HEAD
 	//   "description": "Updates the track configuration for the specified track type. When halted, the rollout track cannot be updated without adding new APKs, and adding new APKs will cause it to resume. This method supports patch semantics.",
+=======
+	//   "description": "Updates the track configuration for the specified track type. This method supports patch semantics.",
+>>>>>>> v0.0.4
 	//   "httpMethod": "PATCH",
 	//   "id": "androidpublisher.edits.tracks.patch",
 	//   "parameterOrder": [
@@ -8168,8 +8241,11 @@ type EditsTracksUpdateCall struct {
 }
 
 // Update: Updates the track configuration for the specified track type.
+<<<<<<< HEAD
 // When halted, the rollout track cannot be updated without adding new
 // APKs, and adding new APKs will cause it to resume.
+=======
+>>>>>>> v0.0.4
 func (r *EditsTracksService) Update(packageNameid string, editId string, track string, track2 *Track) *EditsTracksUpdateCall {
 	c := &EditsTracksUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.packageNameid = packageNameid
@@ -8271,7 +8347,11 @@ func (c *EditsTracksUpdateCall) Do(opts ...googleapi.CallOption) (*Track, error)
 	}
 	return ret, nil
 	// {
+<<<<<<< HEAD
 	//   "description": "Updates the track configuration for the specified track type. When halted, the rollout track cannot be updated without adding new APKs, and adding new APKs will cause it to resume.",
+=======
+	//   "description": "Updates the track configuration for the specified track type.",
+>>>>>>> v0.0.4
 	//   "httpMethod": "PUT",
 	//   "id": "androidpublisher.edits.tracks.update",
 	//   "parameterOrder": [

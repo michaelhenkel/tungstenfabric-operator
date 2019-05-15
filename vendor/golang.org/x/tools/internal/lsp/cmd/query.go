@@ -30,7 +30,11 @@ type query struct {
 }
 
 func (q *query) Name() string  { return "query" }
+<<<<<<< HEAD
 func (q *query) Usage() string { return "query [flags] <mode> <mode args>" }
+=======
+func (q *query) Usage() string { return "<mode> <mode args>" }
+>>>>>>> v0.0.4
 func (q *query) ShortHelp() string {
 	return "answer queries about go source code"
 }

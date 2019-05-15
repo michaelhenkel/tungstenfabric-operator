@@ -18,13 +18,17 @@ import (
 	"sync"
 
 	"k8s.io/apimachinery/pkg/runtime/schema"
+<<<<<<< HEAD
 	"k8s.io/apimachinery/pkg/types"
+=======
+>>>>>>> v0.0.4
 	"sigs.k8s.io/controller-runtime/pkg/controller"
 )
 
 // ControllerMap - map of GVK to ControllerMapContents
 type ControllerMap struct {
 	mutex    sync.RWMutex
+<<<<<<< HEAD
 	internal map[schema.GroupVersionKind]*ControllerMapContents
 }
 
@@ -32,6 +36,9 @@ type ControllerMap struct {
 type UIDMap struct {
 	mutex    sync.RWMutex
 	internal map[types.UID]types.NamespacedName
+=======
+	internal map[schema.GroupVersionKind]*Contents
+>>>>>>> v0.0.4
 }
 
 // WatchMap - map of GVK to interface. Determines if resource is being watched already
@@ -40,6 +47,7 @@ type WatchMap struct {
 	internal map[schema.GroupVersionKind]interface{}
 }
 
+<<<<<<< HEAD
 // ControllerMapContents- Contains internal data associated with each controller
 type ControllerMapContents struct {
 	Controller                  controller.Controller
@@ -47,13 +55,26 @@ type ControllerMapContents struct {
 	WatchClusterScopedResources bool
 	WatchMap                    *WatchMap
 	UIDMap                      *UIDMap
+=======
+// Contents - Contains internal data associated with each controller
+type Contents struct {
+	Controller                  controller.Controller
+	WatchDependentResources     bool
+	WatchClusterScopedResources bool
+	OwnerWatchMap               *WatchMap
+	AnnotationWatchMap          *WatchMap
+>>>>>>> v0.0.4
 }
 
 // NewControllerMap returns a new object that contains a mapping between GVK
 // and ControllerMapContents object
 func NewControllerMap() *ControllerMap {
 	return &ControllerMap{
+<<<<<<< HEAD
 		internal: make(map[schema.GroupVersionKind]*ControllerMapContents),
+=======
+		internal: make(map[schema.GroupVersionKind]*Contents),
+>>>>>>> v0.0.4
 	}
 }
 
@@ -65,6 +86,7 @@ func NewWatchMap() *WatchMap {
 	}
 }
 
+<<<<<<< HEAD
 // NewUIDMap - returns a new object that maps UID to namespaced name of owner
 func NewUIDMap() *UIDMap {
 	return &UIDMap{
@@ -75,6 +97,11 @@ func NewUIDMap() *UIDMap {
 // Get - Returns a ControllerMapContents given a GVK as the key. `ok`
 // determines if the key exists
 func (cm *ControllerMap) Get(key schema.GroupVersionKind) (value *ControllerMapContents, ok bool) {
+=======
+// Get - Returns a ControllerMapContents given a GVK as the key. `ok`
+// determines if the key exists
+func (cm *ControllerMap) Get(key schema.GroupVersionKind) (value *Contents, ok bool) {
+>>>>>>> v0.0.4
 	cm.mutex.RLock()
 	defer cm.mutex.RUnlock()
 	value, ok = cm.internal[key]
@@ -89,7 +116,11 @@ func (cm *ControllerMap) Delete(key schema.GroupVersionKind) {
 }
 
 // Store - Adds a new GVK to controller mapping
+<<<<<<< HEAD
 func (cm *ControllerMap) Store(key schema.GroupVersionKind, value *ControllerMapContents) {
+=======
+func (cm *ControllerMap) Store(key schema.GroupVersionKind, value *Contents) {
+>>>>>>> v0.0.4
 	cm.mutex.Lock()
 	defer cm.mutex.Unlock()
 	cm.internal[key] = value
@@ -116,6 +147,7 @@ func (wm *WatchMap) Store(key schema.GroupVersionKind) {
 	defer wm.mutex.Unlock()
 	wm.internal[key] = nil
 }
+<<<<<<< HEAD
 
 // Get - Returns a NamespacedName of the owner given a UID
 func (um *UIDMap) Get(key types.UID) (value types.NamespacedName, ok bool) {
@@ -138,3 +170,5 @@ func (um *UIDMap) Store(key types.UID, value types.NamespacedName) {
 	defer um.mutex.Unlock()
 	um.internal[key] = value
 }
+=======
+>>>>>>> v0.0.4

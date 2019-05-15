@@ -68,8 +68,21 @@ func loadEnv() {
 	}
 }
 
+<<<<<<< HEAD
 func Mods() bool {
 	return Get(GO111MODULE, "off") == "on"
+=======
+// Mods returns true if module support is enabled, false otherwise
+// See https://github.com/golang/go/wiki/Modules#how-to-install-and-activate-module-support for details
+func Mods() bool {
+	go111 := Get(GO111MODULE, "")
+
+	if !InGoPath() {
+		return go111 != "off"
+	}
+
+	return go111 == "on"
+>>>>>>> v0.0.4
 }
 
 // Reload the ENV variables. Useful if
@@ -168,7 +181,11 @@ func Map() map[string]string {
 	for k, v := range env {
 		cp[k] = v
 	}
+<<<<<<< HEAD
 	return env
+=======
+	return cp
+>>>>>>> v0.0.4
 }
 
 // Temp makes a copy of the values and allows operation on

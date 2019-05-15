@@ -23,6 +23,10 @@ import (
 	"sync/atomic"
 	"time"
 
+<<<<<<< HEAD
+=======
+	"cloud.google.com/go/internal/trace"
+>>>>>>> v0.0.4
 	"cloud.google.com/go/internal/version"
 	"google.golang.org/api/option"
 	gtransport "google.golang.org/api/transport/grpc"
@@ -119,8 +123,13 @@ func NewClient(ctx context.Context, database string, opts ...option.ClientOption
 // NewClientWithConfig creates a client to a database. A valid database name has the
 // form projects/PROJECT_ID/instances/INSTANCE_ID/databases/DATABASE_ID.
 func NewClientWithConfig(ctx context.Context, database string, config ClientConfig, opts ...option.ClientOption) (c *Client, err error) {
+<<<<<<< HEAD
 	ctx = startSpan(ctx, "cloud.google.com/go/spanner.NewClient")
 	defer func() { endSpan(ctx, err) }()
+=======
+	ctx = trace.StartSpan(ctx, "cloud.google.com/go/spanner.NewClient")
+	defer func() { trace.EndSpan(ctx, err) }()
+>>>>>>> v0.0.4
 
 	// Validate database path.
 	if err := validDatabaseName(database); err != nil {
@@ -354,8 +363,13 @@ func checkNestedTxn(ctx context.Context) error {
 // See https://godoc.org/cloud.google.com/go/spanner#ReadWriteTransaction for
 // more details.
 func (c *Client) ReadWriteTransaction(ctx context.Context, f func(context.Context, *ReadWriteTransaction) error) (commitTimestamp time.Time, err error) {
+<<<<<<< HEAD
 	ctx = startSpan(ctx, "cloud.google.com/go/spanner.ReadWriteTransaction")
 	defer func() { endSpan(ctx, err) }()
+=======
+	ctx = trace.StartSpan(ctx, "cloud.google.com/go/spanner.ReadWriteTransaction")
+	defer func() { trace.EndSpan(ctx, err) }()
+>>>>>>> v0.0.4
 	if err := checkNestedTxn(ctx); err != nil {
 		return time.Time{}, err
 	}
@@ -385,7 +399,11 @@ func (c *Client) ReadWriteTransaction(ctx context.Context, f func(context.Contex
 			}
 		}
 		t.txReadOnly.txReadEnv = t
+<<<<<<< HEAD
 		statsPrintf(ctx, map[string]interface{}{"transactionID": string(sh.getTransactionID())},
+=======
+		trace.TracePrintf(ctx, map[string]interface{}{"transactionID": string(sh.getTransactionID())},
+>>>>>>> v0.0.4
 			"Starting transaction attempt")
 		if err = t.begin(ctx); err != nil {
 			// Mask error from begin operation as retryable error.
@@ -438,8 +456,13 @@ func (c *Client) Apply(ctx context.Context, ms []*Mutation, opts ...ApplyOption)
 		})
 	}
 
+<<<<<<< HEAD
 	ctx = startSpan(ctx, "cloud.google.com/go/spanner.Apply")
 	defer func() { endSpan(ctx, err) }()
+=======
+	ctx = trace.StartSpan(ctx, "cloud.google.com/go/spanner.Apply")
+	defer func() { trace.EndSpan(ctx, err) }()
+>>>>>>> v0.0.4
 	t := &writeOnlyTransaction{c.idleSessions}
 	return t.applyAtLeastOnce(ctx, ms...)
 }

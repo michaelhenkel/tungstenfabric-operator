@@ -63,9 +63,12 @@ func NewServerHandlerTransport(w http.ResponseWriter, r *http.Request, stats sta
 	if _, ok := w.(http.Flusher); !ok {
 		return nil, errors.New("gRPC requires a ResponseWriter supporting http.Flusher")
 	}
+<<<<<<< HEAD
 	if _, ok := w.(http.CloseNotifier); !ok {
 		return nil, errors.New("gRPC requires a ResponseWriter supporting http.CloseNotifier")
 	}
+=======
+>>>>>>> v0.0.4
 
 	st := &serverHandlerTransport{
 		rw:             w,
@@ -176,6 +179,7 @@ func (a strAddr) String() string { return string(a) }
 
 // do runs fn in the ServeHTTP goroutine.
 func (ht *serverHandlerTransport) do(fn func()) error {
+<<<<<<< HEAD
 	// Avoid a panic writing to closed channel. Imperfect but maybe good enough.
 	select {
 	case <-ht.closedCh:
@@ -187,6 +191,13 @@ func (ht *serverHandlerTransport) do(fn func()) error {
 		case <-ht.closedCh:
 			return ErrConnClosing
 		}
+=======
+	select {
+	case <-ht.closedCh:
+		return ErrConnClosing
+	case ht.writes <- fn:
+		return nil
+>>>>>>> v0.0.4
 	}
 }
 
@@ -237,7 +248,10 @@ func (ht *serverHandlerTransport) WriteStatus(s *Stream, st *status.Status) erro
 		if ht.stats != nil {
 			ht.stats.HandleRPC(s.Context(), &stats.OutTrailer{})
 		}
+<<<<<<< HEAD
 		close(ht.writes)
+=======
+>>>>>>> v0.0.4
 	}
 	ht.Close()
 	return err
@@ -315,6 +329,7 @@ func (ht *serverHandlerTransport) HandleStreams(startStream func(*Stream), trace
 		ctx, cancel = context.WithCancel(ctx)
 	}
 
+<<<<<<< HEAD
 	// requestOver is closed when either the request's context is done
 	// or the status has been written via WriteStatus.
 	requestOver := make(chan struct{})
@@ -323,11 +338,19 @@ func (ht *serverHandlerTransport) HandleStreams(startStream func(*Stream), trace
 	// because the underlying connection is dead or because the
 	// peer sends an http2 RST_STREAM.
 	clientGone := ht.rw.(http.CloseNotifier).CloseNotify()
+=======
+	// requestOver is closed when the status has been written via WriteStatus.
+	requestOver := make(chan struct{})
+>>>>>>> v0.0.4
 	go func() {
 		select {
 		case <-requestOver:
 		case <-ht.closedCh:
+<<<<<<< HEAD
 		case <-clientGone:
+=======
+		case <-ht.req.Context().Done():
+>>>>>>> v0.0.4
 		}
 		cancel()
 		ht.Close()
@@ -407,10 +430,14 @@ func (ht *serverHandlerTransport) HandleStreams(startStream func(*Stream), trace
 func (ht *serverHandlerTransport) runStream() {
 	for {
 		select {
+<<<<<<< HEAD
 		case fn, ok := <-ht.writes:
 			if !ok {
 				return
 			}
+=======
+		case fn := <-ht.writes:
+>>>>>>> v0.0.4
 			fn()
 		case <-ht.closedCh:
 			return

@@ -5,6 +5,7 @@
 package lsp
 
 import (
+<<<<<<< HEAD
 	"bytes"
 	"context"
 	"fmt"
@@ -18,6 +19,13 @@ import (
 	"sync"
 
 	"golang.org/x/tools/go/packages"
+=======
+	"context"
+	"fmt"
+	"net"
+	"sync"
+
+>>>>>>> v0.0.4
 	"golang.org/x/tools/internal/jsonrpc2"
 	"golang.org/x/tools/internal/lsp/cache"
 	"golang.org/x/tools/internal/lsp/protocol"
@@ -67,18 +75,38 @@ func RunServerOnAddress(ctx context.Context, addr string, h func(s *Server)) err
 	}
 }
 
+<<<<<<< HEAD
+=======
+func (s *Server) Run(ctx context.Context) error {
+	return s.Conn.Run(ctx)
+}
+
+>>>>>>> v0.0.4
 type Server struct {
 	Conn   *jsonrpc2.Conn
 	client protocol.Client
 	log    xlog.Logger
 
 	initializedMu sync.Mutex
+<<<<<<< HEAD
 	initialized   bool // set once the server has received "initialize" request
 
 	signatureHelpEnabled          bool
 	snippetsSupported             bool
 	configurationSupported        bool
 	dynamicConfigurationSupported bool
+=======
+	isInitialized bool // set once the server has received "initialize" request
+
+	// Configurations.
+	// TODO(rstambler): Separate these into their own struct?
+	usePlaceholders               bool
+	enhancedHover                 bool
+	insertTextFormat              protocol.InsertTextFormat
+	configurationSupported        bool
+	dynamicConfigurationSupported bool
+	preferredContentFormat        protocol.MarkupKind
+>>>>>>> v0.0.4
 
 	textDocumentSyncKind protocol.TextDocumentSyncKind
 
@@ -90,6 +118,7 @@ type Server struct {
 	undelivered   map[span.URI][]source.Diagnostic
 }
 
+<<<<<<< HEAD
 func (s *Server) Run(ctx context.Context) error {
 	return s.Conn.Run(ctx)
 }
@@ -241,6 +270,28 @@ func (s *Server) Exit(ctx context.Context) error {
 	return nil
 }
 
+=======
+// General
+
+func (s *Server) Initialize(ctx context.Context, params *protocol.InitializeParams) (*protocol.InitializeResult, error) {
+	return s.initialize(ctx, params)
+}
+
+func (s *Server) Initialized(ctx context.Context, params *protocol.InitializedParams) error {
+	return s.initialized(ctx, params)
+}
+
+func (s *Server) Shutdown(ctx context.Context) error {
+	return s.shutdown(ctx)
+}
+
+func (s *Server) Exit(ctx context.Context) error {
+	return s.exit(ctx)
+}
+
+// Workspace
+
+>>>>>>> v0.0.4
 func (s *Server) DidChangeWorkspaceFolders(context.Context, *protocol.DidChangeWorkspaceFoldersParams) error {
 	return notImplemented("DidChangeWorkspaceFolders")
 }
@@ -253,18 +304,29 @@ func (s *Server) DidChangeWatchedFiles(context.Context, *protocol.DidChangeWatch
 	return notImplemented("DidChangeWatchedFiles")
 }
 
+<<<<<<< HEAD
 func (s *Server) Symbols(context.Context, *protocol.WorkspaceSymbolParams) ([]protocol.SymbolInformation, error) {
 	return nil, notImplemented("Symbols")
+=======
+func (s *Server) Symbol(context.Context, *protocol.WorkspaceSymbolParams) ([]protocol.SymbolInformation, error) {
+	return nil, notImplemented("Symbol")
+>>>>>>> v0.0.4
 }
 
 func (s *Server) ExecuteCommand(context.Context, *protocol.ExecuteCommandParams) (interface{}, error) {
 	return nil, notImplemented("ExecuteCommand")
 }
 
+<<<<<<< HEAD
+=======
+// Text Synchronization
+
+>>>>>>> v0.0.4
 func (s *Server) DidOpen(ctx context.Context, params *protocol.DidOpenTextDocumentParams) error {
 	return s.cacheAndDiagnose(ctx, span.NewURI(params.TextDocument.URI), params.TextDocument.Text)
 }
 
+<<<<<<< HEAD
 func (s *Server) applyChanges(ctx context.Context, params *protocol.DidChangeTextDocumentParams) (string, error) {
 	if len(params.ContentChanges) == 1 && params.ContentChanges[0].Range == nil {
 		// If range is empty, we expect the full content of file, i.e. a single change with no range.
@@ -325,6 +387,10 @@ func (s *Server) DidChange(ctx context.Context, params *protocol.DidChangeTextDo
 		text = change.Text
 	}
 	return s.cacheAndDiagnose(ctx, span.NewURI(params.TextDocument.URI), text)
+=======
+func (s *Server) DidChange(ctx context.Context, params *protocol.DidChangeTextDocumentParams) error {
+	return s.didChange(ctx, params)
+>>>>>>> v0.0.4
 }
 
 func (s *Server) WillSave(context.Context, *protocol.WillSaveTextDocumentParams) error {
@@ -335,6 +401,7 @@ func (s *Server) WillSaveWaitUntil(context.Context, *protocol.WillSaveTextDocume
 	return nil, notImplemented("WillSaveWaitUntil")
 }
 
+<<<<<<< HEAD
 func (s *Server) DidSave(context.Context, *protocol.DidSaveTextDocumentParams) error {
 	return nil // ignore
 }
@@ -368,6 +435,20 @@ func (s *Server) Completion(ctx context.Context, params *protocol.CompletionPara
 		IsIncomplete: false,
 		Items:        toProtocolCompletionItems(items, prefix, params.Position, s.snippetsSupported, s.signatureHelpEnabled),
 	}, nil
+=======
+func (s *Server) DidSave(ctx context.Context, params *protocol.DidSaveTextDocumentParams) error {
+	return s.didSave(ctx, params)
+}
+
+func (s *Server) DidClose(ctx context.Context, params *protocol.DidCloseTextDocumentParams) error {
+	return s.didClose(ctx, params)
+}
+
+// Language Features
+
+func (s *Server) Completion(ctx context.Context, params *protocol.CompletionParams) (*protocol.CompletionList, error) {
+	return s.completion(ctx, params)
+>>>>>>> v0.0.4
 }
 
 func (s *Server) CompletionResolve(context.Context, *protocol.CompletionItem) (*protocol.CompletionItem, error) {
@@ -375,6 +456,7 @@ func (s *Server) CompletionResolve(context.Context, *protocol.CompletionItem) (*
 }
 
 func (s *Server) Hover(ctx context.Context, params *protocol.TextDocumentPositionParams) (*protocol.Hover, error) {
+<<<<<<< HEAD
 	uri := span.NewURI(params.TextDocument.URI)
 	view := s.findView(ctx, uri)
 	f, m, err := newColumnMap(ctx, view, uri)
@@ -503,6 +585,21 @@ func (s *Server) TypeDefinition(ctx context.Context, params *protocol.TextDocume
 		return nil, err
 	}
 	return []protocol.Location{loc}, nil
+=======
+	return s.hover(ctx, params)
+}
+
+func (s *Server) SignatureHelp(ctx context.Context, params *protocol.TextDocumentPositionParams) (*protocol.SignatureHelp, error) {
+	return s.signatureHelp(ctx, params)
+}
+
+func (s *Server) Definition(ctx context.Context, params *protocol.TextDocumentPositionParams) ([]protocol.Location, error) {
+	return s.definition(ctx, params)
+}
+
+func (s *Server) TypeDefinition(ctx context.Context, params *protocol.TextDocumentPositionParams) ([]protocol.Location, error) {
+	return s.typeDefinition(ctx, params)
+>>>>>>> v0.0.4
 }
 
 func (s *Server) Implementation(context.Context, *protocol.TextDocumentPositionParams) ([]protocol.Location, error) {
@@ -514,6 +611,7 @@ func (s *Server) References(context.Context, *protocol.ReferenceParams) ([]proto
 }
 
 func (s *Server) DocumentHighlight(ctx context.Context, params *protocol.TextDocumentPositionParams) ([]protocol.DocumentHighlight, error) {
+<<<<<<< HEAD
 	uri := span.NewURI(params.TextDocument.URI)
 	view := s.findView(ctx, uri)
 	f, m, err := newColumnMap(ctx, view, uri)
@@ -572,6 +670,17 @@ func (s *Server) CodeAction(ctx context.Context, params *protocol.CodeActionPara
 			},
 		},
 	}, nil
+=======
+	return s.documentHighlight(ctx, params)
+}
+
+func (s *Server) DocumentSymbol(ctx context.Context, params *protocol.DocumentSymbolParams) ([]protocol.DocumentSymbol, error) {
+	return s.documentSymbol(ctx, params)
+}
+
+func (s *Server) CodeAction(ctx context.Context, params *protocol.CodeActionParams) ([]protocol.CodeAction, error) {
+	return s.codeAction(ctx, params)
+>>>>>>> v0.0.4
 }
 
 func (s *Server) CodeLens(context.Context, *protocol.CodeLensParams) ([]protocol.CodeLens, error) {
@@ -599,6 +708,7 @@ func (s *Server) ColorPresentation(context.Context, *protocol.ColorPresentationP
 }
 
 func (s *Server) Formatting(ctx context.Context, params *protocol.DocumentFormattingParams) ([]protocol.TextEdit, error) {
+<<<<<<< HEAD
 	uri := span.NewURI(params.TextDocument.URI)
 	view := s.findView(ctx, uri)
 	spn := span.New(uri, span.Point{}, span.Point{})
@@ -617,6 +727,13 @@ func (s *Server) RangeFormatting(ctx context.Context, params *protocol.DocumentR
 		return nil, err
 	}
 	return formatRange(ctx, view, spn)
+=======
+	return s.formatting(ctx, params)
+}
+
+func (s *Server) RangeFormatting(ctx context.Context, params *protocol.DocumentRangeFormattingParams) ([]protocol.TextEdit, error) {
+	return s.rangeFormatting(ctx, params)
+>>>>>>> v0.0.4
 }
 
 func (s *Server) OnTypeFormatting(context.Context, *protocol.DocumentOnTypeFormattingParams) ([]protocol.TextEdit, error) {
@@ -627,6 +744,7 @@ func (s *Server) Rename(context.Context, *protocol.RenameParams) ([]protocol.Wor
 	return nil, notImplemented("Rename")
 }
 
+<<<<<<< HEAD
 func (s *Server) FoldingRanges(context.Context, *protocol.FoldingRangeParams) ([]protocol.FoldingRange, error) {
 	return nil, notImplemented("FoldingRanges")
 }
@@ -664,11 +782,16 @@ func applyEnv(env []string, k string, v interface{}) []string {
 		}
 	}
 	return append(env, value)
+=======
+func (s *Server) FoldingRange(context.Context, *protocol.FoldingRangeParams) ([]protocol.FoldingRange, error) {
+	return nil, notImplemented("FoldingRange")
+>>>>>>> v0.0.4
 }
 
 func notImplemented(method string) *jsonrpc2.Error {
 	return jsonrpc2.NewErrorf(jsonrpc2.CodeMethodNotFound, "method %q not yet implemented", method)
 }
+<<<<<<< HEAD
 
 func (s *Server) findView(ctx context.Context, uri span.URI) *cache.View {
 	// first see if a view already has this file
@@ -692,3 +815,5 @@ func (s *Server) findView(ctx context.Context, uri span.URI) *cache.View {
 	//TODO: are there any more heuristics we can use?
 	return s.views[0]
 }
+=======
+>>>>>>> v0.0.4

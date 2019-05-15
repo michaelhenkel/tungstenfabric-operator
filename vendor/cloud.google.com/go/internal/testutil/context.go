@@ -17,6 +17,10 @@ package testutil
 
 import (
 	"context"
+<<<<<<< HEAD
+=======
+	"errors"
+>>>>>>> v0.0.4
 	"fmt"
 	"io/ioutil"
 	"log"
@@ -139,3 +143,16 @@ func CanReplay(replayFilename string) bool {
 	_, err := os.Stat(replayFilename)
 	return err == nil
 }
+<<<<<<< HEAD
+=======
+
+// ErroringTokenSource is a token source for testing purposes,
+// to always return a non-nil error to its caller. It is useful
+// when testing error responses with bad oauth2 credentials.
+type ErroringTokenSource struct{}
+
+// Token implements oauth2.TokenSource, returning a nil oauth2.Token and a non-nil error.
+func (fts ErroringTokenSource) Token() (*oauth2.Token, error) {
+	return nil, errors.New("intentional error")
+}
+>>>>>>> v0.0.4

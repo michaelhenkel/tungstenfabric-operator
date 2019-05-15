@@ -22,6 +22,10 @@ import (
 	"sync/atomic"
 	"time"
 
+<<<<<<< HEAD
+=======
+	"cloud.google.com/go/internal/trace"
+>>>>>>> v0.0.4
 	"google.golang.org/api/iterator"
 	sppb "google.golang.org/genproto/googleapis/spanner/v1"
 	"google.golang.org/grpc"
@@ -80,8 +84,13 @@ type ReadOptions struct {
 // ReadWithOptions returns a RowIterator for reading multiple rows from the database.
 // Pass a ReadOptions to modify the read operation.
 func (t *txReadOnly) ReadWithOptions(ctx context.Context, table string, keys KeySet, columns []string, opts *ReadOptions) (ri *RowIterator) {
+<<<<<<< HEAD
 	ctx = startSpan(ctx, "cloud.google.com/go/spanner.Read")
 	defer func() { endSpan(ctx, ri.err) }()
+=======
+	ctx = trace.StartSpan(ctx, "cloud.google.com/go/spanner.Read")
+	defer func() { trace.EndSpan(ctx, ri.err) }()
+>>>>>>> v0.0.4
 	var (
 		sh  *sessionHandle
 		ts  *sppb.TransactionSelector
@@ -188,8 +197,13 @@ func (t *txReadOnly) AnalyzeQuery(ctx context.Context, statement Statement) (*sp
 }
 
 func (t *txReadOnly) query(ctx context.Context, statement Statement, mode sppb.ExecuteSqlRequest_QueryMode) (ri *RowIterator) {
+<<<<<<< HEAD
 	ctx = startSpan(ctx, "cloud.google.com/go/spanner.Query")
 	defer func() { endSpan(ctx, ri.err) }()
+=======
+	ctx = trace.StartSpan(ctx, "cloud.google.com/go/spanner.Query")
+	defer func() { trace.EndSpan(ctx, ri.err) }()
+>>>>>>> v0.0.4
 	req, sh, err := t.prepareExecuteSQL(ctx, statement, mode)
 	if err != nil {
 		return &RowIterator{err: err}
@@ -659,8 +673,13 @@ func (t *ReadWriteTransaction) BufferWrite(ms []*Mutation) error {
 // Update returns an error if the statement is a query. However, the
 // query is executed, and any data read will be validated upon commit.
 func (t *ReadWriteTransaction) Update(ctx context.Context, stmt Statement) (rowCount int64, err error) {
+<<<<<<< HEAD
 	ctx = startSpan(ctx, "cloud.google.com/go/spanner.Update")
 	defer func() { endSpan(ctx, err) }()
+=======
+	ctx = trace.StartSpan(ctx, "cloud.google.com/go/spanner.Update")
+	defer func() { trace.EndSpan(ctx, err) }()
+>>>>>>> v0.0.4
 	req, sh, err := t.prepareExecuteSQL(ctx, stmt, sppb.ExecuteSqlRequest_NORMAL)
 	if err != nil {
 		return 0, err
@@ -682,8 +701,13 @@ func (t *ReadWriteTransaction) Update(ctx context.Context, stmt Statement) (rowC
 // affected rows for the given query at the same index. If an error occurs,
 // counts will be returned up to the query that encountered the error.
 func (t *ReadWriteTransaction) BatchUpdate(ctx context.Context, stmts []Statement) (_ []int64, err error) {
+<<<<<<< HEAD
 	ctx = startSpan(ctx, "cloud.google.com/go/spanner.BatchUpdate")
 	defer func() { endSpan(ctx, err) }()
+=======
+	ctx = trace.StartSpan(ctx, "cloud.google.com/go/spanner.BatchUpdate")
+	defer func() { trace.EndSpan(ctx, err) }()
+>>>>>>> v0.0.4
 
 	sh, ts, err := t.acquire(ctx)
 	if err != nil {

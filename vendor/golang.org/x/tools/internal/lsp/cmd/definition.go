@@ -5,11 +5,15 @@
 package cmd
 
 import (
+<<<<<<< HEAD
 	"bytes"
+=======
+>>>>>>> v0.0.4
 	"context"
 	"encoding/json"
 	"flag"
 	"fmt"
+<<<<<<< HEAD
 	"go/types"
 	"os"
 
@@ -17,6 +21,13 @@ import (
 	"golang.org/x/tools/internal/lsp/cache"
 	"golang.org/x/tools/internal/lsp/source"
 	"golang.org/x/tools/internal/lsp/xlog"
+=======
+	"os"
+	"strings"
+
+	guru "golang.org/x/tools/cmd/guru/serial"
+	"golang.org/x/tools/internal/lsp/protocol"
+>>>>>>> v0.0.4
 	"golang.org/x/tools/internal/span"
 	"golang.org/x/tools/internal/tool"
 )
@@ -31,9 +42,15 @@ type Definition struct {
 // help is still valid.
 // They refer to "Set" in "flag.FlagSet" from the DetailedHelp method below.
 const (
+<<<<<<< HEAD
 	exampleLine   = 47
 	exampleColumn = 47
 	exampleOffset = 1359
+=======
+	exampleLine   = 44
+	exampleColumn = 47
+	exampleOffset = 1270
+>>>>>>> v0.0.4
 )
 
 // definition implements the definition noun for the query command.
@@ -62,6 +79,7 @@ func (d *definition) Run(ctx context.Context, args ...string) error {
 	if len(args) != 1 {
 		return tool.CommandLineErrorf("definition expects 1 argument")
 	}
+<<<<<<< HEAD
 	log := xlog.New(xlog.StdSink{})
 	view := cache.NewView(ctx, log, "definition_test", span.FileURI(d.query.app.Config.Dir), &d.query.app.Config)
 	from := span.Parse(args[0])
@@ -87,6 +105,63 @@ func (d *definition) Run(ctx context.Context, args ...string) error {
 		result, err = buildDefinition(ctx, view, ident)
 	case emulateGuru:
 		result, err = buildGuruDefinition(ctx, view, ident)
+=======
+	client := &baseClient{}
+	server, err := d.query.app.connect(ctx, client)
+	if err != nil {
+		return err
+	}
+	from := span.Parse(args[0])
+	m, err := client.AddFile(ctx, from.URI())
+	if err != nil {
+		return err
+	}
+	loc, err := m.Location(from)
+	if err != nil {
+		return err
+	}
+	p := protocol.TextDocumentPositionParams{
+		TextDocument: protocol.TextDocumentIdentifier{URI: loc.URI},
+		Position:     loc.Range.Start,
+	}
+	locs, err := server.Definition(ctx, &p)
+	if err != nil {
+		return fmt.Errorf("%v: %v", from, err)
+	}
+
+	if len(locs) == 0 {
+		return fmt.Errorf("%v: not an identifier", from)
+	}
+	hover, err := server.Hover(ctx, &p)
+	if err != nil {
+		return fmt.Errorf("%v: %v", from, err)
+	}
+	if hover == nil {
+		return fmt.Errorf("%v: not an identifier", from)
+	}
+	m, err = client.AddFile(ctx, span.NewURI(locs[0].URI))
+	if err != nil {
+		return fmt.Errorf("%v: %v", from, err)
+	}
+	definition, err := m.Span(locs[0])
+	if err != nil {
+		return fmt.Errorf("%v: %v", from, err)
+	}
+	description := strings.TrimSpace(hover.Contents.Value)
+	var result interface{}
+	switch d.query.Emulate {
+	case "":
+		result = &Definition{
+			Span:        definition,
+			Description: description,
+		}
+	case emulateGuru:
+		pos := span.New(definition.URI(), definition.Start(), definition.Start())
+		result = &guru.Definition{
+			ObjPos: fmt.Sprint(pos),
+			Desc:   description,
+		}
+>>>>>>> v0.0.4
 	default:
 		return fmt.Errorf("unknown emulation for definition: %s", d.query.Emulate)
 	}
@@ -108,6 +183,7 @@ func (d *definition) Run(ctx context.Context, args ...string) error {
 	}
 	return nil
 }
+<<<<<<< HEAD
 
 func buildDefinition(ctx context.Context, view source.View, ident *source.IdentifierInfo) (*Definition, error) {
 	content, err := ident.Hover(ctx, nil)
@@ -187,3 +263,5 @@ func buildGuruDefinition(ctx context.Context, view source.View, ident *source.Id
 		Desc:   buf.String(),
 	}, nil
 }
+=======
+>>>>>>> v0.0.4

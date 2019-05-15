@@ -15,13 +15,25 @@
 package ansible
 
 import (
+<<<<<<< HEAD
 	"github.com/operator-framework/operator-sdk/internal/pkg/scaffold"
 	"github.com/operator-framework/operator-sdk/internal/pkg/scaffold/input"
+=======
+	"fmt"
+
+	"github.com/operator-framework/operator-sdk/internal/pkg/scaffold"
+	"github.com/operator-framework/operator-sdk/internal/pkg/scaffold/input"
+	"github.com/operator-framework/operator-sdk/internal/pkg/scaffold/internal/deps"
+>>>>>>> v0.0.4
 )
 
 // GopkgToml - the Gopkg.toml file for a hybrid operator
 type GopkgToml struct {
+<<<<<<< HEAD
 	input.Input
+=======
+	StaticInput
+>>>>>>> v0.0.4
 }
 
 func (s *GopkgToml) GetInput() (input.Input, error) {
@@ -36,7 +48,11 @@ const gopkgTomlTmpl = `[[constraint]]
   name = "github.com/operator-framework/operator-sdk"
   # The version rule is used for a specific release and the master branch for in between releases.
   branch = "master" #osdk_branch_annotation
+<<<<<<< HEAD
   # version = "=v0.6.0" #osdk_version_annotation
+=======
+  # version = "=v0.7.0" #osdk_version_annotation
+>>>>>>> v0.0.4
 
 [[override]]
   name = "k8s.io/api"
@@ -54,3 +70,14 @@ const gopkgTomlTmpl = `[[constraint]]
   go-tests = true
   unused-packages = true
 `
+<<<<<<< HEAD
+=======
+
+func PrintDepGopkgTOML(asFile bool) error {
+	if asFile {
+		_, err := fmt.Println(gopkgTomlTmpl)
+		return err
+	}
+	return deps.PrintDepGopkgTOML(gopkgTomlTmpl)
+}
+>>>>>>> v0.0.4

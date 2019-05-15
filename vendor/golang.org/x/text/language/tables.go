@@ -2,6 +2,7 @@
 
 package language
 
+<<<<<<< HEAD
 import "golang.org/x/text/internal/tag"
 
 // CLDRVersion is the CLDR version from which the tables in this package are derived.
@@ -993,6 +994,24 @@ var suppressScript = [1330]uint8{
 	0x00, 0x00,
 }
 
+=======
+// CLDRVersion is the CLDR version from which the tables in this package are derived.
+const CLDRVersion = "32"
+
+const (
+	_de  = 269
+	_en  = 313
+	_fr  = 350
+	_it  = 505
+	_mo  = 784
+	_no  = 879
+	_nb  = 839
+	_pt  = 960
+	_sh  = 1031
+	_mul = 806
+	_und = 0
+)
+>>>>>>> v0.0.4
 const (
 	_001 = 1
 	_419 = 31
@@ -1009,6 +1028,7 @@ const (
 	_XC  = 325
 	_XK  = 333
 )
+<<<<<<< HEAD
 
 // isoRegionOffset needs to be added to the index of regionISO to obtain the regionID
 // for 2-letter ISO codes. (The first isoRegionOffset regionIDs are reserved for
@@ -3293,6 +3313,22 @@ var likelyRegionGroup = [33]likelyTag{
 
 // Size: 358 bytes, 358 elements
 var regionToGroups = [358]uint8{
+=======
+const (
+	_Latn = 87
+	_Hani = 54
+	_Hans = 56
+	_Hant = 57
+	_Qaaa = 139
+	_Qaai = 147
+	_Qabx = 188
+	_Zinh = 236
+	_Zyyy = 241
+	_Zzzz = 242
+)
+
+var regionToGroups = []uint8{ // 357 elements
+>>>>>>> v0.0.4
 	// Entry 0 - 3F
 	0x00, 0x00, 0x00, 0x04, 0x04, 0x00, 0x00, 0x04,
 	0x00, 0x00, 0x00, 0x00, 0x04, 0x04, 0x04, 0x00,
@@ -3343,6 +3379,7 @@ var regionToGroups = [358]uint8{
 	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
 	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
 	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+<<<<<<< HEAD
 	0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
 }
 
@@ -3352,6 +3389,16 @@ var paradigmLocales = [3][3]uint16{
 	1: [3]uint16{0x13e, 0x0, 0x1f},
 	2: [3]uint16{0x3c0, 0x41, 0xee},
 }
+=======
+	0x00, 0x00, 0x00, 0x00, 0x00,
+} // Size: 381 bytes
+
+var paradigmLocales = [][3]uint16{ // 3 elements
+	0: [3]uint16{0x139, 0x0, 0x7b},
+	1: [3]uint16{0x13e, 0x0, 0x1f},
+	2: [3]uint16{0x3c0, 0x41, 0xee},
+} // Size: 42 bytes
+>>>>>>> v0.0.4
 
 type mutualIntelligibility struct {
 	want     uint16
@@ -3359,7 +3406,10 @@ type mutualIntelligibility struct {
 	distance uint8
 	oneway   bool
 }
+<<<<<<< HEAD
 
+=======
+>>>>>>> v0.0.4
 type scriptIntelligibility struct {
 	wantLang   uint16
 	haveLang   uint16
@@ -3367,7 +3417,10 @@ type scriptIntelligibility struct {
 	haveScript uint8
 	distance   uint8
 }
+<<<<<<< HEAD
 
+=======
+>>>>>>> v0.0.4
 type regionIntelligibility struct {
 	lang     uint16
 	script   uint8
@@ -3378,8 +3431,12 @@ type regionIntelligibility struct {
 // matchLang holds pairs of langIDs of base languages that are typically
 // mutually intelligible. Each pair is associated with a confidence and
 // whether the intelligibility goes one or both ways.
+<<<<<<< HEAD
 // Size: 678 bytes, 113 elements
 var matchLang = [113]mutualIntelligibility{
+=======
+var matchLang = []mutualIntelligibility{ // 113 elements
+>>>>>>> v0.0.4
 	0:   {want: 0x1d1, have: 0xb7, distance: 0x4, oneway: false},
 	1:   {want: 0x407, have: 0xb7, distance: 0x4, oneway: false},
 	2:   {want: 0x407, have: 0x1d1, distance: 0x4, oneway: false},
@@ -3493,12 +3550,20 @@ var matchLang = [113]mutualIntelligibility{
 	110: {want: 0x512, have: 0x139, distance: 0xa, oneway: true},
 	111: {want: 0x518, have: 0x139, distance: 0xa, oneway: true},
 	112: {want: 0x52f, have: 0x139, distance: 0xa, oneway: true},
+<<<<<<< HEAD
 }
 
 // matchScript holds pairs of scriptIDs where readers of one script
 // can typically also read the other. Each is associated with a confidence.
 // Size: 208 bytes, 26 elements
 var matchScript = [26]scriptIntelligibility{
+=======
+} // Size: 702 bytes
+
+// matchScript holds pairs of scriptIDs where readers of one script
+// can typically also read the other. Each is associated with a confidence.
+var matchScript = []scriptIntelligibility{ // 26 elements
+>>>>>>> v0.0.4
 	0:  {wantLang: 0x432, haveLang: 0x432, wantScript: 0x57, haveScript: 0x1f, distance: 0x5},
 	1:  {wantLang: 0x432, haveLang: 0x432, wantScript: 0x1f, haveScript: 0x57, distance: 0x5},
 	2:  {wantLang: 0x58, haveLang: 0x3e2, wantScript: 0x57, haveScript: 0x1f, distance: 0xa},
@@ -3525,10 +3590,16 @@ var matchScript = [26]scriptIntelligibility{
 	23: {wantLang: 0x512, haveLang: 0x139, wantScript: 0x3b, haveScript: 0x57, distance: 0xa},
 	24: {wantLang: 0x529, haveLang: 0x529, wantScript: 0x38, haveScript: 0x39, distance: 0xf},
 	25: {wantLang: 0x529, haveLang: 0x529, wantScript: 0x39, haveScript: 0x38, distance: 0x13},
+<<<<<<< HEAD
 }
 
 // Size: 90 bytes, 15 elements
 var matchRegion = [15]regionIntelligibility{
+=======
+} // Size: 232 bytes
+
+var matchRegion = []regionIntelligibility{ // 15 elements
+>>>>>>> v0.0.4
 	0:  {lang: 0x3a, script: 0x0, group: 0x4, distance: 0x4},
 	1:  {lang: 0x3a, script: 0x0, group: 0x84, distance: 0x4},
 	2:  {lang: 0x139, script: 0x0, group: 0x1, distance: 0x4},
@@ -3544,6 +3615,7 @@ var matchRegion = [15]regionIntelligibility{
 	12: {lang: 0x13e, script: 0x0, group: 0x80, distance: 0x5},
 	13: {lang: 0x3c0, script: 0x0, group: 0x80, distance: 0x5},
 	14: {lang: 0x529, script: 0x39, group: 0x80, distance: 0x5},
+<<<<<<< HEAD
 }
 
 // Size: 264 bytes, 33 elements
@@ -3684,3 +3756,8 @@ var parents = [5]parentRel{
 }
 
 // Total table size 27238 bytes (26KiB); checksum: C9BBE4D5
+=======
+} // Size: 114 bytes
+
+// Total table size 1471 bytes (1KiB); checksum: 4CB1CD46
+>>>>>>> v0.0.4

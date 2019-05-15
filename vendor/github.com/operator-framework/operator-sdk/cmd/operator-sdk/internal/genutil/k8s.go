@@ -16,7 +16,10 @@ package genutil
 
 import (
 	"fmt"
+<<<<<<< HEAD
 	"io/ioutil"
+=======
+>>>>>>> v0.0.4
 	"os/exec"
 	"path/filepath"
 	"strings"
@@ -39,7 +42,10 @@ func K8sCodegen(hf string) error {
 	binDir := filepath.Join(wd, scaffold.BuildBinDir)
 
 	genDirs := []string{
+<<<<<<< HEAD
 		"./cmd/defaulter-gen",
+=======
+>>>>>>> v0.0.4
 		"./cmd/client-gen",
 		"./cmd/lister-gen",
 		"./cmd/informer-gen",
@@ -64,10 +70,13 @@ func K8sCodegen(hf string) error {
 	if err = withHeaderFile(hf, fdc); err != nil {
 		return err
 	}
+<<<<<<< HEAD
 	fd := func(a string) error { return defaulterGen(binDir, repoPkg, a, gvMap) }
 	if err = withHeaderFile(hf, fd); err != nil {
 		return err
 	}
+=======
+>>>>>>> v0.0.4
 
 	log.Info("Code-generation complete.")
 	return nil
@@ -84,6 +93,7 @@ func deepcopyGen(binDir, repoPkg, hf string, gvMap map[string][]string) (err err
 		"--go-header-file", hf,
 	}
 	cmd := exec.Command(filepath.Join(binDir, "deepcopy-gen"), args...)
+<<<<<<< HEAD
 	if projutil.IsGoVerbose() {
 		err = projutil.ExecCmd(cmd)
 	} else {
@@ -92,10 +102,14 @@ func deepcopyGen(binDir, repoPkg, hf string, gvMap map[string][]string) (err err
 		err = cmd.Run()
 	}
 	if err != nil {
+=======
+	if err = projutil.ExecCmd(cmd); err != nil {
+>>>>>>> v0.0.4
 		return fmt.Errorf("failed to perform deepcopy code-generation: %v", err)
 	}
 	return nil
 }
+<<<<<<< HEAD
 
 func defaulterGen(binDir, repoPkg, hf string, gvMap map[string][]string) (err error) {
 	apisPkg := filepath.Join(repoPkg, scaffold.ApisDir)
@@ -119,3 +133,5 @@ func defaulterGen(binDir, repoPkg, hf string, gvMap map[string][]string) (err er
 	}
 	return nil
 }
+=======
+>>>>>>> v0.0.4

@@ -2759,6 +2759,7 @@ type TestSpecification struct {
 	// AndroidTestLoop: An Android Application with a Test Loop.
 	AndroidTestLoop *AndroidTestLoop `json:"androidTestLoop,omitempty"`
 
+<<<<<<< HEAD
 	// AutoGoogleLogin: Enables automatic Google account login.
 	// If set, the service will automatically generate a Google test account
 	// and
@@ -2773,6 +2774,8 @@ type TestSpecification struct {
 	// Default is false.
 	AutoGoogleLogin bool `json:"autoGoogleLogin,omitempty"`
 
+=======
+>>>>>>> v0.0.4
 	// DisablePerformanceMetrics: Disables performance metrics recording;
 	// may reduce test latency.
 	DisablePerformanceMetrics bool `json:"disablePerformanceMetrics,omitempty"`

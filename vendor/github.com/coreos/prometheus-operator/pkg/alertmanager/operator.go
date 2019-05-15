@@ -73,6 +73,11 @@ type Config struct {
 	Host                         string
 	LocalHost                    string
 	ConfigReloaderImage          string
+<<<<<<< HEAD
+=======
+	ConfigReloaderCPU            string
+	ConfigReloaderMemory         string
+>>>>>>> v0.0.4
 	AlertmanagerDefaultBaseImage string
 	Namespaces                   []string
 	Labels                       prometheusoperator.Labels
@@ -114,6 +119,11 @@ func New(c prometheusoperator.Config, logger log.Logger) (*Operator, error) {
 			Host:                         c.Host,
 			LocalHost:                    c.LocalHost,
 			ConfigReloaderImage:          c.ConfigReloaderImage,
+<<<<<<< HEAD
+=======
+			ConfigReloaderCPU:            c.ConfigReloaderCPU,
+			ConfigReloaderMemory:         c.ConfigReloaderMemory,
+>>>>>>> v0.0.4
 			AlertmanagerDefaultBaseImage: c.AlertmanagerDefaultBaseImage,
 			Namespaces:                   c.Namespaces,
 			CrdGroup:                     c.CrdGroup,

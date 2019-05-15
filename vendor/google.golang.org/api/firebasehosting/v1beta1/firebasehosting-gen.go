@@ -308,6 +308,7 @@ func (s *CertHttpChallenge) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+<<<<<<< HEAD
 // CloudRunRewrite: A configured rewrite that will direct any requests
 // to a Cloud Run service. If
 // the Cloud Run service does not exist when setting or updating your
@@ -324,6 +325,24 @@ type CloudRunRewrite struct {
 	Region string `json:"region,omitempty"`
 
 	// ServiceId: Required. User supplied ID of the Cloud Run service.
+=======
+// CloudRunRewrite: A configured rewrite that directs requests to a
+// Cloud Run service. If the
+// Cloud Run service does not exist when setting or updating your
+// Firebase
+// Hosting configuration, then the request fails. Any errors from the
+// Cloud Run
+// service are passed to the end user (for example, if you delete a
+// service, any
+// requests directed to that service receive a `404` error).
+type CloudRunRewrite struct {
+	// Region: Optional. User-provided region where the Cloud Run service is
+	// hosted.<br>
+	// Defaults to `us-central1` if not supplied.
+	Region string `json:"region,omitempty"`
+
+	// ServiceId: Required. User-defined ID of the Cloud Run service.
+>>>>>>> v0.0.4
 	ServiceId string `json:"serviceId,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Region") to

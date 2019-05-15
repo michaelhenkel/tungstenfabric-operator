@@ -15,6 +15,7 @@
 package scaffold
 
 import (
+<<<<<<< HEAD
 	"bytes"
 	"encoding/json"
 	"errors"
@@ -25,6 +26,12 @@ import (
 	"github.com/operator-framework/operator-sdk/internal/pkg/scaffold/input"
 
 	"github.com/BurntSushi/toml"
+=======
+	"fmt"
+
+	"github.com/operator-framework/operator-sdk/internal/pkg/scaffold/input"
+	"github.com/operator-framework/operator-sdk/internal/pkg/scaffold/internal/deps"
+>>>>>>> v0.0.4
 )
 
 const GopkgTomlFile = "Gopkg.toml"
@@ -43,7 +50,10 @@ func (s *GopkgToml) GetInput() (input.Input, error) {
 
 const gopkgTomlTmpl = `# Force dep to vendor the code generators, which aren't imported just used at dev time.
 required = [
+<<<<<<< HEAD
   "k8s.io/code-generator/cmd/defaulter-gen",
+=======
+>>>>>>> v0.0.4
   "k8s.io/code-generator/cmd/deepcopy-gen",
   "k8s.io/code-generator/cmd/conversion-gen",
   "k8s.io/code-generator/cmd/client-gen",
@@ -93,7 +103,11 @@ required = [
 
 [[override]]
   name = "github.com/coreos/prometheus-operator"
+<<<<<<< HEAD
   version = "=v0.26.0"
+=======
+  version = "=v0.29.0"
+>>>>>>> v0.0.4
 
 [[override]]
   name = "sigs.k8s.io/controller-runtime"
@@ -103,7 +117,11 @@ required = [
   name = "github.com/operator-framework/operator-sdk"
   # The version rule is used for a specific release and the master branch for in between releases.
   branch = "master" #osdk_branch_annotation
+<<<<<<< HEAD
   # version = "=v0.6.0" #osdk_version_annotation
+=======
+  # version = "=v0.7.0" #osdk_version_annotation
+>>>>>>> v0.0.4
 
 [prune]
   go-tests = true
@@ -118,6 +136,7 @@ required = [
     non-go = false
 `
 
+<<<<<<< HEAD
 func PrintDepsAsFile() {
 	fmt.Println(gopkgTomlTmpl)
 }
@@ -193,4 +212,12 @@ func writeDepRow(w *tabwriter.Writer, dep map[string]interface{}) error {
 
 	_, err := w.Write([]byte(name + strings.Repeat("\t", col) + ver + "\t\n"))
 	return err
+=======
+func PrintDepGopkgTOML(asFile bool) error {
+	if asFile {
+		_, err := fmt.Println(gopkgTomlTmpl)
+		return err
+	}
+	return deps.PrintDepGopkgTOML(gopkgTomlTmpl)
+>>>>>>> v0.0.4
 }

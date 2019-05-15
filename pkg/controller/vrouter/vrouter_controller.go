@@ -2,17 +2,27 @@ package vrouter
 
 import (
 	"context"
+<<<<<<< HEAD
 
 	tfv1alpha1 "github.com/michaelhenkel/tungstenfabric-operator/pkg/apis/tf/v1alpha1"
 
 	corev1 "k8s.io/api/core/v1"
 	"k8s.io/apimachinery/pkg/api/errors"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
+=======
+	"reflect"
+	tfv1alpha1 "github.com/michaelhenkel/tungstenfabric-operator/pkg/apis/tf/v1alpha1"
+	corev1 "k8s.io/api/core/v1"
+	"k8s.io/apimachinery/pkg/api/errors"
+>>>>>>> v0.0.4
 	"k8s.io/apimachinery/pkg/runtime"
 	"k8s.io/apimachinery/pkg/types"
 	"sigs.k8s.io/controller-runtime/pkg/client"
 	"sigs.k8s.io/controller-runtime/pkg/controller"
+<<<<<<< HEAD
 	"sigs.k8s.io/controller-runtime/pkg/controller/controllerutil"
+=======
+>>>>>>> v0.0.4
 	"sigs.k8s.io/controller-runtime/pkg/handler"
 	"sigs.k8s.io/controller-runtime/pkg/manager"
 	"sigs.k8s.io/controller-runtime/pkg/reconcile"
@@ -99,6 +109,7 @@ func (r *ReconcileVrouter) Reconcile(request reconcile.Request) (reconcile.Resul
 		// Error reading the object - requeue the request.
 		return reconcile.Result{}, err
 	}
+<<<<<<< HEAD
 
 	// Define a new Pod object
 	pod := newPodForCR(instance)
@@ -150,4 +161,97 @@ func newPodForCR(cr *tfv1alpha1.Vrouter) *corev1.Pod {
 			},
 		},
 	}
+=======
+	baseInstance := &tfv1alpha1.TungstenfabricManager{}
+	err = r.client.Get(context.TODO(), types.NamespacedName{Name: instance.Name, Namespace: instance.Namespace}, baseInstance)
+	if err != nil && errors.IsNotFound(err){
+		reqLogger.Info("baseconfig instance not found")
+	}
+	reqLogger.Info("baseconfig instance found")
+	var configMap = make(map[string]string)
+	for k,v := range(baseInstance.Spec.ControlConfig){
+		configMap[k] = v
+	}
+	configInstance := &tfv1alpha1.ConfigCluster{}
+	controlInstance := &tfv1alpha1.ControlCluster{}
+	var resource tfv1alpha1.TungstenFabricResource
+	clusterResource := &tfv1alpha1.ClusterResource{
+		Name: "vrouter",
+		InstanceName: instance.Name,
+		InstanceNamespace: instance.Namespace,
+		Containers: instance.Spec.Containers,
+		General: instance.Spec.General,
+		ResourceConfig: configMap,
+		BaseInstance: baseInstance,
+		InitContainers: instance.Spec.InitContainers,
+		WaitFor: []string{"control","config"},
+		ControlInstance: controlInstance,
+		ConfigInstance: configInstance,
+		Type: instance.Spec.Type,
+		VolumeList: map[string]bool{},
+	}
+	resource = clusterResource
+
+	// Create Deployment
+	err = resource.CreateDeployment(r.client, instance, r.scheme)
+	if err != nil {
+		reqLogger.Error(err, "daemonset creation failed")
+		return reconcile.Result{Requeue: true}, nil
+	}
+	reqLogger.Info(clusterResource.Name + " daemonset created")
+
+	var podNames []string
+	podNames, err = resource.GetPodNames(r.client)
+	if err != nil {
+		reqLogger.Error(err, "Failed to get PodNames")
+		return reconcile.Result{}, err
+	} else {
+		reqLogger.Info("Got PodNames")
+	}
+
+	if !reflect.DeepEqual(podNames, instance.Status.Nodes) {
+		instance.Status.Nodes = podNames
+		err = r.client.Update(context.TODO(), instance)
+		if err != nil {
+			reqLogger.Error(err, "Failed to update Pod status.")
+			return reconcile.Result{}, err
+		}
+	}
+	reqLogger.Info("Updated Node status with PodNames")
+
+/*
+	var initContainerRunning bool
+	initContainerRunning, err = resource.WaitForInitContainer(r.client)
+	if err != nil || !initContainerRunning{
+		reqLogger.Info("Init container not running")
+		return reconcile.Result{Requeue: true}, nil
+	}
+	reqLogger.Info("Init Container running")
+
+	clusterResource.ResourceConfig["CONTROLLER_NODES"] = resource.GetNodeIpList()
+	clusterResource.ResourceConfig["CONTROL_NODES"] = resource.GetNodeIpList()
+*/
+	// Create ConfigMap
+	err = resource.CreateConfigMap(r.client, instance, r.scheme)
+	if err != nil {
+		return reconcile.Result{Requeue: true}, nil
+	}
+	reqLogger.Info("Vrouter configmap created")
+
+	var labeledPod *corev1.Pod
+	for _, pod := range(podNames){
+		labeledPod, err = resource.LabelPod(r.client, pod)
+		if err != nil {
+			return reconcile.Result{}, err
+		}
+			err = r.client.Update(context.TODO(), labeledPod)
+		if err != nil {
+			reqLogger.Error(err, "Failed to update Pod label.")
+			return reconcile.Result{}, err
+		}
+		reqLogger.Info("Labeled Pod")
+	}
+
+	return reconcile.Result{}, nil
+>>>>>>> v0.0.4
 }

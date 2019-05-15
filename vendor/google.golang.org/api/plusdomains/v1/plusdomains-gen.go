@@ -83,6 +83,7 @@ const (
 	// View your circles and the people and pages in them
 	PlusCirclesReadScope = "https://www.googleapis.com/auth/plus.circles.read"
 
+<<<<<<< HEAD
 	// Manage your circles and add people and pages. People and pages you
 	// add to your circles will be notified. Others may see this information
 	// publicly. People you add to circles can use Hangouts with you.
@@ -92,6 +93,12 @@ const (
 	PlusLoginScope = "https://www.googleapis.com/auth/plus.login"
 
 	// Know who you are on Google
+=======
+	// View your basic profile info, including your age range and language
+	PlusLoginScope = "https://www.googleapis.com/auth/plus.login"
+
+	// Associate you with your personal info on Google
+>>>>>>> v0.0.4
 	PlusMeScope = "https://www.googleapis.com/auth/plus.me"
 
 	// Send your photos and videos to Google+
@@ -103,14 +110,21 @@ const (
 	// View your Google+ posts, comments, and stream
 	PlusStreamReadScope = "https://www.googleapis.com/auth/plus.stream.read"
 
+<<<<<<< HEAD
 	// Manage your Google+ posts, comments, and stream
 	PlusStreamWriteScope = "https://www.googleapis.com/auth/plus.stream.write"
 
+=======
+>>>>>>> v0.0.4
 	// View your email address
 	UserinfoEmailScope = "https://www.googleapis.com/auth/userinfo.email"
 
 	// See your personal info, including any personal info you've made
+<<<<<<< HEAD
 	// publically available
+=======
+	// publicly available
+>>>>>>> v0.0.4
 	UserinfoProfileScope = "https://www.googleapis.com/auth/userinfo.profile"
 )
 
@@ -118,13 +132,19 @@ const (
 func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, error) {
 	scopesOption := option.WithScopes(
 		"https://www.googleapis.com/auth/plus.circles.read",
+<<<<<<< HEAD
 		"https://www.googleapis.com/auth/plus.circles.write",
+=======
+>>>>>>> v0.0.4
 		"https://www.googleapis.com/auth/plus.login",
 		"https://www.googleapis.com/auth/plus.me",
 		"https://www.googleapis.com/auth/plus.media.upload",
 		"https://www.googleapis.com/auth/plus.profiles.read",
 		"https://www.googleapis.com/auth/plus.stream.read",
+<<<<<<< HEAD
 		"https://www.googleapis.com/auth/plus.stream.write",
+=======
+>>>>>>> v0.0.4
 		"https://www.googleapis.com/auth/userinfo.email",
 		"https://www.googleapis.com/auth/userinfo.profile",
 	)
@@ -1418,10 +1438,13 @@ type Circle struct {
 	// SelfLink: Link to this circle resource
 	SelfLink string `json:"selfLink,omitempty"`
 
+<<<<<<< HEAD
 	// ServerResponse contains the HTTP response code and headers from the
 	// server.
 	googleapi.ServerResponse `json:"-"`
 
+=======
+>>>>>>> v0.0.4
 	// ForceSendFields is a list of field names (e.g. "Description") to
 	// unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,
@@ -2844,7 +2867,12 @@ type ActivitiesGetCall struct {
 	header_      http.Header
 }
 
+<<<<<<< HEAD
 // Get: Get an activity.
+=======
+// Get: Shut down. See https://developers.google.com/+/api-shutdown for
+// more details.
+>>>>>>> v0.0.4
 func (r *ActivitiesService) Get(activityId string) *ActivitiesGetCall {
 	c := &ActivitiesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.activityId = activityId
@@ -2949,7 +2977,11 @@ func (c *ActivitiesGetCall) Do(opts ...googleapi.CallOption) (*Activity, error) 
 	}
 	return ret, nil
 	// {
+<<<<<<< HEAD
 	//   "description": "Get an activity.",
+=======
+	//   "description": "Shut down. See https://developers.google.com/+/api-shutdown for more details.",
+>>>>>>> v0.0.4
 	//   "httpMethod": "GET",
 	//   "id": "plusDomains.activities.get",
 	//   "parameterOrder": [
@@ -2976,6 +3008,7 @@ func (c *ActivitiesGetCall) Do(opts ...googleapi.CallOption) (*Activity, error) 
 
 }
 
+<<<<<<< HEAD
 // method id "plusDomains.activities.insert":
 
 type ActivitiesInsertCall struct {
@@ -3129,6 +3162,8 @@ func (c *ActivitiesInsertCall) Do(opts ...googleapi.CallOption) (*Activity, erro
 
 }
 
+=======
+>>>>>>> v0.0.4
 // method id "plusDomains.activities.list":
 
 type ActivitiesListCall struct {
@@ -3141,8 +3176,13 @@ type ActivitiesListCall struct {
 	header_      http.Header
 }
 
+<<<<<<< HEAD
 // List: List all of the activities in the specified collection for a
 // particular user.
+=======
+// List: Shut down. See https://developers.google.com/+/api-shutdown for
+// more details.
+>>>>>>> v0.0.4
 func (r *ActivitiesService) List(userId string, collection string) *ActivitiesListCall {
 	c := &ActivitiesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.userId = userId
@@ -3267,7 +3307,11 @@ func (c *ActivitiesListCall) Do(opts ...googleapi.CallOption) (*ActivityFeed, er
 	}
 	return ret, nil
 	// {
+<<<<<<< HEAD
 	//   "description": "List all of the activities in the specified collection for a particular user.",
+=======
+	//   "description": "Shut down. See https://developers.google.com/+/api-shutdown for more details.",
+>>>>>>> v0.0.4
 	//   "httpMethod": "GET",
 	//   "id": "plusDomains.activities.list",
 	//   "parameterOrder": [
@@ -3353,7 +3397,12 @@ type AudiencesListCall struct {
 	header_      http.Header
 }
 
+<<<<<<< HEAD
 // List: List all of the audiences to which a user can share.
+=======
+// List: Shut down. See https://developers.google.com/+/api-shutdown for
+// more details.
+>>>>>>> v0.0.4
 func (r *AudiencesService) List(userId string) *AudiencesListCall {
 	c := &AudiencesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.userId = userId
@@ -3476,7 +3525,11 @@ func (c *AudiencesListCall) Do(opts ...googleapi.CallOption) (*AudiencesFeed, er
 	}
 	return ret, nil
 	// {
+<<<<<<< HEAD
 	//   "description": "List all of the audiences to which a user can share.",
+=======
+	//   "description": "Shut down. See https://developers.google.com/+/api-shutdown for more details.",
+>>>>>>> v0.0.4
 	//   "httpMethod": "GET",
 	//   "id": "plusDomains.audiences.list",
 	//   "parameterOrder": [
@@ -3538,6 +3591,7 @@ func (c *AudiencesListCall) Pages(ctx context.Context, f func(*AudiencesFeed) er
 	}
 }
 
+<<<<<<< HEAD
 // method id "plusDomains.circles.addPeople":
 
 type CirclesAddPeopleCall struct {
@@ -3567,56 +3621,138 @@ func (c *CirclesAddPeopleCall) Email(email ...string) *CirclesAddPeopleCall {
 // to the circle. Optional, can be repeated.
 func (c *CirclesAddPeopleCall) UserId(userId ...string) *CirclesAddPeopleCall {
 	c.urlParams_.SetMulti("userId", append([]string{}, userId...))
+=======
+// method id "plusDomains.circles.list":
+
+type CirclesListCall struct {
+	s            *Service
+	userId       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Shut down. See https://developers.google.com/+/api-shutdown for
+// more details.
+func (r *CirclesService) List(userId string) *CirclesListCall {
+	c := &CirclesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.userId = userId
+	return c
+}
+
+// MaxResults sets the optional parameter "maxResults": The maximum
+// number of circles to include in the response, which is used for
+// paging. For any response, the actual number returned might be less
+// than the specified maxResults.
+func (c *CirclesListCall) MaxResults(maxResults int64) *CirclesListCall {
+	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": The continuation
+// token, which is used to page through large result sets. To get the
+// next page of results, set this parameter to the value of
+// "nextPageToken" from the previous response.
+func (c *CirclesListCall) PageToken(pageToken string) *CirclesListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+>>>>>>> v0.0.4
 	return c
 }
 
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
+<<<<<<< HEAD
 func (c *CirclesAddPeopleCall) Fields(s ...googleapi.Field) *CirclesAddPeopleCall {
+=======
+func (c *CirclesListCall) Fields(s ...googleapi.Field) *CirclesListCall {
+>>>>>>> v0.0.4
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+<<<<<<< HEAD
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *CirclesAddPeopleCall) Context(ctx context.Context) *CirclesAddPeopleCall {
+=======
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *CirclesListCall) IfNoneMatch(entityTag string) *CirclesListCall {
+	c.ifNoneMatch_ = entityTag
 	return c
 }
 
 // Context sets the context to be used in this call's Do method. Any
 // pending HTTP request will be aborted if the provided context is
 // canceled.
-func (c *CirclesAddPeopleCall) Context(ctx context.Context) *CirclesAddPeopleCall {
+func (c *CirclesListCall) Context(ctx context.Context) *CirclesListCall {
+>>>>>>> v0.0.4
 	c.ctx_ = ctx
 	return c
 }
 
 // Header returns an http.Header that can be modified by the caller to
 // add HTTP headers to the request.
+<<<<<<< HEAD
 func (c *CirclesAddPeopleCall) Header() http.Header {
+=======
+func (c *CirclesListCall) Header() http.Header {
+>>>>>>> v0.0.4
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
 	}
 	return c.header_
 }
 
+<<<<<<< HEAD
 func (c *CirclesAddPeopleCall) doRequest(alt string) (*http.Response, error) {
+=======
+func (c *CirclesListCall) doRequest(alt string) (*http.Response, error) {
+>>>>>>> v0.0.4
 	reqHeaders := make(http.Header)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
 	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
+<<<<<<< HEAD
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "circles/{circleId}/people")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("PUT", urls, body)
+=======
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "people/{userId}/circles")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+>>>>>>> v0.0.4
 	if err != nil {
 		return nil, err
 	}
 	req.Header = reqHeaders
 	googleapi.Expand(req.URL, map[string]string{
+<<<<<<< HEAD
 		"circleId": c.circleId,
+=======
+		"userId": c.userId,
+>>>>>>> v0.0.4
 	})
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
+<<<<<<< HEAD
 // Do executes the "plusDomains.circles.addPeople" call.
 // Exactly one of *Circle or error will be non-nil. Any non-2xx status
 // code is an error. Response headers are in either
@@ -3625,6 +3761,16 @@ func (c *CirclesAddPeopleCall) doRequest(alt string) (*http.Response, error) {
 // check whether the returned error was because http.StatusNotModified
 // was returned.
 func (c *CirclesAddPeopleCall) Do(opts ...googleapi.CallOption) (*Circle, error) {
+=======
+// Do executes the "plusDomains.circles.list" call.
+// Exactly one of *CircleFeed or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *CircleFeed.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *CirclesListCall) Do(opts ...googleapi.CallOption) (*CircleFeed, error) {
+>>>>>>> v0.0.4
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {
@@ -3643,7 +3789,11 @@ func (c *CirclesAddPeopleCall) Do(opts ...googleapi.CallOption) (*Circle, error)
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
+<<<<<<< HEAD
 	ret := &Circle{
+=======
+	ret := &CircleFeed{
+>>>>>>> v0.0.4
 		ServerResponse: googleapi.ServerResponse{
 			Header:         res.Header,
 			HTTPStatusCode: res.StatusCode,
@@ -3655,6 +3805,7 @@ func (c *CirclesAddPeopleCall) Do(opts ...googleapi.CallOption) (*Circle, error)
 	}
 	return ret, nil
 	// {
+<<<<<<< HEAD
 	//   "description": "Add a person to a circle. Google+ limits certain circle operations, including the number of circle adds. Learn More.",
 	//   "httpMethod": "PUT",
 	//   "id": "plusDomains.circles.addPeople",
@@ -3688,33 +3839,112 @@ func (c *CirclesAddPeopleCall) Do(opts ...googleapi.CallOption) (*Circle, error)
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/plus.circles.write",
 	//     "https://www.googleapis.com/auth/plus.login"
+=======
+	//   "description": "Shut down. See https://developers.google.com/+/api-shutdown for more details.",
+	//   "httpMethod": "GET",
+	//   "id": "plusDomains.circles.list",
+	//   "parameterOrder": [
+	//     "userId"
+	//   ],
+	//   "parameters": {
+	//     "maxResults": {
+	//       "default": "20",
+	//       "description": "The maximum number of circles to include in the response, which is used for paging. For any response, the actual number returned might be less than the specified maxResults.",
+	//       "format": "uint32",
+	//       "location": "query",
+	//       "maximum": "100",
+	//       "minimum": "1",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "The continuation token, which is used to page through large result sets. To get the next page of results, set this parameter to the value of \"nextPageToken\" from the previous response.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "userId": {
+	//       "description": "The ID of the user to get circles for. The special value \"me\" can be used to indicate the authenticated user.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "people/{userId}/circles",
+	//   "response": {
+	//     "$ref": "CircleFeed"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/plus.circles.read",
+	//     "https://www.googleapis.com/auth/plus.login",
+	//     "https://www.googleapis.com/auth/plus.me"
+>>>>>>> v0.0.4
 	//   ]
 	// }
 
 }
 
+<<<<<<< HEAD
 // method id "plusDomains.circles.get":
 
 type CirclesGetCall struct {
 	s            *Service
 	circleId     string
+=======
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *CirclesListCall) Pages(ctx context.Context, f func(*CircleFeed) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+// method id "plusDomains.comments.get":
+
+type CommentsGetCall struct {
+	s            *Service
+	commentId    string
+>>>>>>> v0.0.4
 	urlParams_   gensupport.URLParams
 	ifNoneMatch_ string
 	ctx_         context.Context
 	header_      http.Header
 }
 
+<<<<<<< HEAD
 // Get: Get a circle.
 func (r *CirclesService) Get(circleId string) *CirclesGetCall {
 	c := &CirclesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.circleId = circleId
+=======
+// Get: Shut down. See https://developers.google.com/+/api-shutdown for
+// more details.
+func (r *CommentsService) Get(commentId string) *CommentsGetCall {
+	c := &CommentsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.commentId = commentId
+>>>>>>> v0.0.4
 	return c
 }
 
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
+<<<<<<< HEAD
 func (c *CirclesGetCall) Fields(s ...googleapi.Field) *CirclesGetCall {
+=======
+func (c *CommentsGetCall) Fields(s ...googleapi.Field) *CommentsGetCall {
+>>>>>>> v0.0.4
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
@@ -3724,7 +3954,11 @@ func (c *CirclesGetCall) Fields(s ...googleapi.Field) *CirclesGetCall {
 // getting updates only after the object has changed since the last
 // request. Use googleapi.IsNotModified to check whether the response
 // error from Do is the result of In-None-Match.
+<<<<<<< HEAD
 func (c *CirclesGetCall) IfNoneMatch(entityTag string) *CirclesGetCall {
+=======
+func (c *CommentsGetCall) IfNoneMatch(entityTag string) *CommentsGetCall {
+>>>>>>> v0.0.4
 	c.ifNoneMatch_ = entityTag
 	return c
 }
@@ -3732,21 +3966,33 @@ func (c *CirclesGetCall) IfNoneMatch(entityTag string) *CirclesGetCall {
 // Context sets the context to be used in this call's Do method. Any
 // pending HTTP request will be aborted if the provided context is
 // canceled.
+<<<<<<< HEAD
 func (c *CirclesGetCall) Context(ctx context.Context) *CirclesGetCall {
+=======
+func (c *CommentsGetCall) Context(ctx context.Context) *CommentsGetCall {
+>>>>>>> v0.0.4
 	c.ctx_ = ctx
 	return c
 }
 
 // Header returns an http.Header that can be modified by the caller to
 // add HTTP headers to the request.
+<<<<<<< HEAD
 func (c *CirclesGetCall) Header() http.Header {
+=======
+func (c *CommentsGetCall) Header() http.Header {
+>>>>>>> v0.0.4
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
 	}
 	return c.header_
 }
 
+<<<<<<< HEAD
 func (c *CirclesGetCall) doRequest(alt string) (*http.Response, error) {
+=======
+func (c *CommentsGetCall) doRequest(alt string) (*http.Response, error) {
+>>>>>>> v0.0.4
 	reqHeaders := make(http.Header)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
@@ -3758,7 +4004,11 @@ func (c *CirclesGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
+<<<<<<< HEAD
 	urls := googleapi.ResolveRelative(c.s.BasePath, "circles/{circleId}")
+=======
+	urls := googleapi.ResolveRelative(c.s.BasePath, "comments/{commentId}")
+>>>>>>> v0.0.4
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("GET", urls, body)
 	if err != nil {
@@ -3766,11 +4016,16 @@ func (c *CirclesGetCall) doRequest(alt string) (*http.Response, error) {
 	}
 	req.Header = reqHeaders
 	googleapi.Expand(req.URL, map[string]string{
+<<<<<<< HEAD
 		"circleId": c.circleId,
+=======
+		"commentId": c.commentId,
+>>>>>>> v0.0.4
 	})
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
+<<<<<<< HEAD
 // Do executes the "plusDomains.circles.get" call.
 // Exactly one of *Circle or error will be non-nil. Any non-2xx status
 // code is an error. Response headers are in either
@@ -3779,6 +4034,16 @@ func (c *CirclesGetCall) doRequest(alt string) (*http.Response, error) {
 // check whether the returned error was because http.StatusNotModified
 // was returned.
 func (c *CirclesGetCall) Do(opts ...googleapi.CallOption) (*Circle, error) {
+=======
+// Do executes the "plusDomains.comments.get" call.
+// Exactly one of *Comment or error will be non-nil. Any non-2xx status
+// code is an error. Response headers are in either
+// *Comment.ServerResponse.Header or (if a response was returned at all)
+// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified
+// was returned.
+func (c *CommentsGetCall) Do(opts ...googleapi.CallOption) (*Comment, error) {
+>>>>>>> v0.0.4
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {
@@ -3797,7 +4062,11 @@ func (c *CirclesGetCall) Do(opts ...googleapi.CallOption) (*Circle, error) {
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
+<<<<<<< HEAD
 	ret := &Circle{
+=======
+	ret := &Comment{
+>>>>>>> v0.0.4
 		ServerResponse: googleapi.ServerResponse{
 			Header:         res.Header,
 			HTTPStatusCode: res.StatusCode,
@@ -3809,6 +4078,7 @@ func (c *CirclesGetCall) Do(opts ...googleapi.CallOption) (*Circle, error) {
 	}
 	return ret, nil
 	// {
+<<<<<<< HEAD
 	//   "description": "Get a circle.",
 	//   "httpMethod": "GET",
 	//   "id": "plusDomains.circles.get",
@@ -4933,21 +5203,40 @@ func (c *CommentsInsertCall) Do(opts ...googleapi.CallOption) (*Comment, error) 
 	//   "parameters": {
 	//     "activityId": {
 	//       "description": "The ID of the activity to reply to.",
+=======
+	//   "description": "Shut down. See https://developers.google.com/+/api-shutdown for more details.",
+	//   "httpMethod": "GET",
+	//   "id": "plusDomains.comments.get",
+	//   "parameterOrder": [
+	//     "commentId"
+	//   ],
+	//   "parameters": {
+	//     "commentId": {
+	//       "description": "The ID of the comment to get.",
+>>>>>>> v0.0.4
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
 	//     }
 	//   },
+<<<<<<< HEAD
 	//   "path": "activities/{activityId}/comments",
 	//   "request": {
 	//     "$ref": "Comment"
 	//   },
+=======
+	//   "path": "comments/{commentId}",
+>>>>>>> v0.0.4
 	//   "response": {
 	//     "$ref": "Comment"
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/plus.login",
+<<<<<<< HEAD
 	//     "https://www.googleapis.com/auth/plus.stream.write"
+=======
+	//     "https://www.googleapis.com/auth/plus.stream.read"
+>>>>>>> v0.0.4
 	//   ]
 	// }
 
@@ -4964,7 +5253,12 @@ type CommentsListCall struct {
 	header_      http.Header
 }
 
+<<<<<<< HEAD
 // List: List all of the comments for an activity.
+=======
+// List: Shut down. See https://developers.google.com/+/api-shutdown for
+// more details.
+>>>>>>> v0.0.4
 func (r *CommentsService) List(activityId string) *CommentsListCall {
 	c := &CommentsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.activityId = activityId
@@ -5098,7 +5392,11 @@ func (c *CommentsListCall) Do(opts ...googleapi.CallOption) (*CommentFeed, error
 	}
 	return ret, nil
 	// {
+<<<<<<< HEAD
 	//   "description": "List all of the comments for an activity.",
+=======
+	//   "description": "Shut down. See https://developers.google.com/+/api-shutdown for more details.",
+>>>>>>> v0.0.4
 	//   "httpMethod": "GET",
 	//   "id": "plusDomains.comments.list",
 	//   "parameterOrder": [
@@ -5186,10 +5484,15 @@ type MediaInsertCall struct {
 	header_    http.Header
 }
 
+<<<<<<< HEAD
 // Insert: Add a new media item to an album. The current upload size
 // limitations are 36MB for a photo and 1GB for a video. Uploads do not
 // count against quota if photos are less than 2048 pixels on their
 // longest side or videos are less than 15 minutes in length.
+=======
+// Insert: Shut down. See https://developers.google.com/+/api-shutdown
+// for more details.
+>>>>>>> v0.0.4
 func (r *MediaService) Insert(userId string, collection string, media *Media) *MediaInsertCall {
 	c := &MediaInsertCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.userId = userId
@@ -5356,7 +5659,11 @@ func (c *MediaInsertCall) Do(opts ...googleapi.CallOption) (*Media, error) {
 	}
 	return ret, nil
 	// {
+<<<<<<< HEAD
 	//   "description": "Add a new media item to an album. The current upload size limitations are 36MB for a photo and 1GB for a video. Uploads do not count against quota if photos are less than 2048 pixels on their longest side or videos are less than 15 minutes in length.",
+=======
+	//   "description": "Shut down. See https://developers.google.com/+/api-shutdown for more details.",
+>>>>>>> v0.0.4
 	//   "httpMethod": "POST",
 	//   "id": "plusDomains.media.insert",
 	//   "mediaUpload": {
@@ -5808,8 +6115,13 @@ type PeopleListByActivityCall struct {
 	header_      http.Header
 }
 
+<<<<<<< HEAD
 // ListByActivity: List all of the people in the specified collection
 // for a particular activity.
+=======
+// ListByActivity: Shut down. See
+// https://developers.google.com/+/api-shutdown for more details.
+>>>>>>> v0.0.4
 func (r *PeopleService) ListByActivity(activityId string, collection string) *PeopleListByActivityCall {
 	c := &PeopleListByActivityCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.activityId = activityId
@@ -5934,7 +6246,11 @@ func (c *PeopleListByActivityCall) Do(opts ...googleapi.CallOption) (*PeopleFeed
 	}
 	return ret, nil
 	// {
+<<<<<<< HEAD
 	//   "description": "List all of the people in the specified collection for a particular activity.",
+=======
+	//   "description": "Shut down. See https://developers.google.com/+/api-shutdown for more details.",
+>>>>>>> v0.0.4
 	//   "httpMethod": "GET",
 	//   "id": "plusDomains.people.listByActivity",
 	//   "parameterOrder": [
@@ -6011,6 +6327,7 @@ func (c *PeopleListByActivityCall) Pages(ctx context.Context, f func(*PeopleFeed
 		c.PageToken(x.NextPageToken)
 	}
 }
+<<<<<<< HEAD
 
 // method id "plusDomains.people.listByCircle":
 
@@ -6206,3 +6523,5 @@ func (c *PeopleListByCircleCall) Pages(ctx context.Context, f func(*PeopleFeed) 
 		c.PageToken(x.NextPageToken)
 	}
 }
+=======
+>>>>>>> v0.0.4

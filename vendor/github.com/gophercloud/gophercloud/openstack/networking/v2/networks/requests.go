@@ -112,7 +112,11 @@ type UpdateOptsBuilder interface {
 // UpdateOpts represents options used to update a network.
 type UpdateOpts struct {
 	AdminStateUp *bool   `json:"admin_state_up,omitempty"`
+<<<<<<< HEAD
 	Name         string  `json:"name,omitempty"`
+=======
+	Name         *string `json:"name,omitempty"`
+>>>>>>> v0.0.4
 	Description  *string `json:"description,omitempty"`
 	Shared       *bool   `json:"shared,omitempty"`
 }

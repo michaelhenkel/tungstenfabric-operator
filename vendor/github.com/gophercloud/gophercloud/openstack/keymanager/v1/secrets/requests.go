@@ -223,11 +223,30 @@ type CreateOpts struct {
 
 	// SecretType is the type of secret.
 	SecretType SecretType `json:"secret_type,omitempty"`
+<<<<<<< HEAD
+=======
+
+	// Expiration is the expiration date of the secret.
+	Expiration *time.Time `json:"-"`
+>>>>>>> v0.0.4
 }
 
 // ToSecretCreateMap formats a CreateOpts into a create request.
 func (opts CreateOpts) ToSecretCreateMap() (map[string]interface{}, error) {
+<<<<<<< HEAD
 	return gophercloud.BuildRequestBody(opts, "")
+=======
+	b, err := gophercloud.BuildRequestBody(opts, "")
+	if err != nil {
+		return nil, err
+	}
+
+	if opts.Expiration != nil {
+		b["expiration"] = opts.Expiration.Format(gophercloud.RFC3339NoZ)
+	}
+
+	return b, nil
+>>>>>>> v0.0.4
 }
 
 // Create creates a new secrets.

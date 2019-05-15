@@ -1,6 +1,7 @@
 apiVersion: tf.tungstenfabric.io/v1alpha1
 kind: ControlCluster
 metadata:
+<<<<<<< HEAD
   name: control-cluster-1
 spec:
   # Add fields here
@@ -16,3 +17,32 @@ spec:
   cassandraClusterName: "cassandra-cluster-1"
   rabbitmqClusterName: "rabbitmq-cluster-1"
   configClusterName: "config-cluster-1"
+=======
+  name: cluster-1
+spec:
+  type: deployment
+  containers:
+    - name: control
+      logvolumepath: "/var/log/contrail"
+      resourceconfigmap: true
+    - name: named
+      logvolumepath: "/var/log/contrail"
+      privileged: true
+      etccontrailvolume: true
+      resourceconfigmap: true
+    - name: dns
+      logvolumepath: "/var/log/contrail"
+      etccontrailvolume: true
+      resourceconfigmap: true
+    - name: nodemanager
+      logvolumepath: "/var/log/contrail"
+      unixsocketvolume: true
+      env:
+        "NODE_TYPE": "control"
+        "DOCKER_HOST": "unix://mnt/docker.sock"
+      resourceconfigmap: true
+  initcontainers:
+    - name: init
+      statusvolume: true
+      command: ["sh","-c","until grep ready /tmp/podinfo/pod_labels > /dev/null 2>&1; do sleep 1; done"]   
+>>>>>>> v0.0.4

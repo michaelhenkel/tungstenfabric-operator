@@ -24,7 +24,11 @@ import (
 const RolesMetaMainFile = "meta" + filePathSep + "main.yml"
 
 type RolesMetaMain struct {
+<<<<<<< HEAD
 	input.Input
+=======
+	StaticInput
+>>>>>>> v0.0.4
 	Resource scaffold.Resource
 }
 

@@ -7,11 +7,14 @@ import (
 	"go/parser"
 	"go/scanner"
 	"go/types"
+<<<<<<< HEAD
 	"io/ioutil"
 	"os"
 	"path/filepath"
 	"strings"
 	"sync"
+=======
+>>>>>>> v0.0.4
 
 	"golang.org/x/tools/go/analysis"
 	"golang.org/x/tools/go/packages"
@@ -41,9 +44,15 @@ func (v *View) parse(ctx context.Context, f *File) ([]packages.Error, error) {
 		return nil, fmt.Errorf("no metadata found for %v", f.filename)
 	}
 	imp := &importer{
+<<<<<<< HEAD
 		view:     v,
 		circular: make(map[string]struct{}),
 		ctx:      ctx,
+=======
+		view: v,
+		seen: make(map[string]struct{}),
+		ctx:  ctx,
+>>>>>>> v0.0.4
 	}
 	// Start prefetching direct imports.
 	for importPath := range f.meta.children {
@@ -96,7 +105,17 @@ func (v *View) checkMetadata(ctx context.Context, f *File) ([]packages.Error, er
 			if err == nil {
 				err = fmt.Errorf("no packages found for %s", f.filename)
 			}
+<<<<<<< HEAD
 			return nil, err
+=======
+			// Return this error as a diagnostic to the user.
+			return []packages.Error{
+				{
+					Msg:  err.Error(),
+					Kind: packages.ListError,
+				},
+			}, err
+>>>>>>> v0.0.4
 		}
 		for _, pkg := range pkgs {
 			// If the package comes back with errors from `go list`, don't bother
@@ -178,15 +197,25 @@ func (v *View) link(pkgPath string, pkg *packages.Package, parent *metadata) *me
 type importer struct {
 	view *View
 
+<<<<<<< HEAD
 	// circular maintains the set of previously imported packages.
 	// If we have seen a package that is already in this map, we have a circular import.
 	circular map[string]struct{}
+=======
+	// seen maintains the set of previously imported packages.
+	// If we have seen a package that is already in this map, we have a circular import.
+	seen map[string]struct{}
+>>>>>>> v0.0.4
 
 	ctx context.Context
 }
 
 func (imp *importer) Import(pkgPath string) (*types.Package, error) {
+<<<<<<< HEAD
 	if _, ok := imp.circular[pkgPath]; ok {
+=======
+	if _, ok := imp.seen[pkgPath]; ok {
+>>>>>>> v0.0.4
 		return nil, fmt.Errorf("circular import detected")
 	}
 	imp.view.pcache.mu.Lock()
@@ -245,22 +274,40 @@ func (imp *importer) typeCheck(pkgPath string) (*Package, error) {
 	appendError := func(err error) {
 		imp.view.appendPkgError(pkg, err)
 	}
+<<<<<<< HEAD
 	files, errs := imp.view.parseFiles(meta.files)
+=======
+	files, errs := imp.parseFiles(meta.files)
+>>>>>>> v0.0.4
 	for _, err := range errs {
 		appendError(err)
 	}
 	pkg.syntax = files
 
 	// Handle circular imports by copying previously seen imports.
+<<<<<<< HEAD
 	newCircular := copySet(imp.circular)
 	newCircular[pkgPath] = struct{}{}
+=======
+	seen := make(map[string]struct{})
+	for k, v := range imp.seen {
+		seen[k] = v
+	}
+	seen[pkgPath] = struct{}{}
+>>>>>>> v0.0.4
 
 	cfg := &types.Config{
 		Error: appendError,
 		Importer: &importer{
+<<<<<<< HEAD
 			view:     imp.view,
 			circular: newCircular,
 			ctx:      imp.ctx,
+=======
+			view: imp.view,
+			seen: seen,
+			ctx:  imp.ctx,
+>>>>>>> v0.0.4
 		},
 	}
 	check := types.NewChecker(cfg, imp.view.Config.Fset, pkg.types, pkg.typesInfo)
@@ -284,6 +331,7 @@ func (imp *importer) typeCheck(pkgPath string) (*Package, error) {
 	return pkg, nil
 }
 
+<<<<<<< HEAD
 func copySet(m map[string]struct{}) map[string]struct{} {
 	result := make(map[string]struct{})
 	for k, v := range m {
@@ -292,6 +340,8 @@ func copySet(m map[string]struct{}) map[string]struct{} {
 	return result
 }
 
+=======
+>>>>>>> v0.0.4
 func (v *View) appendPkgError(pkg *Package, err error) {
 	if err == nil {
 		return
@@ -322,6 +372,7 @@ func (v *View) appendPkgError(pkg *Package, err error) {
 	}
 	pkg.errors = append(pkg.errors, errs...)
 }
+<<<<<<< HEAD
 
 // We use a counting semaphore to limit
 // the number of parallel I/O calls per process.
@@ -434,3 +485,5 @@ func sameFile(x, y string) bool {
 	}
 	return false
 }
+=======
+>>>>>>> v0.0.4

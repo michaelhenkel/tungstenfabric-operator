@@ -33,6 +33,7 @@ import (
 )
 
 const (
+<<<<<<< HEAD
 	governingServiceName     = "prometheus-operated"
 	DefaultPrometheusVersion = "v2.5.0"
 	DefaultThanosVersion     = "v0.1.0"
@@ -46,10 +47,30 @@ const (
 	configFilename           = "prometheus.yaml"
 	configEnvsubstFilename   = "prometheus.env.yaml"
 	sSetInputHashName        = "prometheus-operator-input-hash"
+=======
+	governingServiceName            = "prometheus-operated"
+	DefaultPrometheusVersion        = "v2.7.1"
+	DefaultThanosVersion            = "v0.2.1"
+	defaultRetention                = "24h"
+	defaultReplicaExternalLabelName = "prometheus_replica"
+	storageDir                      = "/prometheus"
+	confDir                         = "/etc/prometheus/config"
+	confOutDir                      = "/etc/prometheus/config_out"
+	rulesDir                        = "/etc/prometheus/rules"
+	secretsDir                      = "/etc/prometheus/secrets/"
+	configmapsDir                   = "/etc/prometheus/configmaps/"
+	configFilename                  = "prometheus.yaml.gz"
+	configEnvsubstFilename          = "prometheus.env.yaml"
+	sSetInputHashName               = "prometheus-operator-input-hash"
+>>>>>>> v0.0.4
 )
 
 var (
 	minReplicas                 int32 = 1
+<<<<<<< HEAD
+=======
+	defaultMaxConcurrency       int32 = 20
+>>>>>>> v0.0.4
 	managedByOperatorLabel            = "managed-by"
 	managedByOperatorLabelValue       = "prometheus-operator"
 	managedByOperatorLabels           = map[string]string{
@@ -81,12 +102,22 @@ var (
 		"v2.4.2",
 		"v2.4.3",
 		"v2.5.0",
+<<<<<<< HEAD
+=======
+		"v2.6.0",
+		"v2.6.1",
+		"v2.7.0",
+		"v2.7.1",
+>>>>>>> v0.0.4
 	}
 )
 
 func makeStatefulSet(
 	p monitoringv1.Prometheus,
+<<<<<<< HEAD
 	previousPodManagementPolicy appsv1.PodManagementPolicyType,
+=======
+>>>>>>> v0.0.4
 	config *Config,
 	ruleConfigMapNames []string,
 	inputHash string,
@@ -211,10 +242,13 @@ func makeStatefulSet(
 		statefulset.Spec.VolumeClaimTemplates = append(statefulset.Spec.VolumeClaimTemplates, pvcTemplate)
 	}
 
+<<<<<<< HEAD
 	// Updates to statefulset spec for fields other than 'replicas',
 	// 'template', and 'updateStrategy' are forbidden.
 	statefulset.Spec.PodManagementPolicy = previousPodManagementPolicy
 
+=======
+>>>>>>> v0.0.4
 	return statefulset, nil
 }
 
@@ -342,15 +376,62 @@ func makeStatefulSetSpec(p monitoringv1.Prometheus, c *Config, ruleConfigMapName
 			"-web.enable-lifecycle",
 			"-storage.tsdb.no-lockfile",
 		)
+<<<<<<< HEAD
+=======
+
+		if p.Spec.Query != nil && p.Spec.Query.LookbackDelta != nil {
+			promArgs = append(promArgs,
+				fmt.Sprintf("-query.lookback-delta=%s", *p.Spec.Query.LookbackDelta),
+			)
+		}
+
+		if version.Minor >= 4 {
+			if p.Spec.Rules.Alert.ForOutageTolerance != "" {
+				promArgs = append(promArgs, "-rules.alert.for-outage-tolerance="+p.Spec.Rules.Alert.ForOutageTolerance)
+			}
+			if p.Spec.Rules.Alert.ForGracePeriod != "" {
+				promArgs = append(promArgs, "-rules.alert.for-grace-period="+p.Spec.Rules.Alert.ForGracePeriod)
+			}
+			if p.Spec.Rules.Alert.ResendDelay != "" {
+				promArgs = append(promArgs, "-rules.alert.resend-delay="+p.Spec.Rules.Alert.ResendDelay)
+			}
+		}
+>>>>>>> v0.0.4
 	default:
 		return nil, errors.Errorf("unsupported Prometheus major version %s", version)
 	}
 
+<<<<<<< HEAD
+=======
+	if p.Spec.Query != nil {
+		if p.Spec.Query.MaxConcurrency != nil {
+			if *p.Spec.Query.MaxConcurrency < 1 {
+				p.Spec.Query.MaxConcurrency = &defaultMaxConcurrency
+			}
+			promArgs = append(promArgs,
+				fmt.Sprintf("-query.max-concurrency=%d", *p.Spec.Query.MaxConcurrency),
+			)
+		}
+		if p.Spec.Query.Timeout != nil {
+			promArgs = append(promArgs,
+				fmt.Sprintf("-query.timeout=%s", *p.Spec.Query.Timeout),
+			)
+		}
+	}
+
+>>>>>>> v0.0.4
 	var securityContext *v1.PodSecurityContext = nil
 	if p.Spec.SecurityContext != nil {
 		securityContext = p.Spec.SecurityContext
 	}
 
+<<<<<<< HEAD
+=======
+	if p.Spec.EnableAdminAPI {
+		promArgs = append(promArgs, "-web.enable-admin-api")
+	}
+
+>>>>>>> v0.0.4
 	if p.Spec.ExternalURL != "" {
 		promArgs = append(promArgs, "-web.external-url="+p.Spec.ExternalURL)
 	}
@@ -364,6 +445,14 @@ func makeStatefulSetSpec(p monitoringv1.Prometheus, c *Config, ruleConfigMapName
 	if p.Spec.LogLevel != "" && p.Spec.LogLevel != "info" {
 		promArgs = append(promArgs, fmt.Sprintf("-log.level=%s", p.Spec.LogLevel))
 	}
+<<<<<<< HEAD
+=======
+	if version.GTE(semver.MustParse("2.6.0")) {
+		if p.Spec.LogFormat != "" && p.Spec.LogFormat != "logfmt" {
+			promArgs = append(promArgs, fmt.Sprintf("-log.format=%s", p.Spec.LogFormat))
+		}
+	}
+>>>>>>> v0.0.4
 
 	var ports []v1.ContainerPort
 	if p.Spec.ListenLocal {
@@ -578,8 +667,13 @@ func makeStatefulSetSpec(p monitoringv1.Prometheus, c *Config, ruleConfigMapName
 			VolumeMounts: []v1.VolumeMount{},
 			Resources: v1.ResourceRequirements{
 				Limits: v1.ResourceList{
+<<<<<<< HEAD
 					v1.ResourceCPU:    resource.MustParse("25m"),
 					v1.ResourceMemory: resource.MustParse("10Mi"),
+=======
+					v1.ResourceCPU:    resource.MustParse(c.ConfigReloaderCPU),
+					v1.ResourceMemory: resource.MustParse(c.ConfigReloaderMemory),
+>>>>>>> v0.0.4
 				},
 			},
 		}
@@ -613,10 +707,20 @@ func makeStatefulSetSpec(p monitoringv1.Prometheus, c *Config, ruleConfigMapName
 		if p.Spec.Thanos.SHA != nil {
 			thanosImage = fmt.Sprintf("%s@sha256:%s", thanosBaseImage, *p.Spec.Thanos.SHA)
 		}
+<<<<<<< HEAD
 
 		thanosArgs := []string{
 			"sidecar",
 			fmt.Sprintf("--prometheus.url=http://%s:9090", c.LocalHost),
+=======
+		if p.Spec.Thanos.Image != nil && *p.Spec.Thanos.Image != "" {
+			thanosImage = *p.Spec.Thanos.Image
+		}
+
+		thanosArgs := []string{
+			"sidecar",
+			fmt.Sprintf("--prometheus.url=http://%s:9090%s", c.LocalHost, path.Clean(webRoutePrefix)),
+>>>>>>> v0.0.4
 			fmt.Sprintf("--tsdb.path=%s", storageDir),
 			fmt.Sprintf("--cluster.address=[$(POD_IP)]:%d", 10900),
 			fmt.Sprintf("--grpc-address=[$(POD_IP)]:%d", 10901),
@@ -625,9 +729,27 @@ func makeStatefulSetSpec(p monitoringv1.Prometheus, c *Config, ruleConfigMapName
 		if p.Spec.Thanos.Peers != nil {
 			thanosArgs = append(thanosArgs, fmt.Sprintf("--cluster.peers=%s", *p.Spec.Thanos.Peers))
 		}
+<<<<<<< HEAD
 		if p.Spec.LogLevel != "" && p.Spec.LogLevel != "info" {
 			thanosArgs = append(thanosArgs, fmt.Sprintf("--log.level=%s", p.Spec.LogLevel))
 		}
+=======
+		if p.Spec.Thanos.ClusterAdvertiseAddress != nil {
+			thanosArgs = append(thanosArgs, fmt.Sprintf("--cluster.advertise-address=%s", *p.Spec.Thanos.ClusterAdvertiseAddress))
+		}
+		if p.Spec.Thanos.GrpcAdvertiseAddress != nil {
+			thanosArgs = append(thanosArgs, fmt.Sprintf("--grpc-advertise-address=%s", *p.Spec.Thanos.GrpcAdvertiseAddress))
+		}
+		if p.Spec.LogLevel != "" && p.Spec.LogLevel != "info" {
+			thanosArgs = append(thanosArgs, fmt.Sprintf("--log.level=%s", p.Spec.LogLevel))
+		}
+		thanosVersion := semver.MustParse(strings.TrimPrefix(*p.Spec.Thanos.Version, "v"))
+		if thanosVersion.GTE(semver.MustParse("0.2.0")) {
+			if p.Spec.LogFormat != "" && p.Spec.LogFormat != "logfmt" {
+				thanosArgs = append(thanosArgs, fmt.Sprintf("--log.format=%s", p.Spec.LogFormat))
+			}
+		}
+>>>>>>> v0.0.4
 
 		thanosVolumeMounts := []v1.VolumeMount{
 			{
@@ -647,7 +769,30 @@ func makeStatefulSetSpec(p monitoringv1.Prometheus, c *Config, ruleConfigMapName
 					},
 				},
 			},
+<<<<<<< HEAD
 		}
+=======
+			{
+				Name: "HOST_IP",
+				ValueFrom: &v1.EnvVarSource{
+					FieldRef: &v1.ObjectFieldSelector{
+						FieldPath: "status.hostIP",
+					},
+				},
+			},
+		}
+
+		if p.Spec.Thanos.ObjectStorageConfig != nil {
+			envVars = append(envVars, v1.EnvVar{
+				Name: "OBJSTORE_CONFIG",
+				ValueFrom: &v1.EnvVarSource{
+					SecretKeyRef: p.Spec.Thanos.ObjectStorageConfig,
+				},
+			})
+			thanosArgs = append(thanosArgs, "--objstore.config=$(OBJSTORE_CONFIG)")
+		}
+
+>>>>>>> v0.0.4
 		if p.Spec.Thanos.GCS != nil {
 			if p.Spec.Thanos.GCS.Bucket != nil {
 				thanosArgs = append(thanosArgs, fmt.Sprintf("--gcs.bucket=%s", *p.Spec.Thanos.GCS.Bucket))
@@ -751,6 +896,12 @@ func makeStatefulSetSpec(p monitoringv1.Prometheus, c *Config, ruleConfigMapName
 	if p.Spec.SHA != "" {
 		prometheusImage = fmt.Sprintf("%s@sha256:%s", p.Spec.BaseImage, p.Spec.SHA)
 	}
+<<<<<<< HEAD
+=======
+	if p.Spec.Image != nil && *p.Spec.Image != "" {
+		prometheusImage = *p.Spec.Image
+	}
+>>>>>>> v0.0.4
 
 	return &appsv1.StatefulSetSpec{
 		ServiceName:         governingServiceName,

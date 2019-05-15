@@ -1,3 +1,8 @@
+<<<<<<< HEAD
+=======
+// +build go1.12
+
+>>>>>>> v0.0.4
 /*
  * Copyright 2019 gRPC authors.
  *
@@ -14,9 +19,12 @@
  * limitations under the License.
  */
 
+<<<<<<< HEAD
 // TODO: move package comment to edsbalancer.go.
 
 // Package edsbalancer implements balancer generated from an eds response.
+=======
+>>>>>>> v0.0.4
 package edsbalancer
 
 import (
@@ -175,7 +183,15 @@ func (bg *balancerGroup) handleSubConnStateChange(sc balancer.SubConn, state con
 		grpclog.Infof("balancer group: balancer not found for sc state change")
 		return
 	}
+<<<<<<< HEAD
 	b.HandleSubConnStateChange(sc, state)
+=======
+	if ub, ok := b.(balancer.V2Balancer); ok {
+		ub.UpdateSubConnState(sc, balancer.SubConnState{ConnectivityState: state})
+	} else {
+		b.HandleSubConnStateChange(sc, state)
+	}
+>>>>>>> v0.0.4
 }
 
 // Address change: forward to balancer.
@@ -187,7 +203,15 @@ func (bg *balancerGroup) handleResolvedAddrs(id string, addrs []resolver.Address
 		grpclog.Infof("balancer group: balancer with id %q not found", id)
 		return
 	}
+<<<<<<< HEAD
 	b.HandleResolvedAddrs(addrs, nil)
+=======
+	if ub, ok := b.(balancer.V2Balancer); ok {
+		ub.UpdateResolverState(resolver.State{Addresses: addrs})
+	} else {
+		b.HandleResolvedAddrs(addrs, nil)
+	}
+>>>>>>> v0.0.4
 }
 
 // TODO: handleServiceConfig()
@@ -238,6 +262,13 @@ func (bg *balancerGroup) close() {
 	for _, b := range bg.idToBalancer {
 		b.Close()
 	}
+<<<<<<< HEAD
+=======
+	// Also remove all SubConns.
+	for sc := range bg.scToID {
+		bg.cc.RemoveSubConn(sc)
+	}
+>>>>>>> v0.0.4
 	bg.mu.Unlock()
 }
 

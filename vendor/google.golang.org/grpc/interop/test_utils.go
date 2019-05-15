@@ -393,7 +393,11 @@ func DoPerRPCCreds(tc testpb.TestServiceClient, serviceAccountKeyFile, oauthScop
 	}
 }
 
+<<<<<<< HEAD
 // DoGoogleDefaultCredentials performs a unary RPC with google default credentials
+=======
+// DoGoogleDefaultCredentials performs an unary RPC with google default credentials
+>>>>>>> v0.0.4
 func DoGoogleDefaultCredentials(tc testpb.TestServiceClient, defaultServiceAccount string) {
 	pl := ClientNewPayload(testpb.PayloadType_COMPRESSABLE, largeReqSize)
 	req := &testpb.SimpleRequest{
@@ -412,6 +416,28 @@ func DoGoogleDefaultCredentials(tc testpb.TestServiceClient, defaultServiceAccou
 	}
 }
 
+<<<<<<< HEAD
+=======
+// DoComputeEngineChannelCredentials performs an unary RPC with compute engine channel credentials
+func DoComputeEngineChannelCredentials(tc testpb.TestServiceClient, defaultServiceAccount string) {
+	pl := ClientNewPayload(testpb.PayloadType_COMPRESSABLE, largeReqSize)
+	req := &testpb.SimpleRequest{
+		ResponseType:   testpb.PayloadType_COMPRESSABLE,
+		ResponseSize:   int32(largeRespSize),
+		Payload:        pl,
+		FillUsername:   true,
+		FillOauthScope: true,
+	}
+	reply, err := tc.UnaryCall(context.Background(), req)
+	if err != nil {
+		grpclog.Fatal("/TestService/UnaryCall RPC failed: ", err)
+	}
+	if reply.GetUsername() != defaultServiceAccount {
+		grpclog.Fatalf("Got user name %q; wanted %q. ", reply.GetUsername(), defaultServiceAccount)
+	}
+}
+
+>>>>>>> v0.0.4
 var testMetadata = metadata.MD{
 	"key1": []string{"value1"},
 	"key2": []string{"value2"},

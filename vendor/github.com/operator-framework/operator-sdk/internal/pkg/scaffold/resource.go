@@ -124,7 +124,11 @@ func (r *Resource) checkAndSetGroups() error {
 		return errors.New("full group cannot be empty")
 	}
 	g := strings.Split(fg[0], ".")
+<<<<<<< HEAD
 	if len(g) < 2 || len(g[0]) == 0 {
+=======
+	if len(g) == 0 || len(g[0]) == 0 {
+>>>>>>> v0.0.4
 		return errors.New("group cannot be empty")
 	}
 	r.FullGroup = fg[0]

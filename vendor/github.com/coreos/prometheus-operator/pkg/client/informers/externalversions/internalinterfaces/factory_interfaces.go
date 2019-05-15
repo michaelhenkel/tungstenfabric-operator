@@ -25,6 +25,10 @@ import (
 	cache "k8s.io/client-go/tools/cache"
 )
 
+<<<<<<< HEAD
+=======
+// NewInformerFunc takes versioned.Interface and time.Duration to return a SharedIndexInformer.
+>>>>>>> v0.0.4
 type NewInformerFunc func(versioned.Interface, time.Duration) cache.SharedIndexInformer
 
 // SharedInformerFactory a small interface to allow for adding an informer without an import cycle
@@ -33,4 +37,8 @@ type SharedInformerFactory interface {
 	InformerFor(obj runtime.Object, newFunc NewInformerFunc) cache.SharedIndexInformer
 }
 
+<<<<<<< HEAD
+=======
+// TweakListOptionsFunc is a function that transforms a v1.ListOptions.
+>>>>>>> v0.0.4
 type TweakListOptionsFunc func(*v1.ListOptions)

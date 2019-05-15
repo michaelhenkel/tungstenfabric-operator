@@ -18,6 +18,10 @@ package errorreporting
 
 import (
 	"context"
+<<<<<<< HEAD
+=======
+	"fmt"
+>>>>>>> v0.0.4
 	"math"
 	"time"
 
@@ -126,7 +130,12 @@ func (c *ErrorStatsClient) SetGoogleClientInfo(keyval ...string) {
 
 // ListGroupStats lists the specified groups.
 func (c *ErrorStatsClient) ListGroupStats(ctx context.Context, req *clouderrorreportingpb.ListGroupStatsRequest, opts ...gax.CallOption) *ErrorGroupStatsIterator {
+<<<<<<< HEAD
 	ctx = insertMetadata(ctx, c.xGoogMetadata)
+=======
+	md := metadata.Pairs("x-goog-request-params", fmt.Sprintf("%s=%v", "project_name", req.GetProjectName()))
+	ctx = insertMetadata(ctx, c.xGoogMetadata, md)
+>>>>>>> v0.0.4
 	opts = append(c.CallOptions.ListGroupStats[0:len(c.CallOptions.ListGroupStats):len(c.CallOptions.ListGroupStats)], opts...)
 	it := &ErrorGroupStatsIterator{}
 	req = proto.Clone(req).(*clouderrorreportingpb.ListGroupStatsRequest)
@@ -163,7 +172,12 @@ func (c *ErrorStatsClient) ListGroupStats(ctx context.Context, req *clouderrorre
 
 // ListEvents lists the specified events.
 func (c *ErrorStatsClient) ListEvents(ctx context.Context, req *clouderrorreportingpb.ListEventsRequest, opts ...gax.CallOption) *ErrorEventIterator {
+<<<<<<< HEAD
 	ctx = insertMetadata(ctx, c.xGoogMetadata)
+=======
+	md := metadata.Pairs("x-goog-request-params", fmt.Sprintf("%s=%v", "project_name", req.GetProjectName()))
+	ctx = insertMetadata(ctx, c.xGoogMetadata, md)
+>>>>>>> v0.0.4
 	opts = append(c.CallOptions.ListEvents[0:len(c.CallOptions.ListEvents):len(c.CallOptions.ListEvents)], opts...)
 	it := &ErrorEventIterator{}
 	req = proto.Clone(req).(*clouderrorreportingpb.ListEventsRequest)
@@ -200,7 +214,12 @@ func (c *ErrorStatsClient) ListEvents(ctx context.Context, req *clouderrorreport
 
 // DeleteEvents deletes all error events of a given project.
 func (c *ErrorStatsClient) DeleteEvents(ctx context.Context, req *clouderrorreportingpb.DeleteEventsRequest, opts ...gax.CallOption) (*clouderrorreportingpb.DeleteEventsResponse, error) {
+<<<<<<< HEAD
 	ctx = insertMetadata(ctx, c.xGoogMetadata)
+=======
+	md := metadata.Pairs("x-goog-request-params", fmt.Sprintf("%s=%v", "project_name", req.GetProjectName()))
+	ctx = insertMetadata(ctx, c.xGoogMetadata, md)
+>>>>>>> v0.0.4
 	opts = append(c.CallOptions.DeleteEvents[0:len(c.CallOptions.DeleteEvents):len(c.CallOptions.DeleteEvents)], opts...)
 	var resp *clouderrorreportingpb.DeleteEventsResponse
 	err := gax.Invoke(ctx, func(ctx context.Context, settings gax.CallSettings) error {

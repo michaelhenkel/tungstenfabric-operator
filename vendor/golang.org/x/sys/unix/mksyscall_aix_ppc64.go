@@ -282,6 +282,14 @@ func main() {
 			if !onlyCommon {
 				// GCCGO Prototype Generation
 				// Imports of system calls from libc
+<<<<<<< HEAD
+=======
+				if sysname == "select" {
+					// select is a keyword of Go. Its name is
+					// changed to c_select.
+					cExtern += "#define c_select select\n"
+				}
+>>>>>>> v0.0.4
 				cExtern += fmt.Sprintf("%s %s", cRettype, sysname)
 				cIn := strings.Join(cIn, ", ")
 				cExtern += fmt.Sprintf("(%s);\n", cIn)
@@ -490,7 +498,18 @@ func main() {
 
 			// GCCGO function generation
 			argsgccgolist := strings.Join(argsgccgo, ", ")
+<<<<<<< HEAD
 			callgccgo := fmt.Sprintf("C.%s(%s)", sysname, argsgccgolist)
+=======
+			var callgccgo string
+			if sysname == "select" {
+				// select is a keyword of Go. Its name is
+				// changed to c_select.
+				callgccgo = fmt.Sprintf("C.c_%s(%s)", sysname, argsgccgolist)
+			} else {
+				callgccgo = fmt.Sprintf("C.%s(%s)", sysname, argsgccgolist)
+			}
+>>>>>>> v0.0.4
 			textgccgo += callProto
 			textgccgo += fmt.Sprintf("\tr1 = uintptr(%s)\n", callgccgo)
 			textgccgo += "\te1 = syscall.GetErrno()\n"

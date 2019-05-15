@@ -85,6 +85,7 @@ func Diagnostics(ctx context.Context, v View, uri span.URI) (map[span.URI][]Diag
 	for _, diag := range diags {
 		spn := span.Parse(diag.Pos)
 		if spn.IsPoint() && diag.Kind == packages.TypeError {
+<<<<<<< HEAD
 			// Don't set a range if it's anything other than a type error.
 			if diagFile, err := v.GetFile(ctx, spn.URI()); err == nil {
 				tok := diagFile.GetToken(ctx)
@@ -106,6 +107,12 @@ func Diagnostics(ctx context.Context, v View, uri span.URI) (map[span.URI][]Diag
 			}
 		}
 		diagnostic := Diagnostic{
+=======
+			spn = pointToSpan(ctx, v, spn)
+		}
+		diagnostic := Diagnostic{
+			Source:   "LSP",
+>>>>>>> v0.0.4
 			Span:     spn,
 			Message:  diag.Msg,
 			Severity: SeverityError,
@@ -118,6 +125,7 @@ func Diagnostics(ctx context.Context, v View, uri span.URI) (map[span.URI][]Diag
 		return reports, nil
 	}
 	// Type checking and parsing succeeded. Run analyses.
+<<<<<<< HEAD
 	runAnalyses(ctx, v, pkg, func(a *analysis.Analyzer, diag analysis.Diagnostic) {
 		r := span.NewRange(v.FileSet(), diag.Pos, 0)
 		s, err := r.Span()
@@ -125,11 +133,20 @@ func Diagnostics(ctx context.Context, v View, uri span.URI) (map[span.URI][]Diag
 			//TODO: we could not process the diag.Pos, and thus have no valid span
 			//we don't have anywhere to put this error though
 			v.Logger().Errorf(ctx, "%v", err)
+=======
+	if err := runAnalyses(ctx, v, pkg, func(a *analysis.Analyzer, diag analysis.Diagnostic) error {
+		r := span.NewRange(v.FileSet(), diag.Pos, 0)
+		s, err := r.Span()
+		if err != nil {
+			// The diagnostic has an invalid position, so we don't have a valid span.
+			return err
+>>>>>>> v0.0.4
 		}
 		category := a.Name
 		if diag.Category != "" {
 			category += "." + category
 		}
+<<<<<<< HEAD
 
 		reports[s.URI()] = append(reports[s.URI()], Diagnostic{
 			Source:   category,
@@ -138,10 +155,58 @@ func Diagnostics(ctx context.Context, v View, uri span.URI) (map[span.URI][]Diag
 			Severity: SeverityWarning,
 		})
 	})
+=======
+		reports[s.URI()] = append(reports[s.URI()], Diagnostic{
+			Source:   category,
+			Span:     s,
+			Message:  diag.Message,
+			Severity: SeverityWarning,
+		})
+		return nil
+	}); err != nil {
+		return singleDiagnostic(uri, "unable to run analyses for %s: %v", uri, err), nil
+	}
+>>>>>>> v0.0.4
 
 	return reports, nil
 }
 
+<<<<<<< HEAD
+=======
+func pointToSpan(ctx context.Context, v View, spn span.Span) span.Span {
+	// Don't set a range if it's anything other than a type error.
+	diagFile, err := v.GetFile(ctx, spn.URI())
+	if err != nil {
+		v.Logger().Errorf(ctx, "Could find file for diagnostic: %v", spn.URI())
+		return spn
+	}
+	tok := diagFile.GetToken(ctx)
+	if tok == nil {
+		v.Logger().Errorf(ctx, "Could not find tokens for diagnostic: %v", spn.URI())
+		return spn
+	}
+	content := diagFile.GetContent(ctx)
+	if content == nil {
+		v.Logger().Errorf(ctx, "Could not find content for diagnostic: %v", spn.URI())
+		return spn
+	}
+	c := span.NewTokenConverter(diagFile.GetFileSet(ctx), tok)
+	s, err := spn.WithOffset(c)
+	//we just don't bother producing an error if this failed
+	if err != nil {
+		v.Logger().Errorf(ctx, "invalid span for diagnostic: %v: %v", spn.URI(), err)
+		return spn
+	}
+	start := s.Start()
+	offset := start.Offset()
+	width := bytes.IndexAny(content[offset:], " \n,():;[]")
+	if width <= 0 {
+		return spn
+	}
+	return span.New(spn.URI(), start, span.NewPoint(start.Line(), start.Column()+width, offset+width))
+}
+
+>>>>>>> v0.0.4
 func singleDiagnostic(uri span.URI, format string, a ...interface{}) map[span.URI][]Diagnostic {
 	return map[span.URI][]Diagnostic{
 		uri: []Diagnostic{{
@@ -153,8 +218,13 @@ func singleDiagnostic(uri span.URI, format string, a ...interface{}) map[span.UR
 	}
 }
 
+<<<<<<< HEAD
 func runAnalyses(ctx context.Context, v View, pkg Package, report func(a *analysis.Analyzer, diag analysis.Diagnostic)) error {
 	// the traditional vet suite:
+=======
+func runAnalyses(ctx context.Context, v View, pkg Package, report func(a *analysis.Analyzer, diag analysis.Diagnostic) error) error {
+	// The traditional vet suite:
+>>>>>>> v0.0.4
 	analyzers := []*analysis.Analyzer{
 		asmdecl.Analyzer,
 		assign.Analyzer,
@@ -180,7 +250,14 @@ func runAnalyses(ctx context.Context, v View, pkg Package, report func(a *analys
 		unusedresult.Analyzer,
 	}
 
+<<<<<<< HEAD
 	roots := analyze(ctx, v, []Package{pkg}, analyzers)
+=======
+	roots, err := analyze(ctx, v, []Package{pkg}, analyzers)
+	if err != nil {
+		return err
+	}
+>>>>>>> v0.0.4
 
 	// Report diagnostics and errors from root analyzers.
 	for _, r := range roots {
@@ -190,9 +267,17 @@ func runAnalyses(ctx context.Context, v View, pkg Package, report func(a *analys
 				// which isn't super useful...
 				return r.err
 			}
+<<<<<<< HEAD
 			report(r.Analyzer, diag)
 		}
 	}
 
+=======
+			if err := report(r.Analyzer, diag); err != nil {
+				return err
+			}
+		}
+	}
+>>>>>>> v0.0.4
 	return nil
 }

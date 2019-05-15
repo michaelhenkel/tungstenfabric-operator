@@ -370,6 +370,45 @@ func (s *AddonsConfig) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+<<<<<<< HEAD
+=======
+// AuthenticatorGroupsConfig: Configuration for returning group
+// information from authenticators.
+type AuthenticatorGroupsConfig struct {
+	// Enabled: Whether this cluster should return group membership
+	// lookups
+	// during authentication using a group of security groups.
+	Enabled bool `json:"enabled,omitempty"`
+
+	// SecurityGroup: The name of the security group-of-groups to be used.
+	// Only relevant
+	// if enabled = true.
+	SecurityGroup string `json:"securityGroup,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Enabled") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Enabled") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *AuthenticatorGroupsConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod AuthenticatorGroupsConfig
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+>>>>>>> v0.0.4
 // AutoUpgradeOptions: AutoUpgradeOptions defines the set of options for
 // the user to control how
 // the Auto Upgrades will proceed.
@@ -617,6 +656,13 @@ type Cluster struct {
 	// in the cluster.
 	AddonsConfig *AddonsConfig `json:"addonsConfig,omitempty"`
 
+<<<<<<< HEAD
+=======
+	// AuthenticatorGroupsConfig: Configuration controlling RBAC group
+	// membership information.
+	AuthenticatorGroupsConfig *AuthenticatorGroupsConfig `json:"authenticatorGroupsConfig,omitempty"`
+
+>>>>>>> v0.0.4
 	// Autoscaling: Cluster-level autoscaling configuration.
 	Autoscaling *ClusterAutoscaling `json:"autoscaling,omitempty"`
 
@@ -1059,6 +1105,13 @@ type ClusterUpdate struct {
 	// NOTE: Set the "desired_node_pool" field as well.
 	DesiredImageType string `json:"desiredImageType,omitempty"`
 
+<<<<<<< HEAD
+=======
+	// DesiredIntraNodeVisibilityConfig: The desired config of Intra-node
+	// visibility.
+	DesiredIntraNodeVisibilityConfig *IntraNodeVisibilityConfig `json:"desiredIntraNodeVisibilityConfig,omitempty"`
+
+>>>>>>> v0.0.4
 	// DesiredLocations: The desired list of Google Compute
 	// Engine
 	// [zones](/compute/docs/zones#available) in which the cluster's
@@ -1391,7 +1444,11 @@ type DatabaseEncryption struct {
 	//   "ENCRYPTED" - Secrets in etcd are encrypted.
 	//   "DECRYPTED" - Secrets in etcd are stored in plain text (at etcd
 	// level) - this is
+<<<<<<< HEAD
 	// unrelated to GCE level full disk encryption.
+=======
+	// unrelated to Google Compute Engine level full disk encryption.
+>>>>>>> v0.0.4
 	State string `json:"state,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "KeyName") to
@@ -1782,6 +1839,39 @@ func (s *IPAllocationPolicy) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+<<<<<<< HEAD
+=======
+// IntraNodeVisibilityConfig: IntraNodeVisibilityConfig contains the
+// desired config of the intra-node
+// visibility on this cluster.
+type IntraNodeVisibilityConfig struct {
+	// Enabled: Enables intra node visibility for this cluster.
+	Enabled bool `json:"enabled,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Enabled") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Enabled") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *IntraNodeVisibilityConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod IntraNodeVisibilityConfig
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+>>>>>>> v0.0.4
 // IstioConfig: Configuration options for Istio addon.
 type IstioConfig struct {
 	// Auth: The specified Istio auth mode, either none, or mutual TLS.
@@ -2435,6 +2525,14 @@ func (s *Metric) UnmarshalJSON(data []byte) error {
 // NetworkConfig: NetworkConfig reports the relative names of network &
 // subnetwork.
 type NetworkConfig struct {
+<<<<<<< HEAD
+=======
+	// EnableIntraNodeVisibility: Whether Intra-node visibility is enabled
+	// for this cluster.
+	// This makes same node pod to pod traffic visible for VPC network.
+	EnableIntraNodeVisibility bool `json:"enableIntraNodeVisibility,omitempty"`
+
+>>>>>>> v0.0.4
 	// Network: Output only. The relative name of the Google Compute
 	// Engine
 	// network(/compute/docs/networks-and-firewalls#networks) to which
@@ -2450,6 +2548,7 @@ type NetworkConfig struct {
 	// projects/my-project/regions/us-central1/subnetworks/my-subnet
 	Subnetwork string `json:"subnetwork,omitempty"`
 
+<<<<<<< HEAD
 	// ForceSendFields is a list of field names (e.g. "Network") to
 	// unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,
@@ -2464,6 +2563,24 @@ type NetworkConfig struct {
 	// empty value appearing in NullFields will be sent to the server as
 	// null. It is an error if a field in this list has a non-empty value.
 	// This may be used to include null fields in Patch requests.
+=======
+	// ForceSendFields is a list of field names (e.g.
+	// "EnableIntraNodeVisibility") to unconditionally include in API
+	// requests. By default, fields with empty values are omitted from API
+	// requests. However, any non-pointer, non-interface field appearing in
+	// ForceSendFields will be sent to the server regardless of whether the
+	// field is empty or not. This may be used to include empty fields in
+	// Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g.
+	// "EnableIntraNodeVisibility") to include in API requests with the JSON
+	// null value. By default, fields with empty values are omitted from API
+	// requests. However, any field with an empty value appearing in
+	// NullFields will be sent to the server as null. It is an error if a
+	// field in this list has a non-empty value. This may be used to include
+	// null fields in Patch requests.
+>>>>>>> v0.0.4
 	NullFields []string `json:"-"`
 }
 
@@ -4552,9 +4669,15 @@ func (s *VerticalPodAutoscaling) MarshalJSON() ([]byte, error) {
 // configuration to expose to
 // workloads on the node pool.
 type WorkloadMetadataConfig struct {
+<<<<<<< HEAD
 	// NodeMetadata: NodeMetadata is the configuration for how to expose the
 	// node metadata to
 	// the workload running on the node.
+=======
+	// NodeMetadata: NodeMetadata is the configuration for how to expose
+	// metadata to the
+	// workloads running on the node.
+>>>>>>> v0.0.4
 	//
 	// Possible values:
 	//   "UNSPECIFIED" - Not set.
@@ -4572,6 +4695,18 @@ type WorkloadMetadataConfig struct {
 	// be
 	// deprecated in the future and later removed.
 	//   "EXPOSE" - Expose all VM metadata to pods.
+<<<<<<< HEAD
+=======
+	//   "GKE_METADATA_SERVER" - Run the GKE Metadata Server on this node.
+	// The GKE Metadata Server exposes
+	// a metadata API to workloads that is compatible with the V1
+	// Compute
+	// Metadata APIs exposed by the Compute Engine and App Engine
+	// Metadata
+	// Servers. This feature can only be enabled if Workload Identity is
+	// enabled
+	// at the cluster level.
+>>>>>>> v0.0.4
 	NodeMetadata string `json:"nodeMetadata,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "NodeMetadata") to
@@ -4608,7 +4743,11 @@ type ProjectsAggregatedUsableSubnetworksListCall struct {
 	header_      http.Header
 }
 
+<<<<<<< HEAD
 // List: Lists subnetworks that are usable for creating clusters in a
+=======
+// List: Lists subnetworks that can be used for creating clusters in a
+>>>>>>> v0.0.4
 // project.
 func (r *ProjectsAggregatedUsableSubnetworksService) List(parent string) *ProjectsAggregatedUsableSubnetworksListCall {
 	c := &ProjectsAggregatedUsableSubnetworksListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -4746,7 +4885,11 @@ func (c *ProjectsAggregatedUsableSubnetworksListCall) Do(opts ...googleapi.CallO
 	}
 	return ret, nil
 	// {
+<<<<<<< HEAD
 	//   "description": "Lists subnetworks that are usable for creating clusters in a project.",
+=======
+	//   "description": "Lists subnetworks that can be used for creating clusters in a project.",
+>>>>>>> v0.0.4
 	//   "flatPath": "v1beta1/projects/{projectsId}/aggregated/usableSubnetworks",
 	//   "httpMethod": "GET",
 	//   "id": "container.projects.aggregated.usableSubnetworks.list",
@@ -4821,8 +4964,13 @@ type ProjectsLocationsGetServerConfigCall struct {
 	header_      http.Header
 }
 
+<<<<<<< HEAD
 // GetServerConfig: Returns configuration info about the Kubernetes
 // Engine service.
+=======
+// GetServerConfig: Returns configuration info about the Google
+// Kubernetes Engine service.
+>>>>>>> v0.0.4
 func (r *ProjectsLocationsService) GetServerConfig(name string) *ProjectsLocationsGetServerConfigCall {
 	c := &ProjectsLocationsGetServerConfigCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -4947,7 +5095,11 @@ func (c *ProjectsLocationsGetServerConfigCall) Do(opts ...googleapi.CallOption) 
 	}
 	return ret, nil
 	// {
+<<<<<<< HEAD
 	//   "description": "Returns configuration info about the Kubernetes Engine service.",
+=======
+	//   "description": "Returns configuration info about the Google Kubernetes Engine service.",
+>>>>>>> v0.0.4
 	//   "flatPath": "v1beta1/projects/{projectsId}/locations/{locationsId}/serverConfig",
 	//   "httpMethod": "GET",
 	//   "id": "container.projects.locations.getServerConfig",
@@ -4995,7 +5147,11 @@ type ProjectsLocationsListCall struct {
 	header_      http.Header
 }
 
+<<<<<<< HEAD
 // List: Used to fetch locations that offer GKE.
+=======
+// List: Fetches locations that offer Google Kubernetes Engine.
+>>>>>>> v0.0.4
 func (r *ProjectsLocationsService) List(parent string) *ProjectsLocationsListCall {
 	c := &ProjectsLocationsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -5100,7 +5256,11 @@ func (c *ProjectsLocationsListCall) Do(opts ...googleapi.CallOption) (*ListLocat
 	}
 	return ret, nil
 	// {
+<<<<<<< HEAD
 	//   "description": "Used to fetch locations that offer GKE.",
+=======
+	//   "description": "Fetches locations that offer Google Kubernetes Engine.",
+>>>>>>> v0.0.4
 	//   "flatPath": "v1beta1/projects/{projectsId}/locations",
 	//   "httpMethod": "GET",
 	//   "id": "container.projects.locations.list",
@@ -5286,14 +5446,22 @@ type ProjectsLocationsClustersCreateCall struct {
 // network](/compute/docs/networks-and-firewalls#networks).
 //
 // One firewall is added for the cluster. After cluster creation,
+<<<<<<< HEAD
 // the cluster creates routes for each node to allow the containers
+=======
+// the Kubelet creates routes for each node to allow the containers
+>>>>>>> v0.0.4
 // on that node to communicate with all other instances in
 // the
 // cluster.
 //
 // Finally, an entry is added to the project's global metadata
 // indicating
+<<<<<<< HEAD
 // which CIDR range is being used by the cluster.
+=======
+// which CIDR range the cluster is using.
+>>>>>>> v0.0.4
 func (r *ProjectsLocationsClustersService) Create(parent string, createclusterrequest *CreateClusterRequest) *ProjectsLocationsClustersCreateCall {
 	c := &ProjectsLocationsClustersCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -5391,7 +5559,11 @@ func (c *ProjectsLocationsClustersCreateCall) Do(opts ...googleapi.CallOption) (
 	}
 	return ret, nil
 	// {
+<<<<<<< HEAD
 	//   "description": "Creates a cluster, consisting of the specified number and type of Google\nCompute Engine instances.\n\nBy default, the cluster is created in the project's\n[default network](/compute/docs/networks-and-firewalls#networks).\n\nOne firewall is added for the cluster. After cluster creation,\nthe cluster creates routes for each node to allow the containers\non that node to communicate with all other instances in the\ncluster.\n\nFinally, an entry is added to the project's global metadata indicating\nwhich CIDR range is being used by the cluster.",
+=======
+	//   "description": "Creates a cluster, consisting of the specified number and type of Google\nCompute Engine instances.\n\nBy default, the cluster is created in the project's\n[default network](/compute/docs/networks-and-firewalls#networks).\n\nOne firewall is added for the cluster. After cluster creation,\nthe Kubelet creates routes for each node to allow the containers\non that node to communicate with all other instances in the\ncluster.\n\nFinally, an entry is added to the project's global metadata indicating\nwhich CIDR range the cluster is using.",
+>>>>>>> v0.0.4
 	//   "flatPath": "v1beta1/projects/{projectsId}/locations/{locationsId}/clusters",
 	//   "httpMethod": "POST",
 	//   "id": "container.projects.locations.clusters.create",
@@ -5439,10 +5611,17 @@ type ProjectsLocationsClustersDeleteCall struct {
 // are also deleted.
 //
 // Other Google Compute Engine resources that might be in use by the
+<<<<<<< HEAD
 // cluster
 // (e.g. load balancer resources) will not be deleted if they weren't
 // present
 // at the initial create time.
+=======
+// cluster,
+// such as load balancer resources, are not deleted if they weren't
+// present
+// when the cluster was initially created.
+>>>>>>> v0.0.4
 func (r *ProjectsLocationsClustersService) Delete(name string) *ProjectsLocationsClustersDeleteCall {
 	c := &ProjectsLocationsClustersDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -5564,7 +5743,11 @@ func (c *ProjectsLocationsClustersDeleteCall) Do(opts ...googleapi.CallOption) (
 	}
 	return ret, nil
 	// {
+<<<<<<< HEAD
 	//   "description": "Deletes the cluster, including the Kubernetes endpoint and all worker\nnodes.\n\nFirewalls and routes that were configured during cluster creation\nare also deleted.\n\nOther Google Compute Engine resources that might be in use by the cluster\n(e.g. load balancer resources) will not be deleted if they weren't present\nat the initial create time.",
+=======
+	//   "description": "Deletes the cluster, including the Kubernetes endpoint and all worker\nnodes.\n\nFirewalls and routes that were configured during cluster creation\nare also deleted.\n\nOther Google Compute Engine resources that might be in use by the cluster,\nsuch as load balancer resources, are not deleted if they weren't present\nwhen the cluster was initially created.",
+>>>>>>> v0.0.4
 	//   "flatPath": "v1beta1/projects/{projectsId}/locations/{locationsId}/clusters/{clustersId}",
 	//   "httpMethod": "DELETE",
 	//   "id": "container.projects.locations.clusters.delete",
@@ -5805,8 +5988,13 @@ type ProjectsLocationsClustersGetJwksCall struct {
 	header_      http.Header
 }
 
+<<<<<<< HEAD
 // GetJwks: GetJSONWebKeys gets the public component of the cluster
 // signing keys in
+=======
+// GetJwks: Gets the public component of the cluster signing keys
+// in
+>>>>>>> v0.0.4
 // JSON Web Key format.
 // This API is not yet intended for general use, and is not available
 // for all
@@ -5915,7 +6103,11 @@ func (c *ProjectsLocationsClustersGetJwksCall) Do(opts ...googleapi.CallOption) 
 	}
 	return ret, nil
 	// {
+<<<<<<< HEAD
 	//   "description": "GetJSONWebKeys gets the public component of the cluster signing keys in\nJSON Web Key format.\nThis API is not yet intended for general use, and is not available for all\nclusters.",
+=======
+	//   "description": "Gets the public component of the cluster signing keys in\nJSON Web Key format.\nThis API is not yet intended for general use, and is not available for all\nclusters.",
+>>>>>>> v0.0.4
 	//   "flatPath": "v1beta1/projects/{projectsId}/locations/{locationsId}/clusters/{clustersId}/jwks",
 	//   "httpMethod": "GET",
 	//   "id": "container.projects.locations.clusters.getJwks",
@@ -6825,11 +7017,19 @@ type ProjectsLocationsClustersSetMasterAuthCall struct {
 	header_              http.Header
 }
 
+<<<<<<< HEAD
 // SetMasterAuth: Used to set master auth materials. Currently supports
 // :-
 // Changing the admin password for a specific cluster.
 // This can be either via password generation or explicitly set.
 // Modify basic_auth.csv and reset the K8S API server.
+=======
+// SetMasterAuth: Sets master auth materials. Currently supports
+// changing the admin password
+// or a specific cluster, either via password generation or explicitly
+// setting
+// the password.
+>>>>>>> v0.0.4
 func (r *ProjectsLocationsClustersService) SetMasterAuth(name string, setmasterauthrequest *SetMasterAuthRequest) *ProjectsLocationsClustersSetMasterAuthCall {
 	c := &ProjectsLocationsClustersSetMasterAuthCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -6927,7 +7127,11 @@ func (c *ProjectsLocationsClustersSetMasterAuthCall) Do(opts ...googleapi.CallOp
 	}
 	return ret, nil
 	// {
+<<<<<<< HEAD
 	//   "description": "Used to set master auth materials. Currently supports :-\nChanging the admin password for a specific cluster.\nThis can be either via password generation or explicitly set.\nModify basic_auth.csv and reset the K8S API server.",
+=======
+	//   "description": "Sets master auth materials. Currently supports changing the admin password\nor a specific cluster, either via password generation or explicitly setting\nthe password.",
+>>>>>>> v0.0.4
 	//   "flatPath": "v1beta1/projects/{projectsId}/locations/{locationsId}/clusters/{clustersId}:setMasterAuth",
 	//   "httpMethod": "POST",
 	//   "id": "container.projects.locations.clusters.setMasterAuth",
@@ -7107,7 +7311,11 @@ type ProjectsLocationsClustersSetNetworkPolicyCall struct {
 	header_                 http.Header
 }
 
+<<<<<<< HEAD
 // SetNetworkPolicy: Enables/Disables Network Policy for a cluster.
+=======
+// SetNetworkPolicy: Enables or disables Network Policy for a cluster.
+>>>>>>> v0.0.4
 func (r *ProjectsLocationsClustersService) SetNetworkPolicy(name string, setnetworkpolicyrequest *SetNetworkPolicyRequest) *ProjectsLocationsClustersSetNetworkPolicyCall {
 	c := &ProjectsLocationsClustersSetNetworkPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -7205,7 +7413,11 @@ func (c *ProjectsLocationsClustersSetNetworkPolicyCall) Do(opts ...googleapi.Cal
 	}
 	return ret, nil
 	// {
+<<<<<<< HEAD
 	//   "description": "Enables/Disables Network Policy for a cluster.",
+=======
+	//   "description": "Enables or disables Network Policy for a cluster.",
+>>>>>>> v0.0.4
 	//   "flatPath": "v1beta1/projects/{projectsId}/locations/{locationsId}/clusters/{clustersId}:setNetworkPolicy",
 	//   "httpMethod": "POST",
 	//   "id": "container.projects.locations.clusters.setNetworkPolicy",
@@ -7385,7 +7597,11 @@ type ProjectsLocationsClustersStartIpRotationCall struct {
 	header_                http.Header
 }
 
+<<<<<<< HEAD
 // StartIpRotation: Start master IP rotation.
+=======
+// StartIpRotation: Starts master IP rotation.
+>>>>>>> v0.0.4
 func (r *ProjectsLocationsClustersService) StartIpRotation(name string, startiprotationrequest *StartIPRotationRequest) *ProjectsLocationsClustersStartIpRotationCall {
 	c := &ProjectsLocationsClustersStartIpRotationCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -7483,7 +7699,11 @@ func (c *ProjectsLocationsClustersStartIpRotationCall) Do(opts ...googleapi.Call
 	}
 	return ret, nil
 	// {
+<<<<<<< HEAD
 	//   "description": "Start master IP rotation.",
+=======
+	//   "description": "Starts master IP rotation.",
+>>>>>>> v0.0.4
 	//   "flatPath": "v1beta1/projects/{projectsId}/locations/{locationsId}/clusters/{clustersId}:startIpRotation",
 	//   "httpMethod": "POST",
 	//   "id": "container.projects.locations.clusters.startIpRotation",
@@ -8128,7 +8348,11 @@ type ProjectsLocationsClustersNodePoolsGetCall struct {
 	header_      http.Header
 }
 
+<<<<<<< HEAD
 // Get: Retrieves the node pool requested.
+=======
+// Get: Retrieves the requested node pool.
+>>>>>>> v0.0.4
 func (r *ProjectsLocationsClustersNodePoolsService) Get(name string) *ProjectsLocationsClustersNodePoolsGetCall {
 	c := &ProjectsLocationsClustersNodePoolsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -8271,7 +8495,11 @@ func (c *ProjectsLocationsClustersNodePoolsGetCall) Do(opts ...googleapi.CallOpt
 	}
 	return ret, nil
 	// {
+<<<<<<< HEAD
 	//   "description": "Retrieves the node pool requested.",
+=======
+	//   "description": "Retrieves the requested node pool.",
+>>>>>>> v0.0.4
 	//   "flatPath": "v1beta1/projects/{projectsId}/locations/{locationsId}/clusters/{clustersId}/nodePools/{nodePoolsId}",
 	//   "httpMethod": "GET",
 	//   "id": "container.projects.locations.clusters.nodePools.get",
@@ -8517,9 +8745,15 @@ type ProjectsLocationsClustersNodePoolsRollbackCall struct {
 	header_                        http.Header
 }
 
+<<<<<<< HEAD
 // Rollback: Roll back the previously Aborted or Failed NodePool
 // upgrade.
 // This will be an no-op if the last upgrade successfully completed.
+=======
+// Rollback: Rolls back a previously Aborted or Failed NodePool
+// upgrade.
+// This makes no changes if the last upgrade successfully completed.
+>>>>>>> v0.0.4
 func (r *ProjectsLocationsClustersNodePoolsService) Rollback(name string, rollbacknodepoolupgraderequest *RollbackNodePoolUpgradeRequest) *ProjectsLocationsClustersNodePoolsRollbackCall {
 	c := &ProjectsLocationsClustersNodePoolsRollbackCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -8617,7 +8851,11 @@ func (c *ProjectsLocationsClustersNodePoolsRollbackCall) Do(opts ...googleapi.Ca
 	}
 	return ret, nil
 	// {
+<<<<<<< HEAD
 	//   "description": "Roll back the previously Aborted or Failed NodePool upgrade.\nThis will be an no-op if the last upgrade successfully completed.",
+=======
+	//   "description": "Rolls back a previously Aborted or Failed NodePool upgrade.\nThis makes no changes if the last upgrade successfully completed.",
+>>>>>>> v0.0.4
 	//   "flatPath": "v1beta1/projects/{projectsId}/locations/{locationsId}/clusters/{clustersId}/nodePools/{nodePoolsId}:rollback",
 	//   "httpMethod": "POST",
 	//   "id": "container.projects.locations.clusters.nodePools.rollback",
@@ -9216,6 +9454,7 @@ type ProjectsLocationsClustersWellKnownGetOpenidConfigurationCall struct {
 	header_      http.Header
 }
 
+<<<<<<< HEAD
 // GetOpenidConfiguration: GetOpenIDConfig gets the OIDC discovery
 // document for the cluster.
 // See the OpenID Connect Discovery 1.0 specification for
@@ -9224,6 +9463,18 @@ type ProjectsLocationsClustersWellKnownGetOpenidConfigurationCall struct {
 // Th
 // is API is not yet intended for general use, and is not available for
 // all
+=======
+// GetOpenidConfiguration: Gets the OIDC discovery document for the
+// cluster.
+// See the
+// [OpenID Connect Discovery
+// 1.0
+// specification](https://openid.net/specs/openid-connect-discovery-1
+// _0.html)
+// for details.
+// This API is not yet intended for general use, and is not available
+// for all
+>>>>>>> v0.0.4
 // clusters.
 func (r *ProjectsLocationsClustersWellKnownService) GetOpenidConfiguration(parent string) *ProjectsLocationsClustersWellKnownGetOpenidConfigurationCall {
 	c := &ProjectsLocationsClustersWellKnownGetOpenidConfigurationCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -9329,7 +9580,11 @@ func (c *ProjectsLocationsClustersWellKnownGetOpenidConfigurationCall) Do(opts .
 	}
 	return ret, nil
 	// {
+<<<<<<< HEAD
 	//   "description": "GetOpenIDConfig gets the OIDC discovery document for the cluster.\nSee the OpenID Connect Discovery 1.0 specification for details.\nhttps://openid.net/specs/openid-connect-discovery-1_0.html\nThis API is not yet intended for general use, and is not available for all\nclusters.",
+=======
+	//   "description": "Gets the OIDC discovery document for the cluster.\nSee the\n[OpenID Connect Discovery 1.0\nspecification](https://openid.net/specs/openid-connect-discovery-1_0.html)\nfor details.\nThis API is not yet intended for general use, and is not available for all\nclusters.",
+>>>>>>> v0.0.4
 	//   "flatPath": "v1beta1/projects/{projectsId}/locations/{locationsId}/clusters/{clustersId}/.well-known/openid-configuration",
 	//   "httpMethod": "GET",
 	//   "id": "container.projects.locations.clusters.well-known.getOpenid-configuration",
@@ -9694,7 +9949,11 @@ type ProjectsLocationsOperationsListCall struct {
 	header_      http.Header
 }
 
+<<<<<<< HEAD
 // List: Lists all operations in a project in a specific zone or all
+=======
+// List: Lists all operations in a project in the specified zone or all
+>>>>>>> v0.0.4
 // zones.
 func (r *ProjectsLocationsOperationsService) List(parent string) *ProjectsLocationsOperationsListCall {
 	c := &ProjectsLocationsOperationsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -9822,7 +10081,11 @@ func (c *ProjectsLocationsOperationsListCall) Do(opts ...googleapi.CallOption) (
 	}
 	return ret, nil
 	// {
+<<<<<<< HEAD
 	//   "description": "Lists all operations in a project in a specific zone or all zones.",
+=======
+	//   "description": "Lists all operations in a project in the specified zone or all zones.",
+>>>>>>> v0.0.4
 	//   "flatPath": "v1beta1/projects/{projectsId}/locations/{locationsId}/operations",
 	//   "httpMethod": "GET",
 	//   "id": "container.projects.locations.operations.list",
@@ -9871,8 +10134,13 @@ type ProjectsZonesGetServerconfigCall struct {
 	header_      http.Header
 }
 
+<<<<<<< HEAD
 // GetServerconfig: Returns configuration info about the Kubernetes
 // Engine service.
+=======
+// GetServerconfig: Returns configuration info about the Google
+// Kubernetes Engine service.
+>>>>>>> v0.0.4
 func (r *ProjectsZonesService) GetServerconfig(projectId string, zone string) *ProjectsZonesGetServerconfigCall {
 	c := &ProjectsZonesGetServerconfigCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectId = projectId
@@ -9987,7 +10255,11 @@ func (c *ProjectsZonesGetServerconfigCall) Do(opts ...googleapi.CallOption) (*Se
 	}
 	return ret, nil
 	// {
+<<<<<<< HEAD
 	//   "description": "Returns configuration info about the Kubernetes Engine service.",
+=======
+	//   "description": "Returns configuration info about the Google Kubernetes Engine service.",
+>>>>>>> v0.0.4
 	//   "flatPath": "v1beta1/projects/{projectId}/zones/{zone}/serverconfig",
 	//   "httpMethod": "GET",
 	//   "id": "container.projects.zones.getServerconfig",
@@ -10362,14 +10634,22 @@ type ProjectsZonesClustersCreateCall struct {
 // network](/compute/docs/networks-and-firewalls#networks).
 //
 // One firewall is added for the cluster. After cluster creation,
+<<<<<<< HEAD
 // the cluster creates routes for each node to allow the containers
+=======
+// the Kubelet creates routes for each node to allow the containers
+>>>>>>> v0.0.4
 // on that node to communicate with all other instances in
 // the
 // cluster.
 //
 // Finally, an entry is added to the project's global metadata
 // indicating
+<<<<<<< HEAD
 // which CIDR range is being used by the cluster.
+=======
+// which CIDR range the cluster is using.
+>>>>>>> v0.0.4
 func (r *ProjectsZonesClustersService) Create(projectId string, zone string, createclusterrequest *CreateClusterRequest) *ProjectsZonesClustersCreateCall {
 	c := &ProjectsZonesClustersCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectId = projectId
@@ -10469,7 +10749,11 @@ func (c *ProjectsZonesClustersCreateCall) Do(opts ...googleapi.CallOption) (*Ope
 	}
 	return ret, nil
 	// {
+<<<<<<< HEAD
 	//   "description": "Creates a cluster, consisting of the specified number and type of Google\nCompute Engine instances.\n\nBy default, the cluster is created in the project's\n[default network](/compute/docs/networks-and-firewalls#networks).\n\nOne firewall is added for the cluster. After cluster creation,\nthe cluster creates routes for each node to allow the containers\non that node to communicate with all other instances in the\ncluster.\n\nFinally, an entry is added to the project's global metadata indicating\nwhich CIDR range is being used by the cluster.",
+=======
+	//   "description": "Creates a cluster, consisting of the specified number and type of Google\nCompute Engine instances.\n\nBy default, the cluster is created in the project's\n[default network](/compute/docs/networks-and-firewalls#networks).\n\nOne firewall is added for the cluster. After cluster creation,\nthe Kubelet creates routes for each node to allow the containers\non that node to communicate with all other instances in the\ncluster.\n\nFinally, an entry is added to the project's global metadata indicating\nwhich CIDR range the cluster is using.",
+>>>>>>> v0.0.4
 	//   "flatPath": "v1beta1/projects/{projectId}/zones/{zone}/clusters",
 	//   "httpMethod": "POST",
 	//   "id": "container.projects.zones.clusters.create",
@@ -10525,10 +10809,17 @@ type ProjectsZonesClustersDeleteCall struct {
 // are also deleted.
 //
 // Other Google Compute Engine resources that might be in use by the
+<<<<<<< HEAD
 // cluster
 // (e.g. load balancer resources) will not be deleted if they weren't
 // present
 // at the initial create time.
+=======
+// cluster,
+// such as load balancer resources, are not deleted if they weren't
+// present
+// when the cluster was initially created.
+>>>>>>> v0.0.4
 func (r *ProjectsZonesClustersService) Delete(projectId string, zone string, clusterId string) *ProjectsZonesClustersDeleteCall {
 	c := &ProjectsZonesClustersDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectId = projectId
@@ -10632,7 +10923,11 @@ func (c *ProjectsZonesClustersDeleteCall) Do(opts ...googleapi.CallOption) (*Ope
 	}
 	return ret, nil
 	// {
+<<<<<<< HEAD
 	//   "description": "Deletes the cluster, including the Kubernetes endpoint and all worker\nnodes.\n\nFirewalls and routes that were configured during cluster creation\nare also deleted.\n\nOther Google Compute Engine resources that might be in use by the cluster\n(e.g. load balancer resources) will not be deleted if they weren't present\nat the initial create time.",
+=======
+	//   "description": "Deletes the cluster, including the Kubernetes endpoint and all worker\nnodes.\n\nFirewalls and routes that were configured during cluster creation\nare also deleted.\n\nOther Google Compute Engine resources that might be in use by the cluster,\nsuch as load balancer resources, are not deleted if they weren't present\nwhen the cluster was initially created.",
+>>>>>>> v0.0.4
 	//   "flatPath": "v1beta1/projects/{projectId}/zones/{zone}/clusters/{clusterId}",
 	//   "httpMethod": "DELETE",
 	//   "id": "container.projects.zones.clusters.delete",
@@ -12140,11 +12435,19 @@ type ProjectsZonesClustersSetMasterAuthCall struct {
 	header_              http.Header
 }
 
+<<<<<<< HEAD
 // SetMasterAuth: Used to set master auth materials. Currently supports
 // :-
 // Changing the admin password for a specific cluster.
 // This can be either via password generation or explicitly set.
 // Modify basic_auth.csv and reset the K8S API server.
+=======
+// SetMasterAuth: Sets master auth materials. Currently supports
+// changing the admin password
+// or a specific cluster, either via password generation or explicitly
+// setting
+// the password.
+>>>>>>> v0.0.4
 func (r *ProjectsZonesClustersService) SetMasterAuth(projectId string, zone string, clusterId string, setmasterauthrequest *SetMasterAuthRequest) *ProjectsZonesClustersSetMasterAuthCall {
 	c := &ProjectsZonesClustersSetMasterAuthCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectId = projectId
@@ -12246,7 +12549,11 @@ func (c *ProjectsZonesClustersSetMasterAuthCall) Do(opts ...googleapi.CallOption
 	}
 	return ret, nil
 	// {
+<<<<<<< HEAD
 	//   "description": "Used to set master auth materials. Currently supports :-\nChanging the admin password for a specific cluster.\nThis can be either via password generation or explicitly set.\nModify basic_auth.csv and reset the K8S API server.",
+=======
+	//   "description": "Sets master auth materials. Currently supports changing the admin password\nor a specific cluster, either via password generation or explicitly setting\nthe password.",
+>>>>>>> v0.0.4
 	//   "flatPath": "v1beta1/projects/{projectId}/zones/{zone}/clusters/{clusterId}:setMasterAuth",
 	//   "httpMethod": "POST",
 	//   "id": "container.projects.zones.clusters.setMasterAuth",
@@ -12302,7 +12609,11 @@ type ProjectsZonesClustersSetNetworkPolicyCall struct {
 	header_                 http.Header
 }
 
+<<<<<<< HEAD
 // SetNetworkPolicy: Enables/Disables Network Policy for a cluster.
+=======
+// SetNetworkPolicy: Enables or disables Network Policy for a cluster.
+>>>>>>> v0.0.4
 func (r *ProjectsZonesClustersService) SetNetworkPolicy(projectId string, zone string, clusterId string, setnetworkpolicyrequest *SetNetworkPolicyRequest) *ProjectsZonesClustersSetNetworkPolicyCall {
 	c := &ProjectsZonesClustersSetNetworkPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectId = projectId
@@ -12404,7 +12715,11 @@ func (c *ProjectsZonesClustersSetNetworkPolicyCall) Do(opts ...googleapi.CallOpt
 	}
 	return ret, nil
 	// {
+<<<<<<< HEAD
 	//   "description": "Enables/Disables Network Policy for a cluster.",
+=======
+	//   "description": "Enables or disables Network Policy for a cluster.",
+>>>>>>> v0.0.4
 	//   "flatPath": "v1beta1/projects/{projectId}/zones/{zone}/clusters/{clusterId}:setNetworkPolicy",
 	//   "httpMethod": "POST",
 	//   "id": "container.projects.zones.clusters.setNetworkPolicy",
@@ -12460,7 +12775,11 @@ type ProjectsZonesClustersStartIpRotationCall struct {
 	header_                http.Header
 }
 
+<<<<<<< HEAD
 // StartIpRotation: Start master IP rotation.
+=======
+// StartIpRotation: Starts master IP rotation.
+>>>>>>> v0.0.4
 func (r *ProjectsZonesClustersService) StartIpRotation(projectId string, zone string, clusterId string, startiprotationrequest *StartIPRotationRequest) *ProjectsZonesClustersStartIpRotationCall {
 	c := &ProjectsZonesClustersStartIpRotationCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectId = projectId
@@ -12562,7 +12881,11 @@ func (c *ProjectsZonesClustersStartIpRotationCall) Do(opts ...googleapi.CallOpti
 	}
 	return ret, nil
 	// {
+<<<<<<< HEAD
 	//   "description": "Start master IP rotation.",
+=======
+	//   "description": "Starts master IP rotation.",
+>>>>>>> v0.0.4
 	//   "flatPath": "v1beta1/projects/{projectId}/zones/{zone}/clusters/{clusterId}:startIpRotation",
 	//   "httpMethod": "POST",
 	//   "id": "container.projects.zones.clusters.startIpRotation",
@@ -13276,7 +13599,11 @@ type ProjectsZonesClustersNodePoolsGetCall struct {
 	header_      http.Header
 }
 
+<<<<<<< HEAD
 // Get: Retrieves the node pool requested.
+=======
+// Get: Retrieves the requested node pool.
+>>>>>>> v0.0.4
 func (r *ProjectsZonesClustersNodePoolsService) Get(projectId string, zone string, clusterId string, nodePoolId string) *ProjectsZonesClustersNodePoolsGetCall {
 	c := &ProjectsZonesClustersNodePoolsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectId = projectId
@@ -13397,7 +13724,11 @@ func (c *ProjectsZonesClustersNodePoolsGetCall) Do(opts ...googleapi.CallOption)
 	}
 	return ret, nil
 	// {
+<<<<<<< HEAD
 	//   "description": "Retrieves the node pool requested.",
+=======
+	//   "description": "Retrieves the requested node pool.",
+>>>>>>> v0.0.4
 	//   "flatPath": "v1beta1/projects/{projectId}/zones/{zone}/clusters/{clusterId}/nodePools/{nodePoolId}",
 	//   "httpMethod": "GET",
 	//   "id": "container.projects.zones.clusters.nodePools.get",
@@ -13638,9 +13969,15 @@ type ProjectsZonesClustersNodePoolsRollbackCall struct {
 	header_                        http.Header
 }
 
+<<<<<<< HEAD
 // Rollback: Roll back the previously Aborted or Failed NodePool
 // upgrade.
 // This will be an no-op if the last upgrade successfully completed.
+=======
+// Rollback: Rolls back a previously Aborted or Failed NodePool
+// upgrade.
+// This makes no changes if the last upgrade successfully completed.
+>>>>>>> v0.0.4
 func (r *ProjectsZonesClustersNodePoolsService) Rollback(projectId string, zone string, clusterId string, nodePoolId string, rollbacknodepoolupgraderequest *RollbackNodePoolUpgradeRequest) *ProjectsZonesClustersNodePoolsRollbackCall {
 	c := &ProjectsZonesClustersNodePoolsRollbackCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectId = projectId
@@ -13744,7 +14081,11 @@ func (c *ProjectsZonesClustersNodePoolsRollbackCall) Do(opts ...googleapi.CallOp
 	}
 	return ret, nil
 	// {
+<<<<<<< HEAD
 	//   "description": "Roll back the previously Aborted or Failed NodePool upgrade.\nThis will be an no-op if the last upgrade successfully completed.",
+=======
+	//   "description": "Rolls back a previously Aborted or Failed NodePool upgrade.\nThis makes no changes if the last upgrade successfully completed.",
+>>>>>>> v0.0.4
 	//   "flatPath": "v1beta1/projects/{projectId}/zones/{zone}/clusters/{clusterId}/nodePools/{nodePoolId}:rollback",
 	//   "httpMethod": "POST",
 	//   "id": "container.projects.zones.clusters.nodePools.rollback",
@@ -14644,7 +14985,11 @@ type ProjectsZonesOperationsListCall struct {
 	header_      http.Header
 }
 
+<<<<<<< HEAD
 // List: Lists all operations in a project in a specific zone or all
+=======
+// List: Lists all operations in a project in the specified zone or all
+>>>>>>> v0.0.4
 // zones.
 func (r *ProjectsZonesOperationsService) List(projectId string, zone string) *ProjectsZonesOperationsListCall {
 	c := &ProjectsZonesOperationsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -14761,7 +15106,11 @@ func (c *ProjectsZonesOperationsListCall) Do(opts ...googleapi.CallOption) (*Lis
 	}
 	return ret, nil
 	// {
+<<<<<<< HEAD
 	//   "description": "Lists all operations in a project in a specific zone or all zones.",
+=======
+	//   "description": "Lists all operations in a project in the specified zone or all zones.",
+>>>>>>> v0.0.4
 	//   "flatPath": "v1beta1/projects/{projectId}/zones/{zone}/operations",
 	//   "httpMethod": "GET",
 	//   "id": "container.projects.zones.operations.list",

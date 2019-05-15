@@ -83,14 +83,22 @@ const (
 	// View your basic profile info, including your age range and language
 	PlusLoginScope = "https://www.googleapis.com/auth/plus.login"
 
+<<<<<<< HEAD
 	// Know who you are on Google
+=======
+	// Associate you with your personal info on Google
+>>>>>>> v0.0.4
 	PlusMeScope = "https://www.googleapis.com/auth/plus.me"
 
 	// View your email address
 	UserinfoEmailScope = "https://www.googleapis.com/auth/userinfo.email"
 
 	// See your personal info, including any personal info you've made
+<<<<<<< HEAD
 	// publically available
+=======
+	// publicly available
+>>>>>>> v0.0.4
 	UserinfoProfileScope = "https://www.googleapis.com/auth/userinfo.profile"
 )
 
@@ -2297,7 +2305,12 @@ type ActivitiesGetCall struct {
 	header_      http.Header
 }
 
+<<<<<<< HEAD
 // Get: Get an activity.
+=======
+// Get: Shut down. See https://developers.google.com/+/api-shutdown for
+// more details.
+>>>>>>> v0.0.4
 func (r *ActivitiesService) Get(activityId string) *ActivitiesGetCall {
 	c := &ActivitiesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.activityId = activityId
@@ -2402,7 +2415,11 @@ func (c *ActivitiesGetCall) Do(opts ...googleapi.CallOption) (*Activity, error) 
 	}
 	return ret, nil
 	// {
+<<<<<<< HEAD
 	//   "description": "Get an activity.",
+=======
+	//   "description": "Shut down. See https://developers.google.com/+/api-shutdown for more details.",
+>>>>>>> v0.0.4
 	//   "httpMethod": "GET",
 	//   "id": "plus.activities.get",
 	//   "parameterOrder": [
@@ -2440,8 +2457,13 @@ type ActivitiesListCall struct {
 	header_      http.Header
 }
 
+<<<<<<< HEAD
 // List: List all of the activities in the specified collection for a
 // particular user.
+=======
+// List: Shut down. See https://developers.google.com/+/api-shutdown for
+// more details.
+>>>>>>> v0.0.4
 func (r *ActivitiesService) List(userId string, collection string) *ActivitiesListCall {
 	c := &ActivitiesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.userId = userId
@@ -2566,7 +2588,11 @@ func (c *ActivitiesListCall) Do(opts ...googleapi.CallOption) (*ActivityFeed, er
 	}
 	return ret, nil
 	// {
+<<<<<<< HEAD
 	//   "description": "List all of the activities in the specified collection for a particular user.",
+=======
+	//   "description": "Shut down. See https://developers.google.com/+/api-shutdown for more details.",
+>>>>>>> v0.0.4
 	//   "httpMethod": "GET",
 	//   "id": "plus.activities.list",
 	//   "parameterOrder": [
@@ -2650,7 +2676,12 @@ type ActivitiesSearchCall struct {
 	header_      http.Header
 }
 
+<<<<<<< HEAD
 // Search: Search public activities.
+=======
+// Search: Shut down. See https://developers.google.com/+/api-shutdown
+// for more details.
+>>>>>>> v0.0.4
 func (r *ActivitiesService) Search(query string) *ActivitiesSearchCall {
 	c := &ActivitiesSearchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.urlParams_.Set("query", query)
@@ -2792,7 +2823,11 @@ func (c *ActivitiesSearchCall) Do(opts ...googleapi.CallOption) (*ActivityFeed, 
 	}
 	return ret, nil
 	// {
+<<<<<<< HEAD
 	//   "description": "Search public activities.",
+=======
+	//   "description": "Shut down. See https://developers.google.com/+/api-shutdown for more details.",
+>>>>>>> v0.0.4
 	//   "httpMethod": "GET",
 	//   "id": "plus.activities.search",
 	//   "parameterOrder": [
@@ -2884,7 +2919,12 @@ type CommentsGetCall struct {
 	header_      http.Header
 }
 
+<<<<<<< HEAD
 // Get: Get a comment.
+=======
+// Get: Shut down. See https://developers.google.com/+/api-shutdown for
+// more details.
+>>>>>>> v0.0.4
 func (r *CommentsService) Get(commentId string) *CommentsGetCall {
 	c := &CommentsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.commentId = commentId
@@ -2989,7 +3029,11 @@ func (c *CommentsGetCall) Do(opts ...googleapi.CallOption) (*Comment, error) {
 	}
 	return ret, nil
 	// {
+<<<<<<< HEAD
 	//   "description": "Get a comment.",
+=======
+	//   "description": "Shut down. See https://developers.google.com/+/api-shutdown for more details.",
+>>>>>>> v0.0.4
 	//   "httpMethod": "GET",
 	//   "id": "plus.comments.get",
 	//   "parameterOrder": [
@@ -3026,7 +3070,12 @@ type CommentsListCall struct {
 	header_      http.Header
 }
 
+<<<<<<< HEAD
 // List: List all of the comments for an activity.
+=======
+// List: Shut down. See https://developers.google.com/+/api-shutdown for
+// more details.
+>>>>>>> v0.0.4
 func (r *CommentsService) List(activityId string) *CommentsListCall {
 	c := &CommentsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.activityId = activityId
@@ -3160,7 +3209,11 @@ func (c *CommentsListCall) Do(opts ...googleapi.CallOption) (*CommentFeed, error
 	}
 	return ret, nil
 	// {
+<<<<<<< HEAD
 	//   "description": "List all of the comments for an activity.",
+=======
+	//   "description": "Shut down. See https://developers.google.com/+/api-shutdown for more details.",
+>>>>>>> v0.0.4
 	//   "httpMethod": "GET",
 	//   "id": "plus.comments.list",
 	//   "parameterOrder": [
@@ -3630,8 +3683,13 @@ type PeopleListByActivityCall struct {
 	header_      http.Header
 }
 
+<<<<<<< HEAD
 // ListByActivity: List all of the people in the specified collection
 // for a particular activity.
+=======
+// ListByActivity: Shut down. See
+// https://developers.google.com/+/api-shutdown for more details.
+>>>>>>> v0.0.4
 func (r *PeopleService) ListByActivity(activityId string, collection string) *PeopleListByActivityCall {
 	c := &PeopleListByActivityCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.activityId = activityId
@@ -3756,7 +3814,11 @@ func (c *PeopleListByActivityCall) Do(opts ...googleapi.CallOption) (*PeopleFeed
 	}
 	return ret, nil
 	// {
+<<<<<<< HEAD
 	//   "description": "List all of the people in the specified collection for a particular activity.",
+=======
+	//   "description": "Shut down. See https://developers.google.com/+/api-shutdown for more details.",
+>>>>>>> v0.0.4
 	//   "httpMethod": "GET",
 	//   "id": "plus.people.listByActivity",
 	//   "parameterOrder": [
@@ -3842,7 +3904,12 @@ type PeopleSearchCall struct {
 	header_      http.Header
 }
 
+<<<<<<< HEAD
 // Search: Search all public profiles.
+=======
+// Search: Shut down. See https://developers.google.com/+/api-shutdown
+// for more details.
+>>>>>>> v0.0.4
 func (r *PeopleService) Search(query string) *PeopleSearchCall {
 	c := &PeopleSearchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.urlParams_.Set("query", query)
@@ -3971,7 +4038,11 @@ func (c *PeopleSearchCall) Do(opts ...googleapi.CallOption) (*PeopleFeed, error)
 	}
 	return ret, nil
 	// {
+<<<<<<< HEAD
 	//   "description": "Search all public profiles.",
+=======
+	//   "description": "Shut down. See https://developers.google.com/+/api-shutdown for more details.",
+>>>>>>> v0.0.4
 	//   "httpMethod": "GET",
 	//   "id": "plus.people.search",
 	//   "parameterOrder": [

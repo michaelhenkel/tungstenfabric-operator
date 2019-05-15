@@ -21,8 +21,11 @@ import (
 	"strings"
 	"time"
 
+<<<<<<< HEAD
 	"go.opencensus.io/exemplar"
 
+=======
+>>>>>>> v0.0.4
 	"go.opencensus.io/stats"
 	"go.opencensus.io/stats/internal"
 	"go.opencensus.io/tag"
@@ -105,7 +108,11 @@ func (cmd *unregisterFromViewReq) handleCommand(w *worker) {
 			// The collected data can be cleared.
 			vi.clearRows()
 		}
+<<<<<<< HEAD
 		delete(w.views, name)
+=======
+		w.unregisterView(name)
+>>>>>>> v0.0.4
 	}
 	cmd.done <- struct{}{}
 }
@@ -150,7 +157,11 @@ func (cmd *retrieveDataReq) handleCommand(w *worker) {
 type recordReq struct {
 	tm          *tag.Map
 	ms          []stats.Measurement
+<<<<<<< HEAD
 	attachments map[string]string
+=======
+	attachments map[string]interface{}
+>>>>>>> v0.0.4
 	t           time.Time
 }
 
@@ -161,12 +172,16 @@ func (cmd *recordReq) handleCommand(w *worker) {
 		}
 		ref := w.getMeasureRef(m.Measure().Name())
 		for v := range ref.views {
+<<<<<<< HEAD
 			e := &exemplar.Exemplar{
 				Value:       m.Value(),
 				Timestamp:   cmd.t,
 				Attachments: cmd.attachments,
 			}
 			v.addSample(cmd.tm, e)
+=======
+			v.addSample(cmd.tm, m.Value(), cmd.attachments, time.Now())
+>>>>>>> v0.0.4
 		}
 	}
 }

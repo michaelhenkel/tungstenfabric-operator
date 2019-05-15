@@ -4,7 +4,11 @@
 
 package main
 
+<<<<<<< HEAD
 //go:generate gotext extract --lang=de,zh
+=======
+//go:generate gotext -srclang=en update -out=catalog_gen.go -lang=en,zh
+>>>>>>> v0.0.4
 
 import (
 	"net/http"

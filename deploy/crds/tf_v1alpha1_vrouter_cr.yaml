@@ -1,7 +1,62 @@
 apiVersion: tf.tungstenfabric.io/v1alpha1
 kind: Vrouter
 metadata:
+<<<<<<< HEAD
   name: example-vrouter
 spec:
   # Add fields here
   size: 3
+=======
+  name: cluster-1
+spec:
+  type: daemonset
+  containers:
+    - name: vrouteragent
+      logvolumepath: "/var/log/contrail"
+      devvolume: true
+      networkscriptsvolume: true
+      hostbinvolume: true
+      usrsrcvolume: true
+      libmodulesvolume: true
+      varlibcontrailvolume: true
+      varcrashesvolume: true
+      privileged: true
+      lifecyclescript: ["/cleanup.sh"]
+      resourceconfigmap: true
+    - name: nodemanager
+      logvolumepath: "/var/log/contrail"
+      unixsocketvolume: true
+      resourceconfigmap: true
+      env:
+        "NODE_TYPE": "vrouter"
+        "DOCKER_HOST": "unix://mnt/docker.sock"
+  initcontainers:  
+    - name: nodeinit
+      privileged: true
+      hostusrbinvolume: true
+      resourceconfigmap: true
+    - name: vrouterkernelinit
+      privileged: true
+      hostusrbinvolume: true
+      usrsrcvolume: true
+      libmodulesvolume: true
+      networkscriptsvolume: true
+      hostbinvolume: true
+      resourceconfigmap: true
+      #    - name: vrouternicinit
+      #privileged: true
+      #hostusrbinvolume: true
+      #usrsrcvolume: true
+      #networkscriptsvolume: true   
+      #hostbinvolume: true  
+      #resourceconfigmap: true
+    - name: vroutercni
+      privileged: true
+      hostusrbinvolume: true
+      varlibcontrailvolume: true
+      etccnivolume: true
+      optcnibinvolume: true
+      varlogcontrailcnivolume: true
+      logvolumepath: "/var/log/contrail"
+      resourceconfigmap: true
+>>>>>>> v0.0.4

@@ -15,5 +15,9 @@
 package version
 
 var (
+<<<<<<< HEAD
 	Version = "v0.6.0+git"
+=======
+	Version = "v0.7.0+git"
+>>>>>>> v0.0.4
 )

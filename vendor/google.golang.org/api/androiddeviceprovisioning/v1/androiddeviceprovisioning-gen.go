@@ -902,6 +902,19 @@ type DeviceClaim struct {
 	//   "SECTION_TYPE_ZERO_TOUCH" - Zero-touch enrollment section type.
 	SectionType string `json:"sectionType,omitempty"`
 
+<<<<<<< HEAD
+=======
+	// VacationModeExpireTime: The timestamp when the device will exit
+	// ‘vacation mode’. This value is
+	// present iff the device is in 'vacation mode'.
+	VacationModeExpireTime string `json:"vacationModeExpireTime,omitempty"`
+
+	// VacationModeStartTime: The timestamp when the device was put into
+	// ‘vacation mode’. This value is
+	// present iff the device is in 'vacation mode'.
+	VacationModeStartTime string `json:"vacationModeStartTime,omitempty"`
+
+>>>>>>> v0.0.4
 	// ForceSendFields is a list of field names (e.g. "OwnerCompanyId") to
 	// unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,
@@ -1688,6 +1701,17 @@ type PartnerUnclaim struct {
 	//   "SECTION_TYPE_ZERO_TOUCH" - Zero-touch enrollment section type.
 	SectionType string `json:"sectionType,omitempty"`
 
+<<<<<<< HEAD
+=======
+	// VacationModeDays: The duration of the vacation unlock starting from
+	// when the request is
+	// processed. (1 day is treated as 24 hours)
+	VacationModeDays int64 `json:"vacationModeDays,omitempty"`
+
+	// VacationModeExpireTime: The expiration time of the vacation unlock.
+	VacationModeExpireTime string `json:"vacationModeExpireTime,omitempty"`
+
+>>>>>>> v0.0.4
 	// ForceSendFields is a list of field names (e.g. "DeviceId") to
 	// unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,
@@ -1904,6 +1928,17 @@ type UnclaimDeviceRequest struct {
 	//   "SECTION_TYPE_ZERO_TOUCH" - Zero-touch enrollment section type.
 	SectionType string `json:"sectionType,omitempty"`
 
+<<<<<<< HEAD
+=======
+	// VacationModeDays: The duration of the vacation unlock starting from
+	// when the request is
+	// processed. (1 day is treated as 24 hours)
+	VacationModeDays int64 `json:"vacationModeDays,omitempty"`
+
+	// VacationModeExpireTime: The expiration time of the vacation unlock.
+	VacationModeExpireTime string `json:"vacationModeExpireTime,omitempty"`
+
+>>>>>>> v0.0.4
 	// ForceSendFields is a list of field names (e.g. "DeviceId") to
 	// unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,

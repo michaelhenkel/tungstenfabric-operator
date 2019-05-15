@@ -5,7 +5,11 @@
 package cldrtree
 
 import (
+<<<<<<< HEAD
 	"golang.org/x/text/internal"
+=======
+	"golang.org/x/text/internal/language/compact"
+>>>>>>> v0.0.4
 	"golang.org/x/text/language"
 )
 
@@ -30,17 +34,29 @@ type Tree struct {
 // Each subsequent element in path indicates which subtree to select data from.
 // The last element of the path must select a leaf node. All other elements
 // of the path select a subindex.
+<<<<<<< HEAD
 func (t *Tree) Lookup(tag int, path ...uint16) string {
+=======
+func (t *Tree) Lookup(tag compact.ID, path ...uint16) string {
+>>>>>>> v0.0.4
 	return t.lookup(tag, false, path...)
 }
 
 // LookupFeature is like Lookup, but will first check whether a value of "other"
 // as a fallback before traversing the inheritance chain.
+<<<<<<< HEAD
 func (t *Tree) LookupFeature(tag int, path ...uint16) string {
 	return t.lookup(tag, true, path...)
 }
 
 func (t *Tree) lookup(tag int, isFeature bool, path ...uint16) string {
+=======
+func (t *Tree) LookupFeature(tag compact.ID, path ...uint16) string {
+	return t.lookup(tag, true, path...)
+}
+
+func (t *Tree) lookup(tag compact.ID, isFeature bool, path ...uint16) string {
+>>>>>>> v0.0.4
 	origLang := tag
 outer:
 	for {
@@ -86,7 +102,11 @@ outer:
 		if tag == 0 {
 			break
 		}
+<<<<<<< HEAD
 		tag = int(internal.Parent[tag])
+=======
+		tag = tag.Parent()
+>>>>>>> v0.0.4
 	}
 	return ""
 }
@@ -105,9 +125,15 @@ func build(b *Builder) (*Tree, error) {
 	}
 	// Set locales for which we don't have data to the parent's data.
 	for i, v := range t.Locales {
+<<<<<<< HEAD
 		p := uint16(i)
 		for v == 0 && p != 0 {
 			p = internal.Parent[p]
+=======
+		p := compact.ID(i)
+		for v == 0 && p != 0 {
+			p = p.Parent()
+>>>>>>> v0.0.4
 			v = t.Locales[p]
 		}
 		t.Locales[i] = v

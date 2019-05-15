@@ -68,7 +68,11 @@ func (t statsTransport) RoundTrip(req *http.Request) (*http.Response, error) {
 			track.end()
 		} else {
 			track.body = resp.Body
+<<<<<<< HEAD
 			resp.Body = track
+=======
+			resp.Body = wrappedBody(track, resp.Body)
+>>>>>>> v0.0.4
 		}
 	}
 	return resp, err

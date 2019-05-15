@@ -18,6 +18,10 @@ package containeranalysis
 
 import (
 	"context"
+<<<<<<< HEAD
+=======
+	"fmt"
+>>>>>>> v0.0.4
 	"math"
 	"time"
 
@@ -162,7 +166,12 @@ func (c *GrafeasV1Beta1Client) setGoogleClientInfo(keyval ...string) {
 
 // GetOccurrence gets the specified occurrence.
 func (c *GrafeasV1Beta1Client) GetOccurrence(ctx context.Context, req *grafeaspb.GetOccurrenceRequest, opts ...gax.CallOption) (*grafeaspb.Occurrence, error) {
+<<<<<<< HEAD
 	ctx = insertMetadata(ctx, c.xGoogMetadata)
+=======
+	md := metadata.Pairs("x-goog-request-params", fmt.Sprintf("%s=%v", "name", req.GetName()))
+	ctx = insertMetadata(ctx, c.xGoogMetadata, md)
+>>>>>>> v0.0.4
 	opts = append(c.CallOptions.GetOccurrence[0:len(c.CallOptions.GetOccurrence):len(c.CallOptions.GetOccurrence)], opts...)
 	var resp *grafeaspb.Occurrence
 	err := gax.Invoke(ctx, func(ctx context.Context, settings gax.CallSettings) error {
@@ -178,7 +187,12 @@ func (c *GrafeasV1Beta1Client) GetOccurrence(ctx context.Context, req *grafeaspb
 
 // ListOccurrences lists occurrences for the specified project.
 func (c *GrafeasV1Beta1Client) ListOccurrences(ctx context.Context, req *grafeaspb.ListOccurrencesRequest, opts ...gax.CallOption) *OccurrenceIterator {
+<<<<<<< HEAD
 	ctx = insertMetadata(ctx, c.xGoogMetadata)
+=======
+	md := metadata.Pairs("x-goog-request-params", fmt.Sprintf("%s=%v", "parent", req.GetParent()))
+	ctx = insertMetadata(ctx, c.xGoogMetadata, md)
+>>>>>>> v0.0.4
 	opts = append(c.CallOptions.ListOccurrences[0:len(c.CallOptions.ListOccurrences):len(c.CallOptions.ListOccurrences)], opts...)
 	it := &OccurrenceIterator{}
 	req = proto.Clone(req).(*grafeaspb.ListOccurrencesRequest)
@@ -217,7 +231,12 @@ func (c *GrafeasV1Beta1Client) ListOccurrences(ctx context.Context, req *grafeas
 // occurrence when the occurrence is no longer applicable for the given
 // resource.
 func (c *GrafeasV1Beta1Client) DeleteOccurrence(ctx context.Context, req *grafeaspb.DeleteOccurrenceRequest, opts ...gax.CallOption) error {
+<<<<<<< HEAD
 	ctx = insertMetadata(ctx, c.xGoogMetadata)
+=======
+	md := metadata.Pairs("x-goog-request-params", fmt.Sprintf("%s=%v", "name", req.GetName()))
+	ctx = insertMetadata(ctx, c.xGoogMetadata, md)
+>>>>>>> v0.0.4
 	opts = append(c.CallOptions.DeleteOccurrence[0:len(c.CallOptions.DeleteOccurrence):len(c.CallOptions.DeleteOccurrence)], opts...)
 	err := gax.Invoke(ctx, func(ctx context.Context, settings gax.CallSettings) error {
 		var err error
@@ -229,7 +248,12 @@ func (c *GrafeasV1Beta1Client) DeleteOccurrence(ctx context.Context, req *grafea
 
 // CreateOccurrence creates a new occurrence.
 func (c *GrafeasV1Beta1Client) CreateOccurrence(ctx context.Context, req *grafeaspb.CreateOccurrenceRequest, opts ...gax.CallOption) (*grafeaspb.Occurrence, error) {
+<<<<<<< HEAD
 	ctx = insertMetadata(ctx, c.xGoogMetadata)
+=======
+	md := metadata.Pairs("x-goog-request-params", fmt.Sprintf("%s=%v", "parent", req.GetParent()))
+	ctx = insertMetadata(ctx, c.xGoogMetadata, md)
+>>>>>>> v0.0.4
 	opts = append(c.CallOptions.CreateOccurrence[0:len(c.CallOptions.CreateOccurrence):len(c.CallOptions.CreateOccurrence)], opts...)
 	var resp *grafeaspb.Occurrence
 	err := gax.Invoke(ctx, func(ctx context.Context, settings gax.CallSettings) error {
@@ -245,7 +269,12 @@ func (c *GrafeasV1Beta1Client) CreateOccurrence(ctx context.Context, req *grafea
 
 // BatchCreateOccurrences creates new occurrences in batch.
 func (c *GrafeasV1Beta1Client) BatchCreateOccurrences(ctx context.Context, req *grafeaspb.BatchCreateOccurrencesRequest, opts ...gax.CallOption) (*grafeaspb.BatchCreateOccurrencesResponse, error) {
+<<<<<<< HEAD
 	ctx = insertMetadata(ctx, c.xGoogMetadata)
+=======
+	md := metadata.Pairs("x-goog-request-params", fmt.Sprintf("%s=%v", "parent", req.GetParent()))
+	ctx = insertMetadata(ctx, c.xGoogMetadata, md)
+>>>>>>> v0.0.4
 	opts = append(c.CallOptions.BatchCreateOccurrences[0:len(c.CallOptions.BatchCreateOccurrences):len(c.CallOptions.BatchCreateOccurrences)], opts...)
 	var resp *grafeaspb.BatchCreateOccurrencesResponse
 	err := gax.Invoke(ctx, func(ctx context.Context, settings gax.CallSettings) error {
@@ -261,7 +290,12 @@ func (c *GrafeasV1Beta1Client) BatchCreateOccurrences(ctx context.Context, req *
 
 // UpdateOccurrence updates the specified occurrence.
 func (c *GrafeasV1Beta1Client) UpdateOccurrence(ctx context.Context, req *grafeaspb.UpdateOccurrenceRequest, opts ...gax.CallOption) (*grafeaspb.Occurrence, error) {
+<<<<<<< HEAD
 	ctx = insertMetadata(ctx, c.xGoogMetadata)
+=======
+	md := metadata.Pairs("x-goog-request-params", fmt.Sprintf("%s=%v", "name", req.GetName()))
+	ctx = insertMetadata(ctx, c.xGoogMetadata, md)
+>>>>>>> v0.0.4
 	opts = append(c.CallOptions.UpdateOccurrence[0:len(c.CallOptions.UpdateOccurrence):len(c.CallOptions.UpdateOccurrence)], opts...)
 	var resp *grafeaspb.Occurrence
 	err := gax.Invoke(ctx, func(ctx context.Context, settings gax.CallSettings) error {
@@ -278,7 +312,12 @@ func (c *GrafeasV1Beta1Client) UpdateOccurrence(ctx context.Context, req *grafea
 // GetOccurrenceNote gets the note attached to the specified occurrence. Consumer projects can
 // use this method to get a note that belongs to a provider project.
 func (c *GrafeasV1Beta1Client) GetOccurrenceNote(ctx context.Context, req *grafeaspb.GetOccurrenceNoteRequest, opts ...gax.CallOption) (*grafeaspb.Note, error) {
+<<<<<<< HEAD
 	ctx = insertMetadata(ctx, c.xGoogMetadata)
+=======
+	md := metadata.Pairs("x-goog-request-params", fmt.Sprintf("%s=%v", "name", req.GetName()))
+	ctx = insertMetadata(ctx, c.xGoogMetadata, md)
+>>>>>>> v0.0.4
 	opts = append(c.CallOptions.GetOccurrenceNote[0:len(c.CallOptions.GetOccurrenceNote):len(c.CallOptions.GetOccurrenceNote)], opts...)
 	var resp *grafeaspb.Note
 	err := gax.Invoke(ctx, func(ctx context.Context, settings gax.CallSettings) error {
@@ -294,7 +333,12 @@ func (c *GrafeasV1Beta1Client) GetOccurrenceNote(ctx context.Context, req *grafe
 
 // GetNote gets the specified note.
 func (c *GrafeasV1Beta1Client) GetNote(ctx context.Context, req *grafeaspb.GetNoteRequest, opts ...gax.CallOption) (*grafeaspb.Note, error) {
+<<<<<<< HEAD
 	ctx = insertMetadata(ctx, c.xGoogMetadata)
+=======
+	md := metadata.Pairs("x-goog-request-params", fmt.Sprintf("%s=%v", "name", req.GetName()))
+	ctx = insertMetadata(ctx, c.xGoogMetadata, md)
+>>>>>>> v0.0.4
 	opts = append(c.CallOptions.GetNote[0:len(c.CallOptions.GetNote):len(c.CallOptions.GetNote)], opts...)
 	var resp *grafeaspb.Note
 	err := gax.Invoke(ctx, func(ctx context.Context, settings gax.CallSettings) error {
@@ -310,7 +354,12 @@ func (c *GrafeasV1Beta1Client) GetNote(ctx context.Context, req *grafeaspb.GetNo
 
 // ListNotes lists notes for the specified project.
 func (c *GrafeasV1Beta1Client) ListNotes(ctx context.Context, req *grafeaspb.ListNotesRequest, opts ...gax.CallOption) *NoteIterator {
+<<<<<<< HEAD
 	ctx = insertMetadata(ctx, c.xGoogMetadata)
+=======
+	md := metadata.Pairs("x-goog-request-params", fmt.Sprintf("%s=%v", "parent", req.GetParent()))
+	ctx = insertMetadata(ctx, c.xGoogMetadata, md)
+>>>>>>> v0.0.4
 	opts = append(c.CallOptions.ListNotes[0:len(c.CallOptions.ListNotes):len(c.CallOptions.ListNotes)], opts...)
 	it := &NoteIterator{}
 	req = proto.Clone(req).(*grafeaspb.ListNotesRequest)
@@ -347,7 +396,12 @@ func (c *GrafeasV1Beta1Client) ListNotes(ctx context.Context, req *grafeaspb.Lis
 
 // DeleteNote deletes the specified note.
 func (c *GrafeasV1Beta1Client) DeleteNote(ctx context.Context, req *grafeaspb.DeleteNoteRequest, opts ...gax.CallOption) error {
+<<<<<<< HEAD
 	ctx = insertMetadata(ctx, c.xGoogMetadata)
+=======
+	md := metadata.Pairs("x-goog-request-params", fmt.Sprintf("%s=%v", "name", req.GetName()))
+	ctx = insertMetadata(ctx, c.xGoogMetadata, md)
+>>>>>>> v0.0.4
 	opts = append(c.CallOptions.DeleteNote[0:len(c.CallOptions.DeleteNote):len(c.CallOptions.DeleteNote)], opts...)
 	err := gax.Invoke(ctx, func(ctx context.Context, settings gax.CallSettings) error {
 		var err error
@@ -359,7 +413,12 @@ func (c *GrafeasV1Beta1Client) DeleteNote(ctx context.Context, req *grafeaspb.De
 
 // CreateNote creates a new note.
 func (c *GrafeasV1Beta1Client) CreateNote(ctx context.Context, req *grafeaspb.CreateNoteRequest, opts ...gax.CallOption) (*grafeaspb.Note, error) {
+<<<<<<< HEAD
 	ctx = insertMetadata(ctx, c.xGoogMetadata)
+=======
+	md := metadata.Pairs("x-goog-request-params", fmt.Sprintf("%s=%v", "parent", req.GetParent()))
+	ctx = insertMetadata(ctx, c.xGoogMetadata, md)
+>>>>>>> v0.0.4
 	opts = append(c.CallOptions.CreateNote[0:len(c.CallOptions.CreateNote):len(c.CallOptions.CreateNote)], opts...)
 	var resp *grafeaspb.Note
 	err := gax.Invoke(ctx, func(ctx context.Context, settings gax.CallSettings) error {
@@ -375,7 +434,12 @@ func (c *GrafeasV1Beta1Client) CreateNote(ctx context.Context, req *grafeaspb.Cr
 
 // BatchCreateNotes creates new notes in batch.
 func (c *GrafeasV1Beta1Client) BatchCreateNotes(ctx context.Context, req *grafeaspb.BatchCreateNotesRequest, opts ...gax.CallOption) (*grafeaspb.BatchCreateNotesResponse, error) {
+<<<<<<< HEAD
 	ctx = insertMetadata(ctx, c.xGoogMetadata)
+=======
+	md := metadata.Pairs("x-goog-request-params", fmt.Sprintf("%s=%v", "parent", req.GetParent()))
+	ctx = insertMetadata(ctx, c.xGoogMetadata, md)
+>>>>>>> v0.0.4
 	opts = append(c.CallOptions.BatchCreateNotes[0:len(c.CallOptions.BatchCreateNotes):len(c.CallOptions.BatchCreateNotes)], opts...)
 	var resp *grafeaspb.BatchCreateNotesResponse
 	err := gax.Invoke(ctx, func(ctx context.Context, settings gax.CallSettings) error {
@@ -391,7 +455,12 @@ func (c *GrafeasV1Beta1Client) BatchCreateNotes(ctx context.Context, req *grafea
 
 // UpdateNote updates the specified note.
 func (c *GrafeasV1Beta1Client) UpdateNote(ctx context.Context, req *grafeaspb.UpdateNoteRequest, opts ...gax.CallOption) (*grafeaspb.Note, error) {
+<<<<<<< HEAD
 	ctx = insertMetadata(ctx, c.xGoogMetadata)
+=======
+	md := metadata.Pairs("x-goog-request-params", fmt.Sprintf("%s=%v", "name", req.GetName()))
+	ctx = insertMetadata(ctx, c.xGoogMetadata, md)
+>>>>>>> v0.0.4
 	opts = append(c.CallOptions.UpdateNote[0:len(c.CallOptions.UpdateNote):len(c.CallOptions.UpdateNote)], opts...)
 	var resp *grafeaspb.Note
 	err := gax.Invoke(ctx, func(ctx context.Context, settings gax.CallSettings) error {
@@ -409,7 +478,12 @@ func (c *GrafeasV1Beta1Client) UpdateNote(ctx context.Context, req *grafeaspb.Up
 // this method to get all occurrences across consumer projects referencing the
 // specified note.
 func (c *GrafeasV1Beta1Client) ListNoteOccurrences(ctx context.Context, req *grafeaspb.ListNoteOccurrencesRequest, opts ...gax.CallOption) *OccurrenceIterator {
+<<<<<<< HEAD
 	ctx = insertMetadata(ctx, c.xGoogMetadata)
+=======
+	md := metadata.Pairs("x-goog-request-params", fmt.Sprintf("%s=%v", "name", req.GetName()))
+	ctx = insertMetadata(ctx, c.xGoogMetadata, md)
+>>>>>>> v0.0.4
 	opts = append(c.CallOptions.ListNoteOccurrences[0:len(c.CallOptions.ListNoteOccurrences):len(c.CallOptions.ListNoteOccurrences)], opts...)
 	it := &OccurrenceIterator{}
 	req = proto.Clone(req).(*grafeaspb.ListNoteOccurrencesRequest)
@@ -446,7 +520,12 @@ func (c *GrafeasV1Beta1Client) ListNoteOccurrences(ctx context.Context, req *gra
 
 // GetVulnerabilityOccurrencesSummary gets a summary of the number and severity of occurrences.
 func (c *GrafeasV1Beta1Client) GetVulnerabilityOccurrencesSummary(ctx context.Context, req *grafeaspb.GetVulnerabilityOccurrencesSummaryRequest, opts ...gax.CallOption) (*grafeaspb.VulnerabilityOccurrencesSummary, error) {
+<<<<<<< HEAD
 	ctx = insertMetadata(ctx, c.xGoogMetadata)
+=======
+	md := metadata.Pairs("x-goog-request-params", fmt.Sprintf("%s=%v", "parent", req.GetParent()))
+	ctx = insertMetadata(ctx, c.xGoogMetadata, md)
+>>>>>>> v0.0.4
 	opts = append(c.CallOptions.GetVulnerabilityOccurrencesSummary[0:len(c.CallOptions.GetVulnerabilityOccurrencesSummary):len(c.CallOptions.GetVulnerabilityOccurrencesSummary)], opts...)
 	var resp *grafeaspb.VulnerabilityOccurrencesSummary
 	err := gax.Invoke(ctx, func(ctx context.Context, settings gax.CallSettings) error {

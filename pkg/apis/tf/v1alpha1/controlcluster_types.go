@@ -2,7 +2,10 @@ package v1alpha1
 
 import (
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
+<<<<<<< HEAD
 	basev1 "github.com/michaelhenkel/tungstenfabric-operator/pkg/apis/base/v1alpha1"
+=======
+>>>>>>> v0.0.4
 )
 
 // EDIT THIS FILE!  THIS IS SCAFFOLDING FOR YOU TO OWN!
@@ -14,6 +17,7 @@ type ControlClusterSpec struct {
 	// INSERT ADDITIONAL SPEC FIELDS - desired state of cluster
 	// Important: Run "operator-sdk generate k8s" to regenerate code after modifying this file
 	// Add custom validation using kubebuilder tags: https://book.kubebuilder.io/beyond_basics/generating_crd.html
+<<<<<<< HEAD
 	basev1.BaseParameter `json:",inline"`
 	ControlImage string `json:"controlImage,omitempty"`
 	NamedImage string `json:"namedImage,omitempty"`
@@ -24,6 +28,13 @@ type ControlClusterSpec struct {
 	CassandraClusterName string `json:"cassandraClusterName,omitempty"`
 	RabbitmqClusterName string `json:"rabbitmqClusterName,omitempty"`
 	ConfigClusterName string `json:"configClusterName,omitempty"`
+=======
+	Containers []*Container `json:"containers"`
+	ConfigParameters map[string]string
+	InitContainers []*Container `json:"initcontainers"`
+	Type string
+	General *General
+>>>>>>> v0.0.4
 }
 
 // ControlClusterStatus defines the observed state of ControlCluster

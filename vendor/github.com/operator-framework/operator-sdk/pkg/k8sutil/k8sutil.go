@@ -22,7 +22,10 @@ import (
 	"strings"
 
 	corev1 "k8s.io/api/core/v1"
+<<<<<<< HEAD
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
+=======
+>>>>>>> v0.0.4
 	discovery "k8s.io/client-go/discovery"
 	crclient "sigs.k8s.io/controller-runtime/pkg/client"
 	logf "sigs.k8s.io/controller-runtime/pkg/runtime/log"
@@ -99,12 +102,16 @@ func GetPod(ctx context.Context, client crclient.Client, ns string) (*corev1.Pod
 
 	log.V(1).Info("Found podname", "Pod.Name", podName)
 
+<<<<<<< HEAD
 	pod := &corev1.Pod{
 		TypeMeta: metav1.TypeMeta{
 			APIVersion: "v1",
 			Kind:       "Pod",
 		},
 	}
+=======
+	pod := &corev1.Pod{}
+>>>>>>> v0.0.4
 	key := crclient.ObjectKey{Namespace: ns, Name: podName}
 	err := client.Get(ctx, key, pod)
 	if err != nil {
@@ -112,6 +119,14 @@ func GetPod(ctx context.Context, client crclient.Client, ns string) (*corev1.Pod
 		return nil, err
 	}
 
+<<<<<<< HEAD
+=======
+	// .Get() clears the APIVersion and Kind,
+	// so we need to set them before returning the object.
+	pod.TypeMeta.APIVersion = "v1"
+	pod.TypeMeta.Kind = "Pod"
+
+>>>>>>> v0.0.4
 	log.V(1).Info("Found Pod", "Pod.Namespace", ns, "Pod.Name", pod.Name)
 
 	return pod, nil

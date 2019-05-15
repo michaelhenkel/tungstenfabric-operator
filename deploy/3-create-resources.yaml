@@ -1,0 +1,233 @@
+---
+apiVersion: tf.tungstenfabric.io/v1alpha1
+kind: CassandraCluster
+metadata:
+  name: cluster-1
+spec:
+  type: deployment
+  containers:
+    - name: cassandra
+      logvolumepath: "/var/log/cassandra"
+      datavolumepath: "/var/lib/cassandra"
+      resourceconfigmap: true
+  initcontainers:
+    - name: init
+      statusvolume: true
+      command: ["sh","-c","until grep ready /tmp/podinfo/pod_labels > /dev/null 2>&1; do sleep 1; done"]
+
+---
+apiVersion: tf.tungstenfabric.io/v1alpha1
+kind: ConfigCluster
+metadata:
+  name: cluster-1
+spec:
+  type: deployment
+  containers:
+    - name: api
+      logvolumepath: "/var/log/contrail"
+      resourceconfigmap: true
+    - name: devicemanager
+      logvolumepath: "/var/log/contrail"
+      resourceconfigmap: true
+    - name: schematransformer
+      logvolumepath: "/var/log/contrail"
+      resourceconfigmap: true
+    - name: servicemonitor
+      logvolumepath: "/var/log/contrail"
+      resourceconfigmap: true
+    - name: analyticsapi
+      logvolumepath: "/var/log/contrail"
+      resourceconfigmap: true
+    - name: collector
+      logvolumepath: "/var/log/contrail"
+      resourceconfigmap: true
+    - name: redis
+      logvolumepath: "/var/log/redis"
+      datavolumepath: "/var/lib/redis"
+      resourceconfigmap: true
+    - name: nodemanagerconfig
+      logvolumepath: "/var/log/contrail"
+      unixsocketvolume: true
+      resourceconfigmap: true
+      env:
+        "NODE_TYPE": "config"
+        "DOCKER_HOST": "unix://mnt/docker.sock"
+    - name: nodemanageranalytics
+      logvolumepath: "/var/log/contrail"
+      unixsocketvolume: true
+      resourceconfigmap: true
+      env:
+        "NODE_TYPE": "analytics"
+        "DOCKER_HOST": "unix://mnt/docker.sock"
+  initcontainers:
+    - name: init
+      statusvolume: true
+      command: ["sh","-c","until grep ready /tmp/podinfo/pod_labels > /dev/null 2>&1; do sleep 1; done"]   
+    - name: nodeinit
+      privileged: true
+      hostusrbinvolume: true
+      resourceconfigmap: true
+
+---
+apiVersion: tf.tungstenfabric.io/v1alpha1
+kind: ControlCluster
+metadata:
+  name: cluster-1
+spec:
+  type: deployment
+  containers:
+    - name: control
+      logvolumepath: "/var/log/contrail"
+      resourceconfigmap: true
+    - name: named
+      logvolumepath: "/var/log/contrail"
+      privileged: true
+      etccontrailvolume: true
+      resourceconfigmap: true
+    - name: dns
+      logvolumepath: "/var/log/contrail"
+      etccontrailvolume: true
+      resourceconfigmap: true
+    - name: nodemanager
+      logvolumepath: "/var/log/contrail"
+      unixsocketvolume: true
+      env:
+        "NODE_TYPE": "control"
+        "DOCKER_HOST": "unix://mnt/docker.sock"
+      resourceconfigmap: true
+  initcontainers:
+    - name: init
+      statusvolume: true
+      command: ["sh","-c","until grep ready /tmp/podinfo/pod_labels > /dev/null 2>&1; do sleep 1; done"]   
+---
+apiVersion: tf.tungstenfabric.io/v1alpha1
+kind: KubemanagerCluster
+metadata:
+  name: cluster-1
+spec:
+  type: deployment
+  containers:
+    - name: kubemanager
+      logvolumepath: "/var/log/contrail"
+      resourceconfigmap: true
+  initcontainers:
+    - name: init
+      statusvolume: true
+      command: ["sh","-c","until grep ready /tmp/podinfo/pod_labels > /dev/null 2>&1; do sleep 1; done"]   
+    - name: nodeinit
+      privileged: true
+      hostusrbinvolume: true
+      resourceconfigmap: true
+
+---
+apiVersion: tf.tungstenfabric.io/v1alpha1
+kind: RabbitmqCluster
+metadata:
+  name: cluster-1
+spec:
+  type: deployment
+  containers:
+    - name: rabbitmq
+      logvolumepath: "/var/log/rabbitmq"
+      datavolumepath: "/var/lib/rabbitmq"
+      resourceconfigmap: true
+  initcontainers:
+    - name: init
+      statusvolume: true
+      command: ["sh","-c","until grep ready /tmp/podinfo/pod_labels > /dev/null 2>&1; do sleep 1; done"]   
+---
+apiVersion: tf.tungstenfabric.io/v1alpha1
+kind: Vrouter
+metadata:
+  name: cluster-1
+spec:
+  type: daemonset
+  containers:
+    - name: vrouteragent
+      logvolumepath: "/var/log/contrail"
+      devvolume: true
+      networkscriptsvolume: true
+      hostbinvolume: true
+      usrsrcvolume: true
+      libmodulesvolume: true
+      varlibcontrailvolume: true
+      varcrashesvolume: true
+      privileged: true
+      lifecyclescript: ["/cleanup.sh"]
+      resourceconfigmap: true
+    - name: nodemanager
+      logvolumepath: "/var/log/contrail"
+      unixsocketvolume: true
+      resourceconfigmap: true
+      env:
+        "NODE_TYPE": "vrouter"
+        "DOCKER_HOST": "unix://mnt/docker.sock"
+  initcontainers:  
+    - name: nodeinit
+      privileged: true
+      hostusrbinvolume: true
+      resourceconfigmap: true
+    - name: vrouterkernelinit
+      privileged: true
+      hostusrbinvolume: true
+      usrsrcvolume: true
+      libmodulesvolume: true
+      networkscriptsvolume: true
+      hostbinvolume: true
+      resourceconfigmap: true
+      #    - name: vrouternicinit
+      #privileged: true
+      #hostusrbinvolume: true
+      #usrsrcvolume: true
+      #networkscriptsvolume: true   
+      #hostbinvolume: true  
+      #resourceconfigmap: true
+    - name: vroutercni
+      privileged: true
+      hostusrbinvolume: true
+      varlibcontrailvolume: true
+      etccnivolume: true
+      optcnibinvolume: true
+      varlogcontrailcnivolume: true
+      logvolumepath: "/var/log/contrail"
+      resourceconfigmap: true
+---
+apiVersion: tf.tungstenfabric.io/v1alpha1
+kind: WebuiCluster
+metadata:
+  name: cluster-1
+spec:
+  type: deployment
+  containers:
+    - name: webuiweb
+      logvolumepath: "/var/log/contrail"
+      resourceconfigmap: true
+    - name: webuijob
+      logvolumepath: "/var/log/contrail"
+      resourceconfigmap: true
+  initcontainers:
+    - name: init
+      statusvolume: true
+      command: ["sh","-c","until grep ready /tmp/podinfo/pod_labels > /dev/null 2>&1; do sleep 1; done"]   
+    - name: nodeinit
+      privileged: true
+      hostusrbinvolume: true
+      resourceconfigmap: true
+
+---
+apiVersion: tf.tungstenfabric.io/v1alpha1
+kind: ZookeeperCluster
+metadata:
+  name: cluster-1
+spec:
+  type: deployment
+  containers:
+    - name: zookeeper
+      logvolumepath: "/var/log/zookeeker"
+      datavolumepath: "/var/lib/zookeeper"
+      resourceconfigmap: true
+  initcontainers:
+    - name: init
+      statusvolume: true
+      command: ["sh","-c","until grep ready /tmp/podinfo/pod_labels > /dev/null 2>&1; do sleep 1; done"]   
+---

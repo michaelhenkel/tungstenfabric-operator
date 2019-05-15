@@ -34,6 +34,10 @@ func (m *MoleculeTestLocalPrepare) GetInput() (input.Input, error) {
 		m.Path = filepath.Join(MoleculeTestLocalDir, MoleculeTestLocalPrepareFile)
 	}
 	m.TemplateBody = moleculeTestLocalPrepareAnsibleTmpl
+<<<<<<< HEAD
+=======
+	m.Delims = AnsibleDelims
+>>>>>>> v0.0.4
 
 	return m.Input, nil
 }
@@ -45,23 +49,41 @@ const moleculeTestLocalPrepareAnsibleTmpl = `---
   hosts: localhost
   connection: local
   vars:
+<<<<<<< HEAD
     ansible_python_interpreter: '{{ "{{ ansible_playbook_python }}" }}'
     deploy_dir: "{{"{{ lookup('env', 'MOLECULE_PROJECT_DIRECTORY') }}/deploy"}}"
   tasks:
   - name: Create Custom Resource Definition
     k8s:
       definition: "{{"{{"}} lookup('file', '/'.join([deploy_dir, 'crds/{{.Resource.Group}}_{{.Resource.Version}}_{{.Resource.LowerKind}}_crd.yaml'])) {{"}}"}}"
+=======
+    ansible_python_interpreter: '{{ ansible_playbook_python }}'
+    deploy_dir: "{{ lookup('env', 'MOLECULE_PROJECT_DIRECTORY') }}/deploy"
+  tasks:
+  - name: Create Custom Resource Definition
+    k8s:
+      definition: "{{ lookup('file', '/'.join([deploy_dir, 'crds/[[.Resource.Group]]_[[.Resource.Version]]_[[.Resource.LowerKind]]_crd.yaml'])) }}"
+>>>>>>> v0.0.4
 
   - name: Ensure specified namespace is present
     k8s:
       api_version: v1
       kind: Namespace
+<<<<<<< HEAD
       name: '{{ "{{ namespace }}" }}'
 
   - name: Create RBAC resources
     k8s:
       definition: "{{"{{"}} lookup('template', '/'.join([deploy_dir, item])) {{"}}"}}"
       namespace: '{{ "{{ namespace }}" }}'
+=======
+      name: '{{ namespace }}'
+
+  - name: Create RBAC resources
+    k8s:
+      definition: "{{ lookup('template', '/'.join([deploy_dir, item])) }}"
+      namespace: '{{ namespace }}'
+>>>>>>> v0.0.4
     with_items:
       - role.yaml
       - role_binding.yaml

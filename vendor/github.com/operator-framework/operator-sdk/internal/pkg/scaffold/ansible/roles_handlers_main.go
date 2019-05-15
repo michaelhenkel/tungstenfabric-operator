@@ -34,10 +34,18 @@ func (r *RolesHandlersMain) GetInput() (input.Input, error) {
 		r.Path = filepath.Join(RolesDir, r.Resource.LowerKind, RolesHandlersMainFile)
 	}
 	r.TemplateBody = rolesHandlersMainAnsibleTmpl
+<<<<<<< HEAD
+=======
+	r.Delims = AnsibleDelims
+>>>>>>> v0.0.4
 
 	return r.Input, nil
 }
 
 const rolesHandlersMainAnsibleTmpl = `---
+<<<<<<< HEAD
 # handlers file for {{.Resource.LowerKind}}
+=======
+# handlers file for [[.Resource.LowerKind]]
+>>>>>>> v0.0.4
 `

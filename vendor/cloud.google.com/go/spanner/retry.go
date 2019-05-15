@@ -22,6 +22,10 @@ import (
 	"strings"
 	"time"
 
+<<<<<<< HEAD
+=======
+	"cloud.google.com/go/internal/trace"
+>>>>>>> v0.0.4
 	"cloud.google.com/go/spanner/internal/backoff"
 	"github.com/golang/protobuf/proto"
 	"github.com/golang/protobuf/ptypes"
@@ -185,7 +189,11 @@ func runRetryableNoWrap(ctx context.Context, f func(context.Context) error) erro
 			if !ok {
 				b = backoff.DefaultBackoff.Delay(retryCount)
 			}
+<<<<<<< HEAD
 			statsPrintf(ctx, nil, "Backing off for %s, then retrying", b)
+=======
+			trace.TracePrintf(ctx, nil, "Backing off for %s, then retrying", b)
+>>>>>>> v0.0.4
 			select {
 			case <-ctx.Done():
 				return errContextCanceled(ctx, funcErr)

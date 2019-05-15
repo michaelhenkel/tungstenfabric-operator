@@ -7,6 +7,10 @@ package span
 import (
 	"fmt"
 	"net/url"
+<<<<<<< HEAD
+=======
+	"os"
+>>>>>>> v0.0.4
 	"path/filepath"
 	"runtime"
 	"strings"
@@ -54,6 +58,32 @@ func NewURI(s string) URI {
 	return FileURI(s)
 }
 
+<<<<<<< HEAD
+=======
+func CompareURI(a, b URI) int {
+	if a == b {
+		return 0
+	}
+	// If we have the same URI basename, we may still have the same file URIs.
+	if fa, err := a.Filename(); err == nil {
+		if fb, err := b.Filename(); err == nil {
+			if strings.EqualFold(filepath.Base(fa), filepath.Base(fb)) {
+				// Stat the files to check if they are equal.
+				if infoa, err := os.Stat(fa); err == nil {
+					if infob, err := os.Stat(fb); err == nil {
+						if os.SameFile(infoa, infob) {
+							return 0
+						}
+					}
+				}
+			}
+			return strings.Compare(fa, fb)
+		}
+	}
+	return strings.Compare(string(a), string(b))
+}
+
+>>>>>>> v0.0.4
 // FileURI returns a span URI for the supplied file path.
 // It will always have the file scheme.
 func FileURI(path string) URI {

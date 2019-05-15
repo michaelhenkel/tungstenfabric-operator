@@ -34,6 +34,10 @@ func (m *MoleculeTestClusterPlaybook) GetInput() (input.Input, error) {
 		m.Path = filepath.Join(MoleculeTestClusterDir, MoleculeTestClusterPlaybookFile)
 	}
 	m.TemplateBody = moleculeTestClusterPlaybookAnsibleTmpl
+<<<<<<< HEAD
+=======
+	m.Delims = AnsibleDelims
+>>>>>>> v0.0.4
 
 	return m.Input, nil
 }
@@ -44,6 +48,7 @@ const moleculeTestClusterPlaybookAnsibleTmpl = `---
   hosts: localhost
   connection: local
   vars:
+<<<<<<< HEAD
     ansible_python_interpreter: '{{ "{{ ansible_playbook_python }}" }}'
     deploy_dir: "{{"{{ lookup('env', 'MOLECULE_PROJECT_DIRECTORY') }}/deploy"}}"
     image_name: {{.Resource.FullGroup}}/{{.ProjectName}}:testing
@@ -64,11 +69,37 @@ const moleculeTestClusterPlaybookAnsibleTmpl = `---
       kind: '{{.Resource.Kind }}'
       namespace: '{{"{{"}} namespace {{"}}"}}'
       name: '{{"{{"}} custom_resource.metadata.name {{"}}"}}'
+=======
+    ansible_python_interpreter: '{{ ansible_playbook_python }}'
+    deploy_dir: "{{ lookup('env', 'MOLECULE_PROJECT_DIRECTORY') }}/deploy"
+    image_name: [[.Resource.FullGroup]]/[[.ProjectName]]:testing
+    custom_resource: "{{ lookup('file', '/'.join([deploy_dir, 'crds/[[.Resource.Group]]_[[.Resource.Version]]_[[.Resource.LowerKind]]_cr.yaml'])) | from_yaml }}"
+  tasks:
+  - name: Create the [[.Resource.FullGroup]]/[[.Resource.Version]].[[.Resource.Kind]]
+    k8s:
+      namespace: '{{ namespace }}'
+      definition: "{{ lookup('file', '/'.join([deploy_dir, 'crds/[[.Resource.Group]]_[[.Resource.Version]]_[[.Resource.LowerKind]]_cr.yaml'])) }}"
+
+  - name: Get the newly created Custom Resource
+    debug:
+      msg: "{{ lookup('k8s', group='[[.Resource.FullGroup]]', api_version='[[.Resource.Version]]', kind='[[.Resource.Kind]]', namespace=namespace, resource_name=custom_resource.metadata.name) }}"
+
+  - name: Wait 40s for reconciliation to run
+    k8s_facts:
+      api_version: '[[.Resource.Version]]'
+      kind: '[[.Resource.Kind]]'
+      namespace: '{{ namespace }}'
+      name: '{{ custom_resource.metadata.name }}'
+>>>>>>> v0.0.4
     register: reconcile_cr
     until:
     - "'Successful' in (reconcile_cr | json_query('resources[].status.conditions[].reason'))"
     delay: 4
     retries: 10
 
+<<<<<<< HEAD
 - import_playbook: "{{"{{ playbook_dir }}/../default/asserts.yml"}}"
+=======
+- import_playbook: '{{ playbook_dir }}/../default/asserts.yml'
+>>>>>>> v0.0.4
 `

@@ -1,0 +1,88 @@
+---
+apiVersion: tf.tungstenfabric.io/v1alpha1
+kind: TungstenfabricManager
+metadata:
+  name: cluster-1
+spec:
+  images:
+    init: "busybox"
+    nodemanager: "docker.io/michaelhenkel/contrail-nodemgr:5.2.0-dev1"
+    nodemanagerconfig: "docker.io/michaelhenkel/contrail-nodemgr:5.2.0-dev1"
+    nodemanageranalytics: "docker.io/michaelhenkel/contrail-nodemgr:5.2.0-dev1"
+    nodeinit: "docker.io/michaelhenkel/contrail-node-init:5.2.0-dev1"
+    status: "docker.io/michaelhenkel/contrail-status:5.2.0-dev1"
+    api: "docker.io/michaelhenkel/contrail-controller-config-api:5.2.0-dev1"
+    devicemanager: "docker.io/michaelhenkel/contrail-controller-config-devicemgr:5.2.0-dev1"
+    schematransformer: "docker.io/michaelhenkel/contrail-controller-config-schema:5.2.0-dev1"
+    servicemonitor: "docker.io/michaelhenkel/contrail-controller-config-svcmonitor:5.2.0-dev1"
+    analyticsapi: "docker.io/michaelhenkel/contrail-analytics-api:5.2.0-dev1"
+    collector: "docker.io/michaelhenkel/contrail-analytics-collector:5.2.0-dev1"
+    redis: "docker.io/michaelhenkel/contrail-external-redis:5.2.0-dev1"
+    control: "docker.io/michaelhenkel/contrail-controller-control-control:5.2.0-dev1"
+    named: "docker.io/michaelhenkel/contrail-controller-control-named:5.2.0-dev1"
+    dns: "docker.io/michaelhenkel/contrail-controller-control-dns:5.2.0-dev1"
+    kubemanager: "docker.io/michaelhenkel/contrail-kubernetes-kube-manager:5.2.0-dev1"
+    cassandra: "docker.io/michaelhenkel/contrail-external-cassandra:5.2.0-dev1"
+    zookeeper: "docker.io/michaelhenkel/contrail-external-zookeeper:5.2.0-dev1"
+    rabbitmq: "docker.io/michaelhenkel/contrail-external-rabbitmq:5.2.0-dev1"
+    vrouterkernelinit: "docker.io/michaelhenkel/contrail-vrouter-kernel-init:5.2.0-dev1"
+    vrouternicinit: "docker.io/michaelhenkel/contrail-vrouter-nic-init:5.2.0-dev1"
+    vroutercni: "docker.io/michaelhenkel/contrail-kubernetes-cni-init:5.2.0-dev1"
+    vrouteragent: "docker.io/michaelhenkel/contrail-vrouter-agent:5.2.0-dev1"
+    webuiweb: "docker.io/michaelhenkel/contrail-controller-webui-web:5.2.0-dev1"
+    webuijob: "docker.io/michaelhenkel/contrail-controller-webui-job:5.2.0-dev1"
+  startResources:
+    - "CassandraCluster"
+    - "ZookeeperCluster"
+    - "RabbitmqCluster"
+    - "ConfigCluster"
+    - "ControlCluster"
+    - "KubemanagerCluster"
+    - "WebuiCluster"
+    - "Vrouter"
+  general:
+    size: "3"
+    hostNetwork: "true"
+    pullPolicy: "Always"
+    aaaMode: ""
+    authMode: ""
+    cloudAdminRole: ""
+    globalReadOnlyRole: ""
+  kubemanagerConfig:
+    size: "3"
+    service:
+    KUBERNETES_API_SERVER: "10.96.0.1"
+    KUBERNETES_API_SECURE_PORT: "443"
+    KUBERNETES_POD_SUBNETS: "10.32.0.0/12"
+    KUBERNETES_SERVICE_SUBNETS: "10.96.0.0/12"
+    KUBERNETES_CLUSTER_NAME: "k8s-default"
+    KUBERNETES_IP_FABRIC_FORWARDING: "true"
+    KUBERNETES_IP_FABRIC_SNAT: "true"
+    K8S_TOKEN_FILE: "/var/run/secrets/kubernetes.io/serviceaccount/token"
+  cassandraConfig:
+    size: "3"
+    CASSANDRA_LISTEN_ADDRESS: "auto"
+    CASSANDRA_PORT: "9160"
+    CASSANDRA_CQL_PORT: "9042"
+    CASSANDRA_SSL_STORAGE_PORT: "7001"
+    CASSANDRA_STORAGE_PORT: "7000"
+    CASSANDRA_JMX_LOCAL_PORT: "7199"
+    CASSANDRA_START_RPC: "true"
+    CASSANDRA_CLUSTER_NAME: "ContrailConfigDB"
+    NODE_TYPE: "config-database"
+  zookeeperConfig:
+    size: "3"
+    ZOOKEEPER_PORT: "2181"
+    ZOOKEEPER_PORTS: "2888:3888"
+    NODE_TYPE: "config-database"
+  rabbitmqConfig:
+    size: "3"
+    RABBITMQ_NODE_PORT: "5673"
+    RABBITMQ_ERLANG_COOKIE: "47EFF3BB-4786-46E0-A5BB-58455B3C2CB4"
+    NODE_TYPE: "config-database"
+  configConfig:
+    size: "3"
+  controlConfig:
+    size: "3"
+  webuiConfig:
+    size: "3"

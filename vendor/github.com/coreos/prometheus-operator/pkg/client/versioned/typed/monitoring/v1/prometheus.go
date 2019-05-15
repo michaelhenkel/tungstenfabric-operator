@@ -17,9 +17,17 @@
 package v1
 
 import (
+<<<<<<< HEAD
 	v1 "github.com/coreos/prometheus-operator/pkg/apis/monitoring/v1"
 	scheme "github.com/coreos/prometheus-operator/pkg/client/versioned/scheme"
 	meta_v1 "k8s.io/apimachinery/pkg/apis/meta/v1"
+=======
+	"time"
+
+	v1 "github.com/coreos/prometheus-operator/pkg/apis/monitoring/v1"
+	scheme "github.com/coreos/prometheus-operator/pkg/client/versioned/scheme"
+	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
+>>>>>>> v0.0.4
 	types "k8s.io/apimachinery/pkg/types"
 	watch "k8s.io/apimachinery/pkg/watch"
 	rest "k8s.io/client-go/rest"
@@ -36,11 +44,19 @@ type PrometheusInterface interface {
 	Create(*v1.Prometheus) (*v1.Prometheus, error)
 	Update(*v1.Prometheus) (*v1.Prometheus, error)
 	UpdateStatus(*v1.Prometheus) (*v1.Prometheus, error)
+<<<<<<< HEAD
 	Delete(name string, options *meta_v1.DeleteOptions) error
 	DeleteCollection(options *meta_v1.DeleteOptions, listOptions meta_v1.ListOptions) error
 	Get(name string, options meta_v1.GetOptions) (*v1.Prometheus, error)
 	List(opts meta_v1.ListOptions) (*v1.PrometheusList, error)
 	Watch(opts meta_v1.ListOptions) (watch.Interface, error)
+=======
+	Delete(name string, options *metav1.DeleteOptions) error
+	DeleteCollection(options *metav1.DeleteOptions, listOptions metav1.ListOptions) error
+	Get(name string, options metav1.GetOptions) (*v1.Prometheus, error)
+	List(opts metav1.ListOptions) (*v1.PrometheusList, error)
+	Watch(opts metav1.ListOptions) (watch.Interface, error)
+>>>>>>> v0.0.4
 	Patch(name string, pt types.PatchType, data []byte, subresources ...string) (result *v1.Prometheus, err error)
 	PrometheusExpansion
 }
@@ -60,7 +76,11 @@ func newPrometheuses(c *MonitoringV1Client, namespace string) *prometheuses {
 }
 
 // Get takes name of the prometheus, and returns the corresponding prometheus object, and an error if there is any.
+<<<<<<< HEAD
 func (c *prometheuses) Get(name string, options meta_v1.GetOptions) (result *v1.Prometheus, err error) {
+=======
+func (c *prometheuses) Get(name string, options metav1.GetOptions) (result *v1.Prometheus, err error) {
+>>>>>>> v0.0.4
 	result = &v1.Prometheus{}
 	err = c.client.Get().
 		Namespace(c.ns).
@@ -73,24 +93,48 @@ func (c *prometheuses) Get(name string, options meta_v1.GetOptions) (result *v1.
 }
 
 // List takes label and field selectors, and returns the list of Prometheuses that match those selectors.
+<<<<<<< HEAD
 func (c *prometheuses) List(opts meta_v1.ListOptions) (result *v1.PrometheusList, err error) {
+=======
+func (c *prometheuses) List(opts metav1.ListOptions) (result *v1.PrometheusList, err error) {
+	var timeout time.Duration
+	if opts.TimeoutSeconds != nil {
+		timeout = time.Duration(*opts.TimeoutSeconds) * time.Second
+	}
+>>>>>>> v0.0.4
 	result = &v1.PrometheusList{}
 	err = c.client.Get().
 		Namespace(c.ns).
 		Resource("prometheuses").
 		VersionedParams(&opts, scheme.ParameterCodec).
+<<<<<<< HEAD
+=======
+		Timeout(timeout).
+>>>>>>> v0.0.4
 		Do().
 		Into(result)
 	return
 }
 
 // Watch returns a watch.Interface that watches the requested prometheuses.
+<<<<<<< HEAD
 func (c *prometheuses) Watch(opts meta_v1.ListOptions) (watch.Interface, error) {
+=======
+func (c *prometheuses) Watch(opts metav1.ListOptions) (watch.Interface, error) {
+	var timeout time.Duration
+	if opts.TimeoutSeconds != nil {
+		timeout = time.Duration(*opts.TimeoutSeconds) * time.Second
+	}
+>>>>>>> v0.0.4
 	opts.Watch = true
 	return c.client.Get().
 		Namespace(c.ns).
 		Resource("prometheuses").
 		VersionedParams(&opts, scheme.ParameterCodec).
+<<<<<<< HEAD
+=======
+		Timeout(timeout).
+>>>>>>> v0.0.4
 		Watch()
 }
 
@@ -136,7 +180,11 @@ func (c *prometheuses) UpdateStatus(prometheus *v1.Prometheus) (result *v1.Prome
 }
 
 // Delete takes name of the prometheus and deletes it. Returns an error if one occurs.
+<<<<<<< HEAD
 func (c *prometheuses) Delete(name string, options *meta_v1.DeleteOptions) error {
+=======
+func (c *prometheuses) Delete(name string, options *metav1.DeleteOptions) error {
+>>>>>>> v0.0.4
 	return c.client.Delete().
 		Namespace(c.ns).
 		Resource("prometheuses").
@@ -147,11 +195,23 @@ func (c *prometheuses) Delete(name string, options *meta_v1.DeleteOptions) error
 }
 
 // DeleteCollection deletes a collection of objects.
+<<<<<<< HEAD
 func (c *prometheuses) DeleteCollection(options *meta_v1.DeleteOptions, listOptions meta_v1.ListOptions) error {
+=======
+func (c *prometheuses) DeleteCollection(options *metav1.DeleteOptions, listOptions metav1.ListOptions) error {
+	var timeout time.Duration
+	if listOptions.TimeoutSeconds != nil {
+		timeout = time.Duration(*listOptions.TimeoutSeconds) * time.Second
+	}
+>>>>>>> v0.0.4
 	return c.client.Delete().
 		Namespace(c.ns).
 		Resource("prometheuses").
 		VersionedParams(&listOptions, scheme.ParameterCodec).
+<<<<<<< HEAD
+=======
+		Timeout(timeout).
+>>>>>>> v0.0.4
 		Body(options).
 		Do().
 		Error()

@@ -306,6 +306,10 @@ var nameMap = map[string]htmlEncoding{
 	"iso-2022-cn":         replacement,
 	"iso-2022-cn-ext":     replacement,
 	"iso-2022-kr":         replacement,
+<<<<<<< HEAD
+=======
+	"replacement":         replacement,
+>>>>>>> v0.0.4
 	"utf-16be":            utf16be,
 	"utf-16":              utf16le,
 	"utf-16le":            utf16le,

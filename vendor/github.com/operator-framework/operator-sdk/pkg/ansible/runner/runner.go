@@ -26,6 +26,10 @@ import (
 	"strings"
 	"time"
 
+<<<<<<< HEAD
+=======
+	"github.com/operator-framework/operator-sdk/pkg/ansible/metrics"
+>>>>>>> v0.0.4
 	"github.com/operator-framework/operator-sdk/pkg/ansible/paramconv"
 	"github.com/operator-framework/operator-sdk/pkg/ansible/runner/eventapi"
 	"github.com/operator-framework/operator-sdk/pkg/ansible/runner/internal/inputdir"
@@ -222,6 +226,13 @@ type runner struct {
 }
 
 func (r *runner) Run(ident string, u *unstructured.Unstructured, kubeconfig string) (RunResult, error) {
+<<<<<<< HEAD
+=======
+
+	timer := metrics.ReconcileTimer(r.GVK.String())
+	defer timer.ObserveDuration()
+
+>>>>>>> v0.0.4
 	if u.GetDeletionTimestamp() != nil && !r.isFinalizerRun(u) {
 		return nil, errors.New("resource has been deleted, but no finalizer was matched, skipping reconciliation")
 	}

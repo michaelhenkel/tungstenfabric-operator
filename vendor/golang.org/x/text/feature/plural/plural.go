@@ -8,11 +8,19 @@
 //
 // The definitions in this package are based on the plural rule handling defined
 // in CLDR. See
+<<<<<<< HEAD
 // http://unicode.org/reports/tr35/tr35-numbers.html#Language_Plural_Rules for
+=======
+// https://unicode.org/reports/tr35/tr35-numbers.html#Language_Plural_Rules for
+>>>>>>> v0.0.4
 // details.
 package plural
 
 import (
+<<<<<<< HEAD
+=======
+	"golang.org/x/text/internal/language/compact"
+>>>>>>> v0.0.4
 	"golang.org/x/text/internal/number"
 	"golang.org/x/text/language"
 )
@@ -113,7 +121,11 @@ func getIntApprox(digits []byte, start, end, nMod, big int) (n int) {
 //      100000     []byte{1}           6      0
 //      100000.00  []byte{1}           6      3
 func (p *Rules) MatchDigits(t language.Tag, digits []byte, exp, scale int) Form {
+<<<<<<< HEAD
 	index, _ := language.CompactIndex(t)
+=======
+	index := tagToID(t)
+>>>>>>> v0.0.4
 
 	// Differentiate up to including mod 1000000 for the integer part.
 	n := getIntApprox(digits, 0, exp, 6, 1000000)
@@ -130,8 +142,12 @@ func (p *Rules) matchDisplayDigits(t language.Tag, d *number.Digits) (Form, int)
 }
 
 func validForms(p *Rules, t language.Tag) (forms []Form) {
+<<<<<<< HEAD
 	index, _ := language.CompactIndex(t)
 	offset := p.langToIndex[index]
+=======
+	offset := p.langToIndex[tagToID(t)]
+>>>>>>> v0.0.4
 	rules := p.rules[p.index[offset]:p.index[offset+1]]
 
 	forms = append(forms, Other)
@@ -146,13 +162,21 @@ func validForms(p *Rules, t language.Tag) (forms []Form) {
 }
 
 func (p *Rules) matchComponents(t language.Tag, n, f, scale int) Form {
+<<<<<<< HEAD
 	index, _ := language.CompactIndex(t)
 	return matchPlural(p, index, n, f, scale)
+=======
+	return matchPlural(p, tagToID(t), n, f, scale)
+>>>>>>> v0.0.4
 }
 
 // MatchPlural returns the plural form for the given language and plural
 // operands (as defined in
+<<<<<<< HEAD
 // http://unicode.org/reports/tr35/tr35-numbers.html#Language_Plural_Rules):
+=======
+// https://unicode.org/reports/tr35/tr35-numbers.html#Language_Plural_Rules):
+>>>>>>> v0.0.4
 //  where
 //  	n  absolute value of the source number (integer and decimals)
 //  input
@@ -165,11 +189,18 @@ func (p *Rules) matchComponents(t language.Tag, n, f, scale int) Form {
 // If any of the operand values is too large to fit in an int, it is okay to
 // pass the value modulo 10,000,000.
 func (p *Rules) MatchPlural(lang language.Tag, i, v, w, f, t int) Form {
+<<<<<<< HEAD
 	index, _ := language.CompactIndex(lang)
 	return matchPlural(p, index, i, f, v)
 }
 
 func matchPlural(p *Rules, index int, n, f, v int) Form {
+=======
+	return matchPlural(p, tagToID(lang), i, f, v)
+}
+
+func matchPlural(p *Rules, index compact.ID, n, f, v int) Form {
+>>>>>>> v0.0.4
 	nMask := p.inclusionMasks[n%maxMod]
 	// Compute the fMask inline in the rules below, as it is relatively rare.
 	// fMask := p.inclusionMasks[f%maxMod]
@@ -256,3 +287,11 @@ func matchPlural(p *Rules, index int, n, f, v int) Form {
 	}
 	return Other
 }
+<<<<<<< HEAD
+=======
+
+func tagToID(t language.Tag) compact.ID {
+	id, _ := compact.RegionalID(compact.Tag(t))
+	return id
+}
+>>>>>>> v0.0.4

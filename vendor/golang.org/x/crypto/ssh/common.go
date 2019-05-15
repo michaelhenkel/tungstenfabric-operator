@@ -109,6 +109,10 @@ func findCommon(what string, client []string, server []string) (common string, e
 	return "", fmt.Errorf("ssh: no common algorithm for %s; client offered: %v, server offered: %v", what, client, server)
 }
 
+<<<<<<< HEAD
+=======
+// directionAlgorithms records algorithm choices in one direction (either read or write)
+>>>>>>> v0.0.4
 type directionAlgorithms struct {
 	Cipher      string
 	MAC         string
@@ -137,7 +141,11 @@ type algorithms struct {
 	r       directionAlgorithms
 }
 
+<<<<<<< HEAD
 func findAgreedAlgorithms(clientKexInit, serverKexInit *kexInitMsg) (algs *algorithms, err error) {
+=======
+func findAgreedAlgorithms(isClient bool, clientKexInit, serverKexInit *kexInitMsg) (algs *algorithms, err error) {
+>>>>>>> v0.0.4
 	result := &algorithms{}
 
 	result.kex, err = findCommon("key exchange", clientKexInit.KexAlgos, serverKexInit.KexAlgos)
@@ -150,32 +158,61 @@ func findAgreedAlgorithms(clientKexInit, serverKexInit *kexInitMsg) (algs *algor
 		return
 	}
 
+<<<<<<< HEAD
 	result.w.Cipher, err = findCommon("client to server cipher", clientKexInit.CiphersClientServer, serverKexInit.CiphersClientServer)
+=======
+	stoc, ctos := &result.w, &result.r
+	if isClient {
+		ctos, stoc = stoc, ctos
+	}
+
+	ctos.Cipher, err = findCommon("client to server cipher", clientKexInit.CiphersClientServer, serverKexInit.CiphersClientServer)
+>>>>>>> v0.0.4
 	if err != nil {
 		return
 	}
 
+<<<<<<< HEAD
 	result.r.Cipher, err = findCommon("server to client cipher", clientKexInit.CiphersServerClient, serverKexInit.CiphersServerClient)
+=======
+	stoc.Cipher, err = findCommon("server to client cipher", clientKexInit.CiphersServerClient, serverKexInit.CiphersServerClient)
+>>>>>>> v0.0.4
 	if err != nil {
 		return
 	}
 
+<<<<<<< HEAD
 	result.w.MAC, err = findCommon("client to server MAC", clientKexInit.MACsClientServer, serverKexInit.MACsClientServer)
+=======
+	ctos.MAC, err = findCommon("client to server MAC", clientKexInit.MACsClientServer, serverKexInit.MACsClientServer)
+>>>>>>> v0.0.4
 	if err != nil {
 		return
 	}
 
+<<<<<<< HEAD
 	result.r.MAC, err = findCommon("server to client MAC", clientKexInit.MACsServerClient, serverKexInit.MACsServerClient)
+=======
+	stoc.MAC, err = findCommon("server to client MAC", clientKexInit.MACsServerClient, serverKexInit.MACsServerClient)
+>>>>>>> v0.0.4
 	if err != nil {
 		return
 	}
 
+<<<<<<< HEAD
 	result.w.Compression, err = findCommon("client to server compression", clientKexInit.CompressionClientServer, serverKexInit.CompressionClientServer)
+=======
+	ctos.Compression, err = findCommon("client to server compression", clientKexInit.CompressionClientServer, serverKexInit.CompressionClientServer)
+>>>>>>> v0.0.4
 	if err != nil {
 		return
 	}
 
+<<<<<<< HEAD
 	result.r.Compression, err = findCommon("server to client compression", clientKexInit.CompressionServerClient, serverKexInit.CompressionServerClient)
+=======
+	stoc.Compression, err = findCommon("server to client compression", clientKexInit.CompressionServerClient, serverKexInit.CompressionServerClient)
+>>>>>>> v0.0.4
 	if err != nil {
 		return
 	}

@@ -6,6 +6,10 @@ package pipeline
 
 import (
 	"encoding/json"
+<<<<<<< HEAD
+=======
+	"errors"
+>>>>>>> v0.0.4
 	"strings"
 
 	"golang.org/x/text/language"
@@ -23,6 +27,7 @@ import (
 // the format string "%d file(s) remaining".
 // See the examples directory for examples of extracted messages.
 
+<<<<<<< HEAD
 // Config contains configuration for the translation pipeline.
 type Config struct {
 	SourceLanguage language.Tag
@@ -45,6 +50,10 @@ type Config struct {
 // A Locale is used to store all information for a single locale. This type is
 // used both for extraction and injection.
 type Locale struct {
+=======
+// Messages is used to store translations for a single language.
+type Messages struct {
+>>>>>>> v0.0.4
 	Language language.Tag    `json:"language"`
 	Messages []Message       `json:"messages"`
 	Macros   map[string]Text `json:"macros,omitempty"`
@@ -55,7 +64,11 @@ type Message struct {
 	// ID contains a list of identifiers for the message.
 	ID IDList `json:"id"`
 	// Key is the string that is used to look up the message at runtime.
+<<<<<<< HEAD
 	Key         string `json:"key"`
+=======
+	Key         string `json:"key,omitempty"`
+>>>>>>> v0.0.4
 	Meaning     string `json:"meaning,omitempty"`
 	Message     Text   `json:"message"`
 	Translation Text   `json:"translation"`
@@ -65,6 +78,14 @@ type Message struct {
 
 	Placeholders []Placeholder `json:"placeholders,omitempty"`
 
+<<<<<<< HEAD
+=======
+	// Fuzzy indicates that the provide translation needs review by a
+	// translator, for instance because it was derived from automated
+	// translation.
+	Fuzzy bool `json:"fuzzy,omitempty"`
+
+>>>>>>> v0.0.4
 	// TODO: default placeholder syntax is {foo}. Allow alternative escaping
 	// like `foo`.
 
@@ -114,6 +135,23 @@ func (m *Message) Substitute(msg string) (sub string, err error) {
 	return sub, err
 }
 
+<<<<<<< HEAD
+=======
+var errIncompatibleMessage = errors.New("messages incompatible")
+
+func checkEquivalence(a, b *Message) error {
+	for _, v := range a.ID {
+		for _, w := range b.ID {
+			if v == w {
+				return nil
+			}
+		}
+	}
+	// TODO: canonicalize placeholders and check for type equivalence.
+	return errIncompatibleMessage
+}
+
+>>>>>>> v0.0.4
 // A Placeholder is a part of the message that should not be changed by a
 // translator. It can be used to hide or prettify format strings (e.g. %d or
 // {{.Count}}), hide HTML, or mark common names that should not be translated.

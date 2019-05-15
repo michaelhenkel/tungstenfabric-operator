@@ -18,8 +18,11 @@
 package proftest
 
 import (
+<<<<<<< HEAD
 	"archive/zip"
 	"bytes"
+=======
+>>>>>>> v0.0.4
 	"context"
 	"encoding/json"
 	"errors"
@@ -32,10 +35,13 @@ import (
 
 	"cloud.google.com/go/storage"
 	gax "github.com/googleapis/gax-go/v2"
+<<<<<<< HEAD
 	"golang.org/x/build/kubernetes"
 	k8sapi "golang.org/x/build/kubernetes/api"
 	"golang.org/x/build/kubernetes/gke"
 	cloudbuild "google.golang.org/api/cloudbuild/v1"
+=======
+>>>>>>> v0.0.4
 	compute "google.golang.org/api/compute/v1"
 	container "google.golang.org/api/container/v1"
 	"google.golang.org/api/googleapi"
@@ -337,6 +343,7 @@ func (tr *TestRunner) QueryProfiles(projectID, service, startTime, endTime, prof
 	return pr, nil
 }
 
+<<<<<<< HEAD
 // createAndPublishDockerImage creates a docker image from source code in a GCS
 // bucket and pushes the image to Google Container Registry.
 func (tr *GKETestRunner) createAndPublishDockerImage(ctx context.Context, projectID, sourceBucket, sourceObject, ImageName string) error {
@@ -387,6 +394,8 @@ func (tr *GKETestRunner) createAndPublishDockerImage(ctx context.Context, projec
 	}
 }
 
+=======
+>>>>>>> v0.0.4
 type imageResponse struct {
 	Manifest map[string]interface{} `json:"manifest"`
 	Name     string                 `json:"name"`
@@ -443,6 +452,7 @@ func deleteDockerImageResource(client *http.Client, url string) error {
 	return nil
 }
 
+<<<<<<< HEAD
 func (tr *GKETestRunner) deployContainer(ctx context.Context, kubernetesClient *kubernetes.Client, podName, ImageName string) error {
 	// TODO: Pod restart policy defaults to "Always". Previous logs will disappear
 	// after restarting. Always restart causes the test not be able to see the
@@ -495,6 +505,8 @@ func (tr *GKETestRunner) PollPodLog(ctx context.Context, kubernetesClient *kuber
 	}
 }
 
+=======
+>>>>>>> v0.0.4
 // DeleteClusterAndImage deletes cluster and images used to create cluster.
 func (tr *GKETestRunner) DeleteClusterAndImage(ctx context.Context, cfg *ClusterConfig) []error {
 	var errs []error
@@ -510,6 +522,7 @@ func (tr *GKETestRunner) DeleteClusterAndImage(ctx context.Context, cfg *Cluster
 
 	return errs
 }
+<<<<<<< HEAD
 
 // StartAndDeployCluster creates image needed for cluster, then starts and
 // deploys to cluster.
@@ -561,3 +574,5 @@ func (tr *GKETestRunner) uploadImageSource(ctx context.Context, bucket, objectNa
 	}
 	return wc.Close()
 }
+=======
+>>>>>>> v0.0.4

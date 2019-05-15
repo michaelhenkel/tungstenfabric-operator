@@ -18,8 +18,11 @@
 Package firestore provides a client for reading and writing to a Cloud Firestore
 database.
 
+<<<<<<< HEAD
    NOTE: This package is in beta. It is not stable, and may be subject to changes.
 
+=======
+>>>>>>> v0.0.4
 See https://cloud.google.com/firestore/docs for an introduction
 to Cloud Firestore and additional help on using the Firestore API.
 

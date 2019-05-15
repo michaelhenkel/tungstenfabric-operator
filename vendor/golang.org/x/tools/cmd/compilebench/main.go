@@ -28,6 +28,12 @@
 //	-cpuprofile file
 //		Write a CPU profile of the compiler to file.
 //
+<<<<<<< HEAD
+=======
+//	-go path
+//		Path to "go" command (default "go").
+//
+>>>>>>> v0.0.4
 //	-memprofile file
 //		Write a memory profile of the compiler to file.
 //
@@ -37,12 +43,22 @@
 //	-obj
 //		Report object file statistics.
 //
+<<<<<<< HEAD
 //  -pkg
+=======
+//	-pkg pkg
+>>>>>>> v0.0.4
 //		Benchmark compiling a single package.
 //
 //	-run regexp
 //		Only run benchmarks with names matching regexp.
 //
+<<<<<<< HEAD
+=======
+//	-short
+//		Skip long-running benchmarks.
+//
+>>>>>>> v0.0.4
 // Although -cpuprofile and -memprofile are intended to write a
 // combined profile for all the executed benchmarks to file,
 // today they write only the profile for the last benchmark executed.

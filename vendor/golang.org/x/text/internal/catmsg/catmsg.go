@@ -104,20 +104,36 @@ const (
 	msgFirst
 	msgRaw
 	msgString
+<<<<<<< HEAD
 	numFixed
+=======
+	msgAffix
+	// Leave some arbitrary room for future expansion: 20 should suffice.
+	numInternal = 20
+>>>>>>> v0.0.4
 )
 
 const prefix = "golang.org/x/text/internal/catmsg."
 
 var (
+<<<<<<< HEAD
+=======
+	// TODO: find a more stable way to link handles to message types.
+>>>>>>> v0.0.4
 	mutex sync.Mutex
 	names = map[string]Handle{
 		prefix + "Vars":   msgVars,
 		prefix + "First":  msgFirst,
 		prefix + "Raw":    msgRaw,
 		prefix + "String": msgString,
+<<<<<<< HEAD
 	}
 	handlers = make([]Handler, numFixed)
+=======
+		prefix + "Affix":  msgAffix,
+	}
+	handlers = make([]Handler, numInternal)
+>>>>>>> v0.0.4
 )
 
 func init() {
@@ -161,6 +177,23 @@ func init() {
 		}
 		return true
 	}
+<<<<<<< HEAD
+=======
+
+	handlers[msgAffix] = func(d *Decoder) bool {
+		// TODO: use an alternative method for common cases.
+		prefix := d.DecodeString()
+		suffix := d.DecodeString()
+		if prefix != "" {
+			d.Render(prefix)
+		}
+		ret := d.ExecuteMessage()
+		if suffix != "" {
+			d.Render(suffix)
+		}
+		return ret
+	}
+>>>>>>> v0.0.4
 }
 
 var (
@@ -374,3 +407,27 @@ func (s String) Compile(e *Encoder) (err error) {
 	}
 	return err
 }
+<<<<<<< HEAD
+=======
+
+// Affix is a message that adds a prefix and suffix to another message.
+// This is mostly used add back whitespace to a translation that was stripped
+// before sending it out.
+type Affix struct {
+	Message Message
+	Prefix  string
+	Suffix  string
+}
+
+// Compile implements Message.
+func (a Affix) Compile(e *Encoder) (err error) {
+	// TODO: consider adding a special message type that just adds a single
+	// return. This is probably common enough to handle the majority of cases.
+	// Get some stats first, though.
+	e.EncodeMessageType(msgAffix)
+	e.EncodeString(a.Prefix)
+	e.EncodeString(a.Suffix)
+	e.EncodeMessage(a.Message)
+	return nil
+}
+>>>>>>> v0.0.4

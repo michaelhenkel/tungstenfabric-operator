@@ -86,6 +86,10 @@ var (
 	procFindNextFileW                      = modkernel32.NewProc("FindNextFileW")
 	procFindClose                          = modkernel32.NewProc("FindClose")
 	procGetFileInformationByHandle         = modkernel32.NewProc("GetFileInformationByHandle")
+<<<<<<< HEAD
+=======
+	procGetFileInformationByHandleEx       = modkernel32.NewProc("GetFileInformationByHandleEx")
+>>>>>>> v0.0.4
 	procGetCurrentDirectoryW               = modkernel32.NewProc("GetCurrentDirectoryW")
 	procSetCurrentDirectoryW               = modkernel32.NewProc("SetCurrentDirectoryW")
 	procCreateDirectoryW                   = modkernel32.NewProc("CreateDirectoryW")
@@ -772,6 +776,21 @@ func GetFileInformationByHandle(handle Handle, data *ByHandleFileInformation) (e
 	return
 }
 
+<<<<<<< HEAD
+=======
+func GetFileInformationByHandleEx(handle Handle, class uint32, outBuffer *byte, outBufferLen uint32) (err error) {
+	r1, _, e1 := syscall.Syscall6(procGetFileInformationByHandleEx.Addr(), 4, uintptr(handle), uintptr(class), uintptr(unsafe.Pointer(outBuffer)), uintptr(outBufferLen), 0, 0)
+	if r1 == 0 {
+		if e1 != 0 {
+			err = errnoErr(e1)
+		} else {
+			err = syscall.EINVAL
+		}
+	}
+	return
+}
+
+>>>>>>> v0.0.4
 func GetCurrentDirectory(buflen uint32, buf *uint16) (n uint32, err error) {
 	r0, _, e1 := syscall.Syscall(procGetCurrentDirectoryW.Addr(), 2, uintptr(buflen), uintptr(unsafe.Pointer(buf)), 0)
 	n = uint32(r0)

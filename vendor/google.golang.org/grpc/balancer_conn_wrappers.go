@@ -82,6 +82,7 @@ func (b *scStateUpdateBuffer) get() <-chan *scStateUpdate {
 	return b.c
 }
 
+<<<<<<< HEAD
 // resolverUpdate contains the new resolved addresses or error if there's
 // any.
 type resolverUpdate struct {
@@ -89,13 +90,19 @@ type resolverUpdate struct {
 	err   error
 }
 
+=======
+>>>>>>> v0.0.4
 // ccBalancerWrapper is a wrapper on top of cc for balancers.
 // It implements balancer.ClientConn interface.
 type ccBalancerWrapper struct {
 	cc               *ClientConn
 	balancer         balancer.Balancer
 	stateChangeQueue *scStateUpdateBuffer
+<<<<<<< HEAD
 	resolverUpdateCh chan *resolverUpdate
+=======
+	resolverUpdateCh chan *resolver.State
+>>>>>>> v0.0.4
 	done             chan struct{}
 
 	mu       sync.Mutex
@@ -106,7 +113,11 @@ func newCCBalancerWrapper(cc *ClientConn, b balancer.Builder, bopts balancer.Bui
 	ccb := &ccBalancerWrapper{
 		cc:               cc,
 		stateChangeQueue: newSCStateUpdateBuffer(),
+<<<<<<< HEAD
 		resolverUpdateCh: make(chan *resolverUpdate, 1),
+=======
+		resolverUpdateCh: make(chan *resolver.State, 1),
+>>>>>>> v0.0.4
 		done:             make(chan struct{}),
 		subConns:         make(map[*acBalancerWrapper]struct{}),
 	}
@@ -128,15 +139,32 @@ func (ccb *ccBalancerWrapper) watcher() {
 				return
 			default:
 			}
+<<<<<<< HEAD
 			ccb.balancer.HandleSubConnStateChange(t.sc, t.state)
 		case t := <-ccb.resolverUpdateCh:
+=======
+			if ub, ok := ccb.balancer.(balancer.V2Balancer); ok {
+				ub.UpdateSubConnState(t.sc, balancer.SubConnState{ConnectivityState: t.state})
+			} else {
+				ccb.balancer.HandleSubConnStateChange(t.sc, t.state)
+			}
+		case s := <-ccb.resolverUpdateCh:
+>>>>>>> v0.0.4
 			select {
 			case <-ccb.done:
 				ccb.balancer.Close()
 				return
 			default:
 			}
+<<<<<<< HEAD
 			ccb.balancer.HandleResolvedAddrs(t.addrs, t.err)
+=======
+			if ub, ok := ccb.balancer.(balancer.V2Balancer); ok {
+				ub.UpdateResolverState(*s)
+			} else {
+				ccb.balancer.HandleResolvedAddrs(s.Addresses, nil)
+			}
+>>>>>>> v0.0.4
 		case <-ccb.done:
 		}
 
@@ -177,6 +205,7 @@ func (ccb *ccBalancerWrapper) handleSubConnStateChange(sc balancer.SubConn, s co
 	})
 }
 
+<<<<<<< HEAD
 func (ccb *ccBalancerWrapper) handleResolvedAddrs(addrs []resolver.Address, err error) {
 	if ccb.cc.curBalancerName != grpclbName {
 		var containsGRPCLB bool
@@ -198,16 +227,32 @@ func (ccb *ccBalancerWrapper) handleResolvedAddrs(addrs []resolver.Address, err 
 				}
 			}
 			addrs = tempAddrs
+=======
+func (ccb *ccBalancerWrapper) updateResolverState(s resolver.State) {
+	if ccb.cc.curBalancerName != grpclbName {
+		// Filter any grpclb addresses since we don't have the grpclb balancer.
+		for i := 0; i < len(s.Addresses); {
+			if s.Addresses[i].Type == resolver.GRPCLB {
+				copy(s.Addresses[i:], s.Addresses[i+1:])
+				s.Addresses = s.Addresses[:len(s.Addresses)-1]
+				continue
+			}
+			i++
+>>>>>>> v0.0.4
 		}
 	}
 	select {
 	case <-ccb.resolverUpdateCh:
 	default:
 	}
+<<<<<<< HEAD
 	ccb.resolverUpdateCh <- &resolverUpdate{
 		addrs: addrs,
 		err:   err,
 	}
+=======
+	ccb.resolverUpdateCh <- &s
+>>>>>>> v0.0.4
 }
 
 func (ccb *ccBalancerWrapper) NewSubConn(addrs []resolver.Address, opts balancer.NewSubConnOptions) (balancer.SubConn, error) {

@@ -99,8 +99,11 @@ const (
 	SERVICE_CONFIG_DESCRIPTION     = 1
 	SERVICE_CONFIG_FAILURE_ACTIONS = 2
 
+<<<<<<< HEAD
 	NO_ERROR = 0
 
+=======
+>>>>>>> v0.0.4
 	SC_ENUM_PROCESS_INFO = 0
 )
 

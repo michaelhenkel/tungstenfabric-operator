@@ -5,6 +5,7 @@
 package main
 
 import (
+<<<<<<< HEAD
 	"encoding/json"
 	"io/ioutil"
 	"os"
@@ -12,6 +13,8 @@ import (
 
 	"golang.org/x/text/internal"
 	"golang.org/x/text/language"
+=======
+>>>>>>> v0.0.4
 	"golang.org/x/text/message/pipeline"
 )
 
@@ -21,6 +24,7 @@ import (
 // - handle features (gender, plural)
 // - message rewriting
 
+<<<<<<< HEAD
 var (
 	srcLang *string
 	lang    *string
@@ -28,6 +32,9 @@ var (
 
 func init() {
 	srcLang = cmdExtract.Flag.String("srclang", "en-US", "the source-code language")
+=======
+func init() {
+>>>>>>> v0.0.4
 	lang = cmdExtract.Flag.String("lang", "en-US", "comma-separated list of languages to process")
 }
 
@@ -37,6 +44,7 @@ var cmdExtract = &Command{
 	Short:     "extracts strings to be translated from code",
 }
 
+<<<<<<< HEAD
 func runExtract(cmd *Command, args []string) error {
 	tag, err := language.Parse(*srcLang)
 	if err != nil {
@@ -78,4 +86,19 @@ func runExtract(cmd *Command, args []string) error {
 		}
 	}
 	return nil
+=======
+func runExtract(cmd *Command, config *pipeline.Config, args []string) error {
+	config.Packages = args
+	state, err := pipeline.Extract(config)
+	if err != nil {
+		return wrap(err, "extract failed")
+	}
+	if err := state.Import(); err != nil {
+		return wrap(err, "import failed")
+	}
+	if err := state.Merge(); err != nil {
+		return wrap(err, "merge failed")
+	}
+	return wrap(state.Export(), "export failed")
+>>>>>>> v0.0.4
 }

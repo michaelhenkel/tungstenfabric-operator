@@ -13,6 +13,14 @@ type VrouterSpec struct {
 	// INSERT ADDITIONAL SPEC FIELDS - desired state of cluster
 	// Important: Run "operator-sdk generate k8s" to regenerate code after modifying this file
 	// Add custom validation using kubebuilder tags: https://book.kubebuilder.io/beyond_basics/generating_crd.html
+<<<<<<< HEAD
+=======
+	Containers []*Container `json:"containers"`
+	InitContainers []*Container `json:"initcontainers"`
+	ConfigParameters map[string]string
+	Type string
+	General *General
+>>>>>>> v0.0.4
 }
 
 // VrouterStatus defines the observed state of Vrouter
@@ -21,6 +29,10 @@ type VrouterStatus struct {
 	// INSERT ADDITIONAL STATUS FIELD - define observed state of cluster
 	// Important: Run "operator-sdk generate k8s" to regenerate code after modifying this file
 	// Add custom validation using kubebuilder tags: https://book.kubebuilder.io/beyond_basics/generating_crd.html
+<<<<<<< HEAD
+=======
+	Nodes []string `json:"nodes"`
+>>>>>>> v0.0.4
 }
 
 // +k8s:deepcopy-gen:interfaces=k8s.io/apimachinery/pkg/runtime.Object

@@ -7,7 +7,11 @@
 package main
 
 // This file generates data for the CLDR plural rules, as defined in
+<<<<<<< HEAD
 //    http://unicode.org/reports/tr35/tr35-numbers.html#Language_Plural_Rules
+=======
+//    https://unicode.org/reports/tr35/tr35-numbers.html#Language_Plural_Rules
+>>>>>>> v0.0.4
 //
 // We assume a slightly simplified grammar:
 //
@@ -63,9 +67,15 @@ import (
 	"strconv"
 	"strings"
 
+<<<<<<< HEAD
 	"golang.org/x/text/internal"
 	"golang.org/x/text/internal/gen"
 	"golang.org/x/text/language"
+=======
+	"golang.org/x/text/internal/gen"
+	"golang.org/x/text/internal/language"
+	"golang.org/x/text/internal/language/compact"
+>>>>>>> v0.0.4
 	"golang.org/x/text/unicode/cldr"
 )
 
@@ -198,7 +208,11 @@ func genPlurals(w *gen.CodeWriter, data *cldr.CLDR) {
 
 		rules := []pluralCheck{}
 		index := []byte{0}
+<<<<<<< HEAD
 		langMap := map[int]byte{0: 0} // From compact language index to index
+=======
+		langMap := map[compact.ID]byte{0: 0}
+>>>>>>> v0.0.4
 
 		for _, pRules := range plurals.PluralRules {
 			// Parse the rules.
@@ -251,7 +265,11 @@ func genPlurals(w *gen.CodeWriter, data *cldr.CLDR) {
 				if strings.TrimSpace(loc) == "" {
 					continue
 				}
+<<<<<<< HEAD
 				lang, ok := language.CompactIndex(language.MustParse(loc))
+=======
+				lang, ok := compact.FromTag(language.MustParse(loc))
+>>>>>>> v0.0.4
 				if !ok {
 					log.Printf("No compact index for locale %q", loc)
 				}
@@ -261,16 +279,38 @@ func genPlurals(w *gen.CodeWriter, data *cldr.CLDR) {
 		}
 		w.WriteVar(plurals.Type+"Rules", rules)
 		w.WriteVar(plurals.Type+"Index", index)
+<<<<<<< HEAD
 		// Expand the values.
 		langToIndex := make([]byte, language.NumCompactTags)
 		for i := range langToIndex {
 			for p := i; ; p = int(internal.Parent[p]) {
+=======
+		// Expand the values: first by using the parent relationship.
+		langToIndex := make([]byte, compact.NumCompactTags)
+		for i := range langToIndex {
+			for p := compact.ID(i); ; p = p.Parent() {
+>>>>>>> v0.0.4
 				if x, ok := langMap[p]; ok {
 					langToIndex[i] = x
 					break
 				}
 			}
 		}
+<<<<<<< HEAD
+=======
+		// Now expand by including entries with identical languages for which
+		// one isn't set.
+		for i, v := range langToIndex {
+			if v == 0 {
+				id, _ := compact.FromTag(language.Tag{
+					LangID: compact.ID(i).Tag().LangID,
+				})
+				if p := langToIndex[id]; p != 0 {
+					langToIndex[i] = p
+				}
+			}
+		}
+>>>>>>> v0.0.4
 		w.WriteVar(plurals.Type+"LangToIndex", langToIndex)
 		// Need to convert array to slice because of golang.org/issue/7651.
 		// This will allow tables to be dropped when unused. This is especially

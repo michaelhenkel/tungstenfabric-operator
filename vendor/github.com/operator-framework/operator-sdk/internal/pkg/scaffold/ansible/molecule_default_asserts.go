@@ -32,6 +32,10 @@ func (m *MoleculeDefaultAsserts) GetInput() (input.Input, error) {
 		m.Path = filepath.Join(MoleculeDefaultDir, MoleculeDefaultAssertsFile)
 	}
 	m.TemplateBody = moleculeDefaultAssertsAnsibleTmpl
+<<<<<<< HEAD
+=======
+	m.Delims = AnsibleDelims
+>>>>>>> v0.0.4
 
 	return m.Input, nil
 }
@@ -42,6 +46,7 @@ const moleculeDefaultAssertsAnsibleTmpl = `---
   hosts: localhost
   connection: local
   vars:
+<<<<<<< HEAD
     ansible_python_interpreter: '{{"{{ ansible_playbook_python }}"}}'
   tasks:
     - name: Get all pods in {{"{{ namespace }}"}}
@@ -49,6 +54,15 @@ const moleculeDefaultAssertsAnsibleTmpl = `---
         api_version: v1
         kind: Pod
         namespace: '{{"{{ namespace }}"}}'
+=======
+    ansible_python_interpreter: '{{ ansible_playbook_python }}'
+  tasks:
+    - name: Get all pods in {{ namespace }}
+      k8s_facts:
+        api_version: v1
+        kind: Pod
+        namespace: '{{ namespace }}'
+>>>>>>> v0.0.4
       register: pods
 
     - name: Output pods

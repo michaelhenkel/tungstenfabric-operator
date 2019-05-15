@@ -18,7 +18,10 @@ package stats
 import (
 	"context"
 
+<<<<<<< HEAD
 	"go.opencensus.io/exemplar"
+=======
+>>>>>>> v0.0.4
 	"go.opencensus.io/stats/internal"
 	"go.opencensus.io/tag"
 )
@@ -51,7 +54,12 @@ func Record(ctx context.Context, ms ...Measurement) {
 	if !record {
 		return
 	}
+<<<<<<< HEAD
 	recorder(tag.FromContext(ctx), ms, exemplar.AttachmentsFromContext(ctx))
+=======
+	// TODO(songy23): fix attachments.
+	recorder(tag.FromContext(ctx), ms, map[string]interface{}{})
+>>>>>>> v0.0.4
 }
 
 // RecordWithTags records one or multiple measurements at once.

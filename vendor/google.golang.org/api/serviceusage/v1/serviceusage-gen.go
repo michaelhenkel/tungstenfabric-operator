@@ -261,7 +261,11 @@ func (s *Api) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+<<<<<<< HEAD
 // AuthProvider: Configuration for an anthentication provider, including
+=======
+// AuthProvider: Configuration for an authentication provider, including
+>>>>>>> v0.0.4
 // support for
 // [JSON Web
 // Token
@@ -724,6 +728,67 @@ func (s *BackendRule) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
+<<<<<<< HEAD
+=======
+// BatchCreateAdminOverridesResponse: Response message for
+// BatchCreateAdminOverrides
+type BatchCreateAdminOverridesResponse struct {
+	// Overrides: The overrides that were created.
+	Overrides []*QuotaOverride `json:"overrides,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Overrides") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Overrides") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *BatchCreateAdminOverridesResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod BatchCreateAdminOverridesResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// BatchCreateConsumerOverridesResponse: Response message for
+// BatchCreateConsumerOverrides
+type BatchCreateConsumerOverridesResponse struct {
+	// Overrides: The overrides that were created.
+	Overrides []*QuotaOverride `json:"overrides,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Overrides") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Overrides") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *BatchCreateConsumerOverridesResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod BatchCreateConsumerOverridesResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+>>>>>>> v0.0.4
 // BatchEnableServicesRequest: Request message for the
 // `BatchEnableServices` method.
 type BatchEnableServicesRequest struct {
@@ -1400,10 +1465,17 @@ type DocumentationRule struct {
 	// Wildcards are only allowed at the end and for a whole component of
 	// the
 	// qualified name, i.e. "foo.*" is ok, but not "foo.b*" or "foo.*.bar".
+<<<<<<< HEAD
 	// To
 	// specify a default for all applicable elements, the whole pattern
 	// "*"
 	// is used.
+=======
+	// A
+	// wildcard will match one or more components. To specify a default for
+	// all
+	// applicable elements, the whole pattern "*" is used.
+>>>>>>> v0.0.4
 	Selector string `json:"selector,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g.
@@ -2284,9 +2356,17 @@ func (s *Http) MarshalJSON() ([]byte, error) {
 //
 // HTTP | gRPC
 // -----|-----
+<<<<<<< HEAD
 // `GET /v1/messages/123456?revision=2&sub.subfield=foo` |
 // `GetMessage(message_id: "123456" revision: 2 sub:
 // SubMessage(subfield: "foo"))`
+=======
+// `GET /v1/messages/123456?revision=2&sub.subfield=foo`
+// |
+// `GetMessage(message_id: "123456" revision: 2 sub:
+// SubMessage(subfield:
+// "foo"))`
+>>>>>>> v0.0.4
 //
 // Note that fields which are mapped to URL query parameters must have
 // a
@@ -2327,7 +2407,12 @@ func (s *Http) MarshalJSON() ([]byte, error) {
 // HTTP | gRPC
 // -----|-----
 // `PATCH /v1/messages/123456 { "text": "Hi!" }` |
+<<<<<<< HEAD
 // `UpdateMessage(message_id: "123456" message { text: "Hi!" })`
+=======
+// `UpdateMessage(message_id:
+// "123456" message { text: "Hi!" })`
+>>>>>>> v0.0.4
 //
 // The special name `*` can be used in the body mapping to define
 // that
@@ -2356,7 +2441,12 @@ func (s *Http) MarshalJSON() ([]byte, error) {
 // HTTP | gRPC
 // -----|-----
 // `PATCH /v1/messages/123456 { "text": "Hi!" }` |
+<<<<<<< HEAD
 // `UpdateMessage(message_id: "123456" text: "Hi!")`
+=======
+// `UpdateMessage(message_id:
+// "123456" text: "Hi!")`
+>>>>>>> v0.0.4
 //
 // Note that when using `*` in the body mapping, it is not possible
 // to
@@ -2393,7 +2483,12 @@ func (s *Http) MarshalJSON() ([]byte, error) {
 // -----|-----
 // `GET /v1/messages/123456` | `GetMessage(message_id: "123456")`
 // `GET /v1/users/me/messages/123456` | `GetMessage(user_id: "me"
+<<<<<<< HEAD
 // message_id: "123456")`
+=======
+// message_id:
+// "123456")`
+>>>>>>> v0.0.4
 //
 // ## Rules for HTTP mapping
 //
@@ -2456,9 +2551,15 @@ func (s *Http) MarshalJSON() ([]byte, error) {
 // server side does the reverse decoding. Such variables show up in
 // the
 // [Discovery
+<<<<<<< HEAD
 // Document](https://developers.google.com/discovery/v1/reference/apis)
 // a
 // s `{var}`.
+=======
+// Document](https://developers.google.com/discovery/v1/re
+// ference/apis) as
+// `{var}`.
+>>>>>>> v0.0.4
 //
 // If a variable contains multiple path segments, such as
 // "{var=foo/*}"
@@ -2468,11 +2569,20 @@ func (s *Http) MarshalJSON() ([]byte, error) {
 // percent-encoded.
 // The server side does the reverse decoding, except "%2F" and "%2f" are
 // left
+<<<<<<< HEAD
 // unchanged. Such variables show up in the
 // [Discovery
 // Document](https://developers.google.com/discovery/v1/reference/apis)
 // a
 // s `{+var}`.
+=======
+// unchanged. Such variables show up in
+// the
+// [Discovery
+// Document](https://developers.google.com/discovery/v1/re
+// ference/apis) as
+// `{+var}`.
+>>>>>>> v0.0.4
 //
 // ## Using gRPC API Service Configuration
 //
@@ -3885,6 +3995,64 @@ func (s *Page) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+<<<<<<< HEAD
+=======
+// Quota: Quota configuration helps to achieve fairness and budgeting in
+// service
+// usage.
+//
+// The metric based quota configuration works this way:
+// - The service configuration defines a set of metrics.
+// - For API calls, the quota.metric_rules maps methods to metrics with
+//   corresponding costs.
+// - The quota.limits defines limits on the metrics, which will be used
+// for
+//   quota checks at runtime.
+//
+// An example quota configuration in yaml format:
+//
+//    quota:
+//      limits:
+//
+//      - name: apiWriteQpsPerProject
+//        metric: library.googleapis.com/write_calls
+//        unit: "1/min/{project}"  # rate limit for consumer projects
+//        values:
+//          STANDARD: 10000
+//
+//
+//      # The metric rules bind all methods to the read_calls metric,
+//      # except for the UpdateBook and DeleteBook methods. These two
+// methods
+//      # are mapped to the write_calls metric, with the UpdateBook
+// method
+//      # consuming at twice rate as the DeleteBook method.
+//      metric_rules:
+//      - selector: "*"
+//        metric_costs:
+//          library.googleapis.com/read_calls: 1
+//      - selector: google.example.library.v1.LibraryService.UpdateBook
+//        metric_costs:
+//          library.googleapis.com/write_calls: 2
+//      - selector: google.example.library.v1.LibraryService.DeleteBook
+//        metric_costs:
+//          library.googleapis.com/write_calls: 1
+//
+//  Corresponding Metric definition:
+//
+//      metrics:
+//      - name: library.googleapis.com/read_calls
+//        display_name: Read requests
+//        metric_kind: DELTA
+//        value_type: INT64
+//
+//      - name: library.googleapis.com/write_calls
+//        display_name: Write requests
+//        metric_kind: DELTA
+//        value_type: INT64
+//
+//
+>>>>>>> v0.0.4
 type Quota struct {
 	// Limits: List of `QuotaLimit` definitions for the service.
 	Limits []*QuotaLimit `json:"limits,omitempty"`
@@ -4058,6 +4226,86 @@ func (s *QuotaLimit) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+<<<<<<< HEAD
+=======
+// QuotaOverride: A quota override
+type QuotaOverride struct {
+	// Dimensions: If this map is nonempty, then this override applies only
+	// to specific values
+	// for dimensions defined in the limit unit.
+	//
+	// For example, an override on a limit with the unit
+	// 1/{project}/{region}
+	// could contain an entry with the key "region" and the value
+	// "us-east-1";
+	// the override is only applied to quota consumed in that region.
+	//
+	// This map has the following restrictions:
+	// - Keys that are not defined in the limit's unit are not valid keys.
+	//   Any string appearing in {brackets} in the unit (besides {project}
+	// or
+	//   {user}) is a defined key.
+	// - "project" is not a valid key; the project is already specified in
+	//   the parent resource name.
+	// - "user" is not a valid key; the API does not support quota
+	// overrides
+	//   that apply only to a specific user.
+	// - If "region" appears as a key, its value must be a valid Cloud
+	// region.
+	// - If "zone" appears as a key, its value must be a valid Cloud zone.
+	// - If any valid key other than "region" or "zone" appears in the map,
+	// then
+	//   all valid keys other than "region" or "zone" must also appear in
+	// the map.
+	Dimensions map[string]string `json:"dimensions,omitempty"`
+
+	// Name: The resource name of the override.
+	// This name is generated by the server when the override is
+	// created.
+	//
+	// Example names would
+	// be:
+	// `projects/123/services/compute.googleapis.com/consumerQuotaMetrics
+	// /compute.googleapis.com%2Fcpus/limits/%2Fproject%2Fregion/adminOverrid
+	// es/4a3f2c1d`
+	// `projects/123/services/compute.googleapis.com/consumerQuo
+	// taMetrics/compute.googleapis.com%2Fcpus/limits/%2Fproject%2Fregion/con
+	// sumerOverrides/4a3f2c1d`
+	//
+	// The resource name is intended to be opaque and should not be parsed
+	// for
+	// its component strings, since its representation could change in the
+	// future.
+	Name string `json:"name,omitempty"`
+
+	// OverrideValue: The overriding quota limit value.
+	// Can be any nonnegative integer, or -1 (unlimited quota).
+	OverrideValue int64 `json:"overrideValue,omitempty,string"`
+
+	// ForceSendFields is a list of field names (e.g. "Dimensions") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Dimensions") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *QuotaOverride) MarshalJSON() ([]byte, error) {
+	type NoMethod QuotaOverride
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+>>>>>>> v0.0.4
 // SourceContext: `SourceContext` represents information about the
 // source of a
 // protobuf element, like the file in which it is defined.

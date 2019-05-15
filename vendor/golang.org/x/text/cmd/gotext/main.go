@@ -25,6 +25,11 @@ import (
 	"unicode"
 	"unicode/utf8"
 
+<<<<<<< HEAD
+=======
+	"golang.org/x/text/message/pipeline"
+
+>>>>>>> v0.0.4
 	"golang.org/x/text/language"
 	"golang.org/x/tools/go/buildutil"
 )
@@ -33,7 +38,27 @@ func init() {
 	flag.Var((*buildutil.TagsFlag)(&build.Default.BuildTags), "tags", buildutil.TagsFlagDoc)
 }
 
+<<<<<<< HEAD
 var dir = flag.String("dir", "locales", "default subdirectory to store translation files")
+=======
+var (
+	srcLang = flag.String("srclang", "en-US", "the source-code language")
+	dir     = flag.String("dir", "locales", "default subdirectory to store translation files")
+)
+
+func config() (*pipeline.Config, error) {
+	tag, err := language.Parse(*srcLang)
+	if err != nil {
+		return nil, wrap(err, "invalid srclang")
+	}
+	return &pipeline.Config{
+		SourceLanguage:      tag,
+		Supported:           getLangs(),
+		TranslationsPattern: `messages\.(.*)\.json`,
+		GenFile:             *out,
+	}, nil
+}
+>>>>>>> v0.0.4
 
 // NOTE: the Command struct is copied from the go tool in core.
 
@@ -42,7 +67,11 @@ var dir = flag.String("dir", "locales", "default subdirectory to store translati
 type Command struct {
 	// Run runs the command.
 	// The args are the arguments after the command name.
+<<<<<<< HEAD
 	Run func(cmd *Command, args []string) error
+=======
+	Run func(cmd *Command, c *pipeline.Config, args []string) error
+>>>>>>> v0.0.4
 
 	// UsageLine is the one-line usage message.
 	// The first word in the line is taken to be the command name.
@@ -83,6 +112,10 @@ func (c *Command) Runnable() bool {
 // Commands lists the available commands and help topics.
 // The order here is the order in which they are printed by 'go help'.
 var commands = []*Command{
+<<<<<<< HEAD
+=======
+	cmdUpdate,
+>>>>>>> v0.0.4
 	cmdExtract,
 	cmdRewrite,
 	cmdGenerate,
@@ -124,7 +157,15 @@ func main() {
 			cmd.Flag.Usage = func() { cmd.Usage() }
 			cmd.Flag.Parse(args[1:])
 			args = cmd.Flag.Args()
+<<<<<<< HEAD
 			if err := cmd.Run(cmd, args); err != nil {
+=======
+			config, err := config()
+			if err != nil {
+				fatalf("gotext: %+v", err)
+			}
+			if err := cmd.Run(cmd, config, args); err != nil {
+>>>>>>> v0.0.4
 				fatalf("gotext: %+v", err)
 			}
 			exit()
@@ -147,7 +188,11 @@ The commands are:
 {{range .}}{{if .Runnable}}
 	{{.Name | printf "%-11s"}} {{.Short}}{{end}}{{end}}
 
+<<<<<<< HEAD
 Use "go help [command]" for more information about a command.
+=======
+Use "gotext help [command]" for more information about a command.
+>>>>>>> v0.0.4
 
 Additional help topics:
 {{range .}}{{if not .Runnable}}
@@ -157,7 +202,11 @@ Use "gotext help [topic]" for more information about that topic.
 
 `
 
+<<<<<<< HEAD
 var helpTemplate = `{{if .Runnable}}usage: go {{.UsageLine}}
+=======
+var helpTemplate = `{{if .Runnable}}usage: gotext {{.UsageLine}}
+>>>>>>> v0.0.4
 
 {{end}}{{.Long | trim}}
 `
@@ -166,7 +215,11 @@ var documentationTemplate = `{{range .}}{{if .Short}}{{.Short | capitalize}}
 
 {{end}}{{if .Runnable}}Usage:
 
+<<<<<<< HEAD
 	go {{.UsageLine}}
+=======
+	gotext {{.UsageLine}}
+>>>>>>> v0.0.4
 
 {{end}}{{.Long | trim}}
 
@@ -304,7 +357,11 @@ func help(args []string) {
 		}
 	}
 
+<<<<<<< HEAD
 	fmt.Fprintf(os.Stderr, "Unknown help topic %#q.  Run 'go help'.\n", arg)
+=======
+	fmt.Fprintf(os.Stderr, "Unknown help topic %#q.  Run 'gotext help'.\n", arg)
+>>>>>>> v0.0.4
 	os.Exit(2) // failed at 'go help cmd'
 }
 

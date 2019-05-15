@@ -26,7 +26,11 @@ const (
 // entry is used to keep track of a single entry in the collation element table
 // during building. Examples of entries can be found in the Default Unicode
 // Collation Element Table.
+<<<<<<< HEAD
 // See http://www.unicode.org/Public/UCA/6.0.0/allkeys.txt.
+=======
+// See https://www.unicode.org/Public/UCA/6.0.0/allkeys.txt.
+>>>>>>> v0.0.4
 type entry struct {
 	str    string // same as string(runes)
 	runes  []rune

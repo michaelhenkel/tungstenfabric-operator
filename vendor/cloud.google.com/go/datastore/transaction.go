@@ -291,9 +291,12 @@ func (t *Transaction) Put(key *Key, src interface{}) (*PendingKey, error) {
 // element of src in the same order.
 // TODO(jba): rewrite in terms of Mutate.
 func (t *Transaction) PutMulti(keys []*Key, src interface{}) (ret []*PendingKey, err error) {
+<<<<<<< HEAD
 	t.ctx = trace.StartSpan(t.ctx, "cloud.google.com/go/datastore.Transaction.PutMulti")
 	defer func() { trace.EndSpan(t.ctx, err) }()
 
+=======
+>>>>>>> v0.0.4
 	if t.id == nil {
 		return nil, errExpiredTransaction
 	}
@@ -334,9 +337,12 @@ func (t *Transaction) Delete(key *Key) error {
 // DeleteMulti is a batch version of Delete.
 // TODO(jba): rewrite in terms of Mutate.
 func (t *Transaction) DeleteMulti(keys []*Key) (err error) {
+<<<<<<< HEAD
 	t.ctx = trace.StartSpan(t.ctx, "cloud.google.com/go/datastore.Transaction.DeleteMulti")
 	defer func() { trace.EndSpan(t.ctx, err) }()
 
+=======
+>>>>>>> v0.0.4
 	if t.id == nil {
 		return errExpiredTransaction
 	}

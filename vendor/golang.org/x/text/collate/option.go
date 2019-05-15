@@ -165,7 +165,11 @@ var (
 	IgnoreWidth Option = ignoreWidth
 	ignoreWidth        = Option{2, ignoreWidthF}
 
+<<<<<<< HEAD
 	// Loose sets the collator to ignore diacritics, case and weight.
+=======
+	// Loose sets the collator to ignore diacritics, case and width.
+>>>>>>> v0.0.4
 	Loose Option = loose
 	loose        = Option{4, looseF}
 
@@ -217,7 +221,11 @@ func Reorder(s ...string) Option {
 // alternateHandling identifies the various ways in which variables are handled.
 // A rune with a primary weight lower than the variable top is considered a
 // variable.
+<<<<<<< HEAD
 // See http://www.unicode.org/reports/tr10/#Variable_Weighting for details.
+=======
+// See https://www.unicode.org/reports/tr10/#Variable_Weighting for details.
+>>>>>>> v0.0.4
 type alternateHandling int
 
 const (

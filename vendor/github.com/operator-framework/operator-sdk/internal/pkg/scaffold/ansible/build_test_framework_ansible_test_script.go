@@ -24,7 +24,11 @@ import (
 const BuildTestFrameworkAnsibleTestScriptFile = "ansible-test.sh"
 
 type BuildTestFrameworkAnsibleTestScript struct {
+<<<<<<< HEAD
 	input.Input
+=======
+	StaticInput
+>>>>>>> v0.0.4
 }
 
 // GetInput - gets the input

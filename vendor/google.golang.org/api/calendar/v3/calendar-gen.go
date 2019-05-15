@@ -6909,22 +6909,38 @@ func (c *EventsListCall) SyncToken(syncToken string) *EventsListCall {
 }
 
 // TimeMax sets the optional parameter "timeMax": Upper bound
+<<<<<<< HEAD
 // (exclusive) for an event's start time to filter by.  The default is
 // not to filter by start time. Must be an RFC3339 timestamp with
 // mandatory time zone offset, e.g., 2011-06-03T10:00:00-07:00,
 // 2011-06-03T10:00:00Z. Milliseconds may be provided but will be
 // ignored. If timeMin is set, timeMax must be greater than timeMin.
+=======
+// (exclusive) for an event's end time to filter by.  The default is not
+// to filter by end time. Must be an RFC3339 timestamp with mandatory
+// time zone offset, for example, 2011-06-03T10:00:00-07:00,
+// 2011-06-03T10:00:00Z. Milliseconds may be provided but are ignored.
+// If timeMin is set, timeMax must be greater than timeMin.
+>>>>>>> v0.0.4
 func (c *EventsListCall) TimeMax(timeMax string) *EventsListCall {
 	c.urlParams_.Set("timeMax", timeMax)
 	return c
 }
 
 // TimeMin sets the optional parameter "timeMin": Lower bound
+<<<<<<< HEAD
 // (inclusive) for an event's end time to filter by.  The default is not
 // to filter by end time. Must be an RFC3339 timestamp with mandatory
 // time zone offset, e.g., 2011-06-03T10:00:00-07:00,
 // 2011-06-03T10:00:00Z. Milliseconds may be provided but will be
 // ignored. If timeMax is set, timeMin must be smaller than timeMax.
+=======
+// (inclusive) for an event's start time to filter by.  The default is
+// not to filter by start time. Must be an RFC3339 timestamp with
+// mandatory time zone offset, for example, 2011-06-03T10:00:00-07:00,
+// 2011-06-03T10:00:00Z. Milliseconds may be provided but are ignored.
+// If timeMax is set, timeMin must be smaller than timeMax.
+>>>>>>> v0.0.4
 func (c *EventsListCall) TimeMin(timeMin string) *EventsListCall {
 	c.urlParams_.Set("timeMin", timeMin)
 	return c
@@ -7139,13 +7155,21 @@ func (c *EventsListCall) Do(opts ...googleapi.CallOption) (*Events, error) {
 	//       "type": "string"
 	//     },
 	//     "timeMax": {
+<<<<<<< HEAD
 	//       "description": "Upper bound (exclusive) for an event's start time to filter by. Optional. The default is not to filter by start time. Must be an RFC3339 timestamp with mandatory time zone offset, e.g., 2011-06-03T10:00:00-07:00, 2011-06-03T10:00:00Z. Milliseconds may be provided but will be ignored. If timeMin is set, timeMax must be greater than timeMin.",
+=======
+	//       "description": "Upper bound (exclusive) for an event's end time to filter by. Optional. The default is not to filter by end time. Must be an RFC3339 timestamp with mandatory time zone offset, for example, 2011-06-03T10:00:00-07:00, 2011-06-03T10:00:00Z. Milliseconds may be provided but are ignored. If timeMin is set, timeMax must be greater than timeMin.",
+>>>>>>> v0.0.4
 	//       "format": "date-time",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "timeMin": {
+<<<<<<< HEAD
 	//       "description": "Lower bound (inclusive) for an event's end time to filter by. Optional. The default is not to filter by end time. Must be an RFC3339 timestamp with mandatory time zone offset, e.g., 2011-06-03T10:00:00-07:00, 2011-06-03T10:00:00Z. Milliseconds may be provided but will be ignored. If timeMax is set, timeMin must be smaller than timeMax.",
+=======
+	//       "description": "Lower bound (inclusive) for an event's start time to filter by. Optional. The default is not to filter by start time. Must be an RFC3339 timestamp with mandatory time zone offset, for example, 2011-06-03T10:00:00-07:00, 2011-06-03T10:00:00Z. Milliseconds may be provided but are ignored. If timeMax is set, timeMin must be smaller than timeMax.",
+>>>>>>> v0.0.4
 	//       "format": "date-time",
 	//       "location": "query",
 	//       "type": "string"
@@ -8261,22 +8285,38 @@ func (c *EventsWatchCall) SyncToken(syncToken string) *EventsWatchCall {
 }
 
 // TimeMax sets the optional parameter "timeMax": Upper bound
+<<<<<<< HEAD
 // (exclusive) for an event's start time to filter by.  The default is
 // not to filter by start time. Must be an RFC3339 timestamp with
 // mandatory time zone offset, e.g., 2011-06-03T10:00:00-07:00,
 // 2011-06-03T10:00:00Z. Milliseconds may be provided but will be
 // ignored. If timeMin is set, timeMax must be greater than timeMin.
+=======
+// (exclusive) for an event's end time to filter by.  The default is not
+// to filter by end time. Must be an RFC3339 timestamp with mandatory
+// time zone offset, for example, 2011-06-03T10:00:00-07:00,
+// 2011-06-03T10:00:00Z. Milliseconds may be provided but are ignored.
+// If timeMin is set, timeMax must be greater than timeMin.
+>>>>>>> v0.0.4
 func (c *EventsWatchCall) TimeMax(timeMax string) *EventsWatchCall {
 	c.urlParams_.Set("timeMax", timeMax)
 	return c
 }
 
 // TimeMin sets the optional parameter "timeMin": Lower bound
+<<<<<<< HEAD
 // (inclusive) for an event's end time to filter by.  The default is not
 // to filter by end time. Must be an RFC3339 timestamp with mandatory
 // time zone offset, e.g., 2011-06-03T10:00:00-07:00,
 // 2011-06-03T10:00:00Z. Milliseconds may be provided but will be
 // ignored. If timeMax is set, timeMin must be smaller than timeMax.
+=======
+// (inclusive) for an event's start time to filter by.  The default is
+// not to filter by start time. Must be an RFC3339 timestamp with
+// mandatory time zone offset, for example, 2011-06-03T10:00:00-07:00,
+// 2011-06-03T10:00:00Z. Milliseconds may be provided but are ignored.
+// If timeMax is set, timeMin must be smaller than timeMax.
+>>>>>>> v0.0.4
 func (c *EventsWatchCall) TimeMin(timeMin string) *EventsWatchCall {
 	c.urlParams_.Set("timeMin", timeMin)
 	return c
@@ -8483,13 +8523,21 @@ func (c *EventsWatchCall) Do(opts ...googleapi.CallOption) (*Channel, error) {
 	//       "type": "string"
 	//     },
 	//     "timeMax": {
+<<<<<<< HEAD
 	//       "description": "Upper bound (exclusive) for an event's start time to filter by. Optional. The default is not to filter by start time. Must be an RFC3339 timestamp with mandatory time zone offset, e.g., 2011-06-03T10:00:00-07:00, 2011-06-03T10:00:00Z. Milliseconds may be provided but will be ignored. If timeMin is set, timeMax must be greater than timeMin.",
+=======
+	//       "description": "Upper bound (exclusive) for an event's end time to filter by. Optional. The default is not to filter by end time. Must be an RFC3339 timestamp with mandatory time zone offset, for example, 2011-06-03T10:00:00-07:00, 2011-06-03T10:00:00Z. Milliseconds may be provided but are ignored. If timeMin is set, timeMax must be greater than timeMin.",
+>>>>>>> v0.0.4
 	//       "format": "date-time",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "timeMin": {
+<<<<<<< HEAD
 	//       "description": "Lower bound (inclusive) for an event's end time to filter by. Optional. The default is not to filter by end time. Must be an RFC3339 timestamp with mandatory time zone offset, e.g., 2011-06-03T10:00:00-07:00, 2011-06-03T10:00:00Z. Milliseconds may be provided but will be ignored. If timeMax is set, timeMin must be smaller than timeMax.",
+=======
+	//       "description": "Lower bound (inclusive) for an event's start time to filter by. Optional. The default is not to filter by start time. Must be an RFC3339 timestamp with mandatory time zone offset, for example, 2011-06-03T10:00:00-07:00, 2011-06-03T10:00:00Z. Milliseconds may be provided but are ignored. If timeMax is set, timeMin must be smaller than timeMax.",
+>>>>>>> v0.0.4
 	//       "format": "date-time",
 	//       "location": "query",
 	//       "type": "string"

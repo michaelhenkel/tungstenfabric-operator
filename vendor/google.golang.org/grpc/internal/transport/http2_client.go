@@ -1140,6 +1140,7 @@ func (t *http2Client) operateHeaders(frame *http2.MetaHeadersFrame) {
 	if !ok {
 		return
 	}
+<<<<<<< HEAD
 	atomic.StoreUint32(&s.bytesReceived, 1)
 	var state decodeState
 	if err := state.decodeHeader(frame); err != nil {
@@ -1149,6 +1150,29 @@ func (t *http2Client) operateHeaders(frame *http2.MetaHeadersFrame) {
 	}
 
 	endStream := frame.StreamEnded()
+=======
+	endStream := frame.StreamEnded()
+	atomic.StoreUint32(&s.bytesReceived, 1)
+	initialHeader := atomic.SwapUint32(&s.headerDone, 1) == 0
+
+	if !initialHeader && !endStream {
+		// As specified by RFC 7540, a HEADERS frame (and associated CONTINUATION frames) can only appear
+		// at the start or end of a stream. Therefore, second HEADERS frame must have EOS bit set.
+		st := status.New(codes.Internal, "a HEADERS frame cannot appear in the middle of a stream")
+		t.closeStream(s, st.Err(), true, http2.ErrCodeProtocol, st, nil, false)
+		return
+	}
+
+	state := &decodeState{}
+	// Initialize isGRPC value to be !initialHeader, since if a gRPC ResponseHeader has been received
+	// which indicates peer speaking gRPC, we are in gRPC mode.
+	state.data.isGRPC = !initialHeader
+	if err := state.decodeHeader(frame); err != nil {
+		t.closeStream(s, err, true, http2.ErrCodeProtocol, status.Convert(err), nil, endStream)
+		return
+	}
+
+>>>>>>> v0.0.4
 	var isHeader bool
 	defer func() {
 		if t.statsHandler != nil {
@@ -1167,14 +1191,23 @@ func (t *http2Client) operateHeaders(frame *http2.MetaHeadersFrame) {
 			}
 		}
 	}()
+<<<<<<< HEAD
 	// If headers haven't been received yet.
 	if atomic.SwapUint32(&s.headerDone, 1) == 0 {
 		if !endStream {
 			// Headers frame is not actually a trailers-only frame.
+=======
+
+	// If headers haven't been received yet.
+	if initialHeader {
+		if !endStream {
+			// Headers frame is ResponseHeader.
+>>>>>>> v0.0.4
 			isHeader = true
 			// These values can be set without any synchronization because
 			// stream goroutine will read it only after seeing a closed
 			// headerChan which we'll close after setting this.
+<<<<<<< HEAD
 			s.recvCompress = state.encoding
 			if len(state.mdata) > 0 {
 				s.header = state.mdata
@@ -1190,6 +1223,23 @@ func (t *http2Client) operateHeaders(frame *http2.MetaHeadersFrame) {
 	// if client received END_STREAM from server while stream was still active, send RST_STREAM
 	rst := s.getState() == streamActive
 	t.closeStream(s, io.EOF, rst, http2.ErrCodeNo, state.status(), state.mdata, true)
+=======
+			s.recvCompress = state.data.encoding
+			if len(state.data.mdata) > 0 {
+				s.header = state.data.mdata
+			}
+			close(s.headerChan)
+			return
+		}
+		// Headers frame is Trailers-only.
+		s.noHeaders = true
+		close(s.headerChan)
+	}
+
+	// if client received END_STREAM from server while stream was still active, send RST_STREAM
+	rst := s.getState() == streamActive
+	t.closeStream(s, io.EOF, rst, http2.ErrCodeNo, state.status(), state.data.mdata, true)
+>>>>>>> v0.0.4
 }
 
 // reader runs as a separate goroutine in charge of reading data from network
@@ -1356,6 +1406,11 @@ func (t *http2Client) ChannelzMetric() *channelz.SocketInternalMetric {
 	return &s
 }
 
+<<<<<<< HEAD
+=======
+func (t *http2Client) RemoteAddr() net.Addr { return t.remoteAddr }
+
+>>>>>>> v0.0.4
 func (t *http2Client) IncrMsgSent() {
 	atomic.AddInt64(&t.czData.msgSent, 1)
 	atomic.StoreInt64(&t.czData.lastMsgSentTime, time.Now().UnixNano())

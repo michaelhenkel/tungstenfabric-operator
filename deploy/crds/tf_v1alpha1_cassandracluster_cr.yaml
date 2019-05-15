@@ -1,6 +1,7 @@
 apiVersion: tf.tungstenfabric.io/v1alpha1
 kind: CassandraCluster
 metadata:
+<<<<<<< HEAD
   name: cassandra-cluster-1
 spec:
   # Add fields here
@@ -15,3 +16,18 @@ spec:
   sslstorageport: "7001"
   storageport: "7000"
   jmxport: "7199"
+=======
+  name: cluster-1
+spec:
+  type: deployment
+  containers:
+    - name: cassandra
+      logvolumepath: "/var/log/cassandra"
+      datavolumepath: "/var/lib/cassandra"
+      resourceconfigmap: true
+  initcontainers:
+    - name: init
+      statusvolume: true
+      command: ["sh","-c","until grep ready /tmp/podinfo/pod_labels > /dev/null 2>&1; do sleep 1; done"]
+
+>>>>>>> v0.0.4

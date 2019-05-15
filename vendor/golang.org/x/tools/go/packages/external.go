@@ -18,7 +18,11 @@ import (
 
 // Driver
 type driverRequest struct {
+<<<<<<< HEAD
 	Command    string            `json "command"`
+=======
+	Command    string            `json:"command"`
+>>>>>>> v0.0.4
 	Mode       LoadMode          `json:"mode"`
 	Env        []string          `json:"env"`
 	BuildFlags []string          `json:"build_flags"`

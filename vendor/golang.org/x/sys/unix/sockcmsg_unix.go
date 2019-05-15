@@ -18,6 +18,12 @@ func cmsgAlignOf(salen int) int {
 	salign := SizeofPtr
 
 	switch runtime.GOOS {
+<<<<<<< HEAD
+=======
+	case "aix":
+		// There is no alignment on AIX.
+		salign = 1
+>>>>>>> v0.0.4
 	case "darwin", "dragonfly", "solaris":
 		// NOTE: It seems like 64-bit Darwin, DragonFly BSD and
 		// Solaris kernels still require 32-bit aligned access to

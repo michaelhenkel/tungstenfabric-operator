@@ -41,6 +41,7 @@ type Resolver struct {
 
 	// Fields actually belong to the resolver.
 	cc             resolver.ClientConn
+<<<<<<< HEAD
 	bootstrapAddrs []resolver.Address
 }
 
@@ -48,13 +49,27 @@ type Resolver struct {
 // NewAddress doesn't need to be explicitly called after Dial.
 func (r *Resolver) InitialAddrs(addrs []resolver.Address) {
 	r.bootstrapAddrs = addrs
+=======
+	bootstrapState *resolver.State
+}
+
+// InitialState adds initial state to the resolver so that UpdateState doesn't
+// need to be explicitly called after Dial.
+func (r *Resolver) InitialState(s resolver.State) {
+	r.bootstrapState = &s
+>>>>>>> v0.0.4
 }
 
 // Build returns itself for Resolver, because it's both a builder and a resolver.
 func (r *Resolver) Build(target resolver.Target, cc resolver.ClientConn, opts resolver.BuildOption) (resolver.Resolver, error) {
 	r.cc = cc
+<<<<<<< HEAD
 	if r.bootstrapAddrs != nil {
 		r.NewAddress(r.bootstrapAddrs)
+=======
+	if r.bootstrapState != nil {
+		r.UpdateState(*r.bootstrapState)
+>>>>>>> v0.0.4
 	}
 	return r, nil
 }
@@ -70,6 +85,7 @@ func (*Resolver) ResolveNow(o resolver.ResolveNowOption) {}
 // Close is a noop for Resolver.
 func (*Resolver) Close() {}
 
+<<<<<<< HEAD
 // NewAddress calls cc.NewAddress.
 func (r *Resolver) NewAddress(addrs []resolver.Address) {
 	r.cc.NewAddress(addrs)
@@ -78,6 +94,11 @@ func (r *Resolver) NewAddress(addrs []resolver.Address) {
 // NewServiceConfig calls cc.NewServiceConfig.
 func (r *Resolver) NewServiceConfig(sc string) {
 	r.cc.NewServiceConfig(sc)
+=======
+// UpdateState calls cc.UpdateState.
+func (r *Resolver) UpdateState(s resolver.State) {
+	r.cc.UpdateState(s)
+>>>>>>> v0.0.4
 }
 
 // GenerateAndRegisterManualResolver generates a random scheme and a Resolver

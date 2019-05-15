@@ -94,6 +94,7 @@ func (m manager) IsUpdateRequired() bool {
 // Sync ensures the Helm storage backend is in sync with the status of the
 // custom resource.
 func (m *manager) Sync(ctx context.Context) error {
+<<<<<<< HEAD
 	// TODO: We're now persisting releases as secrets. To support seamless upgrades, we
 	// need to sync the release status from the CR to the persistent storage backend.
 	// Once we release the storage backend migration, this function (and comment)
@@ -102,6 +103,8 @@ func (m *manager) Sync(ctx context.Context) error {
 		return fmt.Errorf("failed to sync release status to storage backend: %s", err)
 	}
 
+=======
+>>>>>>> v0.0.4
 	// Get release history for this release name
 	releases, err := m.storageBackend.History(m.releaseName)
 	if err != nil && !notFoundErr(err) {
@@ -151,6 +154,7 @@ func (m *manager) Sync(ctx context.Context) error {
 	return nil
 }
 
+<<<<<<< HEAD
 func (m manager) syncReleaseStatus(status types.HelmAppStatus) error {
 	var release *rpb.Release
 	for _, condition := range status.Conditions {
@@ -176,6 +180,8 @@ func (m manager) syncReleaseStatus(status types.HelmAppStatus) error {
 	return m.storageBackend.Create(release)
 }
 
+=======
+>>>>>>> v0.0.4
 func notFoundErr(err error) bool {
 	return strings.Contains(err.Error(), "not found")
 }

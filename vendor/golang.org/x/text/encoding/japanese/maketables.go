@@ -10,8 +10,13 @@ package main
 //	go run maketables.go | gofmt > tables.go
 
 // TODO: Emoji extensions?
+<<<<<<< HEAD
 // http://www.unicode.org/faq/emoji_dingbats.html
 // http://www.unicode.org/Public/UNIDATA/EmojiSources.txt
+=======
+// https://www.unicode.org/faq/emoji_dingbats.html
+// https://www.unicode.org/Public/UNIDATA/EmojiSources.txt
+>>>>>>> v0.0.4
 
 import (
 	"bufio"

@@ -115,7 +115,11 @@ func (r *exampleResolver) start() {
 	for i, s := range addrStrs {
 		addrs[i] = resolver.Address{Addr: s}
 	}
+<<<<<<< HEAD
 	r.cc.NewAddress(addrs)
+=======
+	r.cc.UpdateState(resolver.State{Addresses: addrs})
+>>>>>>> v0.0.4
 }
 func (*exampleResolver) ResolveNow(o resolver.ResolveNowOption) {}
 func (*exampleResolver) Close()                                 {}

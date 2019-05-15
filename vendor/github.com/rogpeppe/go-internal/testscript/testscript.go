@@ -39,13 +39,37 @@ var testWork = flag.Bool("testwork", false, "")
 
 // Env holds the environment to use at the start of a test script invocation.
 type Env struct {
+<<<<<<< HEAD
 	WorkDir string
 	Vars    []string
 	Cd      string
+=======
+	// WorkDir holds the path to the root directory of the
+	// extracted files.
+	WorkDir string
+	// Vars holds the initial set environment variables that will be passed to the
+	// testscript commands.
+	Vars []string
+	// Cd holds the initial current working directory.
+	Cd string
+	// Values holds a map of arbitrary values for use by custom
+	// testscript commands. This enables Setup to pass arbitrary
+	// values (not just strings) through to custom commands.
+	Values map[interface{}]interface{}
+>>>>>>> v0.0.4
 
 	ts *TestScript
 }
 
+<<<<<<< HEAD
+=======
+// Value returns a value from Env.Values, or nil if no
+// value was set by Setup.
+func (ts *TestScript) Value(key interface{}) interface{} {
+	return ts.values[key]
+}
+
+>>>>>>> v0.0.4
 // Defer arranges for f to be called at the end
 // of the test. If Defer is called multiple times, the
 // defers are executed in reverse order (similar
@@ -171,6 +195,7 @@ type TestScript struct {
 	params      Params
 	t           T
 	testTempDir string
+<<<<<<< HEAD
 	workdir     string            // temporary work dir ($WORK)
 	log         bytes.Buffer      // test execution log (printed at end of test)
 	mark        int               // offset of next log truncation
@@ -188,6 +213,26 @@ type TestScript struct {
 	start       time.Time         // time phase started
 	background  []backgroundCmd   // backgrounded 'exec' and 'go' commands
 	deferred    func()            // deferred cleanup actions.
+=======
+	workdir     string                      // temporary work dir ($WORK)
+	log         bytes.Buffer                // test execution log (printed at end of test)
+	mark        int                         // offset of next log truncation
+	cd          string                      // current directory during test execution; initially $WORK/gopath/src
+	name        string                      // short name of test ("foo")
+	file        string                      // full file name ("testdata/script/foo.txt")
+	lineno      int                         // line number currently executing
+	line        string                      // line currently executing
+	env         []string                    // environment list (for os/exec)
+	envMap      map[string]string           // environment mapping (matches env; on Windows keys are lowercase)
+	values      map[interface{}]interface{} // values for custom commands
+	stdin       string                      // standard input to next 'go' command; set by 'stdin' command.
+	stdout      string                      // standard output from last 'go' command; for 'stdout' command
+	stderr      string                      // standard error from last 'go' command; for 'stderr' command
+	stopped     bool                        // test wants to stop early
+	start       time.Time                   // time phase started
+	background  []backgroundCmd             // backgrounded 'exec' and 'go' commands
+	deferred    func()                      // deferred cleanup actions.
+>>>>>>> v0.0.4
 
 	ctxt context.Context // per TestScript context
 }
@@ -213,6 +258,10 @@ func (ts *TestScript) setup() string {
 			":=" + string(os.PathListSeparator),
 		},
 		WorkDir: ts.workdir,
+<<<<<<< HEAD
+=======
+		Values:  make(map[interface{}]interface{}),
+>>>>>>> v0.0.4
 		Cd:      ts.workdir,
 		ts:      ts,
 	}
@@ -242,6 +291,10 @@ func (ts *TestScript) setup() string {
 	}
 	ts.cd = env.Cd
 	ts.env = env.Vars
+<<<<<<< HEAD
+=======
+	ts.values = env.Values
+>>>>>>> v0.0.4
 
 	ts.envMap = make(map[string]string)
 	for _, kv := range ts.env {

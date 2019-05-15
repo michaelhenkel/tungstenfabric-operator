@@ -7,6 +7,7 @@ package windows
 import "syscall"
 
 const (
+<<<<<<< HEAD
 	// Windows errors.
 	ERROR_FILE_NOT_FOUND         syscall.Errno = 2
 	ERROR_PATH_NOT_FOUND         syscall.Errno = 3
@@ -34,6 +35,8 @@ const (
 )
 
 const (
+=======
+>>>>>>> v0.0.4
 	// Invented values to support what package os expects.
 	O_RDONLY   = 0x00000
 	O_WRONLY   = 0x00001
@@ -177,7 +180,10 @@ const (
 	IGNORE                = 0
 	INFINITE              = 0xffffffff
 
+<<<<<<< HEAD
 	WAIT_TIMEOUT   = 258
+=======
+>>>>>>> v0.0.4
 	WAIT_ABANDONED = 0x00000080
 	WAIT_OBJECT_0  = 0x00000000
 	WAIT_FAILED    = 0xFFFFFFFF
@@ -412,12 +418,15 @@ const (
 	CERT_CHAIN_POLICY_EV                = 8
 	CERT_CHAIN_POLICY_SSL_F12           = 9
 
+<<<<<<< HEAD
 	CERT_E_EXPIRED       = 0x800B0101
 	CERT_E_ROLE          = 0x800B0103
 	CERT_E_PURPOSE       = 0x800B0106
 	CERT_E_UNTRUSTEDROOT = 0x800B0109
 	CERT_E_CN_NO_MATCH   = 0x800B010F
 
+=======
+>>>>>>> v0.0.4
 	/* AuthType values for SSLExtraCertChainPolicyPara struct */
 	AUTHTYPE_CLIENT = 1
 	AUTHTYPE_SERVER = 2
@@ -860,10 +869,13 @@ const (
 )
 
 const (
+<<<<<<< HEAD
 	DNS_INFO_NO_RECORDS = 0x251D
 )
 
 const (
+=======
+>>>>>>> v0.0.4
 	// flags inside DNSRecord.Dw
 	DnsSectionQuestion   = 0x0000
 	DnsSectionAnswer     = 0x0001

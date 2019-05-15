@@ -8,7 +8,11 @@ import fmt "fmt"
 import math "math"
 import _ "google.golang.org/genproto/googleapis/api/annotations"
 import longrunning "google.golang.org/genproto/googleapis/longrunning"
+<<<<<<< HEAD
 import _ "google.golang.org/genproto/protobuf/field_mask"
+=======
+import field_mask "google.golang.org/genproto/protobuf/field_mask"
+>>>>>>> v0.0.4
 
 import (
 	context "golang.org/x/net/context"
@@ -26,8 +30,12 @@ var _ = math.Inf
 // proto package needs to be updated.
 const _ = proto.ProtoPackageIsVersion2 // please upgrade the proto package
 
+<<<<<<< HEAD
 // Request message for
 // [AutoMl.CreateDataset][google.cloud.automl.v1beta1.AutoMl.CreateDataset].
+=======
+// Request message for [AutoMl.CreateDataset][google.cloud.automl.v1beta1.AutoMl.CreateDataset].
+>>>>>>> v0.0.4
 type CreateDatasetRequest struct {
 	// The resource name of the project to create the dataset for.
 	Parent string `protobuf:"bytes,1,opt,name=parent,proto3" json:"parent,omitempty"`
@@ -42,7 +50,11 @@ func (m *CreateDatasetRequest) Reset()         { *m = CreateDatasetRequest{} }
 func (m *CreateDatasetRequest) String() string { return proto.CompactTextString(m) }
 func (*CreateDatasetRequest) ProtoMessage()    {}
 func (*CreateDatasetRequest) Descriptor() ([]byte, []int) {
+<<<<<<< HEAD
 	return fileDescriptor_service_b4ecd4b3d5c9ee33, []int{0}
+=======
+	return fileDescriptor_service_ae865470535b24b9, []int{0}
+>>>>>>> v0.0.4
 }
 func (m *CreateDatasetRequest) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_CreateDatasetRequest.Unmarshal(m, b)
@@ -76,8 +88,12 @@ func (m *CreateDatasetRequest) GetDataset() *Dataset {
 	return nil
 }
 
+<<<<<<< HEAD
 // Request message for
 // [AutoMl.GetDataset][google.cloud.automl.v1beta1.AutoMl.GetDataset].
+=======
+// Request message for [AutoMl.GetDataset][google.cloud.automl.v1beta1.AutoMl.GetDataset].
+>>>>>>> v0.0.4
 type GetDatasetRequest struct {
 	// The resource name of the dataset to retrieve.
 	Name                 string   `protobuf:"bytes,1,opt,name=name,proto3" json:"name,omitempty"`
@@ -90,7 +106,11 @@ func (m *GetDatasetRequest) Reset()         { *m = GetDatasetRequest{} }
 func (m *GetDatasetRequest) String() string { return proto.CompactTextString(m) }
 func (*GetDatasetRequest) ProtoMessage()    {}
 func (*GetDatasetRequest) Descriptor() ([]byte, []int) {
+<<<<<<< HEAD
 	return fileDescriptor_service_b4ecd4b3d5c9ee33, []int{1}
+=======
+	return fileDescriptor_service_ae865470535b24b9, []int{1}
+>>>>>>> v0.0.4
 }
 func (m *GetDatasetRequest) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_GetDatasetRequest.Unmarshal(m, b)
@@ -117,16 +137,25 @@ func (m *GetDatasetRequest) GetName() string {
 	return ""
 }
 
+<<<<<<< HEAD
 // Request message for
 // [AutoMl.ListDatasets][google.cloud.automl.v1beta1.AutoMl.ListDatasets].
+=======
+// Request message for [AutoMl.ListDatasets][google.cloud.automl.v1beta1.AutoMl.ListDatasets].
+>>>>>>> v0.0.4
 type ListDatasetsRequest struct {
 	// The resource name of the project from which to list datasets.
 	Parent string `protobuf:"bytes,1,opt,name=parent,proto3" json:"parent,omitempty"`
 	// An expression for filtering the results of the request.
 	//
+<<<<<<< HEAD
 	//   * `dataset_metadata` - for existence of the case.
 	//
 	// An example of using the filter is:
+=======
+	//   * `dataset_metadata` - for existence of the case (e.g.
+	//             image_classification_dataset_metadata:*). Some examples of using the filter are:
+>>>>>>> v0.0.4
 	//
 	//   * `translation_dataset_metadata:*` --> The dataset has
 	//                                          translation_dataset_metadata.
@@ -136,10 +165,15 @@ type ListDatasetsRequest struct {
 	PageSize int32 `protobuf:"varint,4,opt,name=page_size,json=pageSize,proto3" json:"page_size,omitempty"`
 	// A token identifying a page of results for the server to return
 	// Typically obtained via
+<<<<<<< HEAD
 	// [ListDatasetsResponse.next_page_token][google.cloud.automl.v1beta1.ListDatasetsResponse.next_page_token]
 	// of the previous
 	// [AutoMl.ListDatasets][google.cloud.automl.v1beta1.AutoMl.ListDatasets]
 	// call.
+=======
+	// [ListDatasetsResponse.next_page_token][google.cloud.automl.v1beta1.ListDatasetsResponse.next_page_token] of the previous
+	// [AutoMl.ListDatasets][google.cloud.automl.v1beta1.AutoMl.ListDatasets] call.
+>>>>>>> v0.0.4
 	PageToken            string   `protobuf:"bytes,6,opt,name=page_token,json=pageToken,proto3" json:"page_token,omitempty"`
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
 	XXX_unrecognized     []byte   `json:"-"`
@@ -150,7 +184,11 @@ func (m *ListDatasetsRequest) Reset()         { *m = ListDatasetsRequest{} }
 func (m *ListDatasetsRequest) String() string { return proto.CompactTextString(m) }
 func (*ListDatasetsRequest) ProtoMessage()    {}
 func (*ListDatasetsRequest) Descriptor() ([]byte, []int) {
+<<<<<<< HEAD
 	return fileDescriptor_service_b4ecd4b3d5c9ee33, []int{2}
+=======
+	return fileDescriptor_service_ae865470535b24b9, []int{2}
+>>>>>>> v0.0.4
 }
 func (m *ListDatasetsRequest) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_ListDatasetsRequest.Unmarshal(m, b)
@@ -198,15 +236,23 @@ func (m *ListDatasetsRequest) GetPageToken() string {
 	return ""
 }
 
+<<<<<<< HEAD
 // Response message for
 // [AutoMl.ListDatasets][google.cloud.automl.v1beta1.AutoMl.ListDatasets].
+=======
+// Response message for [AutoMl.ListDatasets][google.cloud.automl.v1beta1.AutoMl.ListDatasets].
+>>>>>>> v0.0.4
 type ListDatasetsResponse struct {
 	// The datasets read.
 	Datasets []*Dataset `protobuf:"bytes,1,rep,name=datasets,proto3" json:"datasets,omitempty"`
 	// A token to retrieve next page of results.
+<<<<<<< HEAD
 	// Pass to
 	// [ListDatasetsRequest.page_token][google.cloud.automl.v1beta1.ListDatasetsRequest.page_token]
 	// to obtain that page.
+=======
+	// Pass to [ListDatasetsRequest.page_token][google.cloud.automl.v1beta1.ListDatasetsRequest.page_token] to obtain that page.
+>>>>>>> v0.0.4
 	NextPageToken        string   `protobuf:"bytes,2,opt,name=next_page_token,json=nextPageToken,proto3" json:"next_page_token,omitempty"`
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
 	XXX_unrecognized     []byte   `json:"-"`
@@ -217,7 +263,11 @@ func (m *ListDatasetsResponse) Reset()         { *m = ListDatasetsResponse{} }
 func (m *ListDatasetsResponse) String() string { return proto.CompactTextString(m) }
 func (*ListDatasetsResponse) ProtoMessage()    {}
 func (*ListDatasetsResponse) Descriptor() ([]byte, []int) {
+<<<<<<< HEAD
 	return fileDescriptor_service_b4ecd4b3d5c9ee33, []int{3}
+=======
+	return fileDescriptor_service_ae865470535b24b9, []int{3}
+>>>>>>> v0.0.4
 }
 func (m *ListDatasetsResponse) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_ListDatasetsResponse.Unmarshal(m, b)
@@ -251,8 +301,66 @@ func (m *ListDatasetsResponse) GetNextPageToken() string {
 	return ""
 }
 
+<<<<<<< HEAD
 // Request message for
 // [AutoMl.DeleteDataset][google.cloud.automl.v1beta1.AutoMl.DeleteDataset].
+=======
+// Request message for [AutoMl.UpdateDataset][google.cloud.automl.v1beta1.AutoMl.UpdateDataset]
+type UpdateDatasetRequest struct {
+	// The dataset which replaces the resource on the server.
+	Dataset *Dataset `protobuf:"bytes,1,opt,name=dataset,proto3" json:"dataset,omitempty"`
+	// The update mask applies to the resource. For the `FieldMask` definition,
+	// see
+	//
+	// https:
+	// //developers.google.com/protocol-buffers
+	// // /docs/reference/google.protobuf#fieldmask
+	UpdateMask           *field_mask.FieldMask `protobuf:"bytes,2,opt,name=update_mask,json=updateMask,proto3" json:"update_mask,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}              `json:"-"`
+	XXX_unrecognized     []byte                `json:"-"`
+	XXX_sizecache        int32                 `json:"-"`
+}
+
+func (m *UpdateDatasetRequest) Reset()         { *m = UpdateDatasetRequest{} }
+func (m *UpdateDatasetRequest) String() string { return proto.CompactTextString(m) }
+func (*UpdateDatasetRequest) ProtoMessage()    {}
+func (*UpdateDatasetRequest) Descriptor() ([]byte, []int) {
+	return fileDescriptor_service_ae865470535b24b9, []int{4}
+}
+func (m *UpdateDatasetRequest) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_UpdateDatasetRequest.Unmarshal(m, b)
+}
+func (m *UpdateDatasetRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_UpdateDatasetRequest.Marshal(b, m, deterministic)
+}
+func (dst *UpdateDatasetRequest) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_UpdateDatasetRequest.Merge(dst, src)
+}
+func (m *UpdateDatasetRequest) XXX_Size() int {
+	return xxx_messageInfo_UpdateDatasetRequest.Size(m)
+}
+func (m *UpdateDatasetRequest) XXX_DiscardUnknown() {
+	xxx_messageInfo_UpdateDatasetRequest.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_UpdateDatasetRequest proto.InternalMessageInfo
+
+func (m *UpdateDatasetRequest) GetDataset() *Dataset {
+	if m != nil {
+		return m.Dataset
+	}
+	return nil
+}
+
+func (m *UpdateDatasetRequest) GetUpdateMask() *field_mask.FieldMask {
+	if m != nil {
+		return m.UpdateMask
+	}
+	return nil
+}
+
+// Request message for [AutoMl.DeleteDataset][google.cloud.automl.v1beta1.AutoMl.DeleteDataset].
+>>>>>>> v0.0.4
 type DeleteDatasetRequest struct {
 	// The resource name of the dataset to delete.
 	Name                 string   `protobuf:"bytes,1,opt,name=name,proto3" json:"name,omitempty"`
@@ -265,7 +373,11 @@ func (m *DeleteDatasetRequest) Reset()         { *m = DeleteDatasetRequest{} }
 func (m *DeleteDatasetRequest) String() string { return proto.CompactTextString(m) }
 func (*DeleteDatasetRequest) ProtoMessage()    {}
 func (*DeleteDatasetRequest) Descriptor() ([]byte, []int) {
+<<<<<<< HEAD
 	return fileDescriptor_service_b4ecd4b3d5c9ee33, []int{4}
+=======
+	return fileDescriptor_service_ae865470535b24b9, []int{5}
+>>>>>>> v0.0.4
 }
 func (m *DeleteDatasetRequest) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_DeleteDatasetRequest.Unmarshal(m, b)
@@ -292,13 +404,22 @@ func (m *DeleteDatasetRequest) GetName() string {
 	return ""
 }
 
+<<<<<<< HEAD
 // Request message for
 // [AutoMl.ImportData][google.cloud.automl.v1beta1.AutoMl.ImportData].
+=======
+// Request message for [AutoMl.ImportData][google.cloud.automl.v1beta1.AutoMl.ImportData].
+>>>>>>> v0.0.4
 type ImportDataRequest struct {
 	// Required. Dataset name. Dataset must already exist. All imported
 	// annotations and examples will be added.
 	Name string `protobuf:"bytes,1,opt,name=name,proto3" json:"name,omitempty"`
+<<<<<<< HEAD
 	// Required. The desired input location.
+=======
+	// Required. The desired input location and its domain specific semantics,
+	// if any.
+>>>>>>> v0.0.4
 	InputConfig          *InputConfig `protobuf:"bytes,3,opt,name=input_config,json=inputConfig,proto3" json:"input_config,omitempty"`
 	XXX_NoUnkeyedLiteral struct{}     `json:"-"`
 	XXX_unrecognized     []byte       `json:"-"`
@@ -309,7 +430,11 @@ func (m *ImportDataRequest) Reset()         { *m = ImportDataRequest{} }
 func (m *ImportDataRequest) String() string { return proto.CompactTextString(m) }
 func (*ImportDataRequest) ProtoMessage()    {}
 func (*ImportDataRequest) Descriptor() ([]byte, []int) {
+<<<<<<< HEAD
 	return fileDescriptor_service_b4ecd4b3d5c9ee33, []int{5}
+=======
+	return fileDescriptor_service_ae865470535b24b9, []int{6}
+>>>>>>> v0.0.4
 }
 func (m *ImportDataRequest) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_ImportDataRequest.Unmarshal(m, b)
@@ -343,8 +468,12 @@ func (m *ImportDataRequest) GetInputConfig() *InputConfig {
 	return nil
 }
 
+<<<<<<< HEAD
 // Request message for
 // [AutoMl.ExportData][google.cloud.automl.v1beta1.AutoMl.ExportData].
+=======
+// Request message for [AutoMl.ExportData][google.cloud.automl.v1beta1.AutoMl.ExportData].
+>>>>>>> v0.0.4
 type ExportDataRequest struct {
 	// Required. The resource name of the dataset.
 	Name string `protobuf:"bytes,1,opt,name=name,proto3" json:"name,omitempty"`
@@ -359,7 +488,11 @@ func (m *ExportDataRequest) Reset()         { *m = ExportDataRequest{} }
 func (m *ExportDataRequest) String() string { return proto.CompactTextString(m) }
 func (*ExportDataRequest) ProtoMessage()    {}
 func (*ExportDataRequest) Descriptor() ([]byte, []int) {
+<<<<<<< HEAD
 	return fileDescriptor_service_b4ecd4b3d5c9ee33, []int{6}
+=======
+	return fileDescriptor_service_ae865470535b24b9, []int{7}
+>>>>>>> v0.0.4
 }
 func (m *ExportDataRequest) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_ExportDataRequest.Unmarshal(m, b)
@@ -393,8 +526,518 @@ func (m *ExportDataRequest) GetOutputConfig() *OutputConfig {
 	return nil
 }
 
+<<<<<<< HEAD
 // Request message for
 // [AutoMl.CreateModel][google.cloud.automl.v1beta1.AutoMl.CreateModel].
+=======
+// Request message for [AutoMl.GetAnnotationSpec][google.cloud.automl.v1beta1.AutoMl.GetAnnotationSpec].
+type GetAnnotationSpecRequest struct {
+	// The resource name of the annotation spec to retrieve.
+	Name                 string   `protobuf:"bytes,1,opt,name=name,proto3" json:"name,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
+}
+
+func (m *GetAnnotationSpecRequest) Reset()         { *m = GetAnnotationSpecRequest{} }
+func (m *GetAnnotationSpecRequest) String() string { return proto.CompactTextString(m) }
+func (*GetAnnotationSpecRequest) ProtoMessage()    {}
+func (*GetAnnotationSpecRequest) Descriptor() ([]byte, []int) {
+	return fileDescriptor_service_ae865470535b24b9, []int{8}
+}
+func (m *GetAnnotationSpecRequest) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_GetAnnotationSpecRequest.Unmarshal(m, b)
+}
+func (m *GetAnnotationSpecRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_GetAnnotationSpecRequest.Marshal(b, m, deterministic)
+}
+func (dst *GetAnnotationSpecRequest) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_GetAnnotationSpecRequest.Merge(dst, src)
+}
+func (m *GetAnnotationSpecRequest) XXX_Size() int {
+	return xxx_messageInfo_GetAnnotationSpecRequest.Size(m)
+}
+func (m *GetAnnotationSpecRequest) XXX_DiscardUnknown() {
+	xxx_messageInfo_GetAnnotationSpecRequest.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_GetAnnotationSpecRequest proto.InternalMessageInfo
+
+func (m *GetAnnotationSpecRequest) GetName() string {
+	if m != nil {
+		return m.Name
+	}
+	return ""
+}
+
+// Request message for [AutoMl.GetTableSpec][google.cloud.automl.v1beta1.AutoMl.GetTableSpec].
+type GetTableSpecRequest struct {
+	// The resource name of the table spec to retrieve.
+	Name string `protobuf:"bytes,1,opt,name=name,proto3" json:"name,omitempty"`
+	// Mask specifying which fields to read.
+	FieldMask            *field_mask.FieldMask `protobuf:"bytes,2,opt,name=field_mask,json=fieldMask,proto3" json:"field_mask,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}              `json:"-"`
+	XXX_unrecognized     []byte                `json:"-"`
+	XXX_sizecache        int32                 `json:"-"`
+}
+
+func (m *GetTableSpecRequest) Reset()         { *m = GetTableSpecRequest{} }
+func (m *GetTableSpecRequest) String() string { return proto.CompactTextString(m) }
+func (*GetTableSpecRequest) ProtoMessage()    {}
+func (*GetTableSpecRequest) Descriptor() ([]byte, []int) {
+	return fileDescriptor_service_ae865470535b24b9, []int{9}
+}
+func (m *GetTableSpecRequest) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_GetTableSpecRequest.Unmarshal(m, b)
+}
+func (m *GetTableSpecRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_GetTableSpecRequest.Marshal(b, m, deterministic)
+}
+func (dst *GetTableSpecRequest) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_GetTableSpecRequest.Merge(dst, src)
+}
+func (m *GetTableSpecRequest) XXX_Size() int {
+	return xxx_messageInfo_GetTableSpecRequest.Size(m)
+}
+func (m *GetTableSpecRequest) XXX_DiscardUnknown() {
+	xxx_messageInfo_GetTableSpecRequest.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_GetTableSpecRequest proto.InternalMessageInfo
+
+func (m *GetTableSpecRequest) GetName() string {
+	if m != nil {
+		return m.Name
+	}
+	return ""
+}
+
+func (m *GetTableSpecRequest) GetFieldMask() *field_mask.FieldMask {
+	if m != nil {
+		return m.FieldMask
+	}
+	return nil
+}
+
+// Request message for [AutoMl.ListTableSpecs][google.cloud.automl.v1beta1.AutoMl.ListTableSpecs].
+type ListTableSpecsRequest struct {
+	// The resource name of the dataset to list table specs from.
+	Parent string `protobuf:"bytes,1,opt,name=parent,proto3" json:"parent,omitempty"`
+	// Mask specifying which fields to read.
+	FieldMask *field_mask.FieldMask `protobuf:"bytes,2,opt,name=field_mask,json=fieldMask,proto3" json:"field_mask,omitempty"`
+	// Filter expression, see go/filtering.
+	Filter string `protobuf:"bytes,3,opt,name=filter,proto3" json:"filter,omitempty"`
+	// Requested page size. The server can return fewer results than requested.
+	// If unspecified, the server will pick a default size.
+	PageSize int32 `protobuf:"varint,4,opt,name=page_size,json=pageSize,proto3" json:"page_size,omitempty"`
+	// A token identifying a page of results for the server to return.
+	// Typically obtained from the
+	// [ListTableSpecsResponse.next_page_token][google.cloud.automl.v1beta1.ListTableSpecsResponse.next_page_token] field of the previous
+	// [AutoMl.ListTableSpecs][google.cloud.automl.v1beta1.AutoMl.ListTableSpecs] call.
+	PageToken            string   `protobuf:"bytes,6,opt,name=page_token,json=pageToken,proto3" json:"page_token,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
+}
+
+func (m *ListTableSpecsRequest) Reset()         { *m = ListTableSpecsRequest{} }
+func (m *ListTableSpecsRequest) String() string { return proto.CompactTextString(m) }
+func (*ListTableSpecsRequest) ProtoMessage()    {}
+func (*ListTableSpecsRequest) Descriptor() ([]byte, []int) {
+	return fileDescriptor_service_ae865470535b24b9, []int{10}
+}
+func (m *ListTableSpecsRequest) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_ListTableSpecsRequest.Unmarshal(m, b)
+}
+func (m *ListTableSpecsRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_ListTableSpecsRequest.Marshal(b, m, deterministic)
+}
+func (dst *ListTableSpecsRequest) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_ListTableSpecsRequest.Merge(dst, src)
+}
+func (m *ListTableSpecsRequest) XXX_Size() int {
+	return xxx_messageInfo_ListTableSpecsRequest.Size(m)
+}
+func (m *ListTableSpecsRequest) XXX_DiscardUnknown() {
+	xxx_messageInfo_ListTableSpecsRequest.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_ListTableSpecsRequest proto.InternalMessageInfo
+
+func (m *ListTableSpecsRequest) GetParent() string {
+	if m != nil {
+		return m.Parent
+	}
+	return ""
+}
+
+func (m *ListTableSpecsRequest) GetFieldMask() *field_mask.FieldMask {
+	if m != nil {
+		return m.FieldMask
+	}
+	return nil
+}
+
+func (m *ListTableSpecsRequest) GetFilter() string {
+	if m != nil {
+		return m.Filter
+	}
+	return ""
+}
+
+func (m *ListTableSpecsRequest) GetPageSize() int32 {
+	if m != nil {
+		return m.PageSize
+	}
+	return 0
+}
+
+func (m *ListTableSpecsRequest) GetPageToken() string {
+	if m != nil {
+		return m.PageToken
+	}
+	return ""
+}
+
+// Response message for [AutoMl.ListTableSpecs][google.cloud.automl.v1beta1.AutoMl.ListTableSpecs].
+type ListTableSpecsResponse struct {
+	// The table specs read.
+	TableSpecs []*TableSpec `protobuf:"bytes,1,rep,name=table_specs,json=tableSpecs,proto3" json:"table_specs,omitempty"`
+	// A token to retrieve next page of results.
+	// Pass to [ListTableSpecsRequest.page_token][google.cloud.automl.v1beta1.ListTableSpecsRequest.page_token] to obtain that page.
+	NextPageToken        string   `protobuf:"bytes,2,opt,name=next_page_token,json=nextPageToken,proto3" json:"next_page_token,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
+}
+
+func (m *ListTableSpecsResponse) Reset()         { *m = ListTableSpecsResponse{} }
+func (m *ListTableSpecsResponse) String() string { return proto.CompactTextString(m) }
+func (*ListTableSpecsResponse) ProtoMessage()    {}
+func (*ListTableSpecsResponse) Descriptor() ([]byte, []int) {
+	return fileDescriptor_service_ae865470535b24b9, []int{11}
+}
+func (m *ListTableSpecsResponse) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_ListTableSpecsResponse.Unmarshal(m, b)
+}
+func (m *ListTableSpecsResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_ListTableSpecsResponse.Marshal(b, m, deterministic)
+}
+func (dst *ListTableSpecsResponse) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_ListTableSpecsResponse.Merge(dst, src)
+}
+func (m *ListTableSpecsResponse) XXX_Size() int {
+	return xxx_messageInfo_ListTableSpecsResponse.Size(m)
+}
+func (m *ListTableSpecsResponse) XXX_DiscardUnknown() {
+	xxx_messageInfo_ListTableSpecsResponse.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_ListTableSpecsResponse proto.InternalMessageInfo
+
+func (m *ListTableSpecsResponse) GetTableSpecs() []*TableSpec {
+	if m != nil {
+		return m.TableSpecs
+	}
+	return nil
+}
+
+func (m *ListTableSpecsResponse) GetNextPageToken() string {
+	if m != nil {
+		return m.NextPageToken
+	}
+	return ""
+}
+
+// Request message for [AutoMl.UpdateTableSpec][google.cloud.automl.v1beta1.AutoMl.UpdateTableSpec]
+type UpdateTableSpecRequest struct {
+	// The table spec which replaces the resource on the server.
+	TableSpec *TableSpec `protobuf:"bytes,1,opt,name=table_spec,json=tableSpec,proto3" json:"table_spec,omitempty"`
+	// The update mask applies to the resource. For the `FieldMask` definition,
+	// see
+	//
+	// https:
+	// //developers.google.com/protocol-buffers
+	// // /docs/reference/google.protobuf#fieldmask
+	UpdateMask           *field_mask.FieldMask `protobuf:"bytes,2,opt,name=update_mask,json=updateMask,proto3" json:"update_mask,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}              `json:"-"`
+	XXX_unrecognized     []byte                `json:"-"`
+	XXX_sizecache        int32                 `json:"-"`
+}
+
+func (m *UpdateTableSpecRequest) Reset()         { *m = UpdateTableSpecRequest{} }
+func (m *UpdateTableSpecRequest) String() string { return proto.CompactTextString(m) }
+func (*UpdateTableSpecRequest) ProtoMessage()    {}
+func (*UpdateTableSpecRequest) Descriptor() ([]byte, []int) {
+	return fileDescriptor_service_ae865470535b24b9, []int{12}
+}
+func (m *UpdateTableSpecRequest) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_UpdateTableSpecRequest.Unmarshal(m, b)
+}
+func (m *UpdateTableSpecRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_UpdateTableSpecRequest.Marshal(b, m, deterministic)
+}
+func (dst *UpdateTableSpecRequest) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_UpdateTableSpecRequest.Merge(dst, src)
+}
+func (m *UpdateTableSpecRequest) XXX_Size() int {
+	return xxx_messageInfo_UpdateTableSpecRequest.Size(m)
+}
+func (m *UpdateTableSpecRequest) XXX_DiscardUnknown() {
+	xxx_messageInfo_UpdateTableSpecRequest.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_UpdateTableSpecRequest proto.InternalMessageInfo
+
+func (m *UpdateTableSpecRequest) GetTableSpec() *TableSpec {
+	if m != nil {
+		return m.TableSpec
+	}
+	return nil
+}
+
+func (m *UpdateTableSpecRequest) GetUpdateMask() *field_mask.FieldMask {
+	if m != nil {
+		return m.UpdateMask
+	}
+	return nil
+}
+
+// Request message for [AutoMl.GetColumnSpec][google.cloud.automl.v1beta1.AutoMl.GetColumnSpec].
+type GetColumnSpecRequest struct {
+	// The resource name of the column spec to retrieve.
+	Name string `protobuf:"bytes,1,opt,name=name,proto3" json:"name,omitempty"`
+	// Mask specifying which fields to read.
+	FieldMask            *field_mask.FieldMask `protobuf:"bytes,2,opt,name=field_mask,json=fieldMask,proto3" json:"field_mask,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}              `json:"-"`
+	XXX_unrecognized     []byte                `json:"-"`
+	XXX_sizecache        int32                 `json:"-"`
+}
+
+func (m *GetColumnSpecRequest) Reset()         { *m = GetColumnSpecRequest{} }
+func (m *GetColumnSpecRequest) String() string { return proto.CompactTextString(m) }
+func (*GetColumnSpecRequest) ProtoMessage()    {}
+func (*GetColumnSpecRequest) Descriptor() ([]byte, []int) {
+	return fileDescriptor_service_ae865470535b24b9, []int{13}
+}
+func (m *GetColumnSpecRequest) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_GetColumnSpecRequest.Unmarshal(m, b)
+}
+func (m *GetColumnSpecRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_GetColumnSpecRequest.Marshal(b, m, deterministic)
+}
+func (dst *GetColumnSpecRequest) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_GetColumnSpecRequest.Merge(dst, src)
+}
+func (m *GetColumnSpecRequest) XXX_Size() int {
+	return xxx_messageInfo_GetColumnSpecRequest.Size(m)
+}
+func (m *GetColumnSpecRequest) XXX_DiscardUnknown() {
+	xxx_messageInfo_GetColumnSpecRequest.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_GetColumnSpecRequest proto.InternalMessageInfo
+
+func (m *GetColumnSpecRequest) GetName() string {
+	if m != nil {
+		return m.Name
+	}
+	return ""
+}
+
+func (m *GetColumnSpecRequest) GetFieldMask() *field_mask.FieldMask {
+	if m != nil {
+		return m.FieldMask
+	}
+	return nil
+}
+
+// Request message for [AutoMl.ListColumnSpecs][google.cloud.automl.v1beta1.AutoMl.ListColumnSpecs].
+type ListColumnSpecsRequest struct {
+	// The resource name of the table spec to list column specs from.
+	Parent string `protobuf:"bytes,1,opt,name=parent,proto3" json:"parent,omitempty"`
+	// Mask specifying which fields to read.
+	FieldMask *field_mask.FieldMask `protobuf:"bytes,2,opt,name=field_mask,json=fieldMask,proto3" json:"field_mask,omitempty"`
+	// Filter expression, see go/filtering.
+	Filter string `protobuf:"bytes,3,opt,name=filter,proto3" json:"filter,omitempty"`
+	// Requested page size. The server can return fewer results than requested.
+	// If unspecified, the server will pick a default size.
+	PageSize int32 `protobuf:"varint,4,opt,name=page_size,json=pageSize,proto3" json:"page_size,omitempty"`
+	// A token identifying a page of results for the server to return.
+	// Typically obtained from the
+	// [ListColumnSpecsResponse.next_page_token][google.cloud.automl.v1beta1.ListColumnSpecsResponse.next_page_token] field of the previous
+	// [AutoMl.ListColumnSpecs][google.cloud.automl.v1beta1.AutoMl.ListColumnSpecs] call.
+	PageToken            string   `protobuf:"bytes,6,opt,name=page_token,json=pageToken,proto3" json:"page_token,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
+}
+
+func (m *ListColumnSpecsRequest) Reset()         { *m = ListColumnSpecsRequest{} }
+func (m *ListColumnSpecsRequest) String() string { return proto.CompactTextString(m) }
+func (*ListColumnSpecsRequest) ProtoMessage()    {}
+func (*ListColumnSpecsRequest) Descriptor() ([]byte, []int) {
+	return fileDescriptor_service_ae865470535b24b9, []int{14}
+}
+func (m *ListColumnSpecsRequest) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_ListColumnSpecsRequest.Unmarshal(m, b)
+}
+func (m *ListColumnSpecsRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_ListColumnSpecsRequest.Marshal(b, m, deterministic)
+}
+func (dst *ListColumnSpecsRequest) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_ListColumnSpecsRequest.Merge(dst, src)
+}
+func (m *ListColumnSpecsRequest) XXX_Size() int {
+	return xxx_messageInfo_ListColumnSpecsRequest.Size(m)
+}
+func (m *ListColumnSpecsRequest) XXX_DiscardUnknown() {
+	xxx_messageInfo_ListColumnSpecsRequest.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_ListColumnSpecsRequest proto.InternalMessageInfo
+
+func (m *ListColumnSpecsRequest) GetParent() string {
+	if m != nil {
+		return m.Parent
+	}
+	return ""
+}
+
+func (m *ListColumnSpecsRequest) GetFieldMask() *field_mask.FieldMask {
+	if m != nil {
+		return m.FieldMask
+	}
+	return nil
+}
+
+func (m *ListColumnSpecsRequest) GetFilter() string {
+	if m != nil {
+		return m.Filter
+	}
+	return ""
+}
+
+func (m *ListColumnSpecsRequest) GetPageSize() int32 {
+	if m != nil {
+		return m.PageSize
+	}
+	return 0
+}
+
+func (m *ListColumnSpecsRequest) GetPageToken() string {
+	if m != nil {
+		return m.PageToken
+	}
+	return ""
+}
+
+// Response message for [AutoMl.ListColumnSpecs][google.cloud.automl.v1beta1.AutoMl.ListColumnSpecs].
+type ListColumnSpecsResponse struct {
+	// The column specs read.
+	ColumnSpecs []*ColumnSpec `protobuf:"bytes,1,rep,name=column_specs,json=columnSpecs,proto3" json:"column_specs,omitempty"`
+	// A token to retrieve next page of results.
+	// Pass to [ListColumnSpecsRequest.page_token][google.cloud.automl.v1beta1.ListColumnSpecsRequest.page_token] to obtain that page.
+	NextPageToken        string   `protobuf:"bytes,2,opt,name=next_page_token,json=nextPageToken,proto3" json:"next_page_token,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
+}
+
+func (m *ListColumnSpecsResponse) Reset()         { *m = ListColumnSpecsResponse{} }
+func (m *ListColumnSpecsResponse) String() string { return proto.CompactTextString(m) }
+func (*ListColumnSpecsResponse) ProtoMessage()    {}
+func (*ListColumnSpecsResponse) Descriptor() ([]byte, []int) {
+	return fileDescriptor_service_ae865470535b24b9, []int{15}
+}
+func (m *ListColumnSpecsResponse) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_ListColumnSpecsResponse.Unmarshal(m, b)
+}
+func (m *ListColumnSpecsResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_ListColumnSpecsResponse.Marshal(b, m, deterministic)
+}
+func (dst *ListColumnSpecsResponse) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_ListColumnSpecsResponse.Merge(dst, src)
+}
+func (m *ListColumnSpecsResponse) XXX_Size() int {
+	return xxx_messageInfo_ListColumnSpecsResponse.Size(m)
+}
+func (m *ListColumnSpecsResponse) XXX_DiscardUnknown() {
+	xxx_messageInfo_ListColumnSpecsResponse.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_ListColumnSpecsResponse proto.InternalMessageInfo
+
+func (m *ListColumnSpecsResponse) GetColumnSpecs() []*ColumnSpec {
+	if m != nil {
+		return m.ColumnSpecs
+	}
+	return nil
+}
+
+func (m *ListColumnSpecsResponse) GetNextPageToken() string {
+	if m != nil {
+		return m.NextPageToken
+	}
+	return ""
+}
+
+// Request message for [AutoMl.UpdateColumnSpec][google.cloud.automl.v1beta1.AutoMl.UpdateColumnSpec]
+type UpdateColumnSpecRequest struct {
+	// The column spec which replaces the resource on the server.
+	ColumnSpec *ColumnSpec `protobuf:"bytes,1,opt,name=column_spec,json=columnSpec,proto3" json:"column_spec,omitempty"`
+	// The update mask applies to the resource. For the `FieldMask` definition,
+	// see
+	//
+	// https:
+	// //developers.google.com/protocol-buffers
+	// // /docs/reference/google.protobuf#fieldmask
+	UpdateMask           *field_mask.FieldMask `protobuf:"bytes,2,opt,name=update_mask,json=updateMask,proto3" json:"update_mask,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}              `json:"-"`
+	XXX_unrecognized     []byte                `json:"-"`
+	XXX_sizecache        int32                 `json:"-"`
+}
+
+func (m *UpdateColumnSpecRequest) Reset()         { *m = UpdateColumnSpecRequest{} }
+func (m *UpdateColumnSpecRequest) String() string { return proto.CompactTextString(m) }
+func (*UpdateColumnSpecRequest) ProtoMessage()    {}
+func (*UpdateColumnSpecRequest) Descriptor() ([]byte, []int) {
+	return fileDescriptor_service_ae865470535b24b9, []int{16}
+}
+func (m *UpdateColumnSpecRequest) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_UpdateColumnSpecRequest.Unmarshal(m, b)
+}
+func (m *UpdateColumnSpecRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_UpdateColumnSpecRequest.Marshal(b, m, deterministic)
+}
+func (dst *UpdateColumnSpecRequest) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_UpdateColumnSpecRequest.Merge(dst, src)
+}
+func (m *UpdateColumnSpecRequest) XXX_Size() int {
+	return xxx_messageInfo_UpdateColumnSpecRequest.Size(m)
+}
+func (m *UpdateColumnSpecRequest) XXX_DiscardUnknown() {
+	xxx_messageInfo_UpdateColumnSpecRequest.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_UpdateColumnSpecRequest proto.InternalMessageInfo
+
+func (m *UpdateColumnSpecRequest) GetColumnSpec() *ColumnSpec {
+	if m != nil {
+		return m.ColumnSpec
+	}
+	return nil
+}
+
+func (m *UpdateColumnSpecRequest) GetUpdateMask() *field_mask.FieldMask {
+	if m != nil {
+		return m.UpdateMask
+	}
+	return nil
+}
+
+// Request message for [AutoMl.CreateModel][google.cloud.automl.v1beta1.AutoMl.CreateModel].
+>>>>>>> v0.0.4
 type CreateModelRequest struct {
 	// Resource name of the parent project where the model is being created.
 	Parent string `protobuf:"bytes,1,opt,name=parent,proto3" json:"parent,omitempty"`
@@ -409,7 +1052,11 @@ func (m *CreateModelRequest) Reset()         { *m = CreateModelRequest{} }
 func (m *CreateModelRequest) String() string { return proto.CompactTextString(m) }
 func (*CreateModelRequest) ProtoMessage()    {}
 func (*CreateModelRequest) Descriptor() ([]byte, []int) {
+<<<<<<< HEAD
 	return fileDescriptor_service_b4ecd4b3d5c9ee33, []int{7}
+=======
+	return fileDescriptor_service_ae865470535b24b9, []int{17}
+>>>>>>> v0.0.4
 }
 func (m *CreateModelRequest) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_CreateModelRequest.Unmarshal(m, b)
@@ -443,8 +1090,12 @@ func (m *CreateModelRequest) GetModel() *Model {
 	return nil
 }
 
+<<<<<<< HEAD
 // Request message for
 // [AutoMl.GetModel][google.cloud.automl.v1beta1.AutoMl.GetModel].
+=======
+// Request message for [AutoMl.GetModel][google.cloud.automl.v1beta1.AutoMl.GetModel].
+>>>>>>> v0.0.4
 type GetModelRequest struct {
 	// Resource name of the model.
 	Name                 string   `protobuf:"bytes,1,opt,name=name,proto3" json:"name,omitempty"`
@@ -457,7 +1108,11 @@ func (m *GetModelRequest) Reset()         { *m = GetModelRequest{} }
 func (m *GetModelRequest) String() string { return proto.CompactTextString(m) }
 func (*GetModelRequest) ProtoMessage()    {}
 func (*GetModelRequest) Descriptor() ([]byte, []int) {
+<<<<<<< HEAD
 	return fileDescriptor_service_b4ecd4b3d5c9ee33, []int{8}
+=======
+	return fileDescriptor_service_ae865470535b24b9, []int{18}
+>>>>>>> v0.0.4
 }
 func (m *GetModelRequest) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_GetModelRequest.Unmarshal(m, b)
@@ -484,13 +1139,18 @@ func (m *GetModelRequest) GetName() string {
 	return ""
 }
 
+<<<<<<< HEAD
 // Request message for
 // [AutoMl.ListModels][google.cloud.automl.v1beta1.AutoMl.ListModels].
+=======
+// Request message for [AutoMl.ListModels][google.cloud.automl.v1beta1.AutoMl.ListModels].
+>>>>>>> v0.0.4
 type ListModelsRequest struct {
 	// Resource name of the project, from which to list the models.
 	Parent string `protobuf:"bytes,1,opt,name=parent,proto3" json:"parent,omitempty"`
 	// An expression for filtering the results of the request.
 	//
+<<<<<<< HEAD
 	//   * `model_metadata` - for existence of the case.
 	//   * `dataset_id` - for = or !=.
 	//
@@ -500,13 +1160,26 @@ type ListModelsRequest struct {
 	//                                        image_classification_model_metadata.
 	//   * `dataset_id=5` --> The model was created from a sibling dataset with
 	//                    ID 5.
+=======
+	//   * `model_metadata` - for existence of the case (e.g.
+	//             video_classification_model_metadata:*).
+	//   * `dataset_id` - for = or !=. Some examples of using the filter are:
+	//
+	//   * `image_classification_model_metadata:*` --> The model has
+	//                                        image_classification_model_metadata.
+	//   * `dataset_id=5` --> The model was created from a dataset with ID 5.
+>>>>>>> v0.0.4
 	Filter string `protobuf:"bytes,3,opt,name=filter,proto3" json:"filter,omitempty"`
 	// Requested page size.
 	PageSize int32 `protobuf:"varint,4,opt,name=page_size,json=pageSize,proto3" json:"page_size,omitempty"`
 	// A token identifying a page of results for the server to return
 	// Typically obtained via
+<<<<<<< HEAD
 	// [ListModelsResponse.next_page_token][google.cloud.automl.v1beta1.ListModelsResponse.next_page_token]
 	// of the previous
+=======
+	// [ListModelsResponse.next_page_token][google.cloud.automl.v1beta1.ListModelsResponse.next_page_token] of the previous
+>>>>>>> v0.0.4
 	// [AutoMl.ListModels][google.cloud.automl.v1beta1.AutoMl.ListModels] call.
 	PageToken            string   `protobuf:"bytes,6,opt,name=page_token,json=pageToken,proto3" json:"page_token,omitempty"`
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
@@ -518,7 +1191,11 @@ func (m *ListModelsRequest) Reset()         { *m = ListModelsRequest{} }
 func (m *ListModelsRequest) String() string { return proto.CompactTextString(m) }
 func (*ListModelsRequest) ProtoMessage()    {}
 func (*ListModelsRequest) Descriptor() ([]byte, []int) {
+<<<<<<< HEAD
 	return fileDescriptor_service_b4ecd4b3d5c9ee33, []int{9}
+=======
+	return fileDescriptor_service_ae865470535b24b9, []int{19}
+>>>>>>> v0.0.4
 }
 func (m *ListModelsRequest) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_ListModelsRequest.Unmarshal(m, b)
@@ -566,13 +1243,21 @@ func (m *ListModelsRequest) GetPageToken() string {
 	return ""
 }
 
+<<<<<<< HEAD
 // Response message for
 // [AutoMl.ListModels][google.cloud.automl.v1beta1.AutoMl.ListModels].
+=======
+// Response message for [AutoMl.ListModels][google.cloud.automl.v1beta1.AutoMl.ListModels].
+>>>>>>> v0.0.4
 type ListModelsResponse struct {
 	// List of models in the requested page.
 	Model []*Model `protobuf:"bytes,1,rep,name=model,proto3" json:"model,omitempty"`
 	// A token to retrieve next page of results.
+<<<<<<< HEAD
 	// Pass to [ListModels.page_token][] to obtain that page.
+=======
+	// Pass to [ListModelsRequest.page_token][google.cloud.automl.v1beta1.ListModelsRequest.page_token] to obtain that page.
+>>>>>>> v0.0.4
 	NextPageToken        string   `protobuf:"bytes,2,opt,name=next_page_token,json=nextPageToken,proto3" json:"next_page_token,omitempty"`
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
 	XXX_unrecognized     []byte   `json:"-"`
@@ -583,7 +1268,11 @@ func (m *ListModelsResponse) Reset()         { *m = ListModelsResponse{} }
 func (m *ListModelsResponse) String() string { return proto.CompactTextString(m) }
 func (*ListModelsResponse) ProtoMessage()    {}
 func (*ListModelsResponse) Descriptor() ([]byte, []int) {
+<<<<<<< HEAD
 	return fileDescriptor_service_b4ecd4b3d5c9ee33, []int{10}
+=======
+	return fileDescriptor_service_ae865470535b24b9, []int{20}
+>>>>>>> v0.0.4
 }
 func (m *ListModelsResponse) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_ListModelsResponse.Unmarshal(m, b)
@@ -617,8 +1306,12 @@ func (m *ListModelsResponse) GetNextPageToken() string {
 	return ""
 }
 
+<<<<<<< HEAD
 // Request message for
 // [AutoMl.DeleteModel][google.cloud.automl.v1beta1.AutoMl.DeleteModel].
+=======
+// Request message for [AutoMl.DeleteModel][google.cloud.automl.v1beta1.AutoMl.DeleteModel].
+>>>>>>> v0.0.4
 type DeleteModelRequest struct {
 	// Resource name of the model being deleted.
 	Name                 string   `protobuf:"bytes,1,opt,name=name,proto3" json:"name,omitempty"`
@@ -631,7 +1324,11 @@ func (m *DeleteModelRequest) Reset()         { *m = DeleteModelRequest{} }
 func (m *DeleteModelRequest) String() string { return proto.CompactTextString(m) }
 func (*DeleteModelRequest) ProtoMessage()    {}
 func (*DeleteModelRequest) Descriptor() ([]byte, []int) {
+<<<<<<< HEAD
 	return fileDescriptor_service_b4ecd4b3d5c9ee33, []int{11}
+=======
+	return fileDescriptor_service_ae865470535b24b9, []int{21}
+>>>>>>> v0.0.4
 }
 func (m *DeleteModelRequest) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_DeleteModelRequest.Unmarshal(m, b)
@@ -658,9 +1355,19 @@ func (m *DeleteModelRequest) GetName() string {
 	return ""
 }
 
+<<<<<<< HEAD
 // Request message for
 // [AutoMl.DeployModel][google.cloud.automl.v1beta1.AutoMl.DeployModel].
 type DeployModelRequest struct {
+=======
+// Request message for [AutoMl.DeployModel][google.cloud.automl.v1beta1.AutoMl.DeployModel].
+type DeployModelRequest struct {
+	// The per-domain specific deployment parameters.
+	//
+	// Types that are valid to be assigned to ModelDeploymentMetadata:
+	//	*DeployModelRequest_ImageObjectDetectionModelDeploymentMetadata
+	ModelDeploymentMetadata isDeployModelRequest_ModelDeploymentMetadata `protobuf_oneof:"model_deployment_metadata"`
+>>>>>>> v0.0.4
 	// Resource name of the model to deploy.
 	Name                 string   `protobuf:"bytes,1,opt,name=name,proto3" json:"name,omitempty"`
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
@@ -672,7 +1379,11 @@ func (m *DeployModelRequest) Reset()         { *m = DeployModelRequest{} }
 func (m *DeployModelRequest) String() string { return proto.CompactTextString(m) }
 func (*DeployModelRequest) ProtoMessage()    {}
 func (*DeployModelRequest) Descriptor() ([]byte, []int) {
+<<<<<<< HEAD
 	return fileDescriptor_service_b4ecd4b3d5c9ee33, []int{12}
+=======
+	return fileDescriptor_service_ae865470535b24b9, []int{22}
+>>>>>>> v0.0.4
 }
 func (m *DeployModelRequest) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_DeployModelRequest.Unmarshal(m, b)
@@ -692,6 +1403,34 @@ func (m *DeployModelRequest) XXX_DiscardUnknown() {
 
 var xxx_messageInfo_DeployModelRequest proto.InternalMessageInfo
 
+<<<<<<< HEAD
+=======
+type isDeployModelRequest_ModelDeploymentMetadata interface {
+	isDeployModelRequest_ModelDeploymentMetadata()
+}
+
+type DeployModelRequest_ImageObjectDetectionModelDeploymentMetadata struct {
+	ImageObjectDetectionModelDeploymentMetadata *ImageObjectDetectionModelDeploymentMetadata `protobuf:"bytes,2,opt,name=image_object_detection_model_deployment_metadata,json=imageObjectDetectionModelDeploymentMetadata,proto3,oneof"`
+}
+
+func (*DeployModelRequest_ImageObjectDetectionModelDeploymentMetadata) isDeployModelRequest_ModelDeploymentMetadata() {
+}
+
+func (m *DeployModelRequest) GetModelDeploymentMetadata() isDeployModelRequest_ModelDeploymentMetadata {
+	if m != nil {
+		return m.ModelDeploymentMetadata
+	}
+	return nil
+}
+
+func (m *DeployModelRequest) GetImageObjectDetectionModelDeploymentMetadata() *ImageObjectDetectionModelDeploymentMetadata {
+	if x, ok := m.GetModelDeploymentMetadata().(*DeployModelRequest_ImageObjectDetectionModelDeploymentMetadata); ok {
+		return x.ImageObjectDetectionModelDeploymentMetadata
+	}
+	return nil
+}
+
+>>>>>>> v0.0.4
 func (m *DeployModelRequest) GetName() string {
 	if m != nil {
 		return m.Name
@@ -699,8 +1438,67 @@ func (m *DeployModelRequest) GetName() string {
 	return ""
 }
 
+<<<<<<< HEAD
 // Request message for
 // [AutoMl.UndeployModel][google.cloud.automl.v1beta1.AutoMl.UndeployModel].
+=======
+// XXX_OneofFuncs is for the internal use of the proto package.
+func (*DeployModelRequest) XXX_OneofFuncs() (func(msg proto.Message, b *proto.Buffer) error, func(msg proto.Message, tag, wire int, b *proto.Buffer) (bool, error), func(msg proto.Message) (n int), []interface{}) {
+	return _DeployModelRequest_OneofMarshaler, _DeployModelRequest_OneofUnmarshaler, _DeployModelRequest_OneofSizer, []interface{}{
+		(*DeployModelRequest_ImageObjectDetectionModelDeploymentMetadata)(nil),
+	}
+}
+
+func _DeployModelRequest_OneofMarshaler(msg proto.Message, b *proto.Buffer) error {
+	m := msg.(*DeployModelRequest)
+	// model_deployment_metadata
+	switch x := m.ModelDeploymentMetadata.(type) {
+	case *DeployModelRequest_ImageObjectDetectionModelDeploymentMetadata:
+		b.EncodeVarint(2<<3 | proto.WireBytes)
+		if err := b.EncodeMessage(x.ImageObjectDetectionModelDeploymentMetadata); err != nil {
+			return err
+		}
+	case nil:
+	default:
+		return fmt.Errorf("DeployModelRequest.ModelDeploymentMetadata has unexpected type %T", x)
+	}
+	return nil
+}
+
+func _DeployModelRequest_OneofUnmarshaler(msg proto.Message, tag, wire int, b *proto.Buffer) (bool, error) {
+	m := msg.(*DeployModelRequest)
+	switch tag {
+	case 2: // model_deployment_metadata.image_object_detection_model_deployment_metadata
+		if wire != proto.WireBytes {
+			return true, proto.ErrInternalBadWireType
+		}
+		msg := new(ImageObjectDetectionModelDeploymentMetadata)
+		err := b.DecodeMessage(msg)
+		m.ModelDeploymentMetadata = &DeployModelRequest_ImageObjectDetectionModelDeploymentMetadata{msg}
+		return true, err
+	default:
+		return false, nil
+	}
+}
+
+func _DeployModelRequest_OneofSizer(msg proto.Message) (n int) {
+	m := msg.(*DeployModelRequest)
+	// model_deployment_metadata
+	switch x := m.ModelDeploymentMetadata.(type) {
+	case *DeployModelRequest_ImageObjectDetectionModelDeploymentMetadata:
+		s := proto.Size(x.ImageObjectDetectionModelDeploymentMetadata)
+		n += 1 // tag and wire
+		n += proto.SizeVarint(uint64(s))
+		n += s
+	case nil:
+	default:
+		panic(fmt.Sprintf("proto: unexpected type %T in oneof", x))
+	}
+	return n
+}
+
+// Request message for [AutoMl.UndeployModel][google.cloud.automl.v1beta1.AutoMl.UndeployModel].
+>>>>>>> v0.0.4
 type UndeployModelRequest struct {
 	// Resource name of the model to undeploy.
 	Name                 string   `protobuf:"bytes,1,opt,name=name,proto3" json:"name,omitempty"`
@@ -713,7 +1511,11 @@ func (m *UndeployModelRequest) Reset()         { *m = UndeployModelRequest{} }
 func (m *UndeployModelRequest) String() string { return proto.CompactTextString(m) }
 func (*UndeployModelRequest) ProtoMessage()    {}
 func (*UndeployModelRequest) Descriptor() ([]byte, []int) {
+<<<<<<< HEAD
 	return fileDescriptor_service_b4ecd4b3d5c9ee33, []int{13}
+=======
+	return fileDescriptor_service_ae865470535b24b9, []int{23}
+>>>>>>> v0.0.4
 }
 func (m *UndeployModelRequest) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_UndeployModelRequest.Unmarshal(m, b)
@@ -731,6 +1533,11 @@ func (m *UndeployModelRequest) XXX_DiscardUnknown() {
 	xxx_messageInfo_UndeployModelRequest.DiscardUnknown(m)
 }
 
+<<<<<<< HEAD
+var xxx_messageInfo_UndeployModelRequest proto.InternalMessageInfo
+
+func (m *UndeployModelRequest) GetName() string {
+=======
 var xxx_messageInfo_UndeployModelRequest proto.InternalMessageInfo
 
 func (m *UndeployModelRequest) GetName() string {
@@ -740,8 +1547,114 @@ func (m *UndeployModelRequest) GetName() string {
 	return ""
 }
 
+// Request message for [AutoMl.ExportModel][google.cloud.automl.v1beta1.AutoMl.ExportModel].
+// Models need to be enabled for exporting, otherwise an error code will be
+// returned.
+type ExportModelRequest struct {
+	// Required. The resource name of the model to export.
+	Name string `protobuf:"bytes,1,opt,name=name,proto3" json:"name,omitempty"`
+	// Required. The desired output location and configuration.
+	OutputConfig         *ModelExportOutputConfig `protobuf:"bytes,3,opt,name=output_config,json=outputConfig,proto3" json:"output_config,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}                 `json:"-"`
+	XXX_unrecognized     []byte                   `json:"-"`
+	XXX_sizecache        int32                    `json:"-"`
+}
+
+func (m *ExportModelRequest) Reset()         { *m = ExportModelRequest{} }
+func (m *ExportModelRequest) String() string { return proto.CompactTextString(m) }
+func (*ExportModelRequest) ProtoMessage()    {}
+func (*ExportModelRequest) Descriptor() ([]byte, []int) {
+	return fileDescriptor_service_ae865470535b24b9, []int{24}
+}
+func (m *ExportModelRequest) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_ExportModelRequest.Unmarshal(m, b)
+}
+func (m *ExportModelRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_ExportModelRequest.Marshal(b, m, deterministic)
+}
+func (dst *ExportModelRequest) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_ExportModelRequest.Merge(dst, src)
+}
+func (m *ExportModelRequest) XXX_Size() int {
+	return xxx_messageInfo_ExportModelRequest.Size(m)
+}
+func (m *ExportModelRequest) XXX_DiscardUnknown() {
+	xxx_messageInfo_ExportModelRequest.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_ExportModelRequest proto.InternalMessageInfo
+
+func (m *ExportModelRequest) GetName() string {
+	if m != nil {
+		return m.Name
+	}
+	return ""
+}
+
+func (m *ExportModelRequest) GetOutputConfig() *ModelExportOutputConfig {
+	if m != nil {
+		return m.OutputConfig
+	}
+	return nil
+}
+
+// Request message for [AutoMl.ExportEvaluatedExamples][google.cloud.automl.v1beta1.AutoMl.ExportEvaluatedExamples].
+type ExportEvaluatedExamplesRequest struct {
+	// Required. The resource name of the model whose evaluated examples are to
+	// be exported.
+	Name string `protobuf:"bytes,1,opt,name=name,proto3" json:"name,omitempty"`
+	// Required. The desired output location and configuration.
+	OutputConfig         *ExportEvaluatedExamplesOutputConfig `protobuf:"bytes,3,opt,name=output_config,json=outputConfig,proto3" json:"output_config,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}                             `json:"-"`
+	XXX_unrecognized     []byte                               `json:"-"`
+	XXX_sizecache        int32                                `json:"-"`
+}
+
+func (m *ExportEvaluatedExamplesRequest) Reset()         { *m = ExportEvaluatedExamplesRequest{} }
+func (m *ExportEvaluatedExamplesRequest) String() string { return proto.CompactTextString(m) }
+func (*ExportEvaluatedExamplesRequest) ProtoMessage()    {}
+func (*ExportEvaluatedExamplesRequest) Descriptor() ([]byte, []int) {
+	return fileDescriptor_service_ae865470535b24b9, []int{25}
+}
+func (m *ExportEvaluatedExamplesRequest) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_ExportEvaluatedExamplesRequest.Unmarshal(m, b)
+}
+func (m *ExportEvaluatedExamplesRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_ExportEvaluatedExamplesRequest.Marshal(b, m, deterministic)
+}
+func (dst *ExportEvaluatedExamplesRequest) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_ExportEvaluatedExamplesRequest.Merge(dst, src)
+}
+func (m *ExportEvaluatedExamplesRequest) XXX_Size() int {
+	return xxx_messageInfo_ExportEvaluatedExamplesRequest.Size(m)
+}
+func (m *ExportEvaluatedExamplesRequest) XXX_DiscardUnknown() {
+	xxx_messageInfo_ExportEvaluatedExamplesRequest.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_ExportEvaluatedExamplesRequest proto.InternalMessageInfo
+
+func (m *ExportEvaluatedExamplesRequest) GetName() string {
+>>>>>>> v0.0.4
+	if m != nil {
+		return m.Name
+	}
+	return ""
+}
+
+<<<<<<< HEAD
 // Request message for
 // [AutoMl.GetModelEvaluation][google.cloud.automl.v1beta1.AutoMl.GetModelEvaluation].
+=======
+func (m *ExportEvaluatedExamplesRequest) GetOutputConfig() *ExportEvaluatedExamplesOutputConfig {
+	if m != nil {
+		return m.OutputConfig
+	}
+	return nil
+}
+
+// Request message for [AutoMl.GetModelEvaluation][google.cloud.automl.v1beta1.AutoMl.GetModelEvaluation].
+>>>>>>> v0.0.4
 type GetModelEvaluationRequest struct {
 	// Resource name for the model evaluation.
 	Name                 string   `protobuf:"bytes,1,opt,name=name,proto3" json:"name,omitempty"`
@@ -754,7 +1667,11 @@ func (m *GetModelEvaluationRequest) Reset()         { *m = GetModelEvaluationReq
 func (m *GetModelEvaluationRequest) String() string { return proto.CompactTextString(m) }
 func (*GetModelEvaluationRequest) ProtoMessage()    {}
 func (*GetModelEvaluationRequest) Descriptor() ([]byte, []int) {
+<<<<<<< HEAD
 	return fileDescriptor_service_b4ecd4b3d5c9ee33, []int{14}
+=======
+	return fileDescriptor_service_ae865470535b24b9, []int{26}
+>>>>>>> v0.0.4
 }
 func (m *GetModelEvaluationRequest) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_GetModelEvaluationRequest.Unmarshal(m, b)
@@ -781,8 +1698,12 @@ func (m *GetModelEvaluationRequest) GetName() string {
 	return ""
 }
 
+<<<<<<< HEAD
 // Request message for
 // [AutoMl.ListModelEvaluations][google.cloud.automl.v1beta1.AutoMl.ListModelEvaluations].
+=======
+// Request message for [AutoMl.ListModelEvaluations][google.cloud.automl.v1beta1.AutoMl.ListModelEvaluations].
+>>>>>>> v0.0.4
 type ListModelEvaluationsRequest struct {
 	// Resource name of the model to list the model evaluations for.
 	// If modelId is set as "-", this will list model evaluations from across all
@@ -804,9 +1725,14 @@ type ListModelEvaluationsRequest struct {
 	PageSize int32 `protobuf:"varint,4,opt,name=page_size,json=pageSize,proto3" json:"page_size,omitempty"`
 	// A token identifying a page of results for the server to return.
 	// Typically obtained via
+<<<<<<< HEAD
 	// `ListModelEvaluationsResponse.next_page_token` of the previous
 	// [AutoMl.ListModelEvaluations][google.cloud.automl.v1beta1.AutoMl.ListModelEvaluations]
 	// call.
+=======
+	// [ListModelEvaluationsResponse.next_page_token][google.cloud.automl.v1beta1.ListModelEvaluationsResponse.next_page_token] of the previous
+	// [AutoMl.ListModelEvaluations][google.cloud.automl.v1beta1.AutoMl.ListModelEvaluations] call.
+>>>>>>> v0.0.4
 	PageToken            string   `protobuf:"bytes,6,opt,name=page_token,json=pageToken,proto3" json:"page_token,omitempty"`
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
 	XXX_unrecognized     []byte   `json:"-"`
@@ -817,7 +1743,11 @@ func (m *ListModelEvaluationsRequest) Reset()         { *m = ListModelEvaluation
 func (m *ListModelEvaluationsRequest) String() string { return proto.CompactTextString(m) }
 func (*ListModelEvaluationsRequest) ProtoMessage()    {}
 func (*ListModelEvaluationsRequest) Descriptor() ([]byte, []int) {
+<<<<<<< HEAD
 	return fileDescriptor_service_b4ecd4b3d5c9ee33, []int{15}
+=======
+	return fileDescriptor_service_ae865470535b24b9, []int{27}
+>>>>>>> v0.0.4
 }
 func (m *ListModelEvaluationsRequest) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_ListModelEvaluationsRequest.Unmarshal(m, b)
@@ -865,13 +1795,22 @@ func (m *ListModelEvaluationsRequest) GetPageToken() string {
 	return ""
 }
 
+<<<<<<< HEAD
 // Response message for
 // [AutoMl.ListModelEvaluations][google.cloud.automl.v1beta1.AutoMl.ListModelEvaluations].
+=======
+// Response message for [AutoMl.ListModelEvaluations][google.cloud.automl.v1beta1.AutoMl.ListModelEvaluations].
+>>>>>>> v0.0.4
 type ListModelEvaluationsResponse struct {
 	// List of model evaluations in the requested page.
 	ModelEvaluation []*ModelEvaluation `protobuf:"bytes,1,rep,name=model_evaluation,json=modelEvaluation,proto3" json:"model_evaluation,omitempty"`
 	// A token to retrieve next page of results.
+<<<<<<< HEAD
 	// Pass to [ListModelEvaluations.page_token][] to obtain that page.
+=======
+	// Pass to the [ListModelEvaluationsRequest.page_token][google.cloud.automl.v1beta1.ListModelEvaluationsRequest.page_token] field of a new
+	// [AutoMl.ListModelEvaluations][google.cloud.automl.v1beta1.AutoMl.ListModelEvaluations] request to obtain that page.
+>>>>>>> v0.0.4
 	NextPageToken        string   `protobuf:"bytes,2,opt,name=next_page_token,json=nextPageToken,proto3" json:"next_page_token,omitempty"`
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
 	XXX_unrecognized     []byte   `json:"-"`
@@ -882,7 +1821,11 @@ func (m *ListModelEvaluationsResponse) Reset()         { *m = ListModelEvaluatio
 func (m *ListModelEvaluationsResponse) String() string { return proto.CompactTextString(m) }
 func (*ListModelEvaluationsResponse) ProtoMessage()    {}
 func (*ListModelEvaluationsResponse) Descriptor() ([]byte, []int) {
+<<<<<<< HEAD
 	return fileDescriptor_service_b4ecd4b3d5c9ee33, []int{16}
+=======
+	return fileDescriptor_service_ae865470535b24b9, []int{28}
+>>>>>>> v0.0.4
 }
 func (m *ListModelEvaluationsResponse) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_ListModelEvaluationsResponse.Unmarshal(m, b)
@@ -921,9 +1864,25 @@ func init() {
 	proto.RegisterType((*GetDatasetRequest)(nil), "google.cloud.automl.v1beta1.GetDatasetRequest")
 	proto.RegisterType((*ListDatasetsRequest)(nil), "google.cloud.automl.v1beta1.ListDatasetsRequest")
 	proto.RegisterType((*ListDatasetsResponse)(nil), "google.cloud.automl.v1beta1.ListDatasetsResponse")
+<<<<<<< HEAD
 	proto.RegisterType((*DeleteDatasetRequest)(nil), "google.cloud.automl.v1beta1.DeleteDatasetRequest")
 	proto.RegisterType((*ImportDataRequest)(nil), "google.cloud.automl.v1beta1.ImportDataRequest")
 	proto.RegisterType((*ExportDataRequest)(nil), "google.cloud.automl.v1beta1.ExportDataRequest")
+=======
+	proto.RegisterType((*UpdateDatasetRequest)(nil), "google.cloud.automl.v1beta1.UpdateDatasetRequest")
+	proto.RegisterType((*DeleteDatasetRequest)(nil), "google.cloud.automl.v1beta1.DeleteDatasetRequest")
+	proto.RegisterType((*ImportDataRequest)(nil), "google.cloud.automl.v1beta1.ImportDataRequest")
+	proto.RegisterType((*ExportDataRequest)(nil), "google.cloud.automl.v1beta1.ExportDataRequest")
+	proto.RegisterType((*GetAnnotationSpecRequest)(nil), "google.cloud.automl.v1beta1.GetAnnotationSpecRequest")
+	proto.RegisterType((*GetTableSpecRequest)(nil), "google.cloud.automl.v1beta1.GetTableSpecRequest")
+	proto.RegisterType((*ListTableSpecsRequest)(nil), "google.cloud.automl.v1beta1.ListTableSpecsRequest")
+	proto.RegisterType((*ListTableSpecsResponse)(nil), "google.cloud.automl.v1beta1.ListTableSpecsResponse")
+	proto.RegisterType((*UpdateTableSpecRequest)(nil), "google.cloud.automl.v1beta1.UpdateTableSpecRequest")
+	proto.RegisterType((*GetColumnSpecRequest)(nil), "google.cloud.automl.v1beta1.GetColumnSpecRequest")
+	proto.RegisterType((*ListColumnSpecsRequest)(nil), "google.cloud.automl.v1beta1.ListColumnSpecsRequest")
+	proto.RegisterType((*ListColumnSpecsResponse)(nil), "google.cloud.automl.v1beta1.ListColumnSpecsResponse")
+	proto.RegisterType((*UpdateColumnSpecRequest)(nil), "google.cloud.automl.v1beta1.UpdateColumnSpecRequest")
+>>>>>>> v0.0.4
 	proto.RegisterType((*CreateModelRequest)(nil), "google.cloud.automl.v1beta1.CreateModelRequest")
 	proto.RegisterType((*GetModelRequest)(nil), "google.cloud.automl.v1beta1.GetModelRequest")
 	proto.RegisterType((*ListModelsRequest)(nil), "google.cloud.automl.v1beta1.ListModelsRequest")
@@ -931,6 +1890,11 @@ func init() {
 	proto.RegisterType((*DeleteModelRequest)(nil), "google.cloud.automl.v1beta1.DeleteModelRequest")
 	proto.RegisterType((*DeployModelRequest)(nil), "google.cloud.automl.v1beta1.DeployModelRequest")
 	proto.RegisterType((*UndeployModelRequest)(nil), "google.cloud.automl.v1beta1.UndeployModelRequest")
+<<<<<<< HEAD
+=======
+	proto.RegisterType((*ExportModelRequest)(nil), "google.cloud.automl.v1beta1.ExportModelRequest")
+	proto.RegisterType((*ExportEvaluatedExamplesRequest)(nil), "google.cloud.automl.v1beta1.ExportEvaluatedExamplesRequest")
+>>>>>>> v0.0.4
 	proto.RegisterType((*GetModelEvaluationRequest)(nil), "google.cloud.automl.v1beta1.GetModelEvaluationRequest")
 	proto.RegisterType((*ListModelEvaluationsRequest)(nil), "google.cloud.automl.v1beta1.ListModelEvaluationsRequest")
 	proto.RegisterType((*ListModelEvaluationsResponse)(nil), "google.cloud.automl.v1beta1.ListModelEvaluationsResponse")
@@ -954,12 +1918,18 @@ type AutoMlClient interface {
 	GetDataset(ctx context.Context, in *GetDatasetRequest, opts ...grpc.CallOption) (*Dataset, error)
 	// Lists datasets in a project.
 	ListDatasets(ctx context.Context, in *ListDatasetsRequest, opts ...grpc.CallOption) (*ListDatasetsResponse, error)
+<<<<<<< HEAD
+=======
+	// Updates a dataset.
+	UpdateDataset(ctx context.Context, in *UpdateDatasetRequest, opts ...grpc.CallOption) (*Dataset, error)
+>>>>>>> v0.0.4
 	// Deletes a dataset and all of its contents.
 	// Returns empty response in the
 	// [response][google.longrunning.Operation.response] field when it completes,
 	// and `delete_details` in the
 	// [metadata][google.longrunning.Operation.metadata] field.
 	DeleteDataset(ctx context.Context, in *DeleteDatasetRequest, opts ...grpc.CallOption) (*longrunning.Operation, error)
+<<<<<<< HEAD
 	// Imports data into a dataset.
 	// Returns an empty response in the
 	// [response][google.longrunning.Operation.response] field when it completes.
@@ -968,6 +1938,35 @@ type AutoMlClient interface {
 	// Returns an empty response in the
 	// [response][google.longrunning.Operation.response] field when it completes.
 	ExportData(ctx context.Context, in *ExportDataRequest, opts ...grpc.CallOption) (*longrunning.Operation, error)
+=======
+	// Imports data into a dataset. For Tables this method can only be called on an empty Dataset.
+	//
+	// For Tables:
+	// *   A
+	// [schema_inference_version][google.cloud.automl.v1beta1.InputConfig.params]
+	//     parameter must be explicitly set.
+	// Returns an empty response in the
+	// [response][google.longrunning.Operation.response] field when it completes.
+	ImportData(ctx context.Context, in *ImportDataRequest, opts ...grpc.CallOption) (*longrunning.Operation, error)
+	// Exports dataset's data to the provided output location.
+	// Returns an empty response in the
+	// [response][google.longrunning.Operation.response] field when it completes.
+	ExportData(ctx context.Context, in *ExportDataRequest, opts ...grpc.CallOption) (*longrunning.Operation, error)
+	// Gets an annotation spec.
+	GetAnnotationSpec(ctx context.Context, in *GetAnnotationSpecRequest, opts ...grpc.CallOption) (*AnnotationSpec, error)
+	// Gets a table spec.
+	GetTableSpec(ctx context.Context, in *GetTableSpecRequest, opts ...grpc.CallOption) (*TableSpec, error)
+	// Lists table specs in a dataset.
+	ListTableSpecs(ctx context.Context, in *ListTableSpecsRequest, opts ...grpc.CallOption) (*ListTableSpecsResponse, error)
+	// Updates a table spec.
+	UpdateTableSpec(ctx context.Context, in *UpdateTableSpecRequest, opts ...grpc.CallOption) (*TableSpec, error)
+	// Gets a column spec.
+	GetColumnSpec(ctx context.Context, in *GetColumnSpecRequest, opts ...grpc.CallOption) (*ColumnSpec, error)
+	// Lists column specs in a table spec.
+	ListColumnSpecs(ctx context.Context, in *ListColumnSpecsRequest, opts ...grpc.CallOption) (*ListColumnSpecsResponse, error)
+	// Updates a column spec.
+	UpdateColumnSpec(ctx context.Context, in *UpdateColumnSpecRequest, opts ...grpc.CallOption) (*ColumnSpec, error)
+>>>>>>> v0.0.4
 	// Creates a model.
 	// Returns a Model in the [response][google.longrunning.Operation.response]
 	// field when it completes.
@@ -979,14 +1978,18 @@ type AutoMlClient interface {
 	// Lists models.
 	ListModels(ctx context.Context, in *ListModelsRequest, opts ...grpc.CallOption) (*ListModelsResponse, error)
 	// Deletes a model.
+<<<<<<< HEAD
 	// If a model is already deployed, this only deletes the model in AutoML BE,
 	// and does not change the status of the deployed model in the production
 	// environment.
+=======
+>>>>>>> v0.0.4
 	// Returns `google.protobuf.Empty` in the
 	// [response][google.longrunning.Operation.response] field when it completes,
 	// and `delete_details` in the
 	// [metadata][google.longrunning.Operation.metadata] field.
 	DeleteModel(ctx context.Context, in *DeleteModelRequest, opts ...grpc.CallOption) (*longrunning.Operation, error)
+<<<<<<< HEAD
 	// Deploys model.
 	// Returns a [DeployModelResponse][] in the
 	// [response][google.longrunning.Operation.response] field when it completes.
@@ -995,6 +1998,53 @@ type AutoMlClient interface {
 	// Returns an `UndeployModelResponse` in the
 	// [response][google.longrunning.Operation.response] field when it completes.
 	UndeployModel(ctx context.Context, in *UndeployModelRequest, opts ...grpc.CallOption) (*longrunning.Operation, error)
+=======
+	// Deploys a model. If a model is already deployed, deploying it with the
+	// same parameters has no effect. Deploying with different parametrs
+	// (as e.g. changing
+	//
+	// [node_number][google.cloud.automl.v1beta1.ImageObjectDetectionModelDeploymentMetadata.node_number]
+	// ) will update the deployment without pausing the model's availability.
+	//
+	// Only applicable for Text Classification, Image Object Detection and Tables;
+	// all other domains manage deployment automatically.
+	//
+	// Returns an empty response in the
+	// [response][google.longrunning.Operation.response] field when it completes.
+	DeployModel(ctx context.Context, in *DeployModelRequest, opts ...grpc.CallOption) (*longrunning.Operation, error)
+	// Undeploys a model. If the model is not deployed this method has no effect.
+	//
+	// Only applicable for Text Classification, Image Object Detection and Tables;
+	// all other domains manage deployment automatically.
+	//
+	// Returns an empty response in the
+	// [response][google.longrunning.Operation.response] field when it completes.
+	UndeployModel(ctx context.Context, in *UndeployModelRequest, opts ...grpc.CallOption) (*longrunning.Operation, error)
+	// Exports a trained, "export-able", model to a user specified Google Cloud
+	// Storage location. A model is considered export-able if and only if it has
+	// an export format defined for it in
+	//
+	// [ModelExportOutputConfig][google.cloud.automl.v1beta1.ModelExportOutputConfig].
+	//
+	// Returns an empty response in the
+	// [response][google.longrunning.Operation.response] field when it completes.
+	ExportModel(ctx context.Context, in *ExportModelRequest, opts ...grpc.CallOption) (*longrunning.Operation, error)
+	// Exports examples on which the model was evaluated (i.e. which were in the
+	// TEST set of the dataset the model was created from), together with their
+	// ground truth annotations and the annotations created (predicted) by the
+	// model.
+	// The examples, ground truth and predictions are exported in the state
+	// they were at the moment the model was evaluated.
+	//
+	// This export is available only for 30 days since the model evaluation is
+	// created.
+	//
+	// Currently only available for Tables.
+	//
+	// Returns an empty response in the
+	// [response][google.longrunning.Operation.response] field when it completes.
+	ExportEvaluatedExamples(ctx context.Context, in *ExportEvaluatedExamplesRequest, opts ...grpc.CallOption) (*longrunning.Operation, error)
+>>>>>>> v0.0.4
 	// Gets a model evaluation.
 	GetModelEvaluation(ctx context.Context, in *GetModelEvaluationRequest, opts ...grpc.CallOption) (*ModelEvaluation, error)
 	// Lists model evaluations.
@@ -1036,6 +2086,18 @@ func (c *autoMlClient) ListDatasets(ctx context.Context, in *ListDatasetsRequest
 	return out, nil
 }
 
+<<<<<<< HEAD
+=======
+func (c *autoMlClient) UpdateDataset(ctx context.Context, in *UpdateDatasetRequest, opts ...grpc.CallOption) (*Dataset, error) {
+	out := new(Dataset)
+	err := c.cc.Invoke(ctx, "/google.cloud.automl.v1beta1.AutoMl/UpdateDataset", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+>>>>>>> v0.0.4
 func (c *autoMlClient) DeleteDataset(ctx context.Context, in *DeleteDatasetRequest, opts ...grpc.CallOption) (*longrunning.Operation, error) {
 	out := new(longrunning.Operation)
 	err := c.cc.Invoke(ctx, "/google.cloud.automl.v1beta1.AutoMl/DeleteDataset", in, out, opts...)
@@ -1063,6 +2125,72 @@ func (c *autoMlClient) ExportData(ctx context.Context, in *ExportDataRequest, op
 	return out, nil
 }
 
+<<<<<<< HEAD
+=======
+func (c *autoMlClient) GetAnnotationSpec(ctx context.Context, in *GetAnnotationSpecRequest, opts ...grpc.CallOption) (*AnnotationSpec, error) {
+	out := new(AnnotationSpec)
+	err := c.cc.Invoke(ctx, "/google.cloud.automl.v1beta1.AutoMl/GetAnnotationSpec", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *autoMlClient) GetTableSpec(ctx context.Context, in *GetTableSpecRequest, opts ...grpc.CallOption) (*TableSpec, error) {
+	out := new(TableSpec)
+	err := c.cc.Invoke(ctx, "/google.cloud.automl.v1beta1.AutoMl/GetTableSpec", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *autoMlClient) ListTableSpecs(ctx context.Context, in *ListTableSpecsRequest, opts ...grpc.CallOption) (*ListTableSpecsResponse, error) {
+	out := new(ListTableSpecsResponse)
+	err := c.cc.Invoke(ctx, "/google.cloud.automl.v1beta1.AutoMl/ListTableSpecs", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *autoMlClient) UpdateTableSpec(ctx context.Context, in *UpdateTableSpecRequest, opts ...grpc.CallOption) (*TableSpec, error) {
+	out := new(TableSpec)
+	err := c.cc.Invoke(ctx, "/google.cloud.automl.v1beta1.AutoMl/UpdateTableSpec", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *autoMlClient) GetColumnSpec(ctx context.Context, in *GetColumnSpecRequest, opts ...grpc.CallOption) (*ColumnSpec, error) {
+	out := new(ColumnSpec)
+	err := c.cc.Invoke(ctx, "/google.cloud.automl.v1beta1.AutoMl/GetColumnSpec", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *autoMlClient) ListColumnSpecs(ctx context.Context, in *ListColumnSpecsRequest, opts ...grpc.CallOption) (*ListColumnSpecsResponse, error) {
+	out := new(ListColumnSpecsResponse)
+	err := c.cc.Invoke(ctx, "/google.cloud.automl.v1beta1.AutoMl/ListColumnSpecs", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *autoMlClient) UpdateColumnSpec(ctx context.Context, in *UpdateColumnSpecRequest, opts ...grpc.CallOption) (*ColumnSpec, error) {
+	out := new(ColumnSpec)
+	err := c.cc.Invoke(ctx, "/google.cloud.automl.v1beta1.AutoMl/UpdateColumnSpec", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+>>>>>>> v0.0.4
 func (c *autoMlClient) CreateModel(ctx context.Context, in *CreateModelRequest, opts ...grpc.CallOption) (*longrunning.Operation, error) {
 	out := new(longrunning.Operation)
 	err := c.cc.Invoke(ctx, "/google.cloud.automl.v1beta1.AutoMl/CreateModel", in, out, opts...)
@@ -1117,6 +2245,27 @@ func (c *autoMlClient) UndeployModel(ctx context.Context, in *UndeployModelReque
 	return out, nil
 }
 
+<<<<<<< HEAD
+=======
+func (c *autoMlClient) ExportModel(ctx context.Context, in *ExportModelRequest, opts ...grpc.CallOption) (*longrunning.Operation, error) {
+	out := new(longrunning.Operation)
+	err := c.cc.Invoke(ctx, "/google.cloud.automl.v1beta1.AutoMl/ExportModel", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *autoMlClient) ExportEvaluatedExamples(ctx context.Context, in *ExportEvaluatedExamplesRequest, opts ...grpc.CallOption) (*longrunning.Operation, error) {
+	out := new(longrunning.Operation)
+	err := c.cc.Invoke(ctx, "/google.cloud.automl.v1beta1.AutoMl/ExportEvaluatedExamples", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+>>>>>>> v0.0.4
 func (c *autoMlClient) GetModelEvaluation(ctx context.Context, in *GetModelEvaluationRequest, opts ...grpc.CallOption) (*ModelEvaluation, error) {
 	out := new(ModelEvaluation)
 	err := c.cc.Invoke(ctx, "/google.cloud.automl.v1beta1.AutoMl/GetModelEvaluation", in, out, opts...)
@@ -1143,12 +2292,18 @@ type AutoMlServer interface {
 	GetDataset(context.Context, *GetDatasetRequest) (*Dataset, error)
 	// Lists datasets in a project.
 	ListDatasets(context.Context, *ListDatasetsRequest) (*ListDatasetsResponse, error)
+<<<<<<< HEAD
+=======
+	// Updates a dataset.
+	UpdateDataset(context.Context, *UpdateDatasetRequest) (*Dataset, error)
+>>>>>>> v0.0.4
 	// Deletes a dataset and all of its contents.
 	// Returns empty response in the
 	// [response][google.longrunning.Operation.response] field when it completes,
 	// and `delete_details` in the
 	// [metadata][google.longrunning.Operation.metadata] field.
 	DeleteDataset(context.Context, *DeleteDatasetRequest) (*longrunning.Operation, error)
+<<<<<<< HEAD
 	// Imports data into a dataset.
 	// Returns an empty response in the
 	// [response][google.longrunning.Operation.response] field when it completes.
@@ -1157,6 +2312,35 @@ type AutoMlServer interface {
 	// Returns an empty response in the
 	// [response][google.longrunning.Operation.response] field when it completes.
 	ExportData(context.Context, *ExportDataRequest) (*longrunning.Operation, error)
+=======
+	// Imports data into a dataset. For Tables this method can only be called on an empty Dataset.
+	//
+	// For Tables:
+	// *   A
+	// [schema_inference_version][google.cloud.automl.v1beta1.InputConfig.params]
+	//     parameter must be explicitly set.
+	// Returns an empty response in the
+	// [response][google.longrunning.Operation.response] field when it completes.
+	ImportData(context.Context, *ImportDataRequest) (*longrunning.Operation, error)
+	// Exports dataset's data to the provided output location.
+	// Returns an empty response in the
+	// [response][google.longrunning.Operation.response] field when it completes.
+	ExportData(context.Context, *ExportDataRequest) (*longrunning.Operation, error)
+	// Gets an annotation spec.
+	GetAnnotationSpec(context.Context, *GetAnnotationSpecRequest) (*AnnotationSpec, error)
+	// Gets a table spec.
+	GetTableSpec(context.Context, *GetTableSpecRequest) (*TableSpec, error)
+	// Lists table specs in a dataset.
+	ListTableSpecs(context.Context, *ListTableSpecsRequest) (*ListTableSpecsResponse, error)
+	// Updates a table spec.
+	UpdateTableSpec(context.Context, *UpdateTableSpecRequest) (*TableSpec, error)
+	// Gets a column spec.
+	GetColumnSpec(context.Context, *GetColumnSpecRequest) (*ColumnSpec, error)
+	// Lists column specs in a table spec.
+	ListColumnSpecs(context.Context, *ListColumnSpecsRequest) (*ListColumnSpecsResponse, error)
+	// Updates a column spec.
+	UpdateColumnSpec(context.Context, *UpdateColumnSpecRequest) (*ColumnSpec, error)
+>>>>>>> v0.0.4
 	// Creates a model.
 	// Returns a Model in the [response][google.longrunning.Operation.response]
 	// field when it completes.
@@ -1168,14 +2352,18 @@ type AutoMlServer interface {
 	// Lists models.
 	ListModels(context.Context, *ListModelsRequest) (*ListModelsResponse, error)
 	// Deletes a model.
+<<<<<<< HEAD
 	// If a model is already deployed, this only deletes the model in AutoML BE,
 	// and does not change the status of the deployed model in the production
 	// environment.
+=======
+>>>>>>> v0.0.4
 	// Returns `google.protobuf.Empty` in the
 	// [response][google.longrunning.Operation.response] field when it completes,
 	// and `delete_details` in the
 	// [metadata][google.longrunning.Operation.metadata] field.
 	DeleteModel(context.Context, *DeleteModelRequest) (*longrunning.Operation, error)
+<<<<<<< HEAD
 	// Deploys model.
 	// Returns a [DeployModelResponse][] in the
 	// [response][google.longrunning.Operation.response] field when it completes.
@@ -1184,6 +2372,53 @@ type AutoMlServer interface {
 	// Returns an `UndeployModelResponse` in the
 	// [response][google.longrunning.Operation.response] field when it completes.
 	UndeployModel(context.Context, *UndeployModelRequest) (*longrunning.Operation, error)
+=======
+	// Deploys a model. If a model is already deployed, deploying it with the
+	// same parameters has no effect. Deploying with different parametrs
+	// (as e.g. changing
+	//
+	// [node_number][google.cloud.automl.v1beta1.ImageObjectDetectionModelDeploymentMetadata.node_number]
+	// ) will update the deployment without pausing the model's availability.
+	//
+	// Only applicable for Text Classification, Image Object Detection and Tables;
+	// all other domains manage deployment automatically.
+	//
+	// Returns an empty response in the
+	// [response][google.longrunning.Operation.response] field when it completes.
+	DeployModel(context.Context, *DeployModelRequest) (*longrunning.Operation, error)
+	// Undeploys a model. If the model is not deployed this method has no effect.
+	//
+	// Only applicable for Text Classification, Image Object Detection and Tables;
+	// all other domains manage deployment automatically.
+	//
+	// Returns an empty response in the
+	// [response][google.longrunning.Operation.response] field when it completes.
+	UndeployModel(context.Context, *UndeployModelRequest) (*longrunning.Operation, error)
+	// Exports a trained, "export-able", model to a user specified Google Cloud
+	// Storage location. A model is considered export-able if and only if it has
+	// an export format defined for it in
+	//
+	// [ModelExportOutputConfig][google.cloud.automl.v1beta1.ModelExportOutputConfig].
+	//
+	// Returns an empty response in the
+	// [response][google.longrunning.Operation.response] field when it completes.
+	ExportModel(context.Context, *ExportModelRequest) (*longrunning.Operation, error)
+	// Exports examples on which the model was evaluated (i.e. which were in the
+	// TEST set of the dataset the model was created from), together with their
+	// ground truth annotations and the annotations created (predicted) by the
+	// model.
+	// The examples, ground truth and predictions are exported in the state
+	// they were at the moment the model was evaluated.
+	//
+	// This export is available only for 30 days since the model evaluation is
+	// created.
+	//
+	// Currently only available for Tables.
+	//
+	// Returns an empty response in the
+	// [response][google.longrunning.Operation.response] field when it completes.
+	ExportEvaluatedExamples(context.Context, *ExportEvaluatedExamplesRequest) (*longrunning.Operation, error)
+>>>>>>> v0.0.4
 	// Gets a model evaluation.
 	GetModelEvaluation(context.Context, *GetModelEvaluationRequest) (*ModelEvaluation, error)
 	// Lists model evaluations.
@@ -1248,6 +2483,27 @@ func _AutoMl_ListDatasets_Handler(srv interface{}, ctx context.Context, dec func
 	return interceptor(ctx, in, info, handler)
 }
 
+<<<<<<< HEAD
+=======
+func _AutoMl_UpdateDataset_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(UpdateDatasetRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AutoMlServer).UpdateDataset(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/google.cloud.automl.v1beta1.AutoMl/UpdateDataset",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AutoMlServer).UpdateDataset(ctx, req.(*UpdateDatasetRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+>>>>>>> v0.0.4
 func _AutoMl_DeleteDataset_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(DeleteDatasetRequest)
 	if err := dec(in); err != nil {
@@ -1302,6 +2558,135 @@ func _AutoMl_ExportData_Handler(srv interface{}, ctx context.Context, dec func(i
 	return interceptor(ctx, in, info, handler)
 }
 
+<<<<<<< HEAD
+=======
+func _AutoMl_GetAnnotationSpec_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetAnnotationSpecRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AutoMlServer).GetAnnotationSpec(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/google.cloud.automl.v1beta1.AutoMl/GetAnnotationSpec",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AutoMlServer).GetAnnotationSpec(ctx, req.(*GetAnnotationSpecRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _AutoMl_GetTableSpec_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetTableSpecRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AutoMlServer).GetTableSpec(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/google.cloud.automl.v1beta1.AutoMl/GetTableSpec",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AutoMlServer).GetTableSpec(ctx, req.(*GetTableSpecRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _AutoMl_ListTableSpecs_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ListTableSpecsRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AutoMlServer).ListTableSpecs(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/google.cloud.automl.v1beta1.AutoMl/ListTableSpecs",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AutoMlServer).ListTableSpecs(ctx, req.(*ListTableSpecsRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _AutoMl_UpdateTableSpec_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(UpdateTableSpecRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AutoMlServer).UpdateTableSpec(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/google.cloud.automl.v1beta1.AutoMl/UpdateTableSpec",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AutoMlServer).UpdateTableSpec(ctx, req.(*UpdateTableSpecRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _AutoMl_GetColumnSpec_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetColumnSpecRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AutoMlServer).GetColumnSpec(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/google.cloud.automl.v1beta1.AutoMl/GetColumnSpec",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AutoMlServer).GetColumnSpec(ctx, req.(*GetColumnSpecRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _AutoMl_ListColumnSpecs_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ListColumnSpecsRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AutoMlServer).ListColumnSpecs(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/google.cloud.automl.v1beta1.AutoMl/ListColumnSpecs",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AutoMlServer).ListColumnSpecs(ctx, req.(*ListColumnSpecsRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _AutoMl_UpdateColumnSpec_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(UpdateColumnSpecRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AutoMlServer).UpdateColumnSpec(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/google.cloud.automl.v1beta1.AutoMl/UpdateColumnSpec",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AutoMlServer).UpdateColumnSpec(ctx, req.(*UpdateColumnSpecRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+>>>>>>> v0.0.4
 func _AutoMl_CreateModel_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(CreateModelRequest)
 	if err := dec(in); err != nil {
@@ -1410,6 +2795,45 @@ func _AutoMl_UndeployModel_Handler(srv interface{}, ctx context.Context, dec fun
 	return interceptor(ctx, in, info, handler)
 }
 
+<<<<<<< HEAD
+=======
+func _AutoMl_ExportModel_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ExportModelRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AutoMlServer).ExportModel(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/google.cloud.automl.v1beta1.AutoMl/ExportModel",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AutoMlServer).ExportModel(ctx, req.(*ExportModelRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _AutoMl_ExportEvaluatedExamples_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ExportEvaluatedExamplesRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AutoMlServer).ExportEvaluatedExamples(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/google.cloud.automl.v1beta1.AutoMl/ExportEvaluatedExamples",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AutoMlServer).ExportEvaluatedExamples(ctx, req.(*ExportEvaluatedExamplesRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+>>>>>>> v0.0.4
 func _AutoMl_GetModelEvaluation_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(GetModelEvaluationRequest)
 	if err := dec(in); err != nil {
@@ -1463,6 +2887,13 @@ var _AutoMl_serviceDesc = grpc.ServiceDesc{
 			Handler:    _AutoMl_ListDatasets_Handler,
 		},
 		{
+<<<<<<< HEAD
+=======
+			MethodName: "UpdateDataset",
+			Handler:    _AutoMl_UpdateDataset_Handler,
+		},
+		{
+>>>>>>> v0.0.4
 			MethodName: "DeleteDataset",
 			Handler:    _AutoMl_DeleteDataset_Handler,
 		},
@@ -1475,6 +2906,37 @@ var _AutoMl_serviceDesc = grpc.ServiceDesc{
 			Handler:    _AutoMl_ExportData_Handler,
 		},
 		{
+<<<<<<< HEAD
+=======
+			MethodName: "GetAnnotationSpec",
+			Handler:    _AutoMl_GetAnnotationSpec_Handler,
+		},
+		{
+			MethodName: "GetTableSpec",
+			Handler:    _AutoMl_GetTableSpec_Handler,
+		},
+		{
+			MethodName: "ListTableSpecs",
+			Handler:    _AutoMl_ListTableSpecs_Handler,
+		},
+		{
+			MethodName: "UpdateTableSpec",
+			Handler:    _AutoMl_UpdateTableSpec_Handler,
+		},
+		{
+			MethodName: "GetColumnSpec",
+			Handler:    _AutoMl_GetColumnSpec_Handler,
+		},
+		{
+			MethodName: "ListColumnSpecs",
+			Handler:    _AutoMl_ListColumnSpecs_Handler,
+		},
+		{
+			MethodName: "UpdateColumnSpec",
+			Handler:    _AutoMl_UpdateColumnSpec_Handler,
+		},
+		{
+>>>>>>> v0.0.4
 			MethodName: "CreateModel",
 			Handler:    _AutoMl_CreateModel_Handler,
 		},
@@ -1499,6 +2961,17 @@ var _AutoMl_serviceDesc = grpc.ServiceDesc{
 			Handler:    _AutoMl_UndeployModel_Handler,
 		},
 		{
+<<<<<<< HEAD
+=======
+			MethodName: "ExportModel",
+			Handler:    _AutoMl_ExportModel_Handler,
+		},
+		{
+			MethodName: "ExportEvaluatedExamples",
+			Handler:    _AutoMl_ExportEvaluatedExamples_Handler,
+		},
+		{
+>>>>>>> v0.0.4
 			MethodName: "GetModelEvaluation",
 			Handler:    _AutoMl_GetModelEvaluation_Handler,
 		},
@@ -1512,6 +2985,7 @@ var _AutoMl_serviceDesc = grpc.ServiceDesc{
 }
 
 func init() {
+<<<<<<< HEAD
 	proto.RegisterFile("google/cloud/automl/v1beta1/service.proto", fileDescriptor_service_b4ecd4b3d5c9ee33)
 }
 
@@ -1586,4 +3060,122 @@ var fileDescriptor_service_b4ecd4b3d5c9ee33 = []byte{
 	0x13, 0xe4, 0xfe, 0x27, 0xe1, 0xba, 0x5c, 0xfe, 0xb1, 0xb0, 0xbe, 0x27, 0x80, 0x87, 0x3b, 0x11,
 	0xe8, 0x50, 0x9e, 0x7f, 0xf8, 0xa1, 0x04, 0x1d, 0x2d, 0x8a, 0xb3, 0xae, 0xfc, 0x1b, 0x00, 0x00,
 	0xff, 0xff, 0x9e, 0x6b, 0xe8, 0xad, 0xde, 0x11, 0x00, 0x00,
+=======
+	proto.RegisterFile("google/cloud/automl/v1beta1/service.proto", fileDescriptor_service_ae865470535b24b9)
+}
+
+var fileDescriptor_service_ae865470535b24b9 = []byte{
+	// 1776 bytes of a gzipped FileDescriptorProto
+	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xd4, 0x59, 0xcd, 0x6f, 0x14, 0x47,
+	0x16, 0xdf, 0x32, 0xe0, 0xc5, 0x6f, 0xec, 0x35, 0x2e, 0xbc, 0xc6, 0xb4, 0x61, 0xd7, 0xea, 0x65,
+	0xc1, 0x18, 0x76, 0x1a, 0x8f, 0xbd, 0xac, 0x3f, 0x00, 0xe1, 0x2f, 0x86, 0x2f, 0x03, 0x32, 0xb0,
+	0xec, 0x46, 0x44, 0xa3, 0xf6, 0x4c, 0x79, 0xd4, 0xa1, 0xa7, 0xab, 0x33, 0xdd, 0xe3, 0x18, 0x22,
+	0x94, 0xaf, 0x13, 0x87, 0x44, 0x8a, 0x50, 0x72, 0x09, 0x51, 0x38, 0x44, 0x9c, 0xa2, 0x28, 0x91,
+	0x72, 0x4e, 0x14, 0x29, 0x8a, 0x94, 0x48, 0xb9, 0x24, 0x87, 0x5c, 0x73, 0xc8, 0x3f, 0x91, 0x5b,
+	0xd4, 0x55, 0xd5, 0x1f, 0x33, 0xdd, 0xee, 0xae, 0x19, 0xcb, 0x42, 0xb9, 0xb9, 0xdb, 0xef, 0xd5,
+	0xfb, 0xbd, 0xaf, 0xea, 0xf7, 0x7b, 0x03, 0xc7, 0xab, 0x94, 0x56, 0x4d, 0xa2, 0x95, 0x4d, 0xda,
+	0xa8, 0x68, 0x7a, 0xc3, 0xa5, 0x35, 0x53, 0xdb, 0x98, 0x58, 0x23, 0xae, 0x3e, 0xa1, 0x39, 0xa4,
+	0xbe, 0x61, 0x94, 0x49, 0xde, 0xae, 0x53, 0x97, 0xe2, 0x11, 0x2e, 0x9a, 0x67, 0xa2, 0x79, 0x2e,
+	0x9a, 0x17, 0xa2, 0xca, 0x21, 0x71, 0x8e, 0x6e, 0x1b, 0x9a, 0x6e, 0x59, 0xd4, 0xd5, 0x5d, 0x83,
+	0x5a, 0x0e, 0x57, 0x55, 0xa6, 0xd2, 0xac, 0x84, 0xe2, 0x25, 0x5b, 0xbf, 0x6f, 0x52, 0xbd, 0x22,
+	0xb4, 0xfe, 0x95, 0xa6, 0x55, 0xa6, 0x66, 0xa3, 0x66, 0x95, 0x1c, 0x9b, 0x94, 0x85, 0x78, 0xaa,
+	0x2b, 0x15, 0xdd, 0xd5, 0x1d, 0xe2, 0x0a, 0xd1, 0x63, 0x69, 0xa2, 0x46, 0x4d, 0xaf, 0x0a, 0x9f,
+	0x95, 0x23, 0xa9, 0x82, 0x54, 0xe6, 0xb8, 0x1a, 0xad, 0x10, 0x53, 0x08, 0x16, 0x32, 0x05, 0x4b,
+	0x64, 0x43, 0x37, 0x1b, 0x2c, 0x1a, 0x42, 0xe7, 0x64, 0x9a, 0x0e, 0xb5, 0x49, 0xbd, 0x29, 0xd2,
+	0xa9, 0xd2, 0xae, 0xbe, 0x66, 0x92, 0x68, 0xc8, 0xfe, 0x21, 0xa4, 0x4d, 0x6a, 0x55, 0xeb, 0x0d,
+	0xcb, 0x32, 0xac, 0x6a, 0xfc, 0xc8, 0x51, 0x21, 0xc4, 0x9e, 0xd6, 0x1a, 0xeb, 0xda, 0xba, 0x41,
+	0xcc, 0x4a, 0xa9, 0xa6, 0x3b, 0xf7, 0xb8, 0x84, 0x6a, 0xc1, 0xe0, 0x62, 0x9d, 0xe8, 0x2e, 0x59,
+	0xe2, 0x51, 0x5e, 0x25, 0x2f, 0x37, 0x88, 0xe3, 0xe2, 0x21, 0xe8, 0xb6, 0xf5, 0x3a, 0xb1, 0xdc,
+	0x61, 0x34, 0x8a, 0xc6, 0x7a, 0x56, 0xc5, 0x13, 0x3e, 0x07, 0x7f, 0x16, 0xf9, 0x18, 0xee, 0x1a,
+	0x45, 0x63, 0xb9, 0xc2, 0x91, 0x7c, 0x4a, 0x6d, 0xe5, 0xfd, 0x53, 0x7d, 0x25, 0xf5, 0x18, 0x0c,
+	0x14, 0x89, 0xdb, 0x62, 0x0c, 0xc3, 0x6e, 0x4b, 0xaf, 0x11, 0x61, 0x8a, 0xfd, 0xad, 0xbe, 0x81,
+	0x60, 0xff, 0x55, 0xc3, 0xf1, 0x45, 0x9d, 0x2c, 0x60, 0x43, 0xd0, 0xbd, 0x6e, 0x98, 0x2e, 0xa9,
+	0x0f, 0xef, 0xe2, 0xef, 0xf9, 0x13, 0x1e, 0x81, 0x1e, 0x5b, 0xaf, 0x92, 0x92, 0x63, 0x3c, 0x20,
+	0xc3, 0xbb, 0x47, 0xd1, 0xd8, 0x9e, 0xd5, 0xbd, 0xde, 0x8b, 0x9b, 0xc6, 0x03, 0x82, 0x0f, 0x03,
+	0xb0, 0x7f, 0xba, 0xf4, 0x1e, 0xb1, 0x86, 0xbb, 0x99, 0x22, 0x13, 0xbf, 0xe5, 0xbd, 0x50, 0x5f,
+	0x47, 0x30, 0xd8, 0x8c, 0xc1, 0xb1, 0xa9, 0xe5, 0x10, 0x7c, 0x1e, 0xf6, 0x0a, 0x87, 0x9c, 0x61,
+	0x34, 0xba, 0x4b, 0x3a, 0x0c, 0x81, 0x16, 0x3e, 0x0a, 0xfd, 0x16, 0xd9, 0x74, 0x4b, 0x11, 0xf3,
+	0x5d, 0xcc, 0x7c, 0x9f, 0xf7, 0xfa, 0x46, 0x00, 0xe1, 0x31, 0x82, 0xc1, 0xdb, 0x76, 0x25, 0x9e,
+	0xa0, 0x48, 0x22, 0x50, 0x07, 0x89, 0xc0, 0x73, 0x90, 0x6b, 0xb0, 0x73, 0x59, 0x35, 0x88, 0x64,
+	0x2a, 0xfe, 0x19, 0x7e, 0xc1, 0xe4, 0x2f, 0x78, 0x05, 0xb3, 0xa2, 0x3b, 0xf7, 0x56, 0x81, 0x8b,
+	0x7b, 0x7f, 0xab, 0xe3, 0x30, 0xb8, 0x44, 0x4c, 0x12, 0x03, 0x95, 0x94, 0x48, 0x17, 0x06, 0x2e,
+	0xd5, 0x6c, 0x5a, 0x67, 0x51, 0x4c, 0x11, 0xc4, 0x57, 0xa0, 0xd7, 0xb0, 0xec, 0x86, 0x5b, 0x2a,
+	0x53, 0x6b, 0xdd, 0xa8, 0xb2, 0x3c, 0xe6, 0x0a, 0x63, 0xa9, 0x6e, 0x5d, 0xf2, 0x14, 0x16, 0x99,
+	0xfc, 0x6a, 0xce, 0x08, 0x1f, 0xd4, 0x57, 0x60, 0x60, 0x79, 0x53, 0xc6, 0xea, 0x35, 0xe8, 0xa3,
+	0x0d, 0x37, 0x66, 0xf6, 0x78, 0xaa, 0xd9, 0xeb, 0x4c, 0x43, 0xd8, 0xed, 0xa5, 0x91, 0x27, 0x35,
+	0x0f, 0xc3, 0x45, 0xe2, 0xce, 0x07, 0x17, 0xe3, 0x4d, 0x9b, 0x94, 0xd3, 0xc2, 0x53, 0x81, 0xfd,
+	0x45, 0xe2, 0xde, 0xf2, 0xda, 0x3b, 0x43, 0x14, 0xcf, 0x00, 0x84, 0xfd, 0x2b, 0x91, 0xb1, 0x9e,
+	0x75, 0xff, 0x4f, 0xf5, 0x4b, 0x04, 0x7f, 0xf5, 0x2a, 0x39, 0xb0, 0x93, 0xd9, 0x4f, 0x9d, 0x1b,
+	0xdb, 0x91, 0x56, 0x7c, 0x84, 0x60, 0xa8, 0xd5, 0x01, 0xd1, 0x8c, 0x45, 0xc8, 0x85, 0xb7, 0xa3,
+	0xdf, 0x8f, 0x47, 0x53, 0xf3, 0x17, 0x86, 0x1b, 0xdc, 0xe0, 0x40, 0xe9, 0x9e, 0x7c, 0x82, 0x60,
+	0x88, 0xf7, 0x64, 0x2c, 0x6d, 0xcb, 0x00, 0x21, 0x16, 0xd1, 0x98, 0xb2, 0x50, 0x7a, 0x02, 0x28,
+	0xdb, 0x6b, 0x4e, 0x02, 0x83, 0x45, 0xe2, 0x2e, 0xb2, 0x8f, 0xec, 0x0e, 0x96, 0xd4, 0x57, 0x22,
+	0x23, 0xa1, 0xa1, 0x3f, 0x5a, 0x4d, 0xbd, 0x8d, 0xe0, 0x40, 0xcc, 0x03, 0x51, 0x54, 0x97, 0xa1,
+	0x37, 0x32, 0xa6, 0xf8, 0x55, 0x75, 0x2c, 0x35, 0x95, 0x91, 0x90, 0xe7, 0xca, 0xe1, 0x99, 0xd2,
+	0x75, 0xf5, 0x14, 0xc1, 0x01, 0x5e, 0x57, 0xf1, 0xe4, 0x5d, 0x84, 0x5c, 0x04, 0x8f, 0xa8, 0x2c,
+	0x69, 0x38, 0x10, 0xc2, 0xd9, 0x5e, 0x6d, 0xad, 0x03, 0xe6, 0xe3, 0xc2, 0x8a, 0x37, 0xf1, 0x64,
+	0xe5, 0x7b, 0x1a, 0xf6, 0xb0, 0xc9, 0x88, 0x25, 0x26, 0x57, 0x50, 0x53, 0xe1, 0xf2, 0x13, 0xb9,
+	0x82, 0xfa, 0x4f, 0xe8, 0x2f, 0x12, 0xb7, 0xc9, 0x48, 0xd2, 0xe5, 0xf9, 0x1a, 0x0c, 0x78, 0x09,
+	0x64, 0x72, 0xcf, 0x65, 0x42, 0xd8, 0x00, 0x1c, 0x05, 0x20, 0x8a, 0x27, 0xf0, 0x9b, 0x57, 0x8d,
+	0xbc, 0xdf, 0xd2, 0xa5, 0x32, 0x06, 0x98, 0x7f, 0x80, 0x33, 0x43, 0xf4, 0x1b, 0xf2, 0x44, 0x6d,
+	0x93, 0xde, 0x6f, 0x12, 0xfd, 0x1c, 0xc1, 0x29, 0x36, 0x2d, 0x97, 0xe8, 0xda, 0x4b, 0xa4, 0xec,
+	0x96, 0x2a, 0xc4, 0x25, 0x65, 0x36, 0xc9, 0xf3, 0x61, 0xb6, 0xc2, 0x74, 0x6a, 0xc4, 0x72, 0x4b,
+	0x35, 0xe2, 0xea, 0xde, 0xd8, 0x20, 0x6a, 0xe5, 0x62, 0xfa, 0x17, 0xd9, 0x3b, 0xf4, 0x3a, 0x3b,
+	0x73, 0xc9, 0x3f, 0x92, 0x59, 0x5e, 0x0a, 0x0e, 0x5c, 0x11, 0xe7, 0x5d, 0xfc, 0xd3, 0xea, 0x09,
+	0x43, 0x5e, 0x3c, 0xc9, 0xbd, 0x85, 0x11, 0x38, 0xb8, 0x25, 0x5e, 0x6f, 0x4c, 0xb9, 0x6d, 0x55,
+	0xe2, 0xce, 0x27, 0xc5, 0xe9, 0x2d, 0x04, 0x98, 0x4f, 0x0c, 0x59, 0xa2, 0xf8, 0xff, 0xc9, 0x23,
+	0xc3, 0x54, 0x76, 0x9a, 0xb9, 0x81, 0x94, 0xe9, 0xe1, 0x03, 0x04, 0x7f, 0xe3, 0x42, 0xcb, 0x9c,
+	0x4c, 0x90, 0xca, 0xf2, 0xa6, 0x5e, 0xb3, 0x4d, 0xe2, 0xa4, 0x21, 0x22, 0xc9, 0x88, 0xce, 0xa7,
+	0x22, 0xda, 0xc2, 0x4e, 0x0a, 0x3a, 0x0d, 0x0e, 0xfa, 0x5d, 0xb9, 0x1c, 0x70, 0x9d, 0xb4, 0xa0,
+	0x3e, 0x42, 0x30, 0x12, 0xf4, 0x47, 0xa8, 0xf2, 0x5c, 0x5a, 0xf5, 0x23, 0x04, 0x87, 0x92, 0xb1,
+	0x88, 0xae, 0xbd, 0x03, 0xfb, 0x5a, 0x79, 0x9c, 0x68, 0xe0, 0x93, 0x12, 0x99, 0x0d, 0xe3, 0xd1,
+	0x5f, 0x6b, 0x7e, 0x21, 0xdb, 0xd4, 0x85, 0x77, 0x54, 0xe8, 0x9e, 0x6f, 0xb8, 0x74, 0xc5, 0xc4,
+	0x9f, 0x20, 0xe8, 0x6b, 0xe2, 0x65, 0x78, 0x22, 0xfd, 0xae, 0x4f, 0xe0, 0x70, 0x8a, 0x14, 0x23,
+	0x50, 0x17, 0xde, 0xfc, 0xe9, 0xd7, 0xc7, 0x5d, 0x67, 0xd4, 0x89, 0x80, 0x6b, 0xbe, 0xca, 0xb3,
+	0x70, 0xd6, 0xae, 0x53, 0xaf, 0x2f, 0x1d, 0x6d, 0x5c, 0x33, 0x69, 0x99, 0x47, 0x4b, 0x1b, 0x7f,
+	0xe8, 0x13, 0x72, 0x67, 0x36, 0x20, 0x13, 0x1f, 0x22, 0x80, 0x90, 0xd6, 0xe1, 0x7c, 0xaa, 0xe1,
+	0x18, 0xff, 0x93, 0x04, 0x3a, 0xc3, 0x80, 0x4e, 0xe2, 0x08, 0x50, 0xaf, 0xc8, 0xb6, 0x80, 0x19,
+	0xa0, 0xd4, 0xc6, 0x1f, 0xe2, 0x4f, 0x11, 0xf4, 0x46, 0x89, 0x1c, 0x3e, 0x95, 0x6a, 0x31, 0x81,
+	0x77, 0x2a, 0x13, 0x6d, 0x68, 0xf0, 0x82, 0x4a, 0x02, 0x2c, 0x19, 0x59, 0xfc, 0x05, 0x82, 0xbe,
+	0x26, 0xda, 0x97, 0x91, 0xff, 0x24, 0x8a, 0x28, 0x19, 0xd6, 0xcb, 0x0c, 0xe5, 0x52, 0x61, 0x26,
+	0x44, 0xe9, 0x6f, 0x5c, 0x24, 0xc3, 0x1b, 0xd6, 0xc1, 0x13, 0x04, 0x7d, 0x4d, 0xc4, 0x30, 0x03,
+	0x76, 0x12, 0x89, 0x54, 0x0e, 0xfb, 0x2a, 0x91, 0xd5, 0x46, 0xfe, 0xba, 0xbf, 0xda, 0xf0, 0xa3,
+	0x3a, 0xde, 0x41, 0x19, 0x7c, 0x8c, 0x00, 0x42, 0x2e, 0x9a, 0x51, 0xa6, 0x31, 0xd2, 0x9a, 0x05,
+	0xac, 0xc8, 0x80, 0xcd, 0xab, 0x67, 0xda, 0x06, 0x36, 0x6b, 0x04, 0xb6, 0x66, 0xd1, 0x38, 0x83,
+	0x19, 0x92, 0xd7, 0x0c, 0x98, 0x31, 0x96, 0xbb, 0x83, 0x30, 0xc9, 0x66, 0x14, 0xe6, 0x37, 0x88,
+	0xed, 0x72, 0x9a, 0xa9, 0x2e, 0xfe, 0x77, 0x56, 0xef, 0x27, 0x52, 0x63, 0xe5, 0x44, 0xaa, 0x5a,
+	0xb3, 0x8e, 0x7a, 0x85, 0xb9, 0xb0, 0x8c, 0x17, 0xdb, 0x75, 0x21, 0xb2, 0xb0, 0x64, 0xa3, 0xb9,
+	0x57, 0x14, 0x9f, 0x21, 0xe8, 0x8d, 0x32, 0xf0, 0x8c, 0xbb, 0x21, 0x81, 0xac, 0x2b, 0x92, 0x0c,
+	0x4f, 0xbd, 0xc0, 0x70, 0x9f, 0xc7, 0xe7, 0xda, 0xc6, 0x1d, 0xb2, 0x54, 0x0f, 0xf2, 0xd7, 0x08,
+	0xfe, 0xd2, 0x4c, 0x86, 0x71, 0x21, 0xf3, 0x7a, 0x8a, 0x51, 0x7f, 0x65, 0xb2, 0x2d, 0x1d, 0x71,
+	0xa9, 0x25, 0xf8, 0x90, 0x7a, 0xa9, 0x45, 0x0b, 0x28, 0xe2, 0x06, 0xfe, 0x01, 0x41, 0x7f, 0x0b,
+	0x89, 0xc6, 0x93, 0x12, 0x77, 0x5c, 0xc7, 0xc1, 0x7f, 0x91, 0x01, 0xbf, 0x53, 0xb8, 0x14, 0x02,
+	0x8f, 0x2c, 0x55, 0x3b, 0xc9, 0xc3, 0x6c, 0x84, 0xeb, 0x7b, 0x39, 0xe9, 0x6b, 0xa2, 0xdd, 0x19,
+	0x57, 0x5f, 0x12, 0x45, 0x57, 0x64, 0x09, 0x9d, 0x7a, 0x8b, 0x39, 0x73, 0x0d, 0x5f, 0xdd, 0x56,
+	0x25, 0x69, 0x11, 0x96, 0xea, 0xd5, 0xd5, 0x8f, 0x08, 0xfa, 0x5b, 0x08, 0x31, 0xce, 0x2e, 0x92,
+	0xf8, 0x02, 0x40, 0x99, 0x6a, 0x4f, 0x49, 0x94, 0x56, 0x82, 0x53, 0xb2, 0xa5, 0xd5, 0x9c, 0x98,
+	0xa8, 0x5f, 0xf8, 0x17, 0x04, 0xfb, 0x5a, 0x59, 0x35, 0x9e, 0x92, 0xa8, 0xb4, 0x6d, 0xa4, 0xa7,
+	0xc6, 0x3c, 0xa9, 0x16, 0xfe, 0x17, 0x7a, 0x12, 0xfd, 0xd1, 0x63, 0xfb, 0xa9, 0x9a, 0x8d, 0x6e,
+	0x03, 0xbc, 0xf1, 0x2b, 0x17, 0xa1, 0xe5, 0x58, 0x93, 0x98, 0x15, 0xa3, 0x2c, 0x27, 0xeb, 0x93,
+	0x71, 0x8e, 0xb9, 0x33, 0xad, 0x6a, 0xd2, 0x83, 0x0c, 0x1b, 0x81, 0x9d, 0x59, 0xc1, 0x6a, 0xdf,
+	0x43, 0xb0, 0xd7, 0x27, 0x0e, 0xf8, 0x64, 0x56, 0x5b, 0x34, 0x21, 0x93, 0xe0, 0xce, 0xea, 0x7f,
+	0x18, 0xbc, 0x09, 0xac, 0xc9, 0x35, 0x03, 0xc7, 0xe6, 0xd5, 0xfb, 0x33, 0x04, 0x10, 0xd2, 0xf7,
+	0x8c, 0x0f, 0x6d, 0x6c, 0xd1, 0xa0, 0x68, 0xd2, 0xf2, 0xa2, 0xc0, 0x13, 0x80, 0x4a, 0xc5, 0x11,
+	0xbf, 0x8f, 0x20, 0x17, 0xe1, 0xfb, 0x19, 0x09, 0x8e, 0x6f, 0x06, 0xb2, 0x12, 0x2c, 0x80, 0x8d,
+	0xb7, 0x1d, 0xc1, 0xa7, 0x0c, 0x58, 0x40, 0xb0, 0x33, 0x81, 0xb5, 0x52, 0xf1, 0x2c, 0x60, 0xf3,
+	0x0c, 0xd8, 0x9c, 0x7a, 0xba, 0x4d, 0x60, 0xb3, 0x9c, 0xf5, 0x7b, 0x63, 0xca, 0x33, 0x6f, 0x94,
+	0x8e, 0x6e, 0x01, 0xb2, 0x46, 0xe9, 0x84, 0x8d, 0x41, 0x16, 0xcc, 0x45, 0x06, 0xf3, 0xac, 0x3a,
+	0xdd, 0x2e, 0xcc, 0x86, 0x15, 0x02, 0xf5, 0x62, 0x19, 0xd9, 0x40, 0x64, 0xc4, 0x32, 0xbe, 0xab,
+	0xd8, 0xb1, 0x58, 0xf2, 0xb1, 0xcf, 0x83, 0xf8, 0x1d, 0x82, 0x03, 0x5b, 0xac, 0x0d, 0xf0, 0x5c,
+	0x27, 0xcb, 0x06, 0x49, 0xe8, 0xab, 0x0c, 0xfa, 0x55, 0xb5, 0xd8, 0x19, 0xf4, 0x98, 0x59, 0xcf,
+	0x97, 0x6f, 0x11, 0xe0, 0xf8, 0x36, 0x03, 0x9f, 0x96, 0xba, 0x9e, 0x62, 0xeb, 0x0f, 0xa5, 0xad,
+	0x1d, 0x81, 0x4f, 0xba, 0xf0, 0x42, 0x7b, 0x0e, 0x69, 0x2d, 0xab, 0x05, 0xd6, 0x83, 0x3f, 0x8b,
+	0x5f, 0x29, 0x5b, 0x17, 0x1b, 0x78, 0x5a, 0xee, 0x7e, 0x8a, 0xef, 0x65, 0x94, 0x99, 0x0e, 0x34,
+	0xc5, 0x1d, 0x97, 0xe0, 0x59, 0xfa, 0x47, 0x3c, 0x48, 0x56, 0xcc, 0xb9, 0x85, 0x77, 0x11, 0xfc,
+	0xbd, 0x4c, 0x6b, 0x69, 0x60, 0x16, 0x72, 0x7c, 0x63, 0x72, 0xa3, 0x4e, 0x5d, 0x7a, 0x03, 0xbd,
+	0x30, 0x2f, 0x64, 0xab, 0xd4, 0xd4, 0xad, 0x6a, 0x9e, 0xd6, 0xab, 0x5a, 0x95, 0x58, 0x6c, 0xab,
+	0xad, 0xf1, 0x7f, 0xe9, 0xb6, 0xe1, 0x24, 0xfe, 0xc6, 0x3e, 0xc7, 0x1f, 0xbf, 0xef, 0x1a, 0x29,
+	0x32, 0xc1, 0xbb, 0x8b, 0x9e, 0xd0, 0x5d, 0x7e, 0xfe, 0xdd, 0xff, 0x72, 0xa1, 0xb5, 0x6e, 0x76,
+	0xd6, 0xe4, 0xef, 0x01, 0x00, 0x00, 0xff, 0xff, 0x0c, 0xe1, 0xf9, 0x9a, 0x7e, 0x21, 0x00, 0x00,
+>>>>>>> v0.0.4
 }

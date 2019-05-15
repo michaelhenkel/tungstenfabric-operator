@@ -2,7 +2,11 @@
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
+<<<<<<< HEAD
 // +build darwin dragonfly freebsd linux netbsd openbsd solaris windows
+=======
+// +build aix darwin dragonfly freebsd linux netbsd openbsd solaris windows
+>>>>>>> v0.0.4
 
 /*
 The h2i command is an interactive HTTP/2 console.

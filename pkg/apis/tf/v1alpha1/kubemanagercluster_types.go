@@ -2,7 +2,10 @@ package v1alpha1
 
 import (
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
+<<<<<<< HEAD
 	basev1 "github.com/michaelhenkel/tungstenfabric-operator/pkg/apis/base/v1alpha1"
+=======
+>>>>>>> v0.0.4
 )
 
 // EDIT THIS FILE!  THIS IS SCAFFOLDING FOR YOU TO OWN!
@@ -14,6 +17,7 @@ type KubemanagerClusterSpec struct {
 	// INSERT ADDITIONAL SPEC FIELDS - desired state of cluster
 	// Important: Run "operator-sdk generate k8s" to regenerate code after modifying this file
 	// Add custom validation using kubebuilder tags: https://book.kubebuilder.io/beyond_basics/generating_crd.html
+<<<<<<< HEAD
 	basev1.BaseParameter `json:",inline"`
 	KubeManagerImage string `json:"kubeManagerImage,omitempty"`
 	NodeInitImage string `json:"nodeInitImage,omitempty"`
@@ -30,6 +34,13 @@ type KubemanagerClusterSpec struct {
 	KubernetesIpFabricSnat string `json:"kubernetesIpFabricSnat,omitempty"`
 	KubernetesTokenFile string `json:"kubernetesTokenFile,omitempty"`
 	ZookeeperClusterName string `json:"zookeeperClusterName,omitempty"`
+=======
+	Containers []*Container `json:"containers"`
+	InitContainers []*Container `json:"initcontainers"`
+	ConfigParameters map[string]string
+	Type string
+	General *General
+>>>>>>> v0.0.4
 }
 
 // KubemanagerClusterStatus defines the observed state of KubemanagerCluster
@@ -48,6 +59,10 @@ type KubemanagerClusterStatus struct {
 type KubemanagerCluster struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`
+<<<<<<< HEAD
+=======
+
+>>>>>>> v0.0.4
 	Spec   KubemanagerClusterSpec   `json:"spec,omitempty"`
 	Status KubemanagerClusterStatus `json:"status,omitempty"`
 }

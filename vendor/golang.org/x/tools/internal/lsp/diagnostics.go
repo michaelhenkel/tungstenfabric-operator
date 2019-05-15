@@ -6,7 +6,10 @@ package lsp
 
 import (
 	"context"
+<<<<<<< HEAD
 	"sort"
+=======
+>>>>>>> v0.0.4
 
 	"golang.org/x/tools/internal/lsp/cache"
 	"golang.org/x/tools/internal/lsp/protocol"
@@ -15,10 +18,16 @@ import (
 )
 
 func (s *Server) cacheAndDiagnose(ctx context.Context, uri span.URI, content string) error {
+<<<<<<< HEAD
+=======
+	s.log.Debugf(ctx, "cacheAndDiagnose: %s", uri)
+
+>>>>>>> v0.0.4
 	view := s.findView(ctx, uri)
 	if err := view.SetContent(ctx, uri, []byte(content)); err != nil {
 		return err
 	}
+<<<<<<< HEAD
 	go func() {
 		ctx := view.BackgroundContext()
 		if ctx.Err() != nil {
@@ -27,11 +36,34 @@ func (s *Server) cacheAndDiagnose(ctx context.Context, uri span.URI, content str
 		reports, err := source.Diagnostics(ctx, view, uri)
 		if err != nil {
 			return // handle error?
+=======
+
+	s.log.Debugf(ctx, "cacheAndDiagnose: set content for %s", uri)
+
+	go func() {
+		ctx := view.BackgroundContext()
+		if ctx.Err() != nil {
+			s.log.Errorf(ctx, "canceling diagnostics for %s: %v", uri, ctx.Err())
+			return
+		}
+
+		s.log.Debugf(ctx, "cacheAndDiagnose: going to get diagnostics for %s", uri)
+
+		reports, err := source.Diagnostics(ctx, view, uri)
+		if err != nil {
+			s.log.Errorf(ctx, "failed to compute diagnostics for %s: %v", uri, err)
+			return
+>>>>>>> v0.0.4
 		}
 
 		s.undeliveredMu.Lock()
 		defer s.undeliveredMu.Unlock()
 
+<<<<<<< HEAD
+=======
+		s.log.Debugf(ctx, "cacheAndDiagnose: publishing diagnostics")
+
+>>>>>>> v0.0.4
 		for uri, diagnostics := range reports {
 			if err := s.publishDiagnostics(ctx, view, uri, diagnostics); err != nil {
 				if s.undelivered == nil {
@@ -43,6 +75,12 @@ func (s *Server) cacheAndDiagnose(ctx context.Context, uri span.URI, content str
 			// In case we had old, undelivered diagnostics.
 			delete(s.undelivered, uri)
 		}
+<<<<<<< HEAD
+=======
+
+		s.log.Debugf(ctx, "cacheAndDiagnose: publishing undelivered diagnostics")
+
+>>>>>>> v0.0.4
 		// Anytime we compute diagnostics, make sure to also send along any
 		// undelivered ones (only for remaining URIs).
 		for uri, diagnostics := range s.undelivered {
@@ -52,6 +90,11 @@ func (s *Server) cacheAndDiagnose(ctx context.Context, uri span.URI, content str
 			delete(s.undelivered, uri)
 		}
 	}()
+<<<<<<< HEAD
+=======
+
+	s.log.Debugf(ctx, "cacheAndDiagnose: returned from diagnostics for %s", uri)
+>>>>>>> v0.0.4
 	return nil
 }
 
@@ -74,10 +117,13 @@ func toProtocolDiagnostics(ctx context.Context, v source.View, diagnostics []sou
 		if err != nil {
 			return nil, err
 		}
+<<<<<<< HEAD
 		src := diag.Source
 		if src == "" {
 			src = "LSP"
 		}
+=======
+>>>>>>> v0.0.4
 		var severity protocol.DiagnosticSeverity
 		switch diag.Severity {
 		case source.SeverityError:
@@ -93,11 +139,16 @@ func toProtocolDiagnostics(ctx context.Context, v source.View, diagnostics []sou
 			Message:  diag.Message,
 			Range:    rng,
 			Severity: severity,
+<<<<<<< HEAD
 			Source:   src,
+=======
+			Source:   diag.Source,
+>>>>>>> v0.0.4
 		})
 	}
 	return reports, nil
 }
+<<<<<<< HEAD
 
 func sorted(d []protocol.Diagnostic) {
 	sort.Slice(d, func(i int, j int) bool {
@@ -110,3 +161,5 @@ func sorted(d []protocol.Diagnostic) {
 		return d[i].Range.Start.Line < d[j].Range.Start.Line
 	})
 }
+=======
+>>>>>>> v0.0.4

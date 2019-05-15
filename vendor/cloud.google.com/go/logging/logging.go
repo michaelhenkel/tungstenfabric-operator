@@ -273,12 +273,26 @@ func detectResource() *mrpb.MonitoredResource {
 		if err != nil {
 			return
 		}
+<<<<<<< HEAD
 		detectedResource.pb = &mrpb.MonitoredResource{
 			Type: "gce_instance",
 			Labels: map[string]string{
 				"project_id":  projectID,
 				"instance_id": id,
 				"zone":        zone,
+=======
+		name, err := metadata.InstanceName()
+		if err != nil {
+			return
+		}
+		detectedResource.pb = &mrpb.MonitoredResource{
+			Type: "gce_instance",
+			Labels: map[string]string{
+				"project_id":    projectID,
+				"instance_id":   id,
+				"instance_name": name,
+				"zone":          zone,
+>>>>>>> v0.0.4
 			},
 		}
 	})

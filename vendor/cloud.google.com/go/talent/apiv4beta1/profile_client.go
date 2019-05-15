@@ -18,6 +18,10 @@ package talent
 
 import (
 	"context"
+<<<<<<< HEAD
+=======
+	"fmt"
+>>>>>>> v0.0.4
 	"math"
 	"time"
 
@@ -132,7 +136,12 @@ func (c *ProfileClient) setGoogleClientInfo(keyval ...string) {
 
 // ListProfiles lists profiles by filter. The order is unspecified.
 func (c *ProfileClient) ListProfiles(ctx context.Context, req *talentpb.ListProfilesRequest, opts ...gax.CallOption) *ProfileIterator {
+<<<<<<< HEAD
 	ctx = insertMetadata(ctx, c.xGoogMetadata)
+=======
+	md := metadata.Pairs("x-goog-request-params", fmt.Sprintf("%s=%v", "parent", req.GetParent()))
+	ctx = insertMetadata(ctx, c.xGoogMetadata, md)
+>>>>>>> v0.0.4
 	opts = append(c.CallOptions.ListProfiles[0:len(c.CallOptions.ListProfiles):len(c.CallOptions.ListProfiles)], opts...)
 	it := &ProfileIterator{}
 	req = proto.Clone(req).(*talentpb.ListProfilesRequest)
@@ -169,7 +178,12 @@ func (c *ProfileClient) ListProfiles(ctx context.Context, req *talentpb.ListProf
 
 // CreateProfile creates and returns a new profile.
 func (c *ProfileClient) CreateProfile(ctx context.Context, req *talentpb.CreateProfileRequest, opts ...gax.CallOption) (*talentpb.Profile, error) {
+<<<<<<< HEAD
 	ctx = insertMetadata(ctx, c.xGoogMetadata)
+=======
+	md := metadata.Pairs("x-goog-request-params", fmt.Sprintf("%s=%v", "parent", req.GetParent()))
+	ctx = insertMetadata(ctx, c.xGoogMetadata, md)
+>>>>>>> v0.0.4
 	opts = append(c.CallOptions.CreateProfile[0:len(c.CallOptions.CreateProfile):len(c.CallOptions.CreateProfile)], opts...)
 	var resp *talentpb.Profile
 	err := gax.Invoke(ctx, func(ctx context.Context, settings gax.CallSettings) error {
@@ -185,7 +199,12 @@ func (c *ProfileClient) CreateProfile(ctx context.Context, req *talentpb.CreateP
 
 // GetProfile gets the specified profile.
 func (c *ProfileClient) GetProfile(ctx context.Context, req *talentpb.GetProfileRequest, opts ...gax.CallOption) (*talentpb.Profile, error) {
+<<<<<<< HEAD
 	ctx = insertMetadata(ctx, c.xGoogMetadata)
+=======
+	md := metadata.Pairs("x-goog-request-params", fmt.Sprintf("%s=%v", "name", req.GetName()))
+	ctx = insertMetadata(ctx, c.xGoogMetadata, md)
+>>>>>>> v0.0.4
 	opts = append(c.CallOptions.GetProfile[0:len(c.CallOptions.GetProfile):len(c.CallOptions.GetProfile)], opts...)
 	var resp *talentpb.Profile
 	err := gax.Invoke(ctx, func(ctx context.Context, settings gax.CallSettings) error {
@@ -201,7 +220,12 @@ func (c *ProfileClient) GetProfile(ctx context.Context, req *talentpb.GetProfile
 
 // UpdateProfile updates the specified profile and returns the updated result.
 func (c *ProfileClient) UpdateProfile(ctx context.Context, req *talentpb.UpdateProfileRequest, opts ...gax.CallOption) (*talentpb.Profile, error) {
+<<<<<<< HEAD
 	ctx = insertMetadata(ctx, c.xGoogMetadata)
+=======
+	md := metadata.Pairs("x-goog-request-params", fmt.Sprintf("%s=%v", "profile.name", req.GetProfile().GetName()))
+	ctx = insertMetadata(ctx, c.xGoogMetadata, md)
+>>>>>>> v0.0.4
 	opts = append(c.CallOptions.UpdateProfile[0:len(c.CallOptions.UpdateProfile):len(c.CallOptions.UpdateProfile)], opts...)
 	var resp *talentpb.Profile
 	err := gax.Invoke(ctx, func(ctx context.Context, settings gax.CallSettings) error {
@@ -216,8 +240,16 @@ func (c *ProfileClient) UpdateProfile(ctx context.Context, req *talentpb.UpdateP
 }
 
 // DeleteProfile deletes the specified profile.
+<<<<<<< HEAD
 func (c *ProfileClient) DeleteProfile(ctx context.Context, req *talentpb.DeleteProfileRequest, opts ...gax.CallOption) error {
 	ctx = insertMetadata(ctx, c.xGoogMetadata)
+=======
+// Prerequisite: The profile has no associated applications or assignments
+// associated.
+func (c *ProfileClient) DeleteProfile(ctx context.Context, req *talentpb.DeleteProfileRequest, opts ...gax.CallOption) error {
+	md := metadata.Pairs("x-goog-request-params", fmt.Sprintf("%s=%v", "name", req.GetName()))
+	ctx = insertMetadata(ctx, c.xGoogMetadata, md)
+>>>>>>> v0.0.4
 	opts = append(c.CallOptions.DeleteProfile[0:len(c.CallOptions.DeleteProfile):len(c.CallOptions.DeleteProfile)], opts...)
 	err := gax.Invoke(ctx, func(ctx context.Context, settings gax.CallSettings) error {
 		var err error
@@ -236,7 +268,12 @@ func (c *ProfileClient) DeleteProfile(ctx context.Context, req *talentpb.DeleteP
 // [SearchProfilesRequest][google.cloud.talent.v4beta1.SearchProfilesRequest]
 // for more information.
 func (c *ProfileClient) SearchProfiles(ctx context.Context, req *talentpb.SearchProfilesRequest, opts ...gax.CallOption) *HistogramQueryResultIterator {
+<<<<<<< HEAD
 	ctx = insertMetadata(ctx, c.xGoogMetadata)
+=======
+	md := metadata.Pairs("x-goog-request-params", fmt.Sprintf("%s=%v", "parent", req.GetParent()))
+	ctx = insertMetadata(ctx, c.xGoogMetadata, md)
+>>>>>>> v0.0.4
 	opts = append(c.CallOptions.SearchProfiles[0:len(c.CallOptions.SearchProfiles):len(c.CallOptions.SearchProfiles)], opts...)
 	it := &HistogramQueryResultIterator{}
 	req = proto.Clone(req).(*talentpb.SearchProfilesRequest)

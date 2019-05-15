@@ -19,4 +19,15 @@ func _() {
 	}
 }
 
+<<<<<<< HEAD
+=======
+func _() {
+	shadowed := 123
+	{
+		shadowed := "hi" //@item(shadowed, "shadowed", "string", "var")
+		sha              //@complete("a", shadowed)
+	}
+}
+
+>>>>>>> v0.0.4
 type IntFoo int //@item(IntFoo, "IntFoo", "int", "type"),complete("", Foo, IntFoo, StructFoo)

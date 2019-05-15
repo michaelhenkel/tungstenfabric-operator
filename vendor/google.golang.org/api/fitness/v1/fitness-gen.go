@@ -803,8 +803,13 @@ type DataSource struct {
 	// number:device.manufacturer:device.model:device.uid:dataStreamName
 	//
 	//
+<<<<<<< HEAD
 	// When any of the optional fields that comprise of the data stream ID
 	// are blank, they will be omitted from the data stream ID. The minimum
+=======
+	// When any of the optional fields that make up the data stream ID are
+	// absent, they will be omitted from the data stream ID. The minimum
+>>>>>>> v0.0.4
 	// viable data stream ID would be: type:dataType.name:developer project
 	// number
 	//

@@ -164,7 +164,11 @@ type AudioConfig struct {
 	//   "LINEAR16" - Uncompressed 16-bit signed little-endian samples
 	// (Linear PCM).
 	// Audio content returned as LINEAR16 also contains a WAV header.
+<<<<<<< HEAD
 	//   "MP3" - MP3 audio.
+=======
+	//   "MP3" - MP3 audio at 32kbps.
+>>>>>>> v0.0.4
 	//   "OGG_OPUS" - Opus encoded audio wrapped in an ogg container. The
 	// result will be a
 	// file which can be played natively on Android, and in browsers (at

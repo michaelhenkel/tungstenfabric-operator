@@ -33,6 +33,10 @@ func (p *Playbook) GetInput() (input.Input, error) {
 		p.Path = PlaybookYamlFile
 	}
 	p.TemplateBody = playbookTmpl
+<<<<<<< HEAD
+=======
+	p.Delims = AnsibleDelims
+>>>>>>> v0.0.4
 	return p.Input, nil
 }
 
@@ -40,5 +44,9 @@ const playbookTmpl = `- hosts: localhost
   gather_facts: no
   tasks:
   - import_role:
+<<<<<<< HEAD
       name: "{{.Resource.LowerKind}}"
+=======
+      name: "[[.Resource.LowerKind]]"
+>>>>>>> v0.0.4
 `

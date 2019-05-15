@@ -1173,9 +1173,14 @@ func (s *GoogleCloudServicebrokerV1beta1__UpdateServiceInstanceResponse) Marshal
 
 // GoogleIamV1__Binding: Associates `members` with a `role`.
 type GoogleIamV1__Binding struct {
+<<<<<<< HEAD
 	// Condition: Unimplemented. The condition that is associated with this
 	// binding.
 	// NOTE: an unsatisfied condition will not allow user access via
+=======
+	// Condition: The condition that is associated with this binding.
+	// NOTE: An unsatisfied condition will not allow user access via
+>>>>>>> v0.0.4
 	// current
 	// binding. Different bindings, including their conditions, are
 	// examined
@@ -1209,7 +1214,11 @@ type GoogleIamV1__Binding struct {
 	//    For example, `admins@example.com`.
 	//
 	//
+<<<<<<< HEAD
 	// * `domain:{domain}`: A Google Apps domain name that represents all
+=======
+	// * `domain:{domain}`: The G Suite domain (primary) that represents all
+>>>>>>> v0.0.4
 	// the
 	//    users of that domain. For example, `google.com` or
 	// `example.com`.

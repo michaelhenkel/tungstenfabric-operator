@@ -28,19 +28,31 @@ var _ = math.Inf
 // proto package needs to be updated.
 const _ = proto.ProtoPackageIsVersion2 // please upgrade the proto package
 
+<<<<<<< HEAD
 // Request message for
 // [ListQueues][google.cloud.tasks.v2beta3.CloudTasks.ListQueues].
+=======
+// Request message for [ListQueues][google.cloud.tasks.v2beta3.CloudTasks.ListQueues].
+>>>>>>> v0.0.4
 type ListQueuesRequest struct {
 	// Required.
 	//
 	// The location name.
 	// For example: `projects/PROJECT_ID/locations/LOCATION_ID`
 	Parent string `protobuf:"bytes,1,opt,name=parent,proto3" json:"parent,omitempty"`
+<<<<<<< HEAD
 	// `filter` can be used to specify a subset of queues. Any
 	// [Queue][google.cloud.tasks.v2beta3.Queue] field can be used as a filter and
 	// several operators as supported. For example: `<=, <, >=, >, !=, =, :`. The
 	// filter syntax is the same as described in [Stackdriver's Advanced Logs
 	// Filters](https://cloud.google.com/logging/docs/view/advanced_filters).
+=======
+	// `filter` can be used to specify a subset of queues. Any [Queue][google.cloud.tasks.v2beta3.Queue]
+	// field can be used as a filter and several operators as supported.
+	// For example: `<=, <, >=, >, !=, =, :`. The filter syntax is the same as
+	// described in
+	// [Stackdriver's Advanced Logs Filters](https://cloud.google.com/logging/docs/view/advanced_filters).
+>>>>>>> v0.0.4
 	//
 	// Sample filter "state: PAUSED".
 	//
@@ -52,19 +64,31 @@ type ListQueuesRequest struct {
 	// The maximum page size is 9800. If unspecified, the page size will
 	// be the maximum. Fewer queues than requested might be returned,
 	// even if more queues exist; use the
+<<<<<<< HEAD
 	// [next_page_token][google.cloud.tasks.v2beta3.ListQueuesResponse.next_page_token]
 	// in the response to determine if more queues exist.
+=======
+	// [next_page_token][google.cloud.tasks.v2beta3.ListQueuesResponse.next_page_token] in the
+	// response to determine if more queues exist.
+>>>>>>> v0.0.4
 	PageSize int32 `protobuf:"varint,3,opt,name=page_size,json=pageSize,proto3" json:"page_size,omitempty"`
 	// A token identifying the page of results to return.
 	//
 	// To request the first page results, page_token must be empty. To
 	// request the next page of results, page_token must be the value of
+<<<<<<< HEAD
 	// [next_page_token][google.cloud.tasks.v2beta3.ListQueuesResponse.next_page_token]
 	// returned from the previous call to
 	// [ListQueues][google.cloud.tasks.v2beta3.CloudTasks.ListQueues] method. It
 	// is an error to switch the value of the
 	// [filter][google.cloud.tasks.v2beta3.ListQueuesRequest.filter] while
 	// iterating through pages.
+=======
+	// [next_page_token][google.cloud.tasks.v2beta3.ListQueuesResponse.next_page_token] returned
+	// from the previous call to [ListQueues][google.cloud.tasks.v2beta3.CloudTasks.ListQueues]
+	// method. It is an error to switch the value of the
+	// [filter][google.cloud.tasks.v2beta3.ListQueuesRequest.filter] while iterating through pages.
+>>>>>>> v0.0.4
 	PageToken            string   `protobuf:"bytes,4,opt,name=page_token,json=pageToken,proto3" json:"page_token,omitempty"`
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
 	XXX_unrecognized     []byte   `json:"-"`
@@ -75,7 +99,11 @@ func (m *ListQueuesRequest) Reset()         { *m = ListQueuesRequest{} }
 func (m *ListQueuesRequest) String() string { return proto.CompactTextString(m) }
 func (*ListQueuesRequest) ProtoMessage()    {}
 func (*ListQueuesRequest) Descriptor() ([]byte, []int) {
+<<<<<<< HEAD
 	return fileDescriptor_cloudtasks_0f88a2f058f94f30, []int{0}
+=======
+	return fileDescriptor_cloudtasks_f6e506220ff6a157, []int{0}
+>>>>>>> v0.0.4
 }
 func (m *ListQueuesRequest) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_ListQueuesRequest.Unmarshal(m, b)
@@ -123,16 +151,24 @@ func (m *ListQueuesRequest) GetPageToken() string {
 	return ""
 }
 
+<<<<<<< HEAD
 // Response message for
 // [ListQueues][google.cloud.tasks.v2beta3.CloudTasks.ListQueues].
+=======
+// Response message for [ListQueues][google.cloud.tasks.v2beta3.CloudTasks.ListQueues].
+>>>>>>> v0.0.4
 type ListQueuesResponse struct {
 	// The list of queues.
 	Queues []*Queue `protobuf:"bytes,1,rep,name=queues,proto3" json:"queues,omitempty"`
 	// A token to retrieve next page of results.
 	//
 	// To return the next page of results, call
+<<<<<<< HEAD
 	// [ListQueues][google.cloud.tasks.v2beta3.CloudTasks.ListQueues] with this
 	// value as the
+=======
+	// [ListQueues][google.cloud.tasks.v2beta3.CloudTasks.ListQueues] with this value as the
+>>>>>>> v0.0.4
 	// [page_token][google.cloud.tasks.v2beta3.ListQueuesRequest.page_token].
 	//
 	// If the next_page_token is empty, there are no more results.
@@ -148,7 +184,11 @@ func (m *ListQueuesResponse) Reset()         { *m = ListQueuesResponse{} }
 func (m *ListQueuesResponse) String() string { return proto.CompactTextString(m) }
 func (*ListQueuesResponse) ProtoMessage()    {}
 func (*ListQueuesResponse) Descriptor() ([]byte, []int) {
+<<<<<<< HEAD
 	return fileDescriptor_cloudtasks_0f88a2f058f94f30, []int{1}
+=======
+	return fileDescriptor_cloudtasks_f6e506220ff6a157, []int{1}
+>>>>>>> v0.0.4
 }
 func (m *ListQueuesResponse) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_ListQueuesResponse.Unmarshal(m, b)
@@ -182,8 +222,12 @@ func (m *ListQueuesResponse) GetNextPageToken() string {
 	return ""
 }
 
+<<<<<<< HEAD
 // Request message for
 // [GetQueue][google.cloud.tasks.v2beta3.CloudTasks.GetQueue].
+=======
+// Request message for [GetQueue][google.cloud.tasks.v2beta3.CloudTasks.GetQueue].
+>>>>>>> v0.0.4
 type GetQueueRequest struct {
 	// Required.
 	//
@@ -199,7 +243,11 @@ func (m *GetQueueRequest) Reset()         { *m = GetQueueRequest{} }
 func (m *GetQueueRequest) String() string { return proto.CompactTextString(m) }
 func (*GetQueueRequest) ProtoMessage()    {}
 func (*GetQueueRequest) Descriptor() ([]byte, []int) {
+<<<<<<< HEAD
 	return fileDescriptor_cloudtasks_0f88a2f058f94f30, []int{2}
+=======
+	return fileDescriptor_cloudtasks_f6e506220ff6a157, []int{2}
+>>>>>>> v0.0.4
 }
 func (m *GetQueueRequest) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_GetQueueRequest.Unmarshal(m, b)
@@ -226,8 +274,12 @@ func (m *GetQueueRequest) GetName() string {
 	return ""
 }
 
+<<<<<<< HEAD
 // Request message for
 // [CreateQueue][google.cloud.tasks.v2beta3.CloudTasks.CreateQueue].
+=======
+// Request message for [CreateQueue][google.cloud.tasks.v2beta3.CloudTasks.CreateQueue].
+>>>>>>> v0.0.4
 type CreateQueueRequest struct {
 	// Required.
 	//
@@ -242,8 +294,12 @@ type CreateQueueRequest struct {
 	//
 	// The queue to create.
 	//
+<<<<<<< HEAD
 	// [Queue's name][google.cloud.tasks.v2beta3.Queue.name] cannot be the same as
 	// an existing queue.
+=======
+	// [Queue's name][google.cloud.tasks.v2beta3.Queue.name] cannot be the same as an existing queue.
+>>>>>>> v0.0.4
 	Queue                *Queue   `protobuf:"bytes,2,opt,name=queue,proto3" json:"queue,omitempty"`
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
 	XXX_unrecognized     []byte   `json:"-"`
@@ -254,7 +310,11 @@ func (m *CreateQueueRequest) Reset()         { *m = CreateQueueRequest{} }
 func (m *CreateQueueRequest) String() string { return proto.CompactTextString(m) }
 func (*CreateQueueRequest) ProtoMessage()    {}
 func (*CreateQueueRequest) Descriptor() ([]byte, []int) {
+<<<<<<< HEAD
 	return fileDescriptor_cloudtasks_0f88a2f058f94f30, []int{3}
+=======
+	return fileDescriptor_cloudtasks_f6e506220ff6a157, []int{3}
+>>>>>>> v0.0.4
 }
 func (m *CreateQueueRequest) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_CreateQueueRequest.Unmarshal(m, b)
@@ -288,13 +348,18 @@ func (m *CreateQueueRequest) GetQueue() *Queue {
 	return nil
 }
 
+<<<<<<< HEAD
 // Request message for
 // [UpdateQueue][google.cloud.tasks.v2beta3.CloudTasks.UpdateQueue].
+=======
+// Request message for [UpdateQueue][google.cloud.tasks.v2beta3.CloudTasks.UpdateQueue].
+>>>>>>> v0.0.4
 type UpdateQueueRequest struct {
 	// Required.
 	//
 	// The queue to create or update.
 	//
+<<<<<<< HEAD
 	// The queue's [name][google.cloud.tasks.v2beta3.Queue.name] must be
 	// specified.
 	//
@@ -302,6 +367,13 @@ type UpdateQueueRequest struct {
 	// Any value specified for an output only field will be ignored.
 	// The queue's [name][google.cloud.tasks.v2beta3.Queue.name] cannot be
 	// changed.
+=======
+	// The queue's [name][google.cloud.tasks.v2beta3.Queue.name] must be specified.
+	//
+	// Output only fields cannot be modified using UpdateQueue.
+	// Any value specified for an output only field will be ignored.
+	// The queue's [name][google.cloud.tasks.v2beta3.Queue.name] cannot be changed.
+>>>>>>> v0.0.4
 	Queue *Queue `protobuf:"bytes,1,opt,name=queue,proto3" json:"queue,omitempty"`
 	// A mask used to specify which fields of the queue are being updated.
 	//
@@ -316,7 +388,11 @@ func (m *UpdateQueueRequest) Reset()         { *m = UpdateQueueRequest{} }
 func (m *UpdateQueueRequest) String() string { return proto.CompactTextString(m) }
 func (*UpdateQueueRequest) ProtoMessage()    {}
 func (*UpdateQueueRequest) Descriptor() ([]byte, []int) {
+<<<<<<< HEAD
 	return fileDescriptor_cloudtasks_0f88a2f058f94f30, []int{4}
+=======
+	return fileDescriptor_cloudtasks_f6e506220ff6a157, []int{4}
+>>>>>>> v0.0.4
 }
 func (m *UpdateQueueRequest) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_UpdateQueueRequest.Unmarshal(m, b)
@@ -350,8 +426,12 @@ func (m *UpdateQueueRequest) GetUpdateMask() *field_mask.FieldMask {
 	return nil
 }
 
+<<<<<<< HEAD
 // Request message for
 // [DeleteQueue][google.cloud.tasks.v2beta3.CloudTasks.DeleteQueue].
+=======
+// Request message for [DeleteQueue][google.cloud.tasks.v2beta3.CloudTasks.DeleteQueue].
+>>>>>>> v0.0.4
 type DeleteQueueRequest struct {
 	// Required.
 	//
@@ -367,7 +447,11 @@ func (m *DeleteQueueRequest) Reset()         { *m = DeleteQueueRequest{} }
 func (m *DeleteQueueRequest) String() string { return proto.CompactTextString(m) }
 func (*DeleteQueueRequest) ProtoMessage()    {}
 func (*DeleteQueueRequest) Descriptor() ([]byte, []int) {
+<<<<<<< HEAD
 	return fileDescriptor_cloudtasks_0f88a2f058f94f30, []int{5}
+=======
+	return fileDescriptor_cloudtasks_f6e506220ff6a157, []int{5}
+>>>>>>> v0.0.4
 }
 func (m *DeleteQueueRequest) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_DeleteQueueRequest.Unmarshal(m, b)
@@ -394,8 +478,12 @@ func (m *DeleteQueueRequest) GetName() string {
 	return ""
 }
 
+<<<<<<< HEAD
 // Request message for
 // [PurgeQueue][google.cloud.tasks.v2beta3.CloudTasks.PurgeQueue].
+=======
+// Request message for [PurgeQueue][google.cloud.tasks.v2beta3.CloudTasks.PurgeQueue].
+>>>>>>> v0.0.4
 type PurgeQueueRequest struct {
 	// Required.
 	//
@@ -411,7 +499,11 @@ func (m *PurgeQueueRequest) Reset()         { *m = PurgeQueueRequest{} }
 func (m *PurgeQueueRequest) String() string { return proto.CompactTextString(m) }
 func (*PurgeQueueRequest) ProtoMessage()    {}
 func (*PurgeQueueRequest) Descriptor() ([]byte, []int) {
+<<<<<<< HEAD
 	return fileDescriptor_cloudtasks_0f88a2f058f94f30, []int{6}
+=======
+	return fileDescriptor_cloudtasks_f6e506220ff6a157, []int{6}
+>>>>>>> v0.0.4
 }
 func (m *PurgeQueueRequest) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_PurgeQueueRequest.Unmarshal(m, b)
@@ -438,8 +530,12 @@ func (m *PurgeQueueRequest) GetName() string {
 	return ""
 }
 
+<<<<<<< HEAD
 // Request message for
 // [PauseQueue][google.cloud.tasks.v2beta3.CloudTasks.PauseQueue].
+=======
+// Request message for [PauseQueue][google.cloud.tasks.v2beta3.CloudTasks.PauseQueue].
+>>>>>>> v0.0.4
 type PauseQueueRequest struct {
 	// Required.
 	//
@@ -455,7 +551,11 @@ func (m *PauseQueueRequest) Reset()         { *m = PauseQueueRequest{} }
 func (m *PauseQueueRequest) String() string { return proto.CompactTextString(m) }
 func (*PauseQueueRequest) ProtoMessage()    {}
 func (*PauseQueueRequest) Descriptor() ([]byte, []int) {
+<<<<<<< HEAD
 	return fileDescriptor_cloudtasks_0f88a2f058f94f30, []int{7}
+=======
+	return fileDescriptor_cloudtasks_f6e506220ff6a157, []int{7}
+>>>>>>> v0.0.4
 }
 func (m *PauseQueueRequest) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_PauseQueueRequest.Unmarshal(m, b)
@@ -482,8 +582,12 @@ func (m *PauseQueueRequest) GetName() string {
 	return ""
 }
 
+<<<<<<< HEAD
 // Request message for
 // [ResumeQueue][google.cloud.tasks.v2beta3.CloudTasks.ResumeQueue].
+=======
+// Request message for [ResumeQueue][google.cloud.tasks.v2beta3.CloudTasks.ResumeQueue].
+>>>>>>> v0.0.4
 type ResumeQueueRequest struct {
 	// Required.
 	//
@@ -499,7 +603,11 @@ func (m *ResumeQueueRequest) Reset()         { *m = ResumeQueueRequest{} }
 func (m *ResumeQueueRequest) String() string { return proto.CompactTextString(m) }
 func (*ResumeQueueRequest) ProtoMessage()    {}
 func (*ResumeQueueRequest) Descriptor() ([]byte, []int) {
+<<<<<<< HEAD
 	return fileDescriptor_cloudtasks_0f88a2f058f94f30, []int{8}
+=======
+	return fileDescriptor_cloudtasks_f6e506220ff6a157, []int{8}
+>>>>>>> v0.0.4
 }
 func (m *ResumeQueueRequest) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_ResumeQueueRequest.Unmarshal(m, b)
@@ -526,14 +634,19 @@ func (m *ResumeQueueRequest) GetName() string {
 	return ""
 }
 
+<<<<<<< HEAD
 // Request message for listing tasks using
 // [ListTasks][google.cloud.tasks.v2beta3.CloudTasks.ListTasks].
+=======
+// Request message for listing tasks using [ListTasks][google.cloud.tasks.v2beta3.CloudTasks.ListTasks].
+>>>>>>> v0.0.4
 type ListTasksRequest struct {
 	// Required.
 	//
 	// The queue name. For example:
 	// `projects/PROJECT_ID/locations/LOCATION_ID/queues/QUEUE_ID`
 	Parent string `protobuf:"bytes,1,opt,name=parent,proto3" json:"parent,omitempty"`
+<<<<<<< HEAD
 	// The response_view specifies which subset of the
 	// [Task][google.cloud.tasks.v2beta3.Task] will be returned.
 	//
@@ -547,22 +660,47 @@ type ListTasksRequest struct {
 	// requires `cloudtasks.tasks.fullView` [Google
 	// IAM](https://cloud.google.com/iam/) permission on the
 	// [Task][google.cloud.tasks.v2beta3.Task] resource.
+=======
+	// The response_view specifies which subset of the [Task][google.cloud.tasks.v2beta3.Task] will be
+	// returned.
+	//
+	// By default response_view is [BASIC][google.cloud.tasks.v2beta3.Task.View.BASIC]; not all
+	// information is retrieved by default because some data, such as
+	// payloads, might be desirable to return only when needed because
+	// of its large size or because of the sensitivity of data that it
+	// contains.
+	//
+	// Authorization for [FULL][google.cloud.tasks.v2beta3.Task.View.FULL] requires
+	// `cloudtasks.tasks.fullView` [Google IAM](https://cloud.google.com/iam/)
+	// permission on the [Task][google.cloud.tasks.v2beta3.Task] resource.
+>>>>>>> v0.0.4
 	ResponseView Task_View `protobuf:"varint,2,opt,name=response_view,json=responseView,proto3,enum=google.cloud.tasks.v2beta3.Task_View" json:"response_view,omitempty"`
 	// Requested page size. Fewer tasks than requested might be returned.
 	//
 	// The maximum page size is 1000. If unspecified, the page size will
 	// be the maximum. Fewer tasks than requested might be returned,
 	// even if more tasks exist; use
+<<<<<<< HEAD
 	// [next_page_token][google.cloud.tasks.v2beta3.ListTasksResponse.next_page_token]
 	// in the response to determine if more tasks exist.
+=======
+	// [next_page_token][google.cloud.tasks.v2beta3.ListTasksResponse.next_page_token] in the
+	// response to determine if more tasks exist.
+>>>>>>> v0.0.4
 	PageSize int32 `protobuf:"varint,3,opt,name=page_size,json=pageSize,proto3" json:"page_size,omitempty"`
 	// A token identifying the page of results to return.
 	//
 	// To request the first page results, page_token must be empty. To
 	// request the next page of results, page_token must be the value of
+<<<<<<< HEAD
 	// [next_page_token][google.cloud.tasks.v2beta3.ListTasksResponse.next_page_token]
 	// returned from the previous call to
 	// [ListTasks][google.cloud.tasks.v2beta3.CloudTasks.ListTasks] method.
+=======
+	// [next_page_token][google.cloud.tasks.v2beta3.ListTasksResponse.next_page_token] returned
+	// from the previous call to [ListTasks][google.cloud.tasks.v2beta3.CloudTasks.ListTasks]
+	// method.
+>>>>>>> v0.0.4
 	//
 	// The page token is valid for only 2 hours.
 	PageToken            string   `protobuf:"bytes,4,opt,name=page_token,json=pageToken,proto3" json:"page_token,omitempty"`
@@ -575,7 +713,11 @@ func (m *ListTasksRequest) Reset()         { *m = ListTasksRequest{} }
 func (m *ListTasksRequest) String() string { return proto.CompactTextString(m) }
 func (*ListTasksRequest) ProtoMessage()    {}
 func (*ListTasksRequest) Descriptor() ([]byte, []int) {
+<<<<<<< HEAD
 	return fileDescriptor_cloudtasks_0f88a2f058f94f30, []int{9}
+=======
+	return fileDescriptor_cloudtasks_f6e506220ff6a157, []int{9}
+>>>>>>> v0.0.4
 }
 func (m *ListTasksRequest) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_ListTasksRequest.Unmarshal(m, b)
@@ -623,16 +765,24 @@ func (m *ListTasksRequest) GetPageToken() string {
 	return ""
 }
 
+<<<<<<< HEAD
 // Response message for listing tasks using
 // [ListTasks][google.cloud.tasks.v2beta3.CloudTasks.ListTasks].
+=======
+// Response message for listing tasks using [ListTasks][google.cloud.tasks.v2beta3.CloudTasks.ListTasks].
+>>>>>>> v0.0.4
 type ListTasksResponse struct {
 	// The list of tasks.
 	Tasks []*Task `protobuf:"bytes,1,rep,name=tasks,proto3" json:"tasks,omitempty"`
 	// A token to retrieve next page of results.
 	//
 	// To return the next page of results, call
+<<<<<<< HEAD
 	// [ListTasks][google.cloud.tasks.v2beta3.CloudTasks.ListTasks] with this
 	// value as the
+=======
+	// [ListTasks][google.cloud.tasks.v2beta3.CloudTasks.ListTasks] with this value as the
+>>>>>>> v0.0.4
 	// [page_token][google.cloud.tasks.v2beta3.ListTasksRequest.page_token].
 	//
 	// If the next_page_token is empty, there are no more results.
@@ -646,7 +796,11 @@ func (m *ListTasksResponse) Reset()         { *m = ListTasksResponse{} }
 func (m *ListTasksResponse) String() string { return proto.CompactTextString(m) }
 func (*ListTasksResponse) ProtoMessage()    {}
 func (*ListTasksResponse) Descriptor() ([]byte, []int) {
+<<<<<<< HEAD
 	return fileDescriptor_cloudtasks_0f88a2f058f94f30, []int{10}
+=======
+	return fileDescriptor_cloudtasks_f6e506220ff6a157, []int{10}
+>>>>>>> v0.0.4
 }
 func (m *ListTasksResponse) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_ListTasksResponse.Unmarshal(m, b)
@@ -680,14 +834,19 @@ func (m *ListTasksResponse) GetNextPageToken() string {
 	return ""
 }
 
+<<<<<<< HEAD
 // Request message for getting a task using
 // [GetTask][google.cloud.tasks.v2beta3.CloudTasks.GetTask].
+=======
+// Request message for getting a task using [GetTask][google.cloud.tasks.v2beta3.CloudTasks.GetTask].
+>>>>>>> v0.0.4
 type GetTaskRequest struct {
 	// Required.
 	//
 	// The task name. For example:
 	// `projects/PROJECT_ID/locations/LOCATION_ID/queues/QUEUE_ID/tasks/TASK_ID`
 	Name string `protobuf:"bytes,1,opt,name=name,proto3" json:"name,omitempty"`
+<<<<<<< HEAD
 	// The response_view specifies which subset of the
 	// [Task][google.cloud.tasks.v2beta3.Task] will be returned.
 	//
@@ -701,6 +860,20 @@ type GetTaskRequest struct {
 	// requires `cloudtasks.tasks.fullView` [Google
 	// IAM](https://cloud.google.com/iam/) permission on the
 	// [Task][google.cloud.tasks.v2beta3.Task] resource.
+=======
+	// The response_view specifies which subset of the [Task][google.cloud.tasks.v2beta3.Task] will be
+	// returned.
+	//
+	// By default response_view is [BASIC][google.cloud.tasks.v2beta3.Task.View.BASIC]; not all
+	// information is retrieved by default because some data, such as
+	// payloads, might be desirable to return only when needed because
+	// of its large size or because of the sensitivity of data that it
+	// contains.
+	//
+	// Authorization for [FULL][google.cloud.tasks.v2beta3.Task.View.FULL] requires
+	// `cloudtasks.tasks.fullView` [Google IAM](https://cloud.google.com/iam/)
+	// permission on the [Task][google.cloud.tasks.v2beta3.Task] resource.
+>>>>>>> v0.0.4
 	ResponseView         Task_View `protobuf:"varint,2,opt,name=response_view,json=responseView,proto3,enum=google.cloud.tasks.v2beta3.Task_View" json:"response_view,omitempty"`
 	XXX_NoUnkeyedLiteral struct{}  `json:"-"`
 	XXX_unrecognized     []byte    `json:"-"`
@@ -711,7 +884,11 @@ func (m *GetTaskRequest) Reset()         { *m = GetTaskRequest{} }
 func (m *GetTaskRequest) String() string { return proto.CompactTextString(m) }
 func (*GetTaskRequest) ProtoMessage()    {}
 func (*GetTaskRequest) Descriptor() ([]byte, []int) {
+<<<<<<< HEAD
 	return fileDescriptor_cloudtasks_0f88a2f058f94f30, []int{11}
+=======
+	return fileDescriptor_cloudtasks_f6e506220ff6a157, []int{11}
+>>>>>>> v0.0.4
 }
 func (m *GetTaskRequest) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_GetTaskRequest.Unmarshal(m, b)
@@ -745,8 +922,12 @@ func (m *GetTaskRequest) GetResponseView() Task_View {
 	return Task_VIEW_UNSPECIFIED
 }
 
+<<<<<<< HEAD
 // Request message for
 // [CreateTask][google.cloud.tasks.v2beta3.CloudTasks.CreateTask].
+=======
+// Request message for [CreateTask][google.cloud.tasks.v2beta3.CloudTasks.CreateTask].
+>>>>>>> v0.0.4
 type CreateTaskRequest struct {
 	// Required.
 	//
@@ -761,6 +942,7 @@ type CreateTaskRequest struct {
 	//
 	// Task names have the following format:
 	// `projects/PROJECT_ID/locations/LOCATION_ID/queues/QUEUE_ID/tasks/TASK_ID`.
+<<<<<<< HEAD
 	// The user can optionally specify a task
 	// [name][google.cloud.tasks.v2beta3.Task.name]. If a name is not specified
 	// then the system will generate a random unique task id, which will be set in
@@ -768,6 +950,15 @@ type CreateTaskRequest struct {
 	//
 	// If [schedule_time][google.cloud.tasks.v2beta3.Task.schedule_time] is not
 	// set or is in the past then Cloud Tasks will set it to the current time.
+=======
+	// The user can optionally specify a task [name][google.cloud.tasks.v2beta3.Task.name]. If a
+	// name is not specified then the system will generate a random
+	// unique task id, which will be set in the task returned in the
+	// [response][google.cloud.tasks.v2beta3.Task.name].
+	//
+	// If [schedule_time][google.cloud.tasks.v2beta3.Task.schedule_time] is not set or is in the
+	// past then Cloud Tasks will set it to the current time.
+>>>>>>> v0.0.4
 	//
 	// Task De-duplication:
 	//
@@ -782,15 +973,23 @@ type CreateTaskRequest struct {
 	// for ~9days after the original task was deleted or executed.
 	//
 	// Because there is an extra lookup cost to identify duplicate task
+<<<<<<< HEAD
 	// names, these [CreateTask][google.cloud.tasks.v2beta3.CloudTasks.CreateTask]
 	// calls have significantly increased latency. Using hashed strings for the
 	// task id or for the prefix of the task id is recommended. Choosing task ids
 	// that are sequential or have sequential prefixes, for example using a
+=======
+	// names, these [CreateTask][google.cloud.tasks.v2beta3.CloudTasks.CreateTask] calls have significantly
+	// increased latency. Using hashed strings for the task id or for
+	// the prefix of the task id is recommended. Choosing task ids that
+	// are sequential or have sequential prefixes, for example using a
+>>>>>>> v0.0.4
 	// timestamp, causes an increase in latency and error rates in all
 	// task commands. The infrastructure relies on an approximately
 	// uniform distribution of task ids to store and serve tasks
 	// efficiently.
 	Task *Task `protobuf:"bytes,2,opt,name=task,proto3" json:"task,omitempty"`
+<<<<<<< HEAD
 	// The response_view specifies which subset of the
 	// [Task][google.cloud.tasks.v2beta3.Task] will be returned.
 	//
@@ -804,6 +1003,20 @@ type CreateTaskRequest struct {
 	// requires `cloudtasks.tasks.fullView` [Google
 	// IAM](https://cloud.google.com/iam/) permission on the
 	// [Task][google.cloud.tasks.v2beta3.Task] resource.
+=======
+	// The response_view specifies which subset of the [Task][google.cloud.tasks.v2beta3.Task] will be
+	// returned.
+	//
+	// By default response_view is [BASIC][google.cloud.tasks.v2beta3.Task.View.BASIC]; not all
+	// information is retrieved by default because some data, such as
+	// payloads, might be desirable to return only when needed because
+	// of its large size or because of the sensitivity of data that it
+	// contains.
+	//
+	// Authorization for [FULL][google.cloud.tasks.v2beta3.Task.View.FULL] requires
+	// `cloudtasks.tasks.fullView` [Google IAM](https://cloud.google.com/iam/)
+	// permission on the [Task][google.cloud.tasks.v2beta3.Task] resource.
+>>>>>>> v0.0.4
 	ResponseView         Task_View `protobuf:"varint,3,opt,name=response_view,json=responseView,proto3,enum=google.cloud.tasks.v2beta3.Task_View" json:"response_view,omitempty"`
 	XXX_NoUnkeyedLiteral struct{}  `json:"-"`
 	XXX_unrecognized     []byte    `json:"-"`
@@ -814,7 +1027,11 @@ func (m *CreateTaskRequest) Reset()         { *m = CreateTaskRequest{} }
 func (m *CreateTaskRequest) String() string { return proto.CompactTextString(m) }
 func (*CreateTaskRequest) ProtoMessage()    {}
 func (*CreateTaskRequest) Descriptor() ([]byte, []int) {
+<<<<<<< HEAD
 	return fileDescriptor_cloudtasks_0f88a2f058f94f30, []int{12}
+=======
+	return fileDescriptor_cloudtasks_f6e506220ff6a157, []int{12}
+>>>>>>> v0.0.4
 }
 func (m *CreateTaskRequest) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_CreateTaskRequest.Unmarshal(m, b)
@@ -872,7 +1089,11 @@ func (m *DeleteTaskRequest) Reset()         { *m = DeleteTaskRequest{} }
 func (m *DeleteTaskRequest) String() string { return proto.CompactTextString(m) }
 func (*DeleteTaskRequest) ProtoMessage()    {}
 func (*DeleteTaskRequest) Descriptor() ([]byte, []int) {
+<<<<<<< HEAD
 	return fileDescriptor_cloudtasks_0f88a2f058f94f30, []int{13}
+=======
+	return fileDescriptor_cloudtasks_f6e506220ff6a157, []int{13}
+>>>>>>> v0.0.4
 }
 func (m *DeleteTaskRequest) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_DeleteTaskRequest.Unmarshal(m, b)
@@ -907,6 +1128,7 @@ type RunTaskRequest struct {
 	// The task name. For example:
 	// `projects/PROJECT_ID/locations/LOCATION_ID/queues/QUEUE_ID/tasks/TASK_ID`
 	Name string `protobuf:"bytes,1,opt,name=name,proto3" json:"name,omitempty"`
+<<<<<<< HEAD
 	// The response_view specifies which subset of the
 	// [Task][google.cloud.tasks.v2beta3.Task] will be returned.
 	//
@@ -920,6 +1142,20 @@ type RunTaskRequest struct {
 	// requires `cloudtasks.tasks.fullView` [Google
 	// IAM](https://cloud.google.com/iam/) permission on the
 	// [Task][google.cloud.tasks.v2beta3.Task] resource.
+=======
+	// The response_view specifies which subset of the [Task][google.cloud.tasks.v2beta3.Task] will be
+	// returned.
+	//
+	// By default response_view is [BASIC][google.cloud.tasks.v2beta3.Task.View.BASIC]; not all
+	// information is retrieved by default because some data, such as
+	// payloads, might be desirable to return only when needed because
+	// of its large size or because of the sensitivity of data that it
+	// contains.
+	//
+	// Authorization for [FULL][google.cloud.tasks.v2beta3.Task.View.FULL] requires
+	// `cloudtasks.tasks.fullView` [Google IAM](https://cloud.google.com/iam/)
+	// permission on the [Task][google.cloud.tasks.v2beta3.Task] resource.
+>>>>>>> v0.0.4
 	ResponseView         Task_View `protobuf:"varint,2,opt,name=response_view,json=responseView,proto3,enum=google.cloud.tasks.v2beta3.Task_View" json:"response_view,omitempty"`
 	XXX_NoUnkeyedLiteral struct{}  `json:"-"`
 	XXX_unrecognized     []byte    `json:"-"`
@@ -930,7 +1166,11 @@ func (m *RunTaskRequest) Reset()         { *m = RunTaskRequest{} }
 func (m *RunTaskRequest) String() string { return proto.CompactTextString(m) }
 func (*RunTaskRequest) ProtoMessage()    {}
 func (*RunTaskRequest) Descriptor() ([]byte, []int) {
+<<<<<<< HEAD
 	return fileDescriptor_cloudtasks_0f88a2f058f94f30, []int{14}
+=======
+	return fileDescriptor_cloudtasks_f6e506220ff6a157, []int{14}
+>>>>>>> v0.0.4
 }
 func (m *RunTaskRequest) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_RunTaskRequest.Unmarshal(m, b)
@@ -1003,15 +1243,25 @@ type CloudTasksClient interface {
 	// Creates a queue.
 	//
 	// Queues created with this method allow tasks to live for a maximum of 31
+<<<<<<< HEAD
 	// days. After a task is 31 days old, the task will be deleted regardless of
 	// whether it was dispatched or not.
+=======
+	// days. After a task is 31 days old, the task will be deleted regardless of whether
+	// it was dispatched or not.
+>>>>>>> v0.0.4
 	//
 	// WARNING: Using this method may have unintended side effects if you are
 	// using an App Engine `queue.yaml` or `queue.xml` file to manage your queues.
 	// Read
+<<<<<<< HEAD
 	// [Overview of Queue Management and
 	// queue.yaml](https://cloud.google.com/tasks/docs/queue-yaml) before using
 	// this method.
+=======
+	// [Overview of Queue Management and queue.yaml](https://cloud.google.com/tasks/docs/queue-yaml)
+	// before using this method.
+>>>>>>> v0.0.4
 	CreateQueue(ctx context.Context, in *CreateQueueRequest, opts ...grpc.CallOption) (*Queue, error)
 	// Updates a queue.
 	//
@@ -1019,15 +1269,25 @@ type CloudTasksClient interface {
 	// the queue if it does exist.
 	//
 	// Queues created with this method allow tasks to live for a maximum of 31
+<<<<<<< HEAD
 	// days. After a task is 31 days old, the task will be deleted regardless of
 	// whether it was dispatched or not.
+=======
+	// days. After a task is 31 days old, the task will be deleted regardless of whether
+	// it was dispatched or not.
+>>>>>>> v0.0.4
 	//
 	// WARNING: Using this method may have unintended side effects if you are
 	// using an App Engine `queue.yaml` or `queue.xml` file to manage your queues.
 	// Read
+<<<<<<< HEAD
 	// [Overview of Queue Management and
 	// queue.yaml](https://cloud.google.com/tasks/docs/queue-yaml) before using
 	// this method.
+=======
+	// [Overview of Queue Management and queue.yaml](https://cloud.google.com/tasks/docs/queue-yaml)
+	// before using this method.
+>>>>>>> v0.0.4
 	UpdateQueue(ctx context.Context, in *UpdateQueueRequest, opts ...grpc.CallOption) (*Queue, error)
 	// Deletes a queue.
 	//
@@ -1039,9 +1299,14 @@ type CloudTasksClient interface {
 	// WARNING: Using this method may have unintended side effects if you are
 	// using an App Engine `queue.yaml` or `queue.xml` file to manage your queues.
 	// Read
+<<<<<<< HEAD
 	// [Overview of Queue Management and
 	// queue.yaml](https://cloud.google.com/tasks/docs/queue-yaml) before using
 	// this method.
+=======
+	// [Overview of Queue Management and queue.yaml](https://cloud.google.com/tasks/docs/queue-yaml)
+	// before using this method.
+>>>>>>> v0.0.4
 	DeleteQueue(ctx context.Context, in *DeleteQueueRequest, opts ...grpc.CallOption) (*empty.Empty, error)
 	// Purges a queue by deleting all of its tasks.
 	//
@@ -1054,30 +1319,50 @@ type CloudTasksClient interface {
 	//
 	// If a queue is paused then the system will stop dispatching tasks
 	// until the queue is resumed via
+<<<<<<< HEAD
 	// [ResumeQueue][google.cloud.tasks.v2beta3.CloudTasks.ResumeQueue]. Tasks can
 	// still be added when the queue is paused. A queue is paused if its
 	// [state][google.cloud.tasks.v2beta3.Queue.state] is
 	// [PAUSED][google.cloud.tasks.v2beta3.Queue.State.PAUSED].
+=======
+	// [ResumeQueue][google.cloud.tasks.v2beta3.CloudTasks.ResumeQueue]. Tasks can still be added
+	// when the queue is paused. A queue is paused if its
+	// [state][google.cloud.tasks.v2beta3.Queue.state] is [PAUSED][google.cloud.tasks.v2beta3.Queue.State.PAUSED].
+>>>>>>> v0.0.4
 	PauseQueue(ctx context.Context, in *PauseQueueRequest, opts ...grpc.CallOption) (*Queue, error)
 	// Resume a queue.
 	//
 	// This method resumes a queue after it has been
 	// [PAUSED][google.cloud.tasks.v2beta3.Queue.State.PAUSED] or
+<<<<<<< HEAD
 	// [DISABLED][google.cloud.tasks.v2beta3.Queue.State.DISABLED]. The state of a
 	// queue is stored in the queue's
 	// [state][google.cloud.tasks.v2beta3.Queue.state]; after calling this method
 	// it will be set to
 	// [RUNNING][google.cloud.tasks.v2beta3.Queue.State.RUNNING].
+=======
+	// [DISABLED][google.cloud.tasks.v2beta3.Queue.State.DISABLED]. The state of a queue is stored
+	// in the queue's [state][google.cloud.tasks.v2beta3.Queue.state]; after calling this method it
+	// will be set to [RUNNING][google.cloud.tasks.v2beta3.Queue.State.RUNNING].
+>>>>>>> v0.0.4
 	//
 	// WARNING: Resuming many high-QPS queues at the same time can
 	// lead to target overloading. If you are resuming high-QPS
 	// queues, follow the 500/50/5 pattern described in
+<<<<<<< HEAD
 	// [Managing Cloud Tasks Scaling
 	// Risks](https://cloud.google.com/tasks/docs/manage-cloud-task-scaling).
 	ResumeQueue(ctx context.Context, in *ResumeQueueRequest, opts ...grpc.CallOption) (*Queue, error)
 	// Gets the access control policy for a
 	// [Queue][google.cloud.tasks.v2beta3.Queue]. Returns an empty policy if the
 	// resource exists and does not have a policy set.
+=======
+	// [Managing Cloud Tasks Scaling Risks](https://cloud.google.com/tasks/docs/manage-cloud-task-scaling).
+	ResumeQueue(ctx context.Context, in *ResumeQueueRequest, opts ...grpc.CallOption) (*Queue, error)
+	// Gets the access control policy for a [Queue][google.cloud.tasks.v2beta3.Queue].
+	// Returns an empty policy if the resource exists and does not have a policy
+	// set.
+>>>>>>> v0.0.4
 	//
 	// Authorization requires the following
 	// [Google IAM](https://cloud.google.com/iam) permission on the specified
@@ -1085,8 +1370,13 @@ type CloudTasksClient interface {
 	//
 	// * `cloudtasks.queues.getIamPolicy`
 	GetIamPolicy(ctx context.Context, in *v1.GetIamPolicyRequest, opts ...grpc.CallOption) (*v1.Policy, error)
+<<<<<<< HEAD
 	// Sets the access control policy for a
 	// [Queue][google.cloud.tasks.v2beta3.Queue]. Replaces any existing policy.
+=======
+	// Sets the access control policy for a [Queue][google.cloud.tasks.v2beta3.Queue]. Replaces any existing
+	// policy.
+>>>>>>> v0.0.4
 	//
 	// Note: The Cloud Console does not check queue-level IAM permissions yet.
 	// Project-level permissions are required to use the Cloud Console.
@@ -1097,10 +1387,16 @@ type CloudTasksClient interface {
 	//
 	// * `cloudtasks.queues.setIamPolicy`
 	SetIamPolicy(ctx context.Context, in *v1.SetIamPolicyRequest, opts ...grpc.CallOption) (*v1.Policy, error)
+<<<<<<< HEAD
 	// Returns permissions that a caller has on a
 	// [Queue][google.cloud.tasks.v2beta3.Queue]. If the resource does not exist,
 	// this will return an empty set of permissions, not a
 	// [NOT_FOUND][google.rpc.Code.NOT_FOUND] error.
+=======
+	// Returns permissions that a caller has on a [Queue][google.cloud.tasks.v2beta3.Queue].
+	// If the resource does not exist, this will return an empty set of
+	// permissions, not a [NOT_FOUND][google.rpc.Code.NOT_FOUND] error.
+>>>>>>> v0.0.4
 	//
 	// Note: This operation is designed to be used for building permission-aware
 	// UIs and command-line tools, not for authorization checking. This operation
@@ -1108,10 +1404,17 @@ type CloudTasksClient interface {
 	TestIamPermissions(ctx context.Context, in *v1.TestIamPermissionsRequest, opts ...grpc.CallOption) (*v1.TestIamPermissionsResponse, error)
 	// Lists the tasks in a queue.
 	//
+<<<<<<< HEAD
 	// By default, only the [BASIC][google.cloud.tasks.v2beta3.Task.View.BASIC]
 	// view is retrieved due to performance considerations;
 	// [response_view][google.cloud.tasks.v2beta3.ListTasksRequest.response_view]
 	// controls the subset of information which is returned.
+=======
+	// By default, only the [BASIC][google.cloud.tasks.v2beta3.Task.View.BASIC] view is retrieved
+	// due to performance considerations;
+	// [response_view][google.cloud.tasks.v2beta3.ListTasksRequest.response_view] controls the
+	// subset of information which is returned.
+>>>>>>> v0.0.4
 	//
 	// The tasks may be returned in any order. The ordering may change at any
 	// time.
@@ -1122,8 +1425,12 @@ type CloudTasksClient interface {
 	//
 	// Tasks cannot be updated after creation; there is no UpdateTask command.
 	//
+<<<<<<< HEAD
 	// * For [App Engine queues][google.cloud.tasks.v2beta3.AppEngineHttpQueue],
 	// the maximum task size is
+=======
+	// * For [App Engine queues][google.cloud.tasks.v2beta3.AppEngineHttpQueue], the maximum task size is
+>>>>>>> v0.0.4
 	//   100KB.
 	CreateTask(ctx context.Context, in *CreateTaskRequest, opts ...grpc.CallOption) (*Task, error)
 	// Deletes a task.
@@ -1135,6 +1442,7 @@ type CloudTasksClient interface {
 	// Forces a task to run now.
 	//
 	// When this method is called, Cloud Tasks will dispatch the task, even if
+<<<<<<< HEAD
 	// the task is already running, the queue has reached its
 	// [RateLimits][google.cloud.tasks.v2beta3.RateLimits] or is
 	// [PAUSED][google.cloud.tasks.v2beta3.Queue.State.PAUSED].
@@ -1143,6 +1451,15 @@ type CloudTasksClient interface {
 	// example, [RunTask][google.cloud.tasks.v2beta3.CloudTasks.RunTask] can be
 	// used to retry a failed task after a fix has been made or to manually force
 	// a task to be dispatched now.
+=======
+	// the task is already running, the queue has reached its [RateLimits][google.cloud.tasks.v2beta3.RateLimits] or
+	// is [PAUSED][google.cloud.tasks.v2beta3.Queue.State.PAUSED].
+	//
+	// This command is meant to be used for manual debugging. For
+	// example, [RunTask][google.cloud.tasks.v2beta3.CloudTasks.RunTask] can be used to retry a failed
+	// task after a fix has been made or to manually force a task to be
+	// dispatched now.
+>>>>>>> v0.0.4
 	//
 	// The dispatched task is returned. That is, the task that is returned
 	// contains the [status][Task.status] after the task is dispatched but
@@ -1150,11 +1467,17 @@ type CloudTasksClient interface {
 	//
 	// If Cloud Tasks receives a successful response from the task's
 	// target, then the task will be deleted; otherwise the task's
+<<<<<<< HEAD
 	// [schedule_time][google.cloud.tasks.v2beta3.Task.schedule_time] will be
 	// reset to the time that
 	// [RunTask][google.cloud.tasks.v2beta3.CloudTasks.RunTask] was called plus
 	// the retry delay specified in the queue's
 	// [RetryConfig][google.cloud.tasks.v2beta3.RetryConfig].
+=======
+	// [schedule_time][google.cloud.tasks.v2beta3.Task.schedule_time] will be reset to the time that
+	// [RunTask][google.cloud.tasks.v2beta3.CloudTasks.RunTask] was called plus the retry delay specified
+	// in the queue's [RetryConfig][google.cloud.tasks.v2beta3.RetryConfig].
+>>>>>>> v0.0.4
 	//
 	// [RunTask][google.cloud.tasks.v2beta3.CloudTasks.RunTask] returns
 	// [NOT_FOUND][google.rpc.Code.NOT_FOUND] when it is called on a
@@ -1325,15 +1648,25 @@ type CloudTasksServer interface {
 	// Creates a queue.
 	//
 	// Queues created with this method allow tasks to live for a maximum of 31
+<<<<<<< HEAD
 	// days. After a task is 31 days old, the task will be deleted regardless of
 	// whether it was dispatched or not.
+=======
+	// days. After a task is 31 days old, the task will be deleted regardless of whether
+	// it was dispatched or not.
+>>>>>>> v0.0.4
 	//
 	// WARNING: Using this method may have unintended side effects if you are
 	// using an App Engine `queue.yaml` or `queue.xml` file to manage your queues.
 	// Read
+<<<<<<< HEAD
 	// [Overview of Queue Management and
 	// queue.yaml](https://cloud.google.com/tasks/docs/queue-yaml) before using
 	// this method.
+=======
+	// [Overview of Queue Management and queue.yaml](https://cloud.google.com/tasks/docs/queue-yaml)
+	// before using this method.
+>>>>>>> v0.0.4
 	CreateQueue(context.Context, *CreateQueueRequest) (*Queue, error)
 	// Updates a queue.
 	//
@@ -1341,15 +1674,25 @@ type CloudTasksServer interface {
 	// the queue if it does exist.
 	//
 	// Queues created with this method allow tasks to live for a maximum of 31
+<<<<<<< HEAD
 	// days. After a task is 31 days old, the task will be deleted regardless of
 	// whether it was dispatched or not.
+=======
+	// days. After a task is 31 days old, the task will be deleted regardless of whether
+	// it was dispatched or not.
+>>>>>>> v0.0.4
 	//
 	// WARNING: Using this method may have unintended side effects if you are
 	// using an App Engine `queue.yaml` or `queue.xml` file to manage your queues.
 	// Read
+<<<<<<< HEAD
 	// [Overview of Queue Management and
 	// queue.yaml](https://cloud.google.com/tasks/docs/queue-yaml) before using
 	// this method.
+=======
+	// [Overview of Queue Management and queue.yaml](https://cloud.google.com/tasks/docs/queue-yaml)
+	// before using this method.
+>>>>>>> v0.0.4
 	UpdateQueue(context.Context, *UpdateQueueRequest) (*Queue, error)
 	// Deletes a queue.
 	//
@@ -1361,9 +1704,14 @@ type CloudTasksServer interface {
 	// WARNING: Using this method may have unintended side effects if you are
 	// using an App Engine `queue.yaml` or `queue.xml` file to manage your queues.
 	// Read
+<<<<<<< HEAD
 	// [Overview of Queue Management and
 	// queue.yaml](https://cloud.google.com/tasks/docs/queue-yaml) before using
 	// this method.
+=======
+	// [Overview of Queue Management and queue.yaml](https://cloud.google.com/tasks/docs/queue-yaml)
+	// before using this method.
+>>>>>>> v0.0.4
 	DeleteQueue(context.Context, *DeleteQueueRequest) (*empty.Empty, error)
 	// Purges a queue by deleting all of its tasks.
 	//
@@ -1376,30 +1724,50 @@ type CloudTasksServer interface {
 	//
 	// If a queue is paused then the system will stop dispatching tasks
 	// until the queue is resumed via
+<<<<<<< HEAD
 	// [ResumeQueue][google.cloud.tasks.v2beta3.CloudTasks.ResumeQueue]. Tasks can
 	// still be added when the queue is paused. A queue is paused if its
 	// [state][google.cloud.tasks.v2beta3.Queue.state] is
 	// [PAUSED][google.cloud.tasks.v2beta3.Queue.State.PAUSED].
+=======
+	// [ResumeQueue][google.cloud.tasks.v2beta3.CloudTasks.ResumeQueue]. Tasks can still be added
+	// when the queue is paused. A queue is paused if its
+	// [state][google.cloud.tasks.v2beta3.Queue.state] is [PAUSED][google.cloud.tasks.v2beta3.Queue.State.PAUSED].
+>>>>>>> v0.0.4
 	PauseQueue(context.Context, *PauseQueueRequest) (*Queue, error)
 	// Resume a queue.
 	//
 	// This method resumes a queue after it has been
 	// [PAUSED][google.cloud.tasks.v2beta3.Queue.State.PAUSED] or
+<<<<<<< HEAD
 	// [DISABLED][google.cloud.tasks.v2beta3.Queue.State.DISABLED]. The state of a
 	// queue is stored in the queue's
 	// [state][google.cloud.tasks.v2beta3.Queue.state]; after calling this method
 	// it will be set to
 	// [RUNNING][google.cloud.tasks.v2beta3.Queue.State.RUNNING].
+=======
+	// [DISABLED][google.cloud.tasks.v2beta3.Queue.State.DISABLED]. The state of a queue is stored
+	// in the queue's [state][google.cloud.tasks.v2beta3.Queue.state]; after calling this method it
+	// will be set to [RUNNING][google.cloud.tasks.v2beta3.Queue.State.RUNNING].
+>>>>>>> v0.0.4
 	//
 	// WARNING: Resuming many high-QPS queues at the same time can
 	// lead to target overloading. If you are resuming high-QPS
 	// queues, follow the 500/50/5 pattern described in
+<<<<<<< HEAD
 	// [Managing Cloud Tasks Scaling
 	// Risks](https://cloud.google.com/tasks/docs/manage-cloud-task-scaling).
 	ResumeQueue(context.Context, *ResumeQueueRequest) (*Queue, error)
 	// Gets the access control policy for a
 	// [Queue][google.cloud.tasks.v2beta3.Queue]. Returns an empty policy if the
 	// resource exists and does not have a policy set.
+=======
+	// [Managing Cloud Tasks Scaling Risks](https://cloud.google.com/tasks/docs/manage-cloud-task-scaling).
+	ResumeQueue(context.Context, *ResumeQueueRequest) (*Queue, error)
+	// Gets the access control policy for a [Queue][google.cloud.tasks.v2beta3.Queue].
+	// Returns an empty policy if the resource exists and does not have a policy
+	// set.
+>>>>>>> v0.0.4
 	//
 	// Authorization requires the following
 	// [Google IAM](https://cloud.google.com/iam) permission on the specified
@@ -1407,8 +1775,13 @@ type CloudTasksServer interface {
 	//
 	// * `cloudtasks.queues.getIamPolicy`
 	GetIamPolicy(context.Context, *v1.GetIamPolicyRequest) (*v1.Policy, error)
+<<<<<<< HEAD
 	// Sets the access control policy for a
 	// [Queue][google.cloud.tasks.v2beta3.Queue]. Replaces any existing policy.
+=======
+	// Sets the access control policy for a [Queue][google.cloud.tasks.v2beta3.Queue]. Replaces any existing
+	// policy.
+>>>>>>> v0.0.4
 	//
 	// Note: The Cloud Console does not check queue-level IAM permissions yet.
 	// Project-level permissions are required to use the Cloud Console.
@@ -1419,10 +1792,16 @@ type CloudTasksServer interface {
 	//
 	// * `cloudtasks.queues.setIamPolicy`
 	SetIamPolicy(context.Context, *v1.SetIamPolicyRequest) (*v1.Policy, error)
+<<<<<<< HEAD
 	// Returns permissions that a caller has on a
 	// [Queue][google.cloud.tasks.v2beta3.Queue]. If the resource does not exist,
 	// this will return an empty set of permissions, not a
 	// [NOT_FOUND][google.rpc.Code.NOT_FOUND] error.
+=======
+	// Returns permissions that a caller has on a [Queue][google.cloud.tasks.v2beta3.Queue].
+	// If the resource does not exist, this will return an empty set of
+	// permissions, not a [NOT_FOUND][google.rpc.Code.NOT_FOUND] error.
+>>>>>>> v0.0.4
 	//
 	// Note: This operation is designed to be used for building permission-aware
 	// UIs and command-line tools, not for authorization checking. This operation
@@ -1430,10 +1809,17 @@ type CloudTasksServer interface {
 	TestIamPermissions(context.Context, *v1.TestIamPermissionsRequest) (*v1.TestIamPermissionsResponse, error)
 	// Lists the tasks in a queue.
 	//
+<<<<<<< HEAD
 	// By default, only the [BASIC][google.cloud.tasks.v2beta3.Task.View.BASIC]
 	// view is retrieved due to performance considerations;
 	// [response_view][google.cloud.tasks.v2beta3.ListTasksRequest.response_view]
 	// controls the subset of information which is returned.
+=======
+	// By default, only the [BASIC][google.cloud.tasks.v2beta3.Task.View.BASIC] view is retrieved
+	// due to performance considerations;
+	// [response_view][google.cloud.tasks.v2beta3.ListTasksRequest.response_view] controls the
+	// subset of information which is returned.
+>>>>>>> v0.0.4
 	//
 	// The tasks may be returned in any order. The ordering may change at any
 	// time.
@@ -1444,8 +1830,12 @@ type CloudTasksServer interface {
 	//
 	// Tasks cannot be updated after creation; there is no UpdateTask command.
 	//
+<<<<<<< HEAD
 	// * For [App Engine queues][google.cloud.tasks.v2beta3.AppEngineHttpQueue],
 	// the maximum task size is
+=======
+	// * For [App Engine queues][google.cloud.tasks.v2beta3.AppEngineHttpQueue], the maximum task size is
+>>>>>>> v0.0.4
 	//   100KB.
 	CreateTask(context.Context, *CreateTaskRequest) (*Task, error)
 	// Deletes a task.
@@ -1457,6 +1847,7 @@ type CloudTasksServer interface {
 	// Forces a task to run now.
 	//
 	// When this method is called, Cloud Tasks will dispatch the task, even if
+<<<<<<< HEAD
 	// the task is already running, the queue has reached its
 	// [RateLimits][google.cloud.tasks.v2beta3.RateLimits] or is
 	// [PAUSED][google.cloud.tasks.v2beta3.Queue.State.PAUSED].
@@ -1465,6 +1856,15 @@ type CloudTasksServer interface {
 	// example, [RunTask][google.cloud.tasks.v2beta3.CloudTasks.RunTask] can be
 	// used to retry a failed task after a fix has been made or to manually force
 	// a task to be dispatched now.
+=======
+	// the task is already running, the queue has reached its [RateLimits][google.cloud.tasks.v2beta3.RateLimits] or
+	// is [PAUSED][google.cloud.tasks.v2beta3.Queue.State.PAUSED].
+	//
+	// This command is meant to be used for manual debugging. For
+	// example, [RunTask][google.cloud.tasks.v2beta3.CloudTasks.RunTask] can be used to retry a failed
+	// task after a fix has been made or to manually force a task to be
+	// dispatched now.
+>>>>>>> v0.0.4
 	//
 	// The dispatched task is returned. That is, the task that is returned
 	// contains the [status][Task.status] after the task is dispatched but
@@ -1472,11 +1872,17 @@ type CloudTasksServer interface {
 	//
 	// If Cloud Tasks receives a successful response from the task's
 	// target, then the task will be deleted; otherwise the task's
+<<<<<<< HEAD
 	// [schedule_time][google.cloud.tasks.v2beta3.Task.schedule_time] will be
 	// reset to the time that
 	// [RunTask][google.cloud.tasks.v2beta3.CloudTasks.RunTask] was called plus
 	// the retry delay specified in the queue's
 	// [RetryConfig][google.cloud.tasks.v2beta3.RetryConfig].
+=======
+	// [schedule_time][google.cloud.tasks.v2beta3.Task.schedule_time] will be reset to the time that
+	// [RunTask][google.cloud.tasks.v2beta3.CloudTasks.RunTask] was called plus the retry delay specified
+	// in the queue's [RetryConfig][google.cloud.tasks.v2beta3.RetryConfig].
+>>>>>>> v0.0.4
 	//
 	// [RunTask][google.cloud.tasks.v2beta3.CloudTasks.RunTask] returns
 	// [NOT_FOUND][google.rpc.Code.NOT_FOUND] when it is called on a
@@ -1850,6 +2256,7 @@ var _CloudTasks_serviceDesc = grpc.ServiceDesc{
 }
 
 func init() {
+<<<<<<< HEAD
 	proto.RegisterFile("google/cloud/tasks/v2beta3/cloudtasks.proto", fileDescriptor_cloudtasks_0f88a2f058f94f30)
 }
 
@@ -1924,4 +2331,81 @@ var fileDescriptor_cloudtasks_0f88a2f058f94f30 = []byte{
 	0xfd, 0xd0, 0x36, 0x6c, 0xe2, 0xf1, 0xe0, 0x19, 0xc2, 0x64, 0x05, 0x0e, 0x3d, 0xe9, 0x1f, 0x1b,
 	0xab, 0x7c, 0xf4, 0xe3, 0xd4, 0xec, 0xf6, 0xfd, 0xee, 0x56, 0x77, 0x67, 0x8e, 0xaf, 0xb9, 0xf9,
 	0x4f, 0x00, 0x00, 0x00, 0xff, 0xff, 0x27, 0xc1, 0x2c, 0x59, 0x9a, 0x11, 0x00, 0x00,
+=======
+	proto.RegisterFile("google/cloud/tasks/v2beta3/cloudtasks.proto", fileDescriptor_cloudtasks_f6e506220ff6a157)
+}
+
+var fileDescriptor_cloudtasks_f6e506220ff6a157 = []byte{
+	// 1113 bytes of a gzipped FileDescriptorProto
+	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xbc, 0x98, 0x5d, 0x6f, 0xdc, 0x44,
+	0x17, 0xc7, 0x35, 0x79, 0x6b, 0x73, 0xb6, 0x6d, 0x9e, 0x8c, 0x9e, 0x56, 0x8b, 0x0b, 0xd5, 0x62,
+	0x29, 0xed, 0xb2, 0xa5, 0xb6, 0xb2, 0xa5, 0x0d, 0xdd, 0x40, 0x9b, 0xa6, 0x6d, 0x22, 0x08, 0x48,
+	0xdb, 0xdd, 0xc0, 0x05, 0x37, 0x2b, 0x67, 0x33, 0xb1, 0x4c, 0xd6, 0x2f, 0xf5, 0x8c, 0x13, 0x28,
+	0x44, 0x48, 0x5c, 0x72, 0xc1, 0x4d, 0x11, 0xe2, 0x8e, 0x57, 0x81, 0xb8, 0xe0, 0x86, 0x6b, 0xbe,
+	0x05, 0x5f, 0x81, 0x0f, 0x82, 0xe6, 0xc5, 0x6b, 0x67, 0x9d, 0xb5, 0x9d, 0x05, 0x7a, 0x95, 0xf5,
+	0x9c, 0xff, 0xcc, 0xf9, 0xcd, 0x99, 0xe3, 0x39, 0xc7, 0x81, 0xeb, 0xb6, 0xef, 0xdb, 0x03, 0x62,
+	0xf6, 0x07, 0x7e, 0xb4, 0x6b, 0x32, 0x8b, 0xee, 0x53, 0xf3, 0xa0, 0xb9, 0x43, 0x98, 0x75, 0x53,
+	0x8e, 0x89, 0x21, 0x23, 0x08, 0x7d, 0xe6, 0x63, 0x4d, 0x8a, 0x0d, 0x61, 0x30, 0xa4, 0x45, 0x89,
+	0xb5, 0x17, 0xd5, 0x42, 0x56, 0xe0, 0x98, 0x96, 0xe7, 0xf9, 0xcc, 0x62, 0x8e, 0xef, 0xa9, 0x99,
+	0xda, 0x0b, 0x29, 0x6b, 0x48, 0xa8, 0x1f, 0x85, 0x7d, 0xa2, 0x4c, 0x97, 0x95, 0x49, 0x3c, 0xed,
+	0x44, 0x7b, 0x26, 0x71, 0x03, 0xf6, 0xb1, 0x32, 0xd6, 0x46, 0x8d, 0x7b, 0x0e, 0x19, 0xec, 0xf6,
+	0x5c, 0x8b, 0xee, 0x2b, 0xc5, 0x52, 0xce, 0x06, 0x58, 0x22, 0xbb, 0x9a, 0x23, 0x7b, 0x12, 0x91,
+	0x28, 0xa6, 0xb9, 0xa2, 0x74, 0x8e, 0xe5, 0x9a, 0x07, 0xcb, 0xfc, 0x4f, 0x2f, 0xf0, 0x07, 0x4e,
+	0x3f, 0x06, 0xd2, 0x8e, 0xdb, 0x8f, 0xd9, 0x2e, 0x2a, 0x5b, 0x18, 0xf4, 0xcd, 0xbe, 0xbf, 0xab,
+	0x96, 0xd4, 0x3f, 0x83, 0xc5, 0x77, 0x1c, 0xca, 0x1e, 0x73, 0x2f, 0xb4, 0x43, 0x9e, 0x44, 0x84,
+	0x32, 0x7c, 0x09, 0xe6, 0x02, 0x2b, 0x24, 0x1e, 0xab, 0xa2, 0x1a, 0xaa, 0xcf, 0x77, 0xd4, 0x13,
+	0x1f, 0xdf, 0x73, 0x06, 0x8c, 0x84, 0xd5, 0x29, 0x39, 0x2e, 0x9f, 0xf0, 0x65, 0x98, 0x0f, 0x2c,
+	0x9b, 0xf4, 0xa8, 0xf3, 0x94, 0x54, 0xa7, 0x6b, 0xa8, 0x3e, 0xdb, 0x39, 0xcb, 0x07, 0xba, 0xce,
+	0x53, 0x82, 0x5f, 0x02, 0x10, 0x46, 0xe6, 0xef, 0x13, 0xaf, 0x3a, 0x23, 0x26, 0x0a, 0xf9, 0x36,
+	0x1f, 0xd0, 0x0f, 0x01, 0xa7, 0x01, 0x68, 0xe0, 0x7b, 0x94, 0xe0, 0x3b, 0x30, 0x27, 0x36, 0x4e,
+	0xab, 0xa8, 0x36, 0x5d, 0xaf, 0x34, 0x5f, 0x36, 0xc6, 0x9f, 0xae, 0x21, 0xe6, 0x76, 0xd4, 0x04,
+	0x7c, 0x15, 0x16, 0x3c, 0xf2, 0x11, 0xeb, 0xa5, 0x9c, 0x4a, 0xda, 0xf3, 0x7c, 0xb8, 0x3d, 0x74,
+	0xbc, 0x04, 0x0b, 0x9b, 0x44, 0xfa, 0x8d, 0xf7, 0x8d, 0x61, 0xc6, 0xb3, 0x5c, 0xa2, 0x76, 0x2d,
+	0x7e, 0xeb, 0x04, 0xf0, 0x83, 0x90, 0x58, 0x8c, 0x1c, 0x53, 0x8e, 0x8b, 0xd0, 0x0a, 0xcc, 0x0a,
+	0x0c, 0xe1, 0xb2, 0x14, 0xb6, 0xd4, 0xeb, 0x5f, 0x20, 0xc0, 0xef, 0x05, 0xbb, 0xa3, 0x7e, 0x86,
+	0xeb, 0xa1, 0xd3, 0xad, 0x87, 0x57, 0xa1, 0x12, 0x89, 0xe5, 0x44, 0x3a, 0x2a, 0x1c, 0x2d, 0x9e,
+	0x1e, 0x67, 0xac, 0xb1, 0xc1, 0x33, 0xf6, 0x5d, 0x8b, 0xee, 0x77, 0x40, 0xca, 0xf9, 0x6f, 0xbd,
+	0x0e, 0xf8, 0x21, 0x19, 0x90, 0x11, 0x96, 0x93, 0xa2, 0x73, 0x0d, 0x16, 0xdb, 0x51, 0x68, 0x97,
+	0x13, 0x5a, 0x11, 0x2d, 0x16, 0xd6, 0x01, 0x77, 0x08, 0x8d, 0xdc, 0x62, 0xe5, 0xef, 0x08, 0xfe,
+	0xc7, 0x53, 0x67, 0x9b, 0x47, 0xa1, 0xe8, 0x60, 0xde, 0x86, 0xf3, 0xa1, 0x4a, 0xae, 0xde, 0x81,
+	0x43, 0x0e, 0x45, 0x44, 0x2e, 0x34, 0x97, 0xf2, 0x02, 0xca, 0x17, 0x36, 0xde, 0x77, 0xc8, 0x61,
+	0xe7, 0x5c, 0x3c, 0x97, 0x3f, 0xfd, 0xa3, 0x74, 0xa7, 0xf2, 0x7d, 0x53, 0xcc, 0x2a, 0xdb, 0x6f,
+	0xc3, 0xac, 0xf0, 0xac, 0x92, 0xbd, 0x56, 0x04, 0xd5, 0x91, 0xf2, 0xd2, 0xa9, 0x1e, 0xc0, 0x85,
+	0x4d, 0x22, 0x7c, 0xe6, 0xc4, 0xf3, 0xdf, 0x0c, 0x91, 0xfe, 0x1b, 0x82, 0x45, 0xf9, 0xda, 0xa4,
+	0xbd, 0x8e, 0x3b, 0x9c, 0xd7, 0x60, 0x86, 0x25, 0x59, 0x5a, 0xbc, 0x7d, 0xa1, 0xce, 0xf2, 0x4e,
+	0x4f, 0xce, 0x7b, 0x0d, 0x16, 0x65, 0xc6, 0x17, 0x04, 0x89, 0x87, 0xb2, 0x13, 0x79, 0xcf, 0x31,
+	0x94, 0xcd, 0x5f, 0xfe, 0x0f, 0xf0, 0x80, 0xeb, 0x45, 0xce, 0xe0, 0x9f, 0x10, 0x40, 0x72, 0x61,
+	0xe2, 0x1b, 0x79, 0x4b, 0x66, 0x6e, 0x76, 0xcd, 0x28, 0x2b, 0x97, 0x00, 0xfa, 0xca, 0xe7, 0x7f,
+	0xfe, 0xf5, 0x6c, 0x6a, 0x19, 0x9b, 0xc3, 0x7a, 0xf4, 0x89, 0x3c, 0xb3, 0x37, 0x83, 0xd0, 0xff,
+	0x90, 0xf4, 0x19, 0x35, 0x1b, 0xe6, 0xc0, 0xef, 0xcb, 0x7a, 0x6a, 0x36, 0x8e, 0x4c, 0x75, 0x0b,
+	0x3f, 0x43, 0x70, 0x36, 0xbe, 0x5e, 0xf1, 0xf5, 0x3c, 0xaf, 0x23, 0x97, 0xb0, 0x56, 0x7c, 0xc7,
+	0x9d, 0x44, 0xc5, 0xc3, 0x3e, 0x86, 0x49, 0x21, 0x99, 0x8d, 0x23, 0xfc, 0x1d, 0x82, 0x4a, 0xea,
+	0x36, 0xc7, 0xb9, 0xe1, 0xc8, 0x5e, 0xfb, 0x65, 0xd8, 0xee, 0x0a, 0xb6, 0xd7, 0xf5, 0xd3, 0x46,
+	0xac, 0xa5, 0x2e, 0xee, 0x9f, 0x11, 0x54, 0x52, 0x85, 0x20, 0x1f, 0x31, 0x5b, 0x31, 0xca, 0x20,
+	0x3e, 0x14, 0x88, 0x77, 0x9b, 0xb7, 0x12, 0x44, 0xd9, 0x65, 0x94, 0x0a, 0x62, 0x0c, 0xfa, 0x25,
+	0x82, 0x4a, 0xaa, 0x4a, 0xe4, 0x83, 0x66, 0xcb, 0x89, 0x76, 0x29, 0x53, 0x8c, 0x1e, 0xf1, 0xde,
+	0x2a, 0x3e, 0xdc, 0xc6, 0x24, 0x87, 0x0b, 0x49, 0x31, 0xca, 0x7f, 0x33, 0x32, 0x45, 0xab, 0x4c,
+	0xdc, 0xd6, 0x04, 0x59, 0x4b, 0xbf, 0x75, 0x4a, 0xb2, 0x56, 0xc0, 0xbd, 0xb5, 0x50, 0x43, 0x22,
+	0x0e, 0xcb, 0x60, 0x01, 0xe2, 0x68, 0xb9, 0xfc, 0x6f, 0x11, 0xb9, 0x37, 0x8e, 0xf8, 0x23, 0x82,
+	0x4a, 0xaa, 0x00, 0xe7, 0x1f, 0x6b, 0xb6, 0x52, 0x97, 0x81, 0xbc, 0x2f, 0x20, 0x57, 0xf5, 0xdb,
+	0xa7, 0x85, 0x0c, 0x85, 0x3b, 0x4e, 0xf9, 0x35, 0x82, 0x73, 0x9b, 0x84, 0xbd, 0x65, 0xb9, 0x6d,
+	0xd1, 0xe4, 0x62, 0x3d, 0x76, 0xeb, 0x58, 0xae, 0x71, 0xb0, 0x6c, 0xa4, 0x8d, 0x31, 0xda, 0xc5,
+	0x11, 0x8d, 0xb4, 0xea, 0x5b, 0x02, 0xe7, 0x91, 0xbe, 0x96, 0xe0, 0xc4, 0x5f, 0x01, 0xc5, 0x48,
+	0x76, 0xca, 0x4f, 0x0c, 0xd6, 0xcd, 0x03, 0xeb, 0x3e, 0x27, 0x30, 0x3a, 0x02, 0xf6, 0x07, 0x02,
+	0xbc, 0x4d, 0xa8, 0x18, 0x24, 0xa1, 0xeb, 0x50, 0xca, 0xa7, 0xe0, 0xfa, 0x88, 0xeb, 0xac, 0x24,
+	0x86, 0x7c, 0xa5, 0x84, 0x52, 0x55, 0x8d, 0xc7, 0x02, 0x7c, 0x4b, 0xdf, 0x98, 0x04, 0x9c, 0x65,
+	0xd6, 0xe5, 0xf8, 0xbf, 0x22, 0x98, 0x1f, 0x36, 0x4e, 0xf8, 0xd5, 0xa2, 0x32, 0x96, 0xee, 0x09,
+	0xb5, 0x1b, 0x25, 0xd5, 0x8a, 0xfe, 0x9e, 0xa0, 0xbf, 0x83, 0x57, 0x4a, 0xde, 0xe0, 0x09, 0xbb,
+	0xfc, 0x74, 0xc3, 0xdf, 0x20, 0x38, 0xa3, 0xfa, 0x2d, 0xdc, 0x28, 0x28, 0x7d, 0xa9, 0x4e, 0x42,
+	0x2b, 0x6c, 0x7c, 0x4e, 0x42, 0x2b, 0xf3, 0xe6, 0xa8, 0x4f, 0xca, 0xc6, 0x11, 0xfe, 0x1e, 0x01,
+	0x24, 0x7d, 0x59, 0xfe, 0x05, 0x94, 0xe9, 0xdf, 0x4a, 0x00, 0xae, 0x0b, 0xc0, 0x37, 0xf4, 0x49,
+	0x63, 0xc7, 0x8f, 0xfa, 0x2b, 0x04, 0x90, 0x34, 0x63, 0xf9, 0x8c, 0x99, 0xa6, 0x6d, 0x6c, 0x59,
+	0x51, 0xa1, 0x6b, 0x4c, 0x1c, 0xba, 0x6f, 0x11, 0x9c, 0x51, 0xad, 0x5f, 0xfe, 0xa9, 0x1e, 0xef,
+	0x0f, 0x4b, 0x04, 0x6d, 0x43, 0xa0, 0xad, 0xe9, 0xab, 0x13, 0xa2, 0xb5, 0xc2, 0xc8, 0x6b, 0xa1,
+	0xc6, 0xfa, 0xa7, 0x70, 0xa5, 0xef, 0xbb, 0x39, 0xee, 0xd6, 0x17, 0x92, 0x46, 0xb2, 0xcd, 0xc3,
+	0xd3, 0x46, 0x1f, 0xdc, 0x53, 0x72, 0xdb, 0x1f, 0x58, 0x9e, 0x6d, 0xf8, 0xa1, 0x6d, 0xda, 0xc4,
+	0x13, 0xc1, 0x33, 0xa5, 0xc9, 0x0a, 0x1c, 0x7a, 0xd2, 0xbf, 0x26, 0x56, 0xc5, 0xd3, 0x0f, 0x53,
+	0xb3, 0xdb, 0xf7, 0xbb, 0x5b, 0xdd, 0x9d, 0x39, 0x31, 0xe7, 0xe6, 0xdf, 0x01, 0x00, 0x00, 0xff,
+	0xff, 0x34, 0x8b, 0xca, 0x54, 0xb5, 0x11, 0x00, 0x00,
+>>>>>>> v0.0.4
 }

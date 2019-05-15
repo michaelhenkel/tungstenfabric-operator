@@ -20,7 +20,10 @@ import (
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/apis/meta/v1/unstructured"
 	"k8s.io/apimachinery/pkg/runtime"
+<<<<<<< HEAD
 	"k8s.io/helm/pkg/proto/hapi/release"
+=======
+>>>>>>> v0.0.4
 )
 
 type HelmAppList struct {
@@ -47,11 +50,22 @@ type HelmAppCondition struct {
 	Status  ConditionStatus        `json:"status"`
 	Reason  HelmAppConditionReason `json:"reason,omitempty"`
 	Message string                 `json:"message,omitempty"`
+<<<<<<< HEAD
 	Release *release.Release       `json:"release,omitempty"`
+=======
+>>>>>>> v0.0.4
 
 	LastTransitionTime metav1.Time `json:"lastTransitionTime,omitempty"`
 }
 
+<<<<<<< HEAD
+=======
+type HelmAppRelease struct {
+	Name     string `json:"name,omitempty"`
+	Manifest string `json:"manifest,omitempty"`
+}
+
+>>>>>>> v0.0.4
 const (
 	ConditionInitialized    HelmAppConditionType = "Initialized"
 	ConditionDeployed       HelmAppConditionType = "Deployed"
@@ -72,7 +86,12 @@ const (
 )
 
 type HelmAppStatus struct {
+<<<<<<< HEAD
 	Conditions []HelmAppCondition `json:"conditions"`
+=======
+	Conditions      []HelmAppCondition `json:"conditions"`
+	DeployedRelease *HelmAppRelease    `json:"deployedRelease,omitempty"`
+>>>>>>> v0.0.4
 }
 
 func (s *HelmAppStatus) ToMap() (map[string]interface{}, error) {

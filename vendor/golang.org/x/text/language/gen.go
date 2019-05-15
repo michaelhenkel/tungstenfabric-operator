@@ -10,6 +10,7 @@
 package main
 
 import (
+<<<<<<< HEAD
 	"bufio"
 	"flag"
 	"fmt"
@@ -19,12 +20,22 @@ import (
 	"math"
 	"reflect"
 	"regexp"
+=======
+	"flag"
+	"fmt"
+	"io"
+	"log"
+>>>>>>> v0.0.4
 	"sort"
 	"strconv"
 	"strings"
 
 	"golang.org/x/text/internal/gen"
+<<<<<<< HEAD
 	"golang.org/x/text/internal/tag"
+=======
+	"golang.org/x/text/internal/language"
+>>>>>>> v0.0.4
 	"golang.org/x/text/unicode/cldr"
 )
 
@@ -37,6 +48,7 @@ var (
 		"output file for generated tables")
 )
 
+<<<<<<< HEAD
 var comment = []string{
 	`
 lang holds an alphabetically sorted list of ISO-639 language identifiers.
@@ -303,6 +315,19 @@ type ianaEntry struct {
 	suppressScript string
 	macro          string
 	prefix         []string
+=======
+func main() {
+	gen.Init()
+
+	w := gen.NewCodeWriter()
+	defer w.WriteGoFile("tables.go", "language")
+
+	b := newBuilder(w)
+	gen.WriteCLDRVersion(w)
+
+	b.writeConstants()
+	b.writeMatchData()
+>>>>>>> v0.0.4
 }
 
 type builder struct {
@@ -310,6 +335,7 @@ type builder struct {
 	hw   io.Writer // MultiWriter for w and w.Hash
 	data *cldr.CLDR
 	supp *cldr.SupplementalData
+<<<<<<< HEAD
 
 	// indices
 	locale      stringSet // common locales
@@ -327,19 +353,41 @@ type builder struct {
 }
 
 type index uint
+=======
+}
+
+func (b *builder) langIndex(s string) uint16 {
+	return uint16(language.MustParseBase(s))
+}
+
+func (b *builder) regionIndex(s string) int {
+	return int(language.MustParseRegion(s))
+}
+
+func (b *builder) scriptIndex(s string) int {
+	return int(language.MustParseScript(s))
+}
+>>>>>>> v0.0.4
 
 func newBuilder(w *gen.CodeWriter) *builder {
 	r := gen.OpenCLDRCoreZip()
 	defer r.Close()
 	d := &cldr.Decoder{}
 	data, err := d.DecodeZip(r)
+<<<<<<< HEAD
 	failOnError(err)
+=======
+	if err != nil {
+		log.Fatal(err)
+	}
+>>>>>>> v0.0.4
 	b := builder{
 		w:    w,
 		hw:   io.MultiWriter(w, w.Hash),
 		data: data,
 		supp: data.Supplemental(),
 	}
+<<<<<<< HEAD
 	b.parseRegistry()
 	return &b
 }
@@ -676,10 +724,24 @@ func (b *builder) parseIndices() {
 
 	// common locales
 	b.locale.parse(meta.DefaultContent.Locales)
+=======
+	return &b
+}
+
+// writeConsts computes f(v) for all v in values and writes the results
+// as constants named _v to a single constant block.
+func (b *builder) writeConsts(f func(string) int, values ...string) {
+	fmt.Fprintln(b.w, "const (")
+	for _, v := range values {
+		fmt.Fprintf(b.w, "\t_%s = %v\n", v, f(v))
+	}
+	fmt.Fprintln(b.w, ")")
+>>>>>>> v0.0.4
 }
 
 // TODO: region inclusion data will probably not be use used in future matchers.
 
+<<<<<<< HEAD
 func (b *builder) computeRegionGroups() {
 	b.groups = make(map[int]index)
 
@@ -850,6 +912,10 @@ func (b *builder) writeLanguage() {
 		types[i] = aliasTypeMap[s]
 	}
 	b.writeSlice("langAliasTypes", types)
+=======
+var langConsts = []string{
+	"de", "en", "fr", "it", "mo", "no", "nb", "pt", "sh", "mul", "und",
+>>>>>>> v0.0.4
 }
 
 var scriptConsts = []string{
@@ -857,6 +923,7 @@ var scriptConsts = []string{
 	"Zzzz",
 }
 
+<<<<<<< HEAD
 func (b *builder) writeScript() {
 	b.writeConsts(b.script.index, scriptConsts...)
 	b.writeConst("script", tag.Index(b.script.join()))
@@ -887,11 +954,14 @@ func parseM49(s string) int16 {
 	return int16(v)
 }
 
+=======
+>>>>>>> v0.0.4
 var regionConsts = []string{
 	"001", "419", "BR", "CA", "ES", "GB", "MD", "PT", "UK", "US",
 	"ZZ", "XA", "XC", "XK", // Unofficial tag for Kosovo.
 }
 
+<<<<<<< HEAD
 func (b *builder) writeRegion() {
 	b.writeConsts(b.region.index, regionConsts...)
 
@@ -1359,6 +1429,12 @@ func (b *builder) writeLikelyData() {
 
 	b.writeType(likelyTag{})
 	b.writeSlice("likelyRegionGroup", likelyRegionGroup)
+=======
+func (b *builder) writeConstants() {
+	b.writeConsts(func(s string) int { return int(b.langIndex(s)) }, langConsts...)
+	b.writeConsts(b.regionIndex, regionConsts...)
+	b.writeConsts(b.scriptIndex, scriptConsts...)
+>>>>>>> v0.0.4
 }
 
 type mutualIntelligibility struct {
@@ -1397,7 +1473,11 @@ func (b *builder) writeMatchData() {
 		regions := strings.Split(g.Contains, " ")
 		regionHierarchy[g.Type] = append(regionHierarchy[g.Type], regions...)
 	}
+<<<<<<< HEAD
 	regionToGroups := make([]uint8, len(b.region.s))
+=======
+	regionToGroups := make([]uint8, language.NumRegions)
+>>>>>>> v0.0.4
 
 	idToIndex := map[string]uint8{}
 	for i, mv := range lm[0].MatchVariable {
@@ -1410,12 +1490,20 @@ func (b *builder) writeMatchData() {
 			todo := []string{r}
 			for k := 0; k < len(todo); k++ {
 				r := todo[k]
+<<<<<<< HEAD
 				regionToGroups[b.region.index(r)] |= 1 << uint8(i)
+=======
+				regionToGroups[b.regionIndex(r)] |= 1 << uint8(i)
+>>>>>>> v0.0.4
 				todo = append(todo, regionHierarchy[r]...)
 			}
 		}
 	}
+<<<<<<< HEAD
 	b.writeSlice("regionToGroups", regionToGroups)
+=======
+	b.w.WriteVar("regionToGroups", regionToGroups)
+>>>>>>> v0.0.4
 
 	// maps language id to in- and out-of-group region.
 	paradigmLocales := [][3]uint16{}
@@ -1426,16 +1514,28 @@ func (b *builder) writeMatchData() {
 			pc := strings.SplitN(locales[i+j], "-", 2)
 			x[0] = b.langIndex(pc[0])
 			if len(pc) == 2 {
+<<<<<<< HEAD
 				x[1+j] = uint16(b.region.index(pc[1]))
+=======
+				x[1+j] = uint16(b.regionIndex(pc[1]))
+>>>>>>> v0.0.4
 			}
 		}
 		paradigmLocales = append(paradigmLocales, x)
 	}
+<<<<<<< HEAD
 	b.writeSlice("paradigmLocales", paradigmLocales)
 
 	b.writeType(mutualIntelligibility{})
 	b.writeType(scriptIntelligibility{})
 	b.writeType(regionIntelligibility{})
+=======
+	b.w.WriteVar("paradigmLocales", paradigmLocales)
+
+	b.w.WriteType(mutualIntelligibility{})
+	b.w.WriteType(scriptIntelligibility{})
+	b.w.WriteType(regionIntelligibility{})
+>>>>>>> v0.0.4
 
 	matchLang := []mutualIntelligibility{}
 	matchScript := []scriptIntelligibility{}
@@ -1461,16 +1561,26 @@ func (b *builder) writeMatchData() {
 			matchScript = append(matchScript, scriptIntelligibility{
 				wantLang:   uint16(b.langIndex(d[0])),
 				haveLang:   uint16(b.langIndex(s[0])),
+<<<<<<< HEAD
 				wantScript: uint8(b.script.index(d[1])),
 				haveScript: uint8(b.script.index(s[1])),
+=======
+				wantScript: uint8(b.scriptIndex(d[1])),
+				haveScript: uint8(b.scriptIndex(s[1])),
+>>>>>>> v0.0.4
 				distance:   uint8(distance),
 			})
 			if m.Oneway != "true" {
 				matchScript = append(matchScript, scriptIntelligibility{
 					wantLang:   uint16(b.langIndex(s[0])),
 					haveLang:   uint16(b.langIndex(d[0])),
+<<<<<<< HEAD
 					wantScript: uint8(b.script.index(s[1])),
 					haveScript: uint8(b.script.index(d[1])),
+=======
+					wantScript: uint8(b.scriptIndex(s[1])),
+					haveScript: uint8(b.scriptIndex(d[1])),
+>>>>>>> v0.0.4
 					distance:   uint8(distance),
 				})
 			}
@@ -1512,7 +1622,11 @@ func (b *builder) writeMatchData() {
 				distance: uint8(distance),
 			}
 			if d[1] != "*" {
+<<<<<<< HEAD
 				ri.script = uint8(b.script.index(d[1]))
+=======
+				ri.script = uint8(b.scriptIndex(d[1]))
+>>>>>>> v0.0.4
 			}
 			switch {
 			case d[2] == "*":
@@ -1532,16 +1646,33 @@ func (b *builder) writeMatchData() {
 	sort.SliceStable(matchLang, func(i, j int) bool {
 		return matchLang[i].distance < matchLang[j].distance
 	})
+<<<<<<< HEAD
 	b.writeSlice("matchLang", matchLang)
 
 	sort.SliceStable(matchScript, func(i, j int) bool {
 		return matchScript[i].distance < matchScript[j].distance
 	})
 	b.writeSlice("matchScript", matchScript)
+=======
+	b.w.WriteComment(`
+		matchLang holds pairs of langIDs of base languages that are typically
+		mutually intelligible. Each pair is associated with a confidence and
+		whether the intelligibility goes one or both ways.`)
+	b.w.WriteVar("matchLang", matchLang)
+
+	b.w.WriteComment(`
+		matchScript holds pairs of scriptIDs where readers of one script
+		can typically also read the other. Each is associated with a confidence.`)
+	sort.SliceStable(matchScript, func(i, j int) bool {
+		return matchScript[i].distance < matchScript[j].distance
+	})
+	b.w.WriteVar("matchScript", matchScript)
+>>>>>>> v0.0.4
 
 	sort.SliceStable(matchRegion, func(i, j int) bool {
 		return matchRegion[i].distance < matchRegion[j].distance
 	})
+<<<<<<< HEAD
 	b.writeSlice("matchRegion", matchRegion)
 }
 
@@ -1709,4 +1840,7 @@ func main() {
 	b.writeMatchData()
 	b.writeRegionInclusionData()
 	b.writeParents()
+=======
+	b.w.WriteVar("matchRegion", matchRegion)
+>>>>>>> v0.0.4
 }

@@ -26,6 +26,10 @@ import (
 
 	"cloud.google.com/go/bigtable/internal/gax"
 	btopt "cloud.google.com/go/bigtable/internal/option"
+<<<<<<< HEAD
+=======
+	"cloud.google.com/go/internal/trace"
+>>>>>>> v0.0.4
 	"github.com/golang/protobuf/proto"
 	"google.golang.org/api/option"
 	gtransport "google.golang.org/api/transport/grpc"
@@ -142,6 +146,7 @@ func (c *Client) Open(table string) *Table {
 //
 // By default, the yielded rows will contain all values in all cells.
 // Use RowFilter to limit the cells returned.
+<<<<<<< HEAD
 func (t *Table) ReadRows(ctx context.Context, arg RowSet, f func(Row) bool, opts ...ReadOption) error {
 	ctx = mergeOutgoingMetadata(ctx, t.md)
 
@@ -149,6 +154,14 @@ func (t *Table) ReadRows(ctx context.Context, arg RowSet, f func(Row) bool, opts
 	var err error
 	ctx = traceStartSpan(ctx, "cloud.google.com/go/bigtable.ReadRows")
 	defer func() { traceEndSpan(ctx, err) }()
+=======
+func (t *Table) ReadRows(ctx context.Context, arg RowSet, f func(Row) bool, opts ...ReadOption) (err error) {
+	ctx = mergeOutgoingMetadata(ctx, t.md)
+	ctx = trace.StartSpan(ctx, "cloud.google.com/go/bigtable.ReadRows")
+	defer func() { trace.EndSpan(ctx, err) }()
+
+	var prevRowKey string
+>>>>>>> v0.0.4
 	attrMap := make(map[string]interface{})
 	err = gax.Invoke(ctx, func(ctx context.Context) error {
 		if !arg.valid() {
@@ -185,12 +198,20 @@ func (t *Table) ReadRows(ctx context.Context, arg RowSet, f func(Row) bool, opts
 				attrMap["rowKey"] = prevRowKey
 				attrMap["error"] = err.Error()
 				attrMap["time_secs"] = time.Since(startTime).Seconds()
+<<<<<<< HEAD
 				tracePrintf(ctx, attrMap, "Retry details in ReadRows")
+=======
+				trace.TracePrintf(ctx, attrMap, "Retry details in ReadRows")
+>>>>>>> v0.0.4
 				return err
 			}
 			attrMap["time_secs"] = time.Since(startTime).Seconds()
 			attrMap["rowCount"] = len(res.Chunks)
+<<<<<<< HEAD
 			tracePrintf(ctx, attrMap, "Details in ReadRows")
+=======
+			trace.TracePrintf(ctx, attrMap, "Details in ReadRows")
+>>>>>>> v0.0.4
 
 			for _, cc := range res.Chunks {
 				row, err := cr.Process(cc)
@@ -468,7 +489,11 @@ const maxMutations = 100000
 
 // Apply mutates a row atomically. A mutation must contain at least one
 // operation and at most 100000 operations.
+<<<<<<< HEAD
 func (t *Table) Apply(ctx context.Context, row string, m *Mutation, opts ...ApplyOption) error {
+=======
+func (t *Table) Apply(ctx context.Context, row string, m *Mutation, opts ...ApplyOption) (err error) {
+>>>>>>> v0.0.4
 	ctx = mergeOutgoingMetadata(ctx, t.md)
 	after := func(res proto.Message) {
 		for _, o := range opts {
@@ -476,9 +501,14 @@ func (t *Table) Apply(ctx context.Context, row string, m *Mutation, opts ...Appl
 		}
 	}
 
+<<<<<<< HEAD
 	var err error
 	ctx = traceStartSpan(ctx, "cloud.google.com/go/bigtable/Apply")
 	defer func() { traceEndSpan(ctx, err) }()
+=======
+	ctx = trace.StartSpan(ctx, "cloud.google.com/go/bigtable/Apply")
+	defer func() { trace.EndSpan(ctx, err) }()
+>>>>>>> v0.0.4
 	var callOptions []gax.CallOption
 	if m.cond == nil {
 		req := &btpb.MutateRowRequest{
@@ -641,8 +671,16 @@ type entryErr struct {
 // will correspond to the relevant rowKeys/muts arguments.
 //
 // Conditional mutations cannot be applied in bulk and providing one will result in an error.
+<<<<<<< HEAD
 func (t *Table) ApplyBulk(ctx context.Context, rowKeys []string, muts []*Mutation, opts ...ApplyOption) ([]error, error) {
 	ctx = mergeOutgoingMetadata(ctx, t.md)
+=======
+func (t *Table) ApplyBulk(ctx context.Context, rowKeys []string, muts []*Mutation, opts ...ApplyOption) (errs []error, err error) {
+	ctx = mergeOutgoingMetadata(ctx, t.md)
+	ctx = trace.StartSpan(ctx, "cloud.google.com/go/bigtable/ApplyBulk")
+	defer func() { trace.EndSpan(ctx, err) }()
+
+>>>>>>> v0.0.4
 	if len(rowKeys) != len(muts) {
 		return nil, fmt.Errorf("mismatched rowKeys and mutation array lengths: %d, %d", len(rowKeys), len(muts))
 	}
@@ -656,15 +694,22 @@ func (t *Table) ApplyBulk(ctx context.Context, rowKeys []string, muts []*Mutatio
 		origEntries[i] = &entryErr{Entry: &btpb.MutateRowsRequest_Entry{RowKey: []byte(key), Mutations: mut.ops}}
 	}
 
+<<<<<<< HEAD
 	var err error
 	ctx = traceStartSpan(ctx, "cloud.google.com/go/bigtable/ApplyBulk")
 	defer func() { traceEndSpan(ctx, err) }()
 
+=======
+>>>>>>> v0.0.4
 	for _, group := range groupEntries(origEntries, maxMutations) {
 		attrMap := make(map[string]interface{})
 		err = gax.Invoke(ctx, func(ctx context.Context) error {
 			attrMap["rowCount"] = len(group)
+<<<<<<< HEAD
 			tracePrintf(ctx, attrMap, "Row count in ApplyBulk")
+=======
+			trace.TracePrintf(ctx, attrMap, "Row count in ApplyBulk")
+>>>>>>> v0.0.4
 			err := t.doApplyBulk(ctx, group, opts...)
 			if err != nil {
 				// We want to retry the entire request with the current group
@@ -683,9 +728,14 @@ func (t *Table) ApplyBulk(ctx context.Context, rowKeys []string, muts []*Mutatio
 		}
 	}
 
+<<<<<<< HEAD
 	// Accumulate all of the errors into an array to return, interspersed with nils for successful
 	// entries. The absence of any errors means we should return nil.
 	var errs []error
+=======
+	// All the errors are accumulated into an array and returned, interspersed with nils for successful
+	// entries. The absence of any errors means we should return nil.
+>>>>>>> v0.0.4
 	var foundErr bool
 	for _, entry := range origEntries {
 		if entry.Err != nil {

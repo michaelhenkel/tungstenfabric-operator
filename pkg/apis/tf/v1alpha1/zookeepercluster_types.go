@@ -2,7 +2,10 @@ package v1alpha1
 
 import (
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
+<<<<<<< HEAD
         basev1 "github.com/michaelhenkel/tungstenfabric-operator/pkg/apis/base/v1alpha1"
+=======
+>>>>>>> v0.0.4
 )
 
 // EDIT THIS FILE!  THIS IS SCAFFOLDING FOR YOU TO OWN!
@@ -14,9 +17,17 @@ type ZookeeperClusterSpec struct {
 	// INSERT ADDITIONAL SPEC FIELDS - desired state of cluster
 	// Important: Run "operator-sdk generate k8s" to regenerate code after modifying this file
 	// Add custom validation using kubebuilder tags: https://book.kubebuilder.io/beyond_basics/generating_crd.html
+<<<<<<< HEAD
 	basev1.BaseParameter `json:",inline"`
 	ZookeeperPort string `json:"zookeeperport"`
 	ZookeeperPorts string `json:"zookeeperports"`
+=======
+	Containers []*Container `json:"containers"`
+	InitContainers []*Container `json:"initcontainers"`
+	ConfigParameters map[string]string
+	Type string
+	General *General
+>>>>>>> v0.0.4
 }
 
 // ZookeeperClusterStatus defines the observed state of ZookeeperCluster
@@ -26,7 +37,10 @@ type ZookeeperClusterStatus struct {
 	// Important: Run "operator-sdk generate k8s" to regenerate code after modifying this file
 	// Add custom validation using kubebuilder tags: https://book.kubebuilder.io/beyond_basics/generating_crd.html
 	Nodes []string `json:"nodes"`
+<<<<<<< HEAD
 
+=======
+>>>>>>> v0.0.4
 }
 
 // +k8s:deepcopy-gen:interfaces=k8s.io/apimachinery/pkg/runtime.Object

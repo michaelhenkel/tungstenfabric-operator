@@ -501,7 +501,12 @@ type ErrorSummary struct {
 	//   "UNAVAILABLE" - The service is currently unavailable.  This is most
 	// likely a
 	// transient condition, which can be corrected by retrying with
+<<<<<<< HEAD
 	// a backoff.
+=======
+	// a backoff. Note that it is not always safe to retry
+	// non-idempotent operations.
+>>>>>>> v0.0.4
 	//
 	// See the guidelines above for deciding between
 	// `FAILED_PRECONDITION`,

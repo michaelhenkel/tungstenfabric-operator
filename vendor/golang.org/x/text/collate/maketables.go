@@ -195,7 +195,11 @@ func openArchive() *zip.Reader {
 }
 
 // parseUCA parses a Default Unicode Collation Element Table of the format
+<<<<<<< HEAD
 // specified in http://www.unicode.org/reports/tr10/#File_Format.
+=======
+// specified in https://www.unicode.org/reports/tr10/#File_Format.
+>>>>>>> v0.0.4
 // It returns the variable top.
 func parseUCA(builder *build.Builder) {
 	var r io.ReadCloser

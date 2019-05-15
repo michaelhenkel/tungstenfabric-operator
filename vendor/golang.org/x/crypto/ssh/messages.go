@@ -764,3 +764,32 @@ func decode(packet []byte) (interface{}, error) {
 	}
 	return msg, nil
 }
+<<<<<<< HEAD
+=======
+
+var packetTypeNames = map[byte]string{
+	msgDisconnect:          "disconnectMsg",
+	msgServiceRequest:      "serviceRequestMsg",
+	msgServiceAccept:       "serviceAcceptMsg",
+	msgKexInit:             "kexInitMsg",
+	msgKexDHInit:           "kexDHInitMsg",
+	msgKexDHReply:          "kexDHReplyMsg",
+	msgUserAuthRequest:     "userAuthRequestMsg",
+	msgUserAuthSuccess:     "userAuthSuccessMsg",
+	msgUserAuthFailure:     "userAuthFailureMsg",
+	msgUserAuthPubKeyOk:    "userAuthPubKeyOkMsg",
+	msgGlobalRequest:       "globalRequestMsg",
+	msgRequestSuccess:      "globalRequestSuccessMsg",
+	msgRequestFailure:      "globalRequestFailureMsg",
+	msgChannelOpen:         "channelOpenMsg",
+	msgChannelData:         "channelDataMsg",
+	msgChannelOpenConfirm:  "channelOpenConfirmMsg",
+	msgChannelOpenFailure:  "channelOpenFailureMsg",
+	msgChannelWindowAdjust: "windowAdjustMsg",
+	msgChannelEOF:          "channelEOFMsg",
+	msgChannelClose:        "channelCloseMsg",
+	msgChannelRequest:      "channelRequestMsg",
+	msgChannelSuccess:      "channelRequestSuccessMsg",
+	msgChannelFailure:      "channelRequestFailureMsg",
+}
+>>>>>>> v0.0.4

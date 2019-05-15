@@ -22,7 +22,11 @@ import (
 
 // UserSetup - userSetup script
 type UserSetup struct {
+<<<<<<< HEAD
 	input.Input
+=======
+	StaticInput
+>>>>>>> v0.0.4
 }
 
 func (u *UserSetup) GetInput() (input.Input, error) {

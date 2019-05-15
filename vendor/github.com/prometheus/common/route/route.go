@@ -22,9 +22,19 @@ import (
 
 type param string
 
+<<<<<<< HEAD
 // Param returns param p for the context.
 func Param(ctx context.Context, p string) string {
 	return ctx.Value(param(p)).(string)
+=======
+// Param returns param p for the context, or the empty string when
+// param does not exist in context.
+func Param(ctx context.Context, p string) string {
+	if v := ctx.Value(param(p)); v != nil {
+		return v.(string)
+	}
+	return ""
+>>>>>>> v0.0.4
 }
 
 // WithParam returns a new context with param p set to v.

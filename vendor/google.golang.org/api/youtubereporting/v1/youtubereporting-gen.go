@@ -816,8 +816,13 @@ type ListReportTypesResponse struct {
 	// Pass this value in the
 	// ListReportTypesRequest.page_token
 	// field in the subsequent call to `ListReportTypes` method to retrieve
+<<<<<<< HEAD
 	// the next
 	// page of results.
+=======
+	// the
+	// next page of results.
+>>>>>>> v0.0.4
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
 	// ReportTypes: The list of report types.

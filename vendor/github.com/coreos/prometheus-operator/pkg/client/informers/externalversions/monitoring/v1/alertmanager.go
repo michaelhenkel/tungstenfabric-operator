@@ -19,11 +19,19 @@ package v1
 import (
 	time "time"
 
+<<<<<<< HEAD
 	monitoring_v1 "github.com/coreos/prometheus-operator/pkg/apis/monitoring/v1"
 	internalinterfaces "github.com/coreos/prometheus-operator/pkg/client/informers/externalversions/internalinterfaces"
 	v1 "github.com/coreos/prometheus-operator/pkg/client/listers/monitoring/v1"
 	versioned "github.com/coreos/prometheus-operator/pkg/client/versioned"
 	meta_v1 "k8s.io/apimachinery/pkg/apis/meta/v1"
+=======
+	monitoringv1 "github.com/coreos/prometheus-operator/pkg/apis/monitoring/v1"
+	internalinterfaces "github.com/coreos/prometheus-operator/pkg/client/informers/externalversions/internalinterfaces"
+	v1 "github.com/coreos/prometheus-operator/pkg/client/listers/monitoring/v1"
+	versioned "github.com/coreos/prometheus-operator/pkg/client/versioned"
+	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
+>>>>>>> v0.0.4
 	runtime "k8s.io/apimachinery/pkg/runtime"
 	watch "k8s.io/apimachinery/pkg/watch"
 	cache "k8s.io/client-go/tools/cache"
@@ -55,20 +63,32 @@ func NewAlertmanagerInformer(client versioned.Interface, namespace string, resyn
 func NewFilteredAlertmanagerInformer(client versioned.Interface, namespace string, resyncPeriod time.Duration, indexers cache.Indexers, tweakListOptions internalinterfaces.TweakListOptionsFunc) cache.SharedIndexInformer {
 	return cache.NewSharedIndexInformer(
 		&cache.ListWatch{
+<<<<<<< HEAD
 			ListFunc: func(options meta_v1.ListOptions) (runtime.Object, error) {
+=======
+			ListFunc: func(options metav1.ListOptions) (runtime.Object, error) {
+>>>>>>> v0.0.4
 				if tweakListOptions != nil {
 					tweakListOptions(&options)
 				}
 				return client.MonitoringV1().Alertmanagers(namespace).List(options)
 			},
+<<<<<<< HEAD
 			WatchFunc: func(options meta_v1.ListOptions) (watch.Interface, error) {
+=======
+			WatchFunc: func(options metav1.ListOptions) (watch.Interface, error) {
+>>>>>>> v0.0.4
 				if tweakListOptions != nil {
 					tweakListOptions(&options)
 				}
 				return client.MonitoringV1().Alertmanagers(namespace).Watch(options)
 			},
 		},
+<<<<<<< HEAD
 		&monitoring_v1.Alertmanager{},
+=======
+		&monitoringv1.Alertmanager{},
+>>>>>>> v0.0.4
 		resyncPeriod,
 		indexers,
 	)
@@ -79,7 +99,11 @@ func (f *alertmanagerInformer) defaultInformer(client versioned.Interface, resyn
 }
 
 func (f *alertmanagerInformer) Informer() cache.SharedIndexInformer {
+<<<<<<< HEAD
 	return f.factory.InformerFor(&monitoring_v1.Alertmanager{}, f.defaultInformer)
+=======
+	return f.factory.InformerFor(&monitoringv1.Alertmanager{}, f.defaultInformer)
+>>>>>>> v0.0.4
 }
 
 func (f *alertmanagerInformer) Lister() v1.AlertmanagerLister {

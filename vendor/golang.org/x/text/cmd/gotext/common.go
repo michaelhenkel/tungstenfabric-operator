@@ -21,6 +21,12 @@ const (
 // NOTE: The command line tool already prefixes with "gotext:".
 var (
 	wrap = func(err error, msg string) error {
+<<<<<<< HEAD
+=======
+		if err == nil {
+			return nil
+		}
+>>>>>>> v0.0.4
 		return fmt.Errorf("%s: %v", msg, err)
 	}
 	errorf = fmt.Errorf

@@ -17,6 +17,13 @@ type call struct {
 	val interface{}
 	err error
 
+<<<<<<< HEAD
+=======
+	// forgotten indicates whether Forget was called with this call's key
+	// while the call was still in flight.
+	forgotten bool
+
+>>>>>>> v0.0.4
 	// These fields are read and written with the singleflight
 	// mutex held before the WaitGroup is done, and are read but
 	// not written after the WaitGroup is done.
@@ -94,7 +101,13 @@ func (g *Group) doCall(c *call, key string, fn func() (interface{}, error)) {
 	c.wg.Done()
 
 	g.mu.Lock()
+<<<<<<< HEAD
 	delete(g.m, key)
+=======
+	if !c.forgotten {
+		delete(g.m, key)
+	}
+>>>>>>> v0.0.4
 	for _, ch := range c.chans {
 		ch <- Result{c.val, c.err, c.dups > 0}
 	}
@@ -106,6 +119,12 @@ func (g *Group) doCall(c *call, key string, fn func() (interface{}, error)) {
 // an earlier call to complete.
 func (g *Group) Forget(key string) {
 	g.mu.Lock()
+<<<<<<< HEAD
+=======
+	if c, ok := g.m[key]; ok {
+		c.forgotten = true
+	}
+>>>>>>> v0.0.4
 	delete(g.m, key)
 	g.mu.Unlock()
 }

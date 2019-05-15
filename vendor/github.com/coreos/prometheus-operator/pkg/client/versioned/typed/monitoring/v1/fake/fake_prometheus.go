@@ -17,7 +17,11 @@
 package fake
 
 import (
+<<<<<<< HEAD
 	monitoring_v1 "github.com/coreos/prometheus-operator/pkg/apis/monitoring/v1"
+=======
+	monitoringv1 "github.com/coreos/prometheus-operator/pkg/apis/monitoring/v1"
+>>>>>>> v0.0.4
 	v1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	labels "k8s.io/apimachinery/pkg/labels"
 	schema "k8s.io/apimachinery/pkg/runtime/schema"
@@ -37,13 +41,20 @@ var prometheusesResource = schema.GroupVersionResource{Group: "monitoring.coreos
 var prometheusesKind = schema.GroupVersionKind{Group: "monitoring.coreos.com", Version: "v1", Kind: "Prometheus"}
 
 // Get takes name of the prometheus, and returns the corresponding prometheus object, and an error if there is any.
+<<<<<<< HEAD
 func (c *FakePrometheuses) Get(name string, options v1.GetOptions) (result *monitoring_v1.Prometheus, err error) {
 	obj, err := c.Fake.
 		Invokes(testing.NewGetAction(prometheusesResource, c.ns, name), &monitoring_v1.Prometheus{})
+=======
+func (c *FakePrometheuses) Get(name string, options v1.GetOptions) (result *monitoringv1.Prometheus, err error) {
+	obj, err := c.Fake.
+		Invokes(testing.NewGetAction(prometheusesResource, c.ns, name), &monitoringv1.Prometheus{})
+>>>>>>> v0.0.4
 
 	if obj == nil {
 		return nil, err
 	}
+<<<<<<< HEAD
 	return obj.(*monitoring_v1.Prometheus), err
 }
 
@@ -51,6 +62,15 @@ func (c *FakePrometheuses) Get(name string, options v1.GetOptions) (result *moni
 func (c *FakePrometheuses) List(opts v1.ListOptions) (result *monitoring_v1.PrometheusList, err error) {
 	obj, err := c.Fake.
 		Invokes(testing.NewListAction(prometheusesResource, prometheusesKind, c.ns, opts), &monitoring_v1.PrometheusList{})
+=======
+	return obj.(*monitoringv1.Prometheus), err
+}
+
+// List takes label and field selectors, and returns the list of Prometheuses that match those selectors.
+func (c *FakePrometheuses) List(opts v1.ListOptions) (result *monitoringv1.PrometheusList, err error) {
+	obj, err := c.Fake.
+		Invokes(testing.NewListAction(prometheusesResource, prometheusesKind, c.ns, opts), &monitoringv1.PrometheusList{})
+>>>>>>> v0.0.4
 
 	if obj == nil {
 		return nil, err
@@ -60,8 +80,13 @@ func (c *FakePrometheuses) List(opts v1.ListOptions) (result *monitoring_v1.Prom
 	if label == nil {
 		label = labels.Everything()
 	}
+<<<<<<< HEAD
 	list := &monitoring_v1.PrometheusList{ListMeta: obj.(*monitoring_v1.PrometheusList).ListMeta}
 	for _, item := range obj.(*monitoring_v1.PrometheusList).Items {
+=======
+	list := &monitoringv1.PrometheusList{ListMeta: obj.(*monitoringv1.PrometheusList).ListMeta}
+	for _, item := range obj.(*monitoringv1.PrometheusList).Items {
+>>>>>>> v0.0.4
 		if label.Matches(labels.Set(item.Labels)) {
 			list.Items = append(list.Items, item)
 		}
@@ -77,13 +102,20 @@ func (c *FakePrometheuses) Watch(opts v1.ListOptions) (watch.Interface, error) {
 }
 
 // Create takes the representation of a prometheus and creates it.  Returns the server's representation of the prometheus, and an error, if there is any.
+<<<<<<< HEAD
 func (c *FakePrometheuses) Create(prometheus *monitoring_v1.Prometheus) (result *monitoring_v1.Prometheus, err error) {
 	obj, err := c.Fake.
 		Invokes(testing.NewCreateAction(prometheusesResource, c.ns, prometheus), &monitoring_v1.Prometheus{})
+=======
+func (c *FakePrometheuses) Create(prometheus *monitoringv1.Prometheus) (result *monitoringv1.Prometheus, err error) {
+	obj, err := c.Fake.
+		Invokes(testing.NewCreateAction(prometheusesResource, c.ns, prometheus), &monitoringv1.Prometheus{})
+>>>>>>> v0.0.4
 
 	if obj == nil {
 		return nil, err
 	}
+<<<<<<< HEAD
 	return obj.(*monitoring_v1.Prometheus), err
 }
 
@@ -91,29 +123,56 @@ func (c *FakePrometheuses) Create(prometheus *monitoring_v1.Prometheus) (result 
 func (c *FakePrometheuses) Update(prometheus *monitoring_v1.Prometheus) (result *monitoring_v1.Prometheus, err error) {
 	obj, err := c.Fake.
 		Invokes(testing.NewUpdateAction(prometheusesResource, c.ns, prometheus), &monitoring_v1.Prometheus{})
+=======
+	return obj.(*monitoringv1.Prometheus), err
+}
+
+// Update takes the representation of a prometheus and updates it. Returns the server's representation of the prometheus, and an error, if there is any.
+func (c *FakePrometheuses) Update(prometheus *monitoringv1.Prometheus) (result *monitoringv1.Prometheus, err error) {
+	obj, err := c.Fake.
+		Invokes(testing.NewUpdateAction(prometheusesResource, c.ns, prometheus), &monitoringv1.Prometheus{})
+>>>>>>> v0.0.4
 
 	if obj == nil {
 		return nil, err
 	}
+<<<<<<< HEAD
 	return obj.(*monitoring_v1.Prometheus), err
+=======
+	return obj.(*monitoringv1.Prometheus), err
+>>>>>>> v0.0.4
 }
 
 // UpdateStatus was generated because the type contains a Status member.
 // Add a +genclient:noStatus comment above the type to avoid generating UpdateStatus().
+<<<<<<< HEAD
 func (c *FakePrometheuses) UpdateStatus(prometheus *monitoring_v1.Prometheus) (*monitoring_v1.Prometheus, error) {
 	obj, err := c.Fake.
 		Invokes(testing.NewUpdateSubresourceAction(prometheusesResource, "status", c.ns, prometheus), &monitoring_v1.Prometheus{})
+=======
+func (c *FakePrometheuses) UpdateStatus(prometheus *monitoringv1.Prometheus) (*monitoringv1.Prometheus, error) {
+	obj, err := c.Fake.
+		Invokes(testing.NewUpdateSubresourceAction(prometheusesResource, "status", c.ns, prometheus), &monitoringv1.Prometheus{})
+>>>>>>> v0.0.4
 
 	if obj == nil {
 		return nil, err
 	}
+<<<<<<< HEAD
 	return obj.(*monitoring_v1.Prometheus), err
+=======
+	return obj.(*monitoringv1.Prometheus), err
+>>>>>>> v0.0.4
 }
 
 // Delete takes name of the prometheus and deletes it. Returns an error if one occurs.
 func (c *FakePrometheuses) Delete(name string, options *v1.DeleteOptions) error {
 	_, err := c.Fake.
+<<<<<<< HEAD
 		Invokes(testing.NewDeleteAction(prometheusesResource, c.ns, name), &monitoring_v1.Prometheus{})
+=======
+		Invokes(testing.NewDeleteAction(prometheusesResource, c.ns, name), &monitoringv1.Prometheus{})
+>>>>>>> v0.0.4
 
 	return err
 }
@@ -122,17 +181,31 @@ func (c *FakePrometheuses) Delete(name string, options *v1.DeleteOptions) error 
 func (c *FakePrometheuses) DeleteCollection(options *v1.DeleteOptions, listOptions v1.ListOptions) error {
 	action := testing.NewDeleteCollectionAction(prometheusesResource, c.ns, listOptions)
 
+<<<<<<< HEAD
 	_, err := c.Fake.Invokes(action, &monitoring_v1.PrometheusList{})
+=======
+	_, err := c.Fake.Invokes(action, &monitoringv1.PrometheusList{})
+>>>>>>> v0.0.4
 	return err
 }
 
 // Patch applies the patch and returns the patched prometheus.
+<<<<<<< HEAD
 func (c *FakePrometheuses) Patch(name string, pt types.PatchType, data []byte, subresources ...string) (result *monitoring_v1.Prometheus, err error) {
 	obj, err := c.Fake.
 		Invokes(testing.NewPatchSubresourceAction(prometheusesResource, c.ns, name, data, subresources...), &monitoring_v1.Prometheus{})
+=======
+func (c *FakePrometheuses) Patch(name string, pt types.PatchType, data []byte, subresources ...string) (result *monitoringv1.Prometheus, err error) {
+	obj, err := c.Fake.
+		Invokes(testing.NewPatchSubresourceAction(prometheusesResource, c.ns, name, pt, data, subresources...), &monitoringv1.Prometheus{})
+>>>>>>> v0.0.4
 
 	if obj == nil {
 		return nil, err
 	}
+<<<<<<< HEAD
 	return obj.(*monitoring_v1.Prometheus), err
+=======
+	return obj.(*monitoringv1.Prometheus), err
+>>>>>>> v0.0.4
 }

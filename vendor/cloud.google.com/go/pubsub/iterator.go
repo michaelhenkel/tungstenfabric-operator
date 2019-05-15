@@ -24,6 +24,10 @@ import (
 	"cloud.google.com/go/pubsub/internal/distribution"
 	gax "github.com/googleapis/gax-go/v2"
 	pb "google.golang.org/genproto/googleapis/pubsub/v1"
+<<<<<<< HEAD
+=======
+	"google.golang.org/grpc"
+>>>>>>> v0.0.4
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/status"
 )
@@ -234,7 +238,11 @@ func (it *messageIterator) pullMessages(maxToPull int32) ([]*pb.ReceivedMessage,
 	res, err := it.subc.Pull(it.ctx, &pb.PullRequest{
 		Subscription: it.subName,
 		MaxMessages:  maxToPull,
+<<<<<<< HEAD
 	})
+=======
+	}, gax.WithGRPCOptions(grpc.MaxCallRecvMsgSize(maxSendRecvBytes)))
+>>>>>>> v0.0.4
 	switch {
 	case err == context.Canceled:
 		return nil, nil

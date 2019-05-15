@@ -34,6 +34,10 @@ func (m *MoleculeTestLocalPlaybook) GetInput() (input.Input, error) {
 		m.Path = filepath.Join(MoleculeTestLocalDir, MoleculeTestLocalPlaybookFile)
 	}
 	m.TemplateBody = moleculeTestLocalPlaybookAnsibleTmpl
+<<<<<<< HEAD
+=======
+	m.Delims = AnsibleDelims
+>>>>>>> v0.0.4
 
 	return m.Input, nil
 }
@@ -43,16 +47,28 @@ const moleculeTestLocalPlaybookAnsibleTmpl = `---
 - name: Build Operator in Kubernetes docker container
   hosts: k8s
   vars:
+<<<<<<< HEAD
     image_name: {{.Resource.FullGroup}}/{{.ProjectName}}:testing
   tasks:
   # using command so we don't need to install any dependencies
   - name: Get existing image hash
     command: docker images -q {{"{{image_name}}"}}
+=======
+    image_name: [[.Resource.FullGroup]]/[[.ProjectName]]:testing
+  tasks:
+  # using command so we don't need to install any dependencies
+  - name: Get existing image hash
+    command: docker images -q {{ image_name }}
+>>>>>>> v0.0.4
     register: prev_hash
     changed_when: false
 
   - name: Build Operator Image
+<<<<<<< HEAD
     command: docker build -f /build/build/Dockerfile -t {{"{{ image_name }}"}} /build
+=======
+    command: docker build -f /build/build/Dockerfile -t {{ image_name }} /build
+>>>>>>> v0.0.4
     register: build_cmd
     changed_when: not prev_hash.stdout or (prev_hash.stdout and prev_hash.stdout not in ''.join(build_cmd.stdout_lines[-2:]))
 
@@ -60,29 +76,51 @@ const moleculeTestLocalPlaybookAnsibleTmpl = `---
   hosts: localhost
   connection: local
   vars:
+<<<<<<< HEAD
     ansible_python_interpreter: '{{ "{{ ansible_playbook_python }}" }}'
     deploy_dir: "{{"{{ lookup('env', 'MOLECULE_PROJECT_DIRECTORY') }}/deploy"}}"
     pull_policy: Never
     REPLACE_IMAGE: {{.Resource.FullGroup}}/{{.ProjectName}}:testing
     custom_resource: "{{"{{"}} lookup('file', '/'.join([deploy_dir, 'crds/{{.Resource.Group}}_{{.Resource.Version}}_{{.Resource.LowerKind}}_cr.yaml'])) | from_yaml {{"}}"}}"
+=======
+    ansible_python_interpreter: '{{ ansible_playbook_python }}'
+    deploy_dir: "{{ lookup('env', 'MOLECULE_PROJECT_DIRECTORY') }}/deploy"
+    pull_policy: Never
+    REPLACE_IMAGE: [[.Resource.FullGroup]]/[[.ProjectName]]:testing
+    custom_resource: "{{ lookup('file', '/'.join([deploy_dir, 'crds/[[.Resource.Group]]_[[.Resource.Version]]_[[.Resource.LowerKind]]_cr.yaml'])) | from_yaml }}"
+>>>>>>> v0.0.4
   tasks:
   - block:
     - name: Delete the Operator Deployment
       k8s:
         state: absent
+<<<<<<< HEAD
         namespace: '{{ "{{ namespace }}" }}'
         definition: "{{"{{"}} lookup('template', '/'.join([deploy_dir, 'operator.yaml'])) {{"}}"}}"
+=======
+        namespace: '{{ namespace }}'
+        definition: "{{ lookup('template', '/'.join([deploy_dir, 'operator.yaml'])) }}"
+>>>>>>> v0.0.4
       register: delete_deployment
       when: hostvars[groups.k8s.0].build_cmd.changed
 
     - name: Wait 30s for Operator Deployment to terminate
       k8s_facts:
+<<<<<<< HEAD
         api_version: '{{"{{"}} definition.apiVersion {{"}}"}}'
         kind: '{{"{{"}} definition.kind {{"}}"}}'
         namespace: '{{"{{"}} namespace {{"}}"}}'
         name: '{{"{{"}} definition.metadata.name {{"}}"}}'
       vars:
         definition: "{{"{{"}} lookup('template', '/'.join([deploy_dir, 'operator.yaml'])) | from_yaml {{"}}"}}"
+=======
+        api_version: '{{ definition.apiVersion }}'
+        kind: '{{ definition.kind }}'
+        namespace: '{{ namespace }}'
+        name: '{{ definition.metadata.name }}'
+      vars:
+        definition: "{{ lookup('template', '/'.join([deploy_dir, 'operator.yaml'])) | from_yaml }}"
+>>>>>>> v0.0.4
       register: deployment
       until: not deployment.resources
       delay: 3
@@ -91,6 +129,7 @@ const moleculeTestLocalPlaybookAnsibleTmpl = `---
 
     - name: Create the Operator Deployment
       k8s:
+<<<<<<< HEAD
         namespace: '{{ "{{ namespace }}" }}'
         definition: "{{"{{"}} lookup('template', '/'.join([deploy_dir, 'operator.yaml'])) {{"}}"}}"
 
@@ -106,6 +145,23 @@ const moleculeTestLocalPlaybookAnsibleTmpl = `---
         kind: '{{"{{"}} custom_resource.kind {{"}}"}}'
         namespace: '{{"{{"}} namespace {{"}}"}}'
         name: '{{"{{"}} custom_resource.metadata.name {{"}}"}}'
+=======
+        namespace: '{{ namespace }}'
+        definition: "{{ lookup('template', '/'.join([deploy_dir, 'operator.yaml'])) }}"
+
+    - name: Create the [[.Resource.FullGroup]]/[[.Resource.Version]].[[.Resource.Kind]]
+      k8s:
+        state: present
+        namespace: '{{ namespace }}'
+        definition: '{{ custom_resource }}'
+
+    - name: Wait 40s for reconciliation to run
+      k8s_facts:
+        api_version: '{{ custom_resource.apiVersion }}'
+        kind: '{{ custom_resource.kind }}'
+        namespace: '{{ namespace }}'
+        name: '{{ custom_resource.metadata.name }}'
+>>>>>>> v0.0.4
       register: cr
       until:
       - "'Successful' in (cr | json_query('resources[].status.conditions[].reason'))"
@@ -118,12 +174,20 @@ const moleculeTestLocalPlaybookAnsibleTmpl = `---
       debug:
         var: debug_cr
       vars:
+<<<<<<< HEAD
         debug_cr: '{{"{{"}} lookup("k8s",
+=======
+        debug_cr: '{{ lookup("k8s",
+>>>>>>> v0.0.4
           kind=custom_resource.kind,
           api_version=custom_resource.apiVersion,
           namespace=namespace,
           resource_name=custom_resource.metadata.name
+<<<<<<< HEAD
         ){{"}}"}}'
+=======
+        )}}'
+>>>>>>> v0.0.4
 
     - name: debug memcached lookup
       ignore_errors: yes
@@ -131,21 +195,37 @@ const moleculeTestLocalPlaybookAnsibleTmpl = `---
       debug:
         var: deploy
       vars:
+<<<<<<< HEAD
         deploy: '{{"{{"}} lookup("k8s",
+=======
+        deploy: '{{ lookup("k8s",
+>>>>>>> v0.0.4
           kind="Deployment",
           api_version="apps/v1",
           namespace=namespace,
           label_selector="app=memcached"
+<<<<<<< HEAD
         ){{"}}"}}'
+=======
+        )}}'
+>>>>>>> v0.0.4
 
     - name: get operator logs
       ignore_errors: yes
       failed_when: false
+<<<<<<< HEAD
       command: kubectl logs deployment/{{"{{"}} definition.metadata.name {{"}}"}} -n {{"{{"}} namespace {{"}}"}}
       environment:
         KUBECONFIG: '{{"{{"}} lookup("env", "KUBECONFIG") {{"}}"}}'
       vars:
         definition: "{{"{{"}} lookup('template', '/'.join([deploy_dir, 'operator.yaml'])) | from_yaml {{"}}"}}"
+=======
+      command: kubectl logs deployment/{{ definition.metadata.name }} -n {{ namespace }}
+      environment:
+        KUBECONFIG: '{{ lookup("env", "KUBECONFIG") }}'
+      vars:
+        definition: "{{ lookup('template', '/'.join([deploy_dir, 'operator.yaml'])) | from_yaml }}"
+>>>>>>> v0.0.4
       register: log
 
     - debug: var=log.stdout_lines
@@ -153,5 +233,9 @@ const moleculeTestLocalPlaybookAnsibleTmpl = `---
     - fail:
         msg: "Failed on action: converge"
 
+<<<<<<< HEAD
 - import_playbook: '{{"{{ playbook_dir }}/../default/asserts.yml"}}'
+=======
+- import_playbook: '{{ playbook_dir }}/../default/asserts.yml'
+>>>>>>> v0.0.4
 `

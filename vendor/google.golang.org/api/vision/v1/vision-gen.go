@@ -203,6 +203,10 @@ type OperationsService struct {
 func NewProjectsService(s *Service) *ProjectsService {
 	rs := &ProjectsService{s: s}
 	rs.Locations = NewProjectsLocationsService(s)
+<<<<<<< HEAD
+=======
+	rs.Operations = NewProjectsOperationsService(s)
+>>>>>>> v0.0.4
 	return rs
 }
 
@@ -210,10 +214,19 @@ type ProjectsService struct {
 	s *Service
 
 	Locations *ProjectsLocationsService
+<<<<<<< HEAD
+=======
+
+	Operations *ProjectsOperationsService
+>>>>>>> v0.0.4
 }
 
 func NewProjectsLocationsService(s *Service) *ProjectsLocationsService {
 	rs := &ProjectsLocationsService{s: s}
+<<<<<<< HEAD
+=======
+	rs.Operations = NewProjectsLocationsOperationsService(s)
+>>>>>>> v0.0.4
 	rs.ProductSets = NewProjectsLocationsProductSetsService(s)
 	rs.Products = NewProjectsLocationsProductsService(s)
 	return rs
@@ -222,11 +235,28 @@ func NewProjectsLocationsService(s *Service) *ProjectsLocationsService {
 type ProjectsLocationsService struct {
 	s *Service
 
+<<<<<<< HEAD
+=======
+	Operations *ProjectsLocationsOperationsService
+
+>>>>>>> v0.0.4
 	ProductSets *ProjectsLocationsProductSetsService
 
 	Products *ProjectsLocationsProductsService
 }
 
+<<<<<<< HEAD
+=======
+func NewProjectsLocationsOperationsService(s *Service) *ProjectsLocationsOperationsService {
+	rs := &ProjectsLocationsOperationsService{s: s}
+	return rs
+}
+
+type ProjectsLocationsOperationsService struct {
+	s *Service
+}
+
+>>>>>>> v0.0.4
 func NewProjectsLocationsProductSetsService(s *Service) *ProjectsLocationsProductSetsService {
 	rs := &ProjectsLocationsProductSetsService{s: s}
 	rs.Products = NewProjectsLocationsProductSetsProductsService(s)
@@ -269,6 +299,18 @@ type ProjectsLocationsProductsReferenceImagesService struct {
 	s *Service
 }
 
+<<<<<<< HEAD
+=======
+func NewProjectsOperationsService(s *Service) *ProjectsOperationsService {
+	rs := &ProjectsOperationsService{s: s}
+	return rs
+}
+
+type ProjectsOperationsService struct {
+	s *Service
+}
+
+>>>>>>> v0.0.4
 // AddProductToProductSetRequest: Request message for the
 // `AddProductToProductSet` method.
 type AddProductToProductSetRequest struct {
@@ -1737,6 +1779,7 @@ func (s *Feature) MarshalJSON() ([]byte, error) {
 // GcsDestination: The Google Cloud Storage location where the output
 // will be written to.
 type GcsDestination struct {
+<<<<<<< HEAD
 	// Uri: Google Cloud Storage URI where the results will be stored.
 	// Results will
 	// be in JSON format and preceded by its corresponding input URI. This
@@ -1750,6 +1793,34 @@ type GcsDestination struct {
 	// *    File: gs://bucket-name/filename.json
 	// *    Prefix: gs://bucket-name/prefix/here/
 	// *    File: gs://bucket-name/prefix/here
+=======
+	// Uri: Google Cloud Storage URI prefix where the results will be
+	// stored. Results
+	// will be in JSON format and preceded by its corresponding input URI
+	// prefix.
+	// This field can either represent a gcs file prefix or gcs directory.
+	// In
+	// either case, the uri should be unique because in order to get all of
+	// the
+	// output files, you will need to do a wildcard gcs search on the uri
+	// prefix
+	// you provide.
+	//
+	// Examples:
+	//
+	// *    File Prefix: gs://bucket-name/here/filenameprefix   The output
+	// files
+	// will be created in gs://bucket-name/here/ and the names of the
+	// output files will begin with "filenameprefix".
+	//
+	// *    Directory Prefix: gs://bucket-name/some/location/   The output
+	// files
+	// will be created in gs://bucket-name/some/location/ and the names of
+	// the
+	// output files could be anything because there was no filename
+	// prefix
+	// specified.
+>>>>>>> v0.0.4
 	//
 	// If multiple outputs, each response is still AnnotateFileResponse,
 	// each of
@@ -2673,6 +2744,7 @@ func (s *GoogleCloudVisionV1p1beta1FaceAnnotationLandmark) MarshalJSON() ([]byte
 // GoogleCloudVisionV1p1beta1GcsDestination: The Google Cloud Storage
 // location where the output will be written to.
 type GoogleCloudVisionV1p1beta1GcsDestination struct {
+<<<<<<< HEAD
 	// Uri: Google Cloud Storage URI where the results will be stored.
 	// Results will
 	// be in JSON format and preceded by its corresponding input URI. This
@@ -2686,6 +2758,34 @@ type GoogleCloudVisionV1p1beta1GcsDestination struct {
 	// *    File: gs://bucket-name/filename.json
 	// *    Prefix: gs://bucket-name/prefix/here/
 	// *    File: gs://bucket-name/prefix/here
+=======
+	// Uri: Google Cloud Storage URI prefix where the results will be
+	// stored. Results
+	// will be in JSON format and preceded by its corresponding input URI
+	// prefix.
+	// This field can either represent a gcs file prefix or gcs directory.
+	// In
+	// either case, the uri should be unique because in order to get all of
+	// the
+	// output files, you will need to do a wildcard gcs search on the uri
+	// prefix
+	// you provide.
+	//
+	// Examples:
+	//
+	// *    File Prefix: gs://bucket-name/here/filenameprefix   The output
+	// files
+	// will be created in gs://bucket-name/here/ and the names of the
+	// output files will begin with "filenameprefix".
+	//
+	// *    Directory Prefix: gs://bucket-name/some/location/   The output
+	// files
+	// will be created in gs://bucket-name/some/location/ and the names of
+	// the
+	// output files could be anything because there was no filename
+	// prefix
+	// specified.
+>>>>>>> v0.0.4
 	//
 	// If multiple outputs, each response is still AnnotateFileResponse,
 	// each of
@@ -3370,8 +3470,15 @@ func (s *GoogleCloudVisionV1p1beta1ProductKeyValue) MarshalJSON() ([]byte, error
 // search request.
 type GoogleCloudVisionV1p1beta1ProductSearchResults struct {
 	// IndexTime: Timestamp of the index which provided these results.
+<<<<<<< HEAD
 	// Changes made after
 	// this time are not reflected in the current results.
+=======
+	// Products added to the
+	// product set and products removed from the product set after this time
+	// are
+	// not reflected in the current results.
+>>>>>>> v0.0.4
 	IndexTime string `json:"indexTime,omitempty"`
 
 	// ProductGroupedResults: List of results grouped by products detected
@@ -5101,6 +5208,7 @@ func (s *GoogleCloudVisionV1p2beta1FaceAnnotationLandmark) MarshalJSON() ([]byte
 // GoogleCloudVisionV1p2beta1GcsDestination: The Google Cloud Storage
 // location where the output will be written to.
 type GoogleCloudVisionV1p2beta1GcsDestination struct {
+<<<<<<< HEAD
 	// Uri: Google Cloud Storage URI where the results will be stored.
 	// Results will
 	// be in JSON format and preceded by its corresponding input URI. This
@@ -5114,6 +5222,34 @@ type GoogleCloudVisionV1p2beta1GcsDestination struct {
 	// *    File: gs://bucket-name/filename.json
 	// *    Prefix: gs://bucket-name/prefix/here/
 	// *    File: gs://bucket-name/prefix/here
+=======
+	// Uri: Google Cloud Storage URI prefix where the results will be
+	// stored. Results
+	// will be in JSON format and preceded by its corresponding input URI
+	// prefix.
+	// This field can either represent a gcs file prefix or gcs directory.
+	// In
+	// either case, the uri should be unique because in order to get all of
+	// the
+	// output files, you will need to do a wildcard gcs search on the uri
+	// prefix
+	// you provide.
+	//
+	// Examples:
+	//
+	// *    File Prefix: gs://bucket-name/here/filenameprefix   The output
+	// files
+	// will be created in gs://bucket-name/here/ and the names of the
+	// output files will begin with "filenameprefix".
+	//
+	// *    Directory Prefix: gs://bucket-name/some/location/   The output
+	// files
+	// will be created in gs://bucket-name/some/location/ and the names of
+	// the
+	// output files could be anything because there was no filename
+	// prefix
+	// specified.
+>>>>>>> v0.0.4
 	//
 	// If multiple outputs, each response is still AnnotateFileResponse,
 	// each of
@@ -5798,8 +5934,15 @@ func (s *GoogleCloudVisionV1p2beta1ProductKeyValue) MarshalJSON() ([]byte, error
 // search request.
 type GoogleCloudVisionV1p2beta1ProductSearchResults struct {
 	// IndexTime: Timestamp of the index which provided these results.
+<<<<<<< HEAD
 	// Changes made after
 	// this time are not reflected in the current results.
+=======
+	// Products added to the
+	// product set and products removed from the product set after this time
+	// are
+	// not reflected in the current results.
+>>>>>>> v0.0.4
 	IndexTime string `json:"indexTime,omitempty"`
 
 	// ProductGroupedResults: List of results grouped by products detected
@@ -7585,6 +7728,7 @@ func (s *GoogleCloudVisionV1p3beta1FaceAnnotationLandmark) MarshalJSON() ([]byte
 // GoogleCloudVisionV1p3beta1GcsDestination: The Google Cloud Storage
 // location where the output will be written to.
 type GoogleCloudVisionV1p3beta1GcsDestination struct {
+<<<<<<< HEAD
 	// Uri: Google Cloud Storage URI where the results will be stored.
 	// Results will
 	// be in JSON format and preceded by its corresponding input URI. This
@@ -7598,6 +7742,34 @@ type GoogleCloudVisionV1p3beta1GcsDestination struct {
 	// *    File: gs://bucket-name/filename.json
 	// *    Prefix: gs://bucket-name/prefix/here/
 	// *    File: gs://bucket-name/prefix/here
+=======
+	// Uri: Google Cloud Storage URI prefix where the results will be
+	// stored. Results
+	// will be in JSON format and preceded by its corresponding input URI
+	// prefix.
+	// This field can either represent a gcs file prefix or gcs directory.
+	// In
+	// either case, the uri should be unique because in order to get all of
+	// the
+	// output files, you will need to do a wildcard gcs search on the uri
+	// prefix
+	// you provide.
+	//
+	// Examples:
+	//
+	// *    File Prefix: gs://bucket-name/here/filenameprefix   The output
+	// files
+	// will be created in gs://bucket-name/here/ and the names of the
+	// output files will begin with "filenameprefix".
+	//
+	// *    Directory Prefix: gs://bucket-name/some/location/   The output
+	// files
+	// will be created in gs://bucket-name/some/location/ and the names of
+	// the
+	// output files could be anything because there was no filename
+	// prefix
+	// specified.
+>>>>>>> v0.0.4
 	//
 	// If multiple outputs, each response is still AnnotateFileResponse,
 	// each of
@@ -8330,8 +8502,15 @@ func (s *GoogleCloudVisionV1p3beta1ProductKeyValue) MarshalJSON() ([]byte, error
 // search request.
 type GoogleCloudVisionV1p3beta1ProductSearchResults struct {
 	// IndexTime: Timestamp of the index which provided these results.
+<<<<<<< HEAD
 	// Changes made after
 	// this time are not reflected in the current results.
+=======
+	// Products added to the
+	// product set and products removed from the product set after this time
+	// are
+	// not reflected in the current results.
+>>>>>>> v0.0.4
 	IndexTime string `json:"indexTime,omitempty"`
 
 	// ProductGroupedResults: List of results grouped by products detected
@@ -10241,6 +10420,7 @@ func (s *GoogleCloudVisionV1p4beta1FaceAnnotationLandmark) MarshalJSON() ([]byte
 // GoogleCloudVisionV1p4beta1GcsDestination: The Google Cloud Storage
 // location where the output will be written to.
 type GoogleCloudVisionV1p4beta1GcsDestination struct {
+<<<<<<< HEAD
 	// Uri: Google Cloud Storage URI where the results will be stored.
 	// Results will
 	// be in JSON format and preceded by its corresponding input URI. This
@@ -10254,6 +10434,34 @@ type GoogleCloudVisionV1p4beta1GcsDestination struct {
 	// *    File: gs://bucket-name/filename.json
 	// *    Prefix: gs://bucket-name/prefix/here/
 	// *    File: gs://bucket-name/prefix/here
+=======
+	// Uri: Google Cloud Storage URI prefix where the results will be
+	// stored. Results
+	// will be in JSON format and preceded by its corresponding input URI
+	// prefix.
+	// This field can either represent a gcs file prefix or gcs directory.
+	// In
+	// either case, the uri should be unique because in order to get all of
+	// the
+	// output files, you will need to do a wildcard gcs search on the uri
+	// prefix
+	// you provide.
+	//
+	// Examples:
+	//
+	// *    File Prefix: gs://bucket-name/here/filenameprefix   The output
+	// files
+	// will be created in gs://bucket-name/here/ and the names of the
+	// output files will begin with "filenameprefix".
+	//
+	// *    Directory Prefix: gs://bucket-name/some/location/   The output
+	// files
+	// will be created in gs://bucket-name/some/location/ and the names of
+	// the
+	// output files could be anything because there was no filename
+	// prefix
+	// specified.
+>>>>>>> v0.0.4
 	//
 	// If multiple outputs, each response is still AnnotateFileResponse,
 	// each of
@@ -10996,8 +11204,15 @@ func (s *GoogleCloudVisionV1p4beta1ProductKeyValue) MarshalJSON() ([]byte, error
 // search request.
 type GoogleCloudVisionV1p4beta1ProductSearchResults struct {
 	// IndexTime: Timestamp of the index which provided these results.
+<<<<<<< HEAD
 	// Changes made after
 	// this time are not reflected in the current results.
+=======
+	// Products added to the
+	// product set and products removed from the product set after this time
+	// are
+	// not reflected in the current results.
+>>>>>>> v0.0.4
 	IndexTime string `json:"indexTime,omitempty"`
 
 	// ProductGroupedResults: List of results grouped by products detected
@@ -13385,12 +13600,24 @@ type ProductSearchParams struct {
 	// on Product labels. We currently support an AND of OR of
 	// key-value
 	// expressions, where each expression within an OR must have the same
+<<<<<<< HEAD
 	// key.
 	//
 	// For example, "(color = red OR color = blue) AND brand = Google"
 	// is
 	// acceptable, but not "(color = red OR brand = Google)" or "color:
 	// red".
+=======
+	// key. An
+	// '=' should be used to connect the key and value.
+	//
+	// For example, "(color = red OR color = blue) AND brand = Google"
+	// is
+	// acceptable, but "(color = red OR brand = Google)" is not
+	// acceptable.
+	// "color: red" is not acceptable because it uses a ':' instead of an
+	// '='.
+>>>>>>> v0.0.4
 	Filter string `json:"filter,omitempty"`
 
 	// ProductCategories: The list of product categories to search in.
@@ -13434,8 +13661,15 @@ func (s *ProductSearchParams) MarshalJSON() ([]byte, error) {
 // ProductSearchResults: Results for a product search request.
 type ProductSearchResults struct {
 	// IndexTime: Timestamp of the index which provided these results.
+<<<<<<< HEAD
 	// Changes made after
 	// this time are not reflected in the current results.
+=======
+	// Products added to the
+	// product set and products removed from the product set after this time
+	// are
+	// not reflected in the current results.
+>>>>>>> v0.0.4
 	IndexTime string `json:"indexTime,omitempty"`
 
 	// ProductGroupedResults: List of results grouped by products detected
@@ -15550,6 +15784,157 @@ func (c *OperationsListCall) Pages(ctx context.Context, f func(*ListOperationsRe
 	}
 }
 
+<<<<<<< HEAD
+=======
+// method id "vision.projects.locations.operations.get":
+
+type ProjectsLocationsOperationsGetCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Gets the latest state of a long-running operation.  Clients can
+// use this
+// method to poll the operation result at intervals as recommended by
+// the API
+// service.
+func (r *ProjectsLocationsOperationsService) Get(name string) *ProjectsLocationsOperationsGetCall {
+	c := &ProjectsLocationsOperationsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsOperationsGetCall) Fields(s ...googleapi.Field) *ProjectsLocationsOperationsGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ProjectsLocationsOperationsGetCall) IfNoneMatch(entityTag string) *ProjectsLocationsOperationsGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsOperationsGetCall) Context(ctx context.Context) *ProjectsLocationsOperationsGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsOperationsGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsOperationsGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "vision.projects.locations.operations.get" call.
+// Exactly one of *Operation or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsOperationsGetCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Gets the latest state of a long-running operation.  Clients can use this\nmethod to poll the operation result at intervals as recommended by the API\nservice.",
+	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/operations/{operationsId}",
+	//   "httpMethod": "GET",
+	//   "id": "vision.projects.locations.operations.get",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "The name of the operation resource.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/operations/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}",
+	//   "response": {
+	//     "$ref": "Operation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/cloud-vision"
+	//   ]
+	// }
+
+}
+
+>>>>>>> v0.0.4
 // method id "vision.projects.locations.productSets.addProduct":
 
 type ProjectsLocationsProductSetsAddProductCall struct {
@@ -15881,7 +16266,11 @@ type ProjectsLocationsProductSetsDeleteCall struct {
 //
 // Possible errors:
 //
+<<<<<<< HEAD
 // * Returns NOT_FOUND if the ProductSet does not exist.
+=======
+// none
+>>>>>>> v0.0.4
 func (r *ProjectsLocationsProductSetsService) Delete(name string) *ProjectsLocationsProductSetsDeleteCall {
 	c := &ProjectsLocationsProductSetsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -15973,7 +16362,11 @@ func (c *ProjectsLocationsProductSetsDeleteCall) Do(opts ...googleapi.CallOption
 	}
 	return ret, nil
 	// {
+<<<<<<< HEAD
 	//   "description": "Permanently deletes a ProductSet. Products and ReferenceImages in the\nProductSet are not deleted.\n\nThe actual image files are not deleted from Google Cloud Storage.\n\nPossible errors:\n\n* Returns NOT_FOUND if the ProductSet does not exist.",
+=======
+	//   "description": "Permanently deletes a ProductSet. Products and ReferenceImages in the\nProductSet are not deleted.\n\nThe actual image files are not deleted from Google Cloud Storage.\n\nPossible errors:\n\nnone",
+>>>>>>> v0.0.4
 	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/productSets/{productSetsId}",
 	//   "httpMethod": "DELETE",
 	//   "id": "vision.projects.locations.productSets.delete",
@@ -16681,7 +17074,11 @@ type ProjectsLocationsProductSetsRemoveProductCall struct {
 //
 // Possible errors:
 //
+<<<<<<< HEAD
 // * Returns NOT_FOUND If the Product is not found under the ProductSet.
+=======
+// none
+>>>>>>> v0.0.4
 func (r *ProjectsLocationsProductSetsService) RemoveProduct(name string, removeproductfromproductsetrequest *RemoveProductFromProductSetRequest) *ProjectsLocationsProductSetsRemoveProductCall {
 	c := &ProjectsLocationsProductSetsRemoveProductCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -16779,7 +17176,11 @@ func (c *ProjectsLocationsProductSetsRemoveProductCall) Do(opts ...googleapi.Cal
 	}
 	return ret, nil
 	// {
+<<<<<<< HEAD
 	//   "description": "Removes a Product from the specified ProductSet.\n\nPossible errors:\n\n* Returns NOT_FOUND If the Product is not found under the ProductSet.",
+=======
+	//   "description": "Removes a Product from the specified ProductSet.\n\nPossible errors:\n\nnone",
+>>>>>>> v0.0.4
 	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/productSets/{productSetsId}:removeProduct",
 	//   "httpMethod": "POST",
 	//   "id": "vision.projects.locations.productSets.removeProduct",
@@ -17196,7 +17597,11 @@ type ProjectsLocationsProductsDeleteCall struct {
 //
 // Possible errors:
 //
+<<<<<<< HEAD
 // * Returns NOT_FOUND if the product does not exist.
+=======
+// none
+>>>>>>> v0.0.4
 func (r *ProjectsLocationsProductsService) Delete(name string) *ProjectsLocationsProductsDeleteCall {
 	c := &ProjectsLocationsProductsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -17288,7 +17693,11 @@ func (c *ProjectsLocationsProductsDeleteCall) Do(opts ...googleapi.CallOption) (
 	}
 	return ret, nil
 	// {
+<<<<<<< HEAD
 	//   "description": "Permanently deletes a product and its reference images.\n\nMetadata of the product and all its images will be deleted right away, but\nsearch queries against ProductSets containing the product may still work\nuntil all related caches are refreshed.\n\nPossible errors:\n\n* Returns NOT_FOUND if the product does not exist.",
+=======
+	//   "description": "Permanently deletes a product and its reference images.\n\nMetadata of the product and all its images will be deleted right away, but\nsearch queries against ProductSets containing the product may still work\nuntil all related caches are refreshed.\n\nPossible errors:\n\nnone",
+>>>>>>> v0.0.4
 	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/products/{productsId}",
 	//   "httpMethod": "DELETE",
 	//   "id": "vision.projects.locations.products.delete",
@@ -18045,7 +18454,11 @@ type ProjectsLocationsProductsReferenceImagesDeleteCall struct {
 //
 // Possible errors:
 //
+<<<<<<< HEAD
 // * Returns NOT_FOUND if the reference image does not exist.
+=======
+// none
+>>>>>>> v0.0.4
 func (r *ProjectsLocationsProductsReferenceImagesService) Delete(name string) *ProjectsLocationsProductsReferenceImagesDeleteCall {
 	c := &ProjectsLocationsProductsReferenceImagesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -18137,7 +18550,11 @@ func (c *ProjectsLocationsProductsReferenceImagesDeleteCall) Do(opts ...googleap
 	}
 	return ret, nil
 	// {
+<<<<<<< HEAD
 	//   "description": "Permanently deletes a reference image.\n\nThe image metadata will be deleted right away, but search queries\nagainst ProductSets containing the image may still work until all related\ncaches are refreshed.\n\nThe actual image files are not deleted from Google Cloud Storage.\n\nPossible errors:\n\n* Returns NOT_FOUND if the reference image does not exist.",
+=======
+	//   "description": "Permanently deletes a reference image.\n\nThe image metadata will be deleted right away, but search queries\nagainst ProductSets containing the image may still work until all related\ncaches are refreshed.\n\nThe actual image files are not deleted from Google Cloud Storage.\n\nPossible errors:\n\nnone",
+>>>>>>> v0.0.4
 	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/products/{productsId}/referenceImages/{referenceImagesId}",
 	//   "httpMethod": "DELETE",
 	//   "id": "vision.projects.locations.products.referenceImages.delete",
@@ -18513,3 +18930,154 @@ func (c *ProjectsLocationsProductsReferenceImagesListCall) Pages(ctx context.Con
 		c.PageToken(x.NextPageToken)
 	}
 }
+<<<<<<< HEAD
+=======
+
+// method id "vision.projects.operations.get":
+
+type ProjectsOperationsGetCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Gets the latest state of a long-running operation.  Clients can
+// use this
+// method to poll the operation result at intervals as recommended by
+// the API
+// service.
+func (r *ProjectsOperationsService) Get(name string) *ProjectsOperationsGetCall {
+	c := &ProjectsOperationsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsOperationsGetCall) Fields(s ...googleapi.Field) *ProjectsOperationsGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ProjectsOperationsGetCall) IfNoneMatch(entityTag string) *ProjectsOperationsGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsOperationsGetCall) Context(ctx context.Context) *ProjectsOperationsGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsOperationsGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsOperationsGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "vision.projects.operations.get" call.
+// Exactly one of *Operation or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsOperationsGetCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Gets the latest state of a long-running operation.  Clients can use this\nmethod to poll the operation result at intervals as recommended by the API\nservice.",
+	//   "flatPath": "v1/projects/{projectsId}/operations/{operationsId}",
+	//   "httpMethod": "GET",
+	//   "id": "vision.projects.operations.get",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "The name of the operation resource.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/operations/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}",
+	//   "response": {
+	//     "$ref": "Operation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/cloud-vision"
+	//   ]
+	// }
+
+}
+>>>>>>> v0.0.4

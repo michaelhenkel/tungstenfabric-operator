@@ -6,7 +6,11 @@
 
 // Package cloudasset provides access to the Cloud Asset API.
 //
+<<<<<<< HEAD
 // For product documentation, see: https://console.cloud.google.com/apis/api/cloudasset.googleapis.com/overview
+=======
+// For product documentation, see: https://cloud.google.com/resource-manager/docs/cloud-asset-inventory/quickstart-cloud-asset-inventory
+>>>>>>> v0.0.4
 //
 // Creating a client
 //

@@ -195,5 +195,11 @@ func newTemplate(i input.Input) (*template.Template, error) {
 	if len(i.TemplateFuncs) > 0 {
 		t.Funcs(i.TemplateFuncs)
 	}
+<<<<<<< HEAD
+=======
+	if i.Delims[0] != "" && i.Delims[1] != "" {
+		t.Delims(i.Delims[0], i.Delims[1])
+	}
+>>>>>>> v0.0.4
 	return t.Parse(i.TemplateBody)
 }

@@ -16,6 +16,10 @@ package trace
 
 import (
 	"context"
+<<<<<<< HEAD
+=======
+	"fmt"
+>>>>>>> v0.0.4
 
 	"go.opencensus.io/trace"
 	"google.golang.org/api/googleapi"
@@ -38,7 +42,11 @@ func EndSpan(ctx context.Context, err error) {
 	span.End()
 }
 
+<<<<<<< HEAD
 // ToStatus interrogates an error and converts it to an appropriate
+=======
+// toStatus interrogates an error and converts it to an appropriate
+>>>>>>> v0.0.4
 // OpenCensus status.
 func toStatus(err error) trace.Status {
 	if err2, ok := err.(*googleapi.Error); ok {
@@ -82,3 +90,30 @@ func httpStatusCodeToOCCode(httpStatusCode int) int32 {
 		return int32(code.Code_UNKNOWN)
 	}
 }
+<<<<<<< HEAD
+=======
+
+// TODO: (odeke-em): perhaps just pass around spans due to the cost
+// incurred from using trace.FromContext(ctx) yet we could avoid
+// throwing away the work done by ctx, span := trace.StartSpan.
+func TracePrintf(ctx context.Context, attrMap map[string]interface{}, format string, args ...interface{}) {
+	var attrs []trace.Attribute
+	for k, v := range attrMap {
+		var a trace.Attribute
+		switch v := v.(type) {
+		case string:
+			a = trace.StringAttribute(k, v)
+		case bool:
+			a = trace.BoolAttribute(k, v)
+		case int:
+			a = trace.Int64Attribute(k, int64(v))
+		case int64:
+			a = trace.Int64Attribute(k, v)
+		default:
+			a = trace.StringAttribute(k, fmt.Sprintf("%#v", v))
+		}
+		attrs = append(attrs, a)
+	}
+	trace.FromContext(ctx).Annotatef(attrs, format, args...)
+}
+>>>>>>> v0.0.4

@@ -34,6 +34,10 @@ func (d *DeployOperator) GetInput() (input.Input, error) {
 		d.Path = filepath.Join(scaffold.DeployDir, DeployOperatorFile)
 	}
 	d.TemplateBody = deployOperatorAnsibleTmpl
+<<<<<<< HEAD
+=======
+	d.Delims = AnsibleDelims
+>>>>>>> v0.0.4
 
 	return d.Input, nil
 }
@@ -41,11 +45,16 @@ func (d *DeployOperator) GetInput() (input.Input, error) {
 const deployOperatorAnsibleTmpl = `apiVersion: apps/v1
 kind: Deployment
 metadata:
+<<<<<<< HEAD
   name: {{.ProjectName}}
+=======
+  name: [[.ProjectName]]
+>>>>>>> v0.0.4
 spec:
   replicas: 1
   selector:
     matchLabels:
+<<<<<<< HEAD
       name: {{.ProjectName}}
   template:
     metadata:
@@ -53,6 +62,15 @@ spec:
         name: {{.ProjectName}}
     spec:
       serviceAccountName: {{.ProjectName}}
+=======
+      name: [[.ProjectName]]
+  template:
+    metadata:
+      labels:
+        name: [[.ProjectName]]
+    spec:
+      serviceAccountName: [[.ProjectName]]
+>>>>>>> v0.0.4
       containers:
         - name: ansible
           command:
@@ -60,21 +78,32 @@ spec:
           - /tmp/ansible-operator/runner
           - stdout
           # Replace this with the built image name
+<<<<<<< HEAD
           image: "{{ "{{ REPLACE_IMAGE }}" }}"
           imagePullPolicy: "{{ "{{ pull_policy|default('Always') }}"}}"
+=======
+          image: "{{ REPLACE_IMAGE }}"
+          imagePullPolicy: "{{ pull_policy|default('Always') }}"
+>>>>>>> v0.0.4
           volumeMounts:
           - mountPath: /tmp/ansible-operator/runner
             name: runner
             readOnly: true
         - name: operator
           # Replace this with the built image name
+<<<<<<< HEAD
           image: "{{ "{{ REPLACE_IMAGE }}" }}"
           imagePullPolicy: "{{ "{{ pull_policy|default('Always') }}"}}"
+=======
+          image: "{{ REPLACE_IMAGE }}"
+          imagePullPolicy: "{{ pull_policy|default('Always') }}"
+>>>>>>> v0.0.4
           volumeMounts:
           - mountPath: /tmp/ansible-operator/runner
             name: runner
           env:
             - name: WATCH_NAMESPACE
+<<<<<<< HEAD
               {{- if .IsClusterScoped }}
               value: ""
               {{- else }}
@@ -82,12 +111,25 @@ spec:
                 fieldRef:
                   fieldPath: metadata.namespace
               {{- end}}
+=======
+              [[- if .IsClusterScoped ]]
+              value: ""
+              [[- else ]]
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.namespace
+              [[- end]]
+>>>>>>> v0.0.4
             - name: POD_NAME
               valueFrom:
                 fieldRef:
                   fieldPath: metadata.name
             - name: OPERATOR_NAME
+<<<<<<< HEAD
               value: "{{.ProjectName}}"
+=======
+              value: "[[.ProjectName]]"
+>>>>>>> v0.0.4
       volumes:
         - name: runner
           emptyDir: {}

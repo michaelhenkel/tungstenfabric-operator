@@ -39,9 +39,14 @@ type ListProfilesRequest struct {
 	//
 	// The token that specifies the current offset (that is, starting result).
 	//
+<<<<<<< HEAD
 	// Please set the value to
 	// [ListProfilesResponse.next_page_token][google.cloud.talent.v4beta1.ListProfilesResponse.next_page_token]
 	// to continue the list.
+=======
+	// Please set the value to [ListProfilesResponse.next_page_token][google.cloud.talent.v4beta1.ListProfilesResponse.next_page_token] to
+	// continue the list.
+>>>>>>> v0.0.4
 	PageToken string `protobuf:"bytes,2,opt,name=page_token,json=pageToken,proto3" json:"page_token,omitempty"`
 	// Optional.
 	//
@@ -67,7 +72,11 @@ func (m *ListProfilesRequest) Reset()         { *m = ListProfilesRequest{} }
 func (m *ListProfilesRequest) String() string { return proto.CompactTextString(m) }
 func (*ListProfilesRequest) ProtoMessage()    {}
 func (*ListProfilesRequest) Descriptor() ([]byte, []int) {
+<<<<<<< HEAD
 	return fileDescriptor_profile_service_a5b49f1e43b88516, []int{0}
+=======
+	return fileDescriptor_profile_service_ae08414b17ed6111, []int{0}
+>>>>>>> v0.0.4
 }
 func (m *ListProfilesRequest) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_ListProfilesRequest.Unmarshal(m, b)
@@ -131,7 +140,11 @@ func (m *ListProfilesResponse) Reset()         { *m = ListProfilesResponse{} }
 func (m *ListProfilesResponse) String() string { return proto.CompactTextString(m) }
 func (*ListProfilesResponse) ProtoMessage()    {}
 func (*ListProfilesResponse) Descriptor() ([]byte, []int) {
+<<<<<<< HEAD
 	return fileDescriptor_profile_service_a5b49f1e43b88516, []int{1}
+=======
+	return fileDescriptor_profile_service_ae08414b17ed6111, []int{1}
+>>>>>>> v0.0.4
 }
 func (m *ListProfilesResponse) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_ListProfilesResponse.Unmarshal(m, b)
@@ -187,7 +200,11 @@ func (m *CreateProfileRequest) Reset()         { *m = CreateProfileRequest{} }
 func (m *CreateProfileRequest) String() string { return proto.CompactTextString(m) }
 func (*CreateProfileRequest) ProtoMessage()    {}
 func (*CreateProfileRequest) Descriptor() ([]byte, []int) {
+<<<<<<< HEAD
 	return fileDescriptor_profile_service_a5b49f1e43b88516, []int{2}
+=======
+	return fileDescriptor_profile_service_ae08414b17ed6111, []int{2}
+>>>>>>> v0.0.4
 }
 func (m *CreateProfileRequest) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_CreateProfileRequest.Unmarshal(m, b)
@@ -240,7 +257,11 @@ func (m *GetProfileRequest) Reset()         { *m = GetProfileRequest{} }
 func (m *GetProfileRequest) String() string { return proto.CompactTextString(m) }
 func (*GetProfileRequest) ProtoMessage()    {}
 func (*GetProfileRequest) Descriptor() ([]byte, []int) {
+<<<<<<< HEAD
 	return fileDescriptor_profile_service_a5b49f1e43b88516, []int{3}
+=======
+	return fileDescriptor_profile_service_ae08414b17ed6111, []int{3}
+>>>>>>> v0.0.4
 }
 func (m *GetProfileRequest) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_GetProfileRequest.Unmarshal(m, b)
@@ -303,6 +324,10 @@ type UpdateProfileRequest struct {
 	// * certifications
 	// * recruitingNotes
 	// * customAttributes
+<<<<<<< HEAD
+=======
+	// * groupId
+>>>>>>> v0.0.4
 	UpdateMask           *field_mask.FieldMask `protobuf:"bytes,2,opt,name=update_mask,json=updateMask,proto3" json:"update_mask,omitempty"`
 	XXX_NoUnkeyedLiteral struct{}              `json:"-"`
 	XXX_unrecognized     []byte                `json:"-"`
@@ -313,7 +338,11 @@ func (m *UpdateProfileRequest) Reset()         { *m = UpdateProfileRequest{} }
 func (m *UpdateProfileRequest) String() string { return proto.CompactTextString(m) }
 func (*UpdateProfileRequest) ProtoMessage()    {}
 func (*UpdateProfileRequest) Descriptor() ([]byte, []int) {
+<<<<<<< HEAD
 	return fileDescriptor_profile_service_a5b49f1e43b88516, []int{4}
+=======
+	return fileDescriptor_profile_service_ae08414b17ed6111, []int{4}
+>>>>>>> v0.0.4
 }
 func (m *UpdateProfileRequest) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_UpdateProfileRequest.Unmarshal(m, b)
@@ -366,7 +395,11 @@ func (m *DeleteProfileRequest) Reset()         { *m = DeleteProfileRequest{} }
 func (m *DeleteProfileRequest) String() string { return proto.CompactTextString(m) }
 func (*DeleteProfileRequest) ProtoMessage()    {}
 func (*DeleteProfileRequest) Descriptor() ([]byte, []int) {
+<<<<<<< HEAD
 	return fileDescriptor_profile_service_a5b49f1e43b88516, []int{5}
+=======
+	return fileDescriptor_profile_service_ae08414b17ed6111, []int{5}
+>>>>>>> v0.0.4
 }
 func (m *DeleteProfileRequest) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_DeleteProfileRequest.Unmarshal(m, b)
@@ -410,8 +443,12 @@ type SearchProfilesRequest struct {
 	RequestMetadata *RequestMetadata `protobuf:"bytes,2,opt,name=request_metadata,json=requestMetadata,proto3" json:"request_metadata,omitempty"`
 	// Optional.
 	//
+<<<<<<< HEAD
 	// Search query to execute. See
 	// [ProfileQuery][google.cloud.talent.v4beta1.ProfileQuery] for more details.
+=======
+	// Search query to execute. See [ProfileQuery][google.cloud.talent.v4beta1.ProfileQuery] for more details.
+>>>>>>> v0.0.4
 	ProfileQuery *ProfileQuery `protobuf:"bytes,3,opt,name=profile_query,json=profileQuery,proto3" json:"profile_query,omitempty"`
 	// Optional.
 	//
@@ -425,17 +462,28 @@ type SearchProfilesRequest struct {
 	// The pageToken, similar to offset enables users of the API to paginate
 	// through the search results. To retrieve the first page of results, set the
 	// pageToken to empty. The search response includes a
+<<<<<<< HEAD
 	// [nextPageToken][google.cloud.talent.v4beta1.SearchProfilesResponse.next_page_token]
 	// field that can be used to populate the pageToken field for the next page of
 	// results. Using pageToken instead of offset increases the performance of the
 	// API, especially compared to larger offset values.
+=======
+	// [nextPageToken][google.cloud.talent.v4beta1.SearchProfilesResponse.next_page_token] field that can be
+	// used to populate the pageToken field for the next page of results. Using
+	// pageToken instead of offset increases the performance of the API,
+	// especially compared to larger offset values.
+>>>>>>> v0.0.4
 	PageToken string `protobuf:"bytes,5,opt,name=page_token,json=pageToken,proto3" json:"page_token,omitempty"`
 	// Optional.
 	//
 	// An integer that specifies the current offset (that is, starting result) in
+<<<<<<< HEAD
 	// search results. This field is only considered if
 	// [page_token][google.cloud.talent.v4beta1.SearchProfilesRequest.page_token]
 	// is unset.
+=======
+	// search results. This field is only considered if [page_token][google.cloud.talent.v4beta1.SearchProfilesRequest.page_token] is unset.
+>>>>>>> v0.0.4
 	//
 	// The maximum allowed value is 5000. Otherwise an error is thrown.
 	//
@@ -481,8 +529,12 @@ type SearchProfilesRequest struct {
 	// Optional.
 	//
 	// A list of expressions specifies histogram requests against matching
+<<<<<<< HEAD
 	// profiles for
 	// [SearchProfilesRequest][google.cloud.talent.v4beta1.SearchProfilesRequest].
+=======
+	// profiles for [SearchProfilesRequest][google.cloud.talent.v4beta1.SearchProfilesRequest].
+>>>>>>> v0.0.4
 	//
 	// The expression syntax looks like a function definition with optional
 	// parameters.
@@ -535,6 +587,7 @@ type SearchProfilesRequest struct {
 	// * experience_in_months: experience in months. 0 means 0 month to 1 month
 	// (exclusive).
 	// * application_date: The application date specifies application start dates.
+<<<<<<< HEAD
 	// See
 	// [ApplicationDateFilter][google.cloud.talent.v4beta1.ApplicationDateFilter]
 	// for more details.
@@ -558,6 +611,21 @@ type SearchProfilesRequest struct {
 	// See
 	// [ApplicationStatusFilter][google.cloud.talent.v4beta1.ApplicationStatusFilter]
 	// for more details.
+=======
+	// See [ApplicationDateFilter][google.cloud.talent.v4beta1.ApplicationDateFilter] for more details.
+	// * application_outcome_notes: The application outcome reason specifies the
+	// reasons behind the outcome of the job application.
+	// See [ApplicationOutcomeNotesFilter][google.cloud.talent.v4beta1.ApplicationOutcomeNotesFilter] for more details.
+	// * application_last_stage: The application last stage specifies the last
+	// stage of job application.
+	// See [ApplicationLastStageFilter][] for more details.
+	// * application_job_title: The application job title specifies the job
+	// applied for in the application.
+	// See [ApplicationJobFilter][google.cloud.talent.v4beta1.ApplicationJobFilter] for more details.
+	// * application_status: The application status specifies the status of job
+	// application.
+	// See [ApplicationStatusFilter][] for more details.
+>>>>>>> v0.0.4
 	// * hirable_status: Hirable status specifies the profile's hirable status.
 	// * string_custom_attribute: String custom attributes. Values can be accessed
 	// via square bracket notation like string_custom_attribute["key1"].
@@ -582,7 +650,11 @@ func (m *SearchProfilesRequest) Reset()         { *m = SearchProfilesRequest{} }
 func (m *SearchProfilesRequest) String() string { return proto.CompactTextString(m) }
 func (*SearchProfilesRequest) ProtoMessage()    {}
 func (*SearchProfilesRequest) Descriptor() ([]byte, []int) {
+<<<<<<< HEAD
 	return fileDescriptor_profile_service_a5b49f1e43b88516, []int{6}
+=======
+	return fileDescriptor_profile_service_ae08414b17ed6111, []int{6}
+>>>>>>> v0.0.4
 }
 func (m *SearchProfilesRequest) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_SearchProfilesRequest.Unmarshal(m, b)
@@ -689,8 +761,12 @@ type SearchProfilesResponse struct {
 	// The histogram results that match with specified
 	// [SearchProfilesRequest.histogram_queries][google.cloud.talent.v4beta1.SearchProfilesRequest.histogram_queries].
 	HistogramQueryResults []*HistogramQueryResult `protobuf:"bytes,5,rep,name=histogram_query_results,json=histogramQueryResults,proto3" json:"histogram_query_results,omitempty"`
+<<<<<<< HEAD
 	// The profile entities that match the specified
 	// [SearchProfilesRequest][google.cloud.talent.v4beta1.SearchProfilesRequest].
+=======
+	// The profile entities that match the specified [SearchProfilesRequest][google.cloud.talent.v4beta1.SearchProfilesRequest].
+>>>>>>> v0.0.4
 	SummarizedProfiles   []*SummarizedProfile `protobuf:"bytes,6,rep,name=summarized_profiles,json=summarizedProfiles,proto3" json:"summarized_profiles,omitempty"`
 	XXX_NoUnkeyedLiteral struct{}             `json:"-"`
 	XXX_unrecognized     []byte               `json:"-"`
@@ -701,7 +777,11 @@ func (m *SearchProfilesResponse) Reset()         { *m = SearchProfilesResponse{}
 func (m *SearchProfilesResponse) String() string { return proto.CompactTextString(m) }
 func (*SearchProfilesResponse) ProtoMessage()    {}
 func (*SearchProfilesResponse) Descriptor() ([]byte, []int) {
+<<<<<<< HEAD
 	return fileDescriptor_profile_service_a5b49f1e43b88516, []int{7}
+=======
+	return fileDescriptor_profile_service_ae08414b17ed6111, []int{7}
+>>>>>>> v0.0.4
 }
 func (m *SearchProfilesResponse) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_SearchProfilesResponse.Unmarshal(m, b)
@@ -765,8 +845,12 @@ func (m *SearchProfilesResponse) GetSummarizedProfiles() []*SummarizedProfile {
 
 // Output only.
 //
+<<<<<<< HEAD
 // Profile entry with metadata inside
 // [SearchProfilesResponse][google.cloud.talent.v4beta1.SearchProfilesResponse].
+=======
+// Profile entry with metadata inside [SearchProfilesResponse][google.cloud.talent.v4beta1.SearchProfilesResponse].
+>>>>>>> v0.0.4
 type SummarizedProfile struct {
 	// A list of profiles that are linked by [Profile.cluster_id][].
 	Profiles []*Profile `protobuf:"bytes,1,rep,name=profiles,proto3" json:"profiles,omitempty"`
@@ -793,7 +877,11 @@ func (m *SummarizedProfile) Reset()         { *m = SummarizedProfile{} }
 func (m *SummarizedProfile) String() string { return proto.CompactTextString(m) }
 func (*SummarizedProfile) ProtoMessage()    {}
 func (*SummarizedProfile) Descriptor() ([]byte, []int) {
+<<<<<<< HEAD
 	return fileDescriptor_profile_service_a5b49f1e43b88516, []int{8}
+=======
+	return fileDescriptor_profile_service_ae08414b17ed6111, []int{8}
+>>>>>>> v0.0.4
 }
 func (m *SummarizedProfile) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_SummarizedProfile.Unmarshal(m, b)
@@ -868,9 +956,13 @@ type ProfileServiceClient interface {
 	// For example, search by raw queries "software engineer in Mountain View" or
 	// search by structured filters (location filter, education filter, etc.).
 	//
+<<<<<<< HEAD
 	// See
 	// [SearchProfilesRequest][google.cloud.talent.v4beta1.SearchProfilesRequest]
 	// for more information.
+=======
+	// See [SearchProfilesRequest][google.cloud.talent.v4beta1.SearchProfilesRequest] for more information.
+>>>>>>> v0.0.4
 	SearchProfiles(ctx context.Context, in *SearchProfilesRequest, opts ...grpc.CallOption) (*SearchProfilesResponse, error)
 }
 
@@ -955,9 +1047,13 @@ type ProfileServiceServer interface {
 	// For example, search by raw queries "software engineer in Mountain View" or
 	// search by structured filters (location filter, education filter, etc.).
 	//
+<<<<<<< HEAD
 	// See
 	// [SearchProfilesRequest][google.cloud.talent.v4beta1.SearchProfilesRequest]
 	// for more information.
+=======
+	// See [SearchProfilesRequest][google.cloud.talent.v4beta1.SearchProfilesRequest] for more information.
+>>>>>>> v0.0.4
 	SearchProfiles(context.Context, *SearchProfilesRequest) (*SearchProfilesResponse, error)
 }
 
@@ -1107,10 +1203,17 @@ var _ProfileService_serviceDesc = grpc.ServiceDesc{
 }
 
 func init() {
+<<<<<<< HEAD
 	proto.RegisterFile("google/cloud/talent/v4beta1/profile_service.proto", fileDescriptor_profile_service_a5b49f1e43b88516)
 }
 
 var fileDescriptor_profile_service_a5b49f1e43b88516 = []byte{
+=======
+	proto.RegisterFile("google/cloud/talent/v4beta1/profile_service.proto", fileDescriptor_profile_service_ae08414b17ed6111)
+}
+
+var fileDescriptor_profile_service_ae08414b17ed6111 = []byte{
+>>>>>>> v0.0.4
 	// 1059 bytes of a gzipped FileDescriptorProto
 	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xac, 0x56, 0xdf, 0x6e, 0x1b, 0xc5,
 	0x17, 0xd6, 0xe6, 0xaf, 0x73, 0xd2, 0x34, 0xc9, 0x24, 0xcd, 0x6f, 0x7f, 0x2e, 0x08, 0x6b, 0x85,

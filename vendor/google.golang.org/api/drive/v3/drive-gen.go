@@ -148,6 +148,10 @@ func New(client *http.Client) (*Service, error) {
 	s.Changes = NewChangesService(s)
 	s.Channels = NewChannelsService(s)
 	s.Comments = NewCommentsService(s)
+<<<<<<< HEAD
+=======
+	s.Drives = NewDrivesService(s)
+>>>>>>> v0.0.4
 	s.Files = NewFilesService(s)
 	s.Permissions = NewPermissionsService(s)
 	s.Replies = NewRepliesService(s)
@@ -169,6 +173,11 @@ type Service struct {
 
 	Comments *CommentsService
 
+<<<<<<< HEAD
+=======
+	Drives *DrivesService
+
+>>>>>>> v0.0.4
 	Files *FilesService
 
 	Permissions *PermissionsService
@@ -223,6 +232,18 @@ type CommentsService struct {
 	s *Service
 }
 
+<<<<<<< HEAD
+=======
+func NewDrivesService(s *Service) *DrivesService {
+	rs := &DrivesService{s: s}
+	return rs
+}
+
+type DrivesService struct {
+	s *Service
+}
+
+>>>>>>> v0.0.4
 func NewFilesService(s *Service) *FilesService {
 	rs := &FilesService{s: s}
 	return rs
@@ -274,9 +295,21 @@ type About struct {
 	// AppInstalled: Whether the user has installed the requesting app.
 	AppInstalled bool `json:"appInstalled,omitempty"`
 
+<<<<<<< HEAD
 	// CanCreateTeamDrives: Whether the user can create Team Drives.
 	CanCreateTeamDrives bool `json:"canCreateTeamDrives,omitempty"`
 
+=======
+	// CanCreateDrives: Whether the user can create shared drives.
+	CanCreateDrives bool `json:"canCreateDrives,omitempty"`
+
+	// CanCreateTeamDrives: Deprecated - use canCreateDrives instead.
+	CanCreateTeamDrives bool `json:"canCreateTeamDrives,omitempty"`
+
+	// DriveThemes: A list of themes that are supported for shared drives.
+	DriveThemes []*AboutDriveThemes `json:"driveThemes,omitempty"`
+
+>>>>>>> v0.0.4
 	// ExportFormats: A map of source MIME type to possible targets for all
 	// supported exports.
 	ExportFormats map[string][]string `json:"exportFormats,omitempty"`
@@ -303,7 +336,11 @@ type About struct {
 	// are measured in bytes.
 	StorageQuota *AboutStorageQuota `json:"storageQuota,omitempty"`
 
+<<<<<<< HEAD
 	// TeamDriveThemes: A list of themes that are supported for Team Drives.
+=======
+	// TeamDriveThemes: Deprecated - use driveThemes instead.
+>>>>>>> v0.0.4
 	TeamDriveThemes []*AboutTeamDriveThemes `json:"teamDriveThemes,omitempty"`
 
 	// User: The authenticated user.
@@ -336,6 +373,43 @@ func (s *About) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+<<<<<<< HEAD
+=======
+type AboutDriveThemes struct {
+	// BackgroundImageLink: A link to this theme's background image.
+	BackgroundImageLink string `json:"backgroundImageLink,omitempty"`
+
+	// ColorRgb: The color of this theme as an RGB hex string.
+	ColorRgb string `json:"colorRgb,omitempty"`
+
+	// Id: The ID of the theme.
+	Id string `json:"id,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "BackgroundImageLink")
+	// to unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "BackgroundImageLink") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *AboutDriveThemes) MarshalJSON() ([]byte, error) {
+	type NoMethod AboutDriveThemes
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+>>>>>>> v0.0.4
 // AboutStorageQuota: The user's storage quota limits and usage. All
 // fields are measured in bytes.
 type AboutStorageQuota struct {
@@ -410,8 +484,25 @@ func (s *AboutTeamDriveThemes) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+<<<<<<< HEAD
 // Change: A change to a file or Team Drive.
 type Change struct {
+=======
+// Change: A change to a file or shared drive.
+type Change struct {
+	// ChangeType: The type of the change. Possible values are file and
+	// drive.
+	ChangeType string `json:"changeType,omitempty"`
+
+	// Drive: The updated state of the shared drive. Present if the
+	// changeType is drive, the user is still a member of the shared drive,
+	// and the shared drive has not been deleted.
+	Drive *Drive `json:"drive,omitempty"`
+
+	// DriveId: The ID of the shared drive associated with this change.
+	DriveId string `json:"driveId,omitempty"`
+
+>>>>>>> v0.0.4
 	// File: The updated state of the file. Present if the type is file and
 	// the file has not been removed from this list of changes.
 	File *File `json:"file,omitempty"`
@@ -423,6 +514,7 @@ type Change struct {
 	// string "drive#change".
 	Kind string `json:"kind,omitempty"`
 
+<<<<<<< HEAD
 	// Removed: Whether the file or Team Drive has been removed from this
 	// list of changes, for example by deletion or loss of access.
 	Removed bool `json:"removed,omitempty"`
@@ -433,15 +525,32 @@ type Change struct {
 	TeamDrive *TeamDrive `json:"teamDrive,omitempty"`
 
 	// TeamDriveId: The ID of the Team Drive associated with this change.
+=======
+	// Removed: Whether the file or shared drive has been removed from this
+	// list of changes, for example by deletion or loss of access.
+	Removed bool `json:"removed,omitempty"`
+
+	// TeamDrive: Deprecated - use drive instead.
+	TeamDrive *TeamDrive `json:"teamDrive,omitempty"`
+
+	// TeamDriveId: Deprecated - use driveId instead.
+>>>>>>> v0.0.4
 	TeamDriveId string `json:"teamDriveId,omitempty"`
 
 	// Time: The time of this change (RFC 3339 date-time).
 	Time string `json:"time,omitempty"`
 
+<<<<<<< HEAD
 	// Type: The type of the change. Possible values are file and teamDrive.
 	Type string `json:"type,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "File") to
+=======
+	// Type: Deprecated - use changeType instead.
+	Type string `json:"type,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ChangeType") to
+>>>>>>> v0.0.4
 	// unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,
 	// non-interface field appearing in ForceSendFields will be sent to the
@@ -449,8 +558,13 @@ type Change struct {
 	// used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
+<<<<<<< HEAD
 	// NullFields is a list of field names (e.g. "File") to include in API
 	// requests with the JSON null value. By default, fields with empty
+=======
+	// NullFields is a list of field names (e.g. "ChangeType") to include in
+	// API requests with the JSON null value. By default, fields with empty
+>>>>>>> v0.0.4
 	// values are omitted from API requests. However, any field with an
 	// empty value appearing in NullFields will be sent to the server as
 	// null. It is an error if a field in this list has a non-empty value.
@@ -733,6 +847,7 @@ func (s *CommentList) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+<<<<<<< HEAD
 // File: The metadata for a file.
 type File struct {
 	// AppProperties: A collection of arbitrary key-value pairs which are
@@ -897,6 +1012,522 @@ type File struct {
 	Shared bool `json:"shared,omitempty"`
 
 	// SharedWithMeTime: The time at which the file was shared with the
+=======
+// Drive: Representation of a shared drive.
+type Drive struct {
+	// BackgroundImageFile: An image file and cropping parameters from which
+	// a background image for this shared drive is set. This is a write only
+	// field; it can only be set on drive.drives.update requests that don't
+	// set themeId. When specified, all fields of the backgroundImageFile
+	// must be set.
+	BackgroundImageFile *DriveBackgroundImageFile `json:"backgroundImageFile,omitempty"`
+
+	// BackgroundImageLink: A short-lived link to this shared drive's
+	// background image.
+	BackgroundImageLink string `json:"backgroundImageLink,omitempty"`
+
+	// Capabilities: Capabilities the current user has on this shared drive.
+	Capabilities *DriveCapabilities `json:"capabilities,omitempty"`
+
+	// ColorRgb: The color of this shared drive as an RGB hex string. It can
+	// only be set on a drive.drives.update request that does not set
+	// themeId.
+	ColorRgb string `json:"colorRgb,omitempty"`
+
+	// CreatedTime: The time at which the shared drive was created (RFC 3339
+	// date-time).
+	CreatedTime string `json:"createdTime,omitempty"`
+
+	// Hidden: Whether the shared drive is hidden from default view.
+	Hidden bool `json:"hidden,omitempty"`
+
+	// Id: The ID of this shared drive which is also the ID of the top level
+	// folder of this shared drive.
+	Id string `json:"id,omitempty"`
+
+	// Kind: Identifies what kind of resource this is. Value: the fixed
+	// string "drive#drive".
+	Kind string `json:"kind,omitempty"`
+
+	// Name: The name of this shared drive.
+	Name string `json:"name,omitempty"`
+
+	// Restrictions: A set of restrictions that apply to this shared drive
+	// or items inside this shared drive.
+	Restrictions *DriveRestrictions `json:"restrictions,omitempty"`
+
+	// ThemeId: The ID of the theme from which the background image and
+	// color will be set. The set of possible driveThemes can be retrieved
+	// from a drive.about.get response. When not specified on a
+	// drive.drives.create request, a random theme is chosen from which the
+	// background image and color are set. This is a write-only field; it
+	// can only be set on requests that don't set colorRgb or
+	// backgroundImageFile.
+	ThemeId string `json:"themeId,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "BackgroundImageFile")
+	// to unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "BackgroundImageFile") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *Drive) MarshalJSON() ([]byte, error) {
+	type NoMethod Drive
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// DriveBackgroundImageFile: An image file and cropping parameters from
+// which a background image for this shared drive is set. This is a
+// write only field; it can only be set on drive.drives.update requests
+// that don't set themeId. When specified, all fields of the
+// backgroundImageFile must be set.
+type DriveBackgroundImageFile struct {
+	// Id: The ID of an image file in Google Drive to use for the background
+	// image.
+	Id string `json:"id,omitempty"`
+
+	// Width: The width of the cropped image in the closed range of 0 to 1.
+	// This value represents the width of the cropped image divided by the
+	// width of the entire image. The height is computed by applying a width
+	// to height aspect ratio of 80 to 9. The resulting image must be at
+	// least 1280 pixels wide and 144 pixels high.
+	Width float64 `json:"width,omitempty"`
+
+	// XCoordinate: The X coordinate of the upper left corner of the
+	// cropping area in the background image. This is a value in the closed
+	// range of 0 to 1. This value represents the horizontal distance from
+	// the left side of the entire image to the left side of the cropping
+	// area divided by the width of the entire image.
+	XCoordinate float64 `json:"xCoordinate,omitempty"`
+
+	// YCoordinate: The Y coordinate of the upper left corner of the
+	// cropping area in the background image. This is a value in the closed
+	// range of 0 to 1. This value represents the vertical distance from the
+	// top side of the entire image to the top side of the cropping area
+	// divided by the height of the entire image.
+	YCoordinate float64 `json:"yCoordinate,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Id") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Id") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *DriveBackgroundImageFile) MarshalJSON() ([]byte, error) {
+	type NoMethod DriveBackgroundImageFile
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+func (s *DriveBackgroundImageFile) UnmarshalJSON(data []byte) error {
+	type NoMethod DriveBackgroundImageFile
+	var s1 struct {
+		Width       gensupport.JSONFloat64 `json:"width"`
+		XCoordinate gensupport.JSONFloat64 `json:"xCoordinate"`
+		YCoordinate gensupport.JSONFloat64 `json:"yCoordinate"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.Width = float64(s1.Width)
+	s.XCoordinate = float64(s1.XCoordinate)
+	s.YCoordinate = float64(s1.YCoordinate)
+	return nil
+}
+
+// DriveCapabilities: Capabilities the current user has on this shared
+// drive.
+type DriveCapabilities struct {
+	// CanAddChildren: Whether the current user can add children to folders
+	// in this shared drive.
+	CanAddChildren bool `json:"canAddChildren,omitempty"`
+
+	// CanChangeCopyRequiresWriterPermissionRestriction: Whether the current
+	// user can change the copyRequiresWriterPermission restriction of this
+	// shared drive.
+	CanChangeCopyRequiresWriterPermissionRestriction bool `json:"canChangeCopyRequiresWriterPermissionRestriction,omitempty"`
+
+	// CanChangeDomainUsersOnlyRestriction: Whether the current user can
+	// change the domainUsersOnly restriction of this shared drive.
+	CanChangeDomainUsersOnlyRestriction bool `json:"canChangeDomainUsersOnlyRestriction,omitempty"`
+
+	// CanChangeDriveBackground: Whether the current user can change the
+	// background of this shared drive.
+	CanChangeDriveBackground bool `json:"canChangeDriveBackground,omitempty"`
+
+	// CanChangeDriveMembersOnlyRestriction: Whether the current user can
+	// change the driveMembersOnly restriction of this shared drive.
+	CanChangeDriveMembersOnlyRestriction bool `json:"canChangeDriveMembersOnlyRestriction,omitempty"`
+
+	// CanComment: Whether the current user can comment on files in this
+	// shared drive.
+	CanComment bool `json:"canComment,omitempty"`
+
+	// CanCopy: Whether the current user can copy files in this shared
+	// drive.
+	CanCopy bool `json:"canCopy,omitempty"`
+
+	// CanDeleteChildren: Whether the current user can delete children from
+	// folders in this shared drive.
+	CanDeleteChildren bool `json:"canDeleteChildren,omitempty"`
+
+	// CanDeleteDrive: Whether the current user can delete this shared
+	// drive. Attempting to delete the shared drive may still fail if there
+	// are untrashed items inside the shared drive.
+	CanDeleteDrive bool `json:"canDeleteDrive,omitempty"`
+
+	// CanDownload: Whether the current user can download files in this
+	// shared drive.
+	CanDownload bool `json:"canDownload,omitempty"`
+
+	// CanEdit: Whether the current user can edit files in this shared drive
+	CanEdit bool `json:"canEdit,omitempty"`
+
+	// CanListChildren: Whether the current user can list the children of
+	// folders in this shared drive.
+	CanListChildren bool `json:"canListChildren,omitempty"`
+
+	// CanManageMembers: Whether the current user can add members to this
+	// shared drive or remove them or change their role.
+	CanManageMembers bool `json:"canManageMembers,omitempty"`
+
+	// CanReadRevisions: Whether the current user can read the revisions
+	// resource of files in this shared drive.
+	CanReadRevisions bool `json:"canReadRevisions,omitempty"`
+
+	// CanRename: Whether the current user can rename files or folders in
+	// this shared drive.
+	CanRename bool `json:"canRename,omitempty"`
+
+	// CanRenameDrive: Whether the current user can rename this shared
+	// drive.
+	CanRenameDrive bool `json:"canRenameDrive,omitempty"`
+
+	// CanShare: Whether the current user can share files or folders in this
+	// shared drive.
+	CanShare bool `json:"canShare,omitempty"`
+
+	// CanTrashChildren: Whether the current user can trash children from
+	// folders in this shared drive.
+	CanTrashChildren bool `json:"canTrashChildren,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "CanAddChildren") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CanAddChildren") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *DriveCapabilities) MarshalJSON() ([]byte, error) {
+	type NoMethod DriveCapabilities
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// DriveRestrictions: A set of restrictions that apply to this shared
+// drive or items inside this shared drive.
+type DriveRestrictions struct {
+	// AdminManagedRestrictions: Whether administrative privileges on this
+	// shared drive are required to modify restrictions.
+	AdminManagedRestrictions bool `json:"adminManagedRestrictions,omitempty"`
+
+	// CopyRequiresWriterPermission: Whether the options to copy, print, or
+	// download files inside this shared drive, should be disabled for
+	// readers and commenters. When this restriction is set to true, it will
+	// override the similarly named field to true for any file inside this
+	// shared drive.
+	CopyRequiresWriterPermission bool `json:"copyRequiresWriterPermission,omitempty"`
+
+	// DomainUsersOnly: Whether access to this shared drive and items inside
+	// this shared drive is restricted to users of the domain to which this
+	// shared drive belongs. This restriction may be overridden by other
+	// sharing policies controlled outside of this shared drive.
+	DomainUsersOnly bool `json:"domainUsersOnly,omitempty"`
+
+	// DriveMembersOnly: Whether access to items inside this shared drive is
+	// restricted to its members.
+	DriveMembersOnly bool `json:"driveMembersOnly,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "AdminManagedRestrictions") to unconditionally include in API
+	// requests. By default, fields with empty values are omitted from API
+	// requests. However, any non-pointer, non-interface field appearing in
+	// ForceSendFields will be sent to the server regardless of whether the
+	// field is empty or not. This may be used to include empty fields in
+	// Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AdminManagedRestrictions")
+	// to include in API requests with the JSON null value. By default,
+	// fields with empty values are omitted from API requests. However, any
+	// field with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *DriveRestrictions) MarshalJSON() ([]byte, error) {
+	type NoMethod DriveRestrictions
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// DriveList: A list of shared drives.
+type DriveList struct {
+	// Drives: The list of shared drives. If nextPageToken is populated,
+	// then this list may be incomplete and an additional page of results
+	// should be fetched.
+	Drives []*Drive `json:"drives,omitempty"`
+
+	// Kind: Identifies what kind of resource this is. Value: the fixed
+	// string "drive#driveList".
+	Kind string `json:"kind,omitempty"`
+
+	// NextPageToken: The page token for the next page of shared drives.
+	// This will be absent if the end of the list has been reached. If the
+	// token is rejected for any reason, it should be discarded, and
+	// pagination should be restarted from the first page of results.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "Drives") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Drives") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *DriveList) MarshalJSON() ([]byte, error) {
+	type NoMethod DriveList
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// File: The metadata for a file.
+type File struct {
+	// AppProperties: A collection of arbitrary key-value pairs which are
+	// private to the requesting app.
+	// Entries with null values are cleared in update and copy requests.
+	AppProperties map[string]string `json:"appProperties,omitempty"`
+
+	// Capabilities: Capabilities the current user has on this file. Each
+	// capability corresponds to a fine-grained action that a user may take.
+	Capabilities *FileCapabilities `json:"capabilities,omitempty"`
+
+	// ContentHints: Additional information about the content of the file.
+	// These fields are never populated in responses.
+	ContentHints *FileContentHints `json:"contentHints,omitempty"`
+
+	// CopyRequiresWriterPermission: Whether the options to copy, print, or
+	// download this file, should be disabled for readers and commenters.
+	CopyRequiresWriterPermission bool `json:"copyRequiresWriterPermission,omitempty"`
+
+	// CreatedTime: The time at which the file was created (RFC 3339
+	// date-time).
+	CreatedTime string `json:"createdTime,omitempty"`
+
+	// Description: A short description of the file.
+	Description string `json:"description,omitempty"`
+
+	// DriveId: ID of the shared drive the file resides in. Only populated
+	// for items in shared drives.
+	DriveId string `json:"driveId,omitempty"`
+
+	// ExplicitlyTrashed: Whether the file has been explicitly trashed, as
+	// opposed to recursively trashed from a parent folder.
+	ExplicitlyTrashed bool `json:"explicitlyTrashed,omitempty"`
+
+	// ExportLinks: Links for exporting Google Docs to specific formats.
+	ExportLinks map[string]string `json:"exportLinks,omitempty"`
+
+	// FileExtension: The final component of fullFileExtension. This is only
+	// available for files with binary content in Google Drive.
+	FileExtension string `json:"fileExtension,omitempty"`
+
+	// FolderColorRgb: The color for a folder as an RGB hex string. The
+	// supported colors are published in the folderColorPalette field of the
+	// About resource.
+	// If an unsupported color is specified, the closest color in the
+	// palette will be used instead.
+	FolderColorRgb string `json:"folderColorRgb,omitempty"`
+
+	// FullFileExtension: The full file extension extracted from the name
+	// field. May contain multiple concatenated extensions, such as
+	// "tar.gz". This is only available for files with binary content in
+	// Google Drive.
+	// This is automatically updated when the name field changes, however it
+	// is not cleared if the new name does not contain a valid extension.
+	FullFileExtension string `json:"fullFileExtension,omitempty"`
+
+	// HasAugmentedPermissions: Whether any users are granted file access
+	// directly on this file. This field is only populated for shared drive
+	// files.
+	HasAugmentedPermissions bool `json:"hasAugmentedPermissions,omitempty"`
+
+	// HasThumbnail: Whether this file has a thumbnail. This does not
+	// indicate whether the requesting app has access to the thumbnail. To
+	// check access, look for the presence of the thumbnailLink field.
+	HasThumbnail bool `json:"hasThumbnail,omitempty"`
+
+	// HeadRevisionId: The ID of the file's head revision. This is currently
+	// only available for files with binary content in Google Drive.
+	HeadRevisionId string `json:"headRevisionId,omitempty"`
+
+	// IconLink: A static, unauthenticated link to the file's icon.
+	IconLink string `json:"iconLink,omitempty"`
+
+	// Id: The ID of the file.
+	Id string `json:"id,omitempty"`
+
+	// ImageMediaMetadata: Additional metadata about image media, if
+	// available.
+	ImageMediaMetadata *FileImageMediaMetadata `json:"imageMediaMetadata,omitempty"`
+
+	// IsAppAuthorized: Whether the file was created or opened by the
+	// requesting app.
+	IsAppAuthorized bool `json:"isAppAuthorized,omitempty"`
+
+	// Kind: Identifies what kind of resource this is. Value: the fixed
+	// string "drive#file".
+	Kind string `json:"kind,omitempty"`
+
+	// LastModifyingUser: The last user to modify the file.
+	LastModifyingUser *User `json:"lastModifyingUser,omitempty"`
+
+	// Md5Checksum: The MD5 checksum for the content of the file. This is
+	// only applicable to files with binary content in Google Drive.
+	Md5Checksum string `json:"md5Checksum,omitempty"`
+
+	// MimeType: The MIME type of the file.
+	// Google Drive will attempt to automatically detect an appropriate
+	// value from uploaded content if no value is provided. The value cannot
+	// be changed unless a new revision is uploaded.
+	// If a file is created with a Google Doc MIME type, the uploaded
+	// content will be imported if possible. The supported import formats
+	// are published in the About resource.
+	MimeType string `json:"mimeType,omitempty"`
+
+	// ModifiedByMe: Whether the file has been modified by this user.
+	ModifiedByMe bool `json:"modifiedByMe,omitempty"`
+
+	// ModifiedByMeTime: The last time the file was modified by the user
+	// (RFC 3339 date-time).
+	ModifiedByMeTime string `json:"modifiedByMeTime,omitempty"`
+
+	// ModifiedTime: The last time the file was modified by anyone (RFC 3339
+	// date-time).
+	// Note that setting modifiedTime will also update modifiedByMeTime for
+	// the user.
+	ModifiedTime string `json:"modifiedTime,omitempty"`
+
+	// Name: The name of the file. This is not necessarily unique within a
+	// folder. Note that for immutable items such as the top level folders
+	// of shared drives, My Drive root folder, and Application Data folder
+	// the name is constant.
+	Name string `json:"name,omitempty"`
+
+	// OriginalFilename: The original filename of the uploaded content if
+	// available, or else the original value of the name field. This is only
+	// available for files with binary content in Google Drive.
+	OriginalFilename string `json:"originalFilename,omitempty"`
+
+	// OwnedByMe: Whether the user owns the file. Not populated for items in
+	// shared drives.
+	OwnedByMe bool `json:"ownedByMe,omitempty"`
+
+	// Owners: The owners of the file. Currently, only certain legacy files
+	// may have more than one owner. Not populated for items in shared
+	// drives.
+	Owners []*User `json:"owners,omitempty"`
+
+	// Parents: The IDs of the parent folders which contain the file.
+	// If not specified as part of a create request, the file will be placed
+	// directly in the user's My Drive folder. If not specified as part of a
+	// copy request, the file will inherit any discoverable parents of the
+	// source file. Update requests must use the addParents and
+	// removeParents parameters to modify the parents list.
+	Parents []string `json:"parents,omitempty"`
+
+	// PermissionIds: List of permission IDs for users with access to this
+	// file.
+	PermissionIds []string `json:"permissionIds,omitempty"`
+
+	// Permissions: The full list of permissions for the file. This is only
+	// available if the requesting user can share the file. Not populated
+	// for items in shared drives.
+	Permissions []*Permission `json:"permissions,omitempty"`
+
+	// Properties: A collection of arbitrary key-value pairs which are
+	// visible to all apps.
+	// Entries with null values are cleared in update and copy requests.
+	Properties map[string]string `json:"properties,omitempty"`
+
+	// QuotaBytesUsed: The number of storage quota bytes used by the file.
+	// This includes the head revision as well as previous revisions with
+	// keepForever enabled.
+	QuotaBytesUsed int64 `json:"quotaBytesUsed,omitempty,string"`
+
+	// Shared: Whether the file has been shared. Not populated for items in
+	// shared drives.
+	Shared bool `json:"shared,omitempty"`
+
+	// SharedWithMeTime: The time at which the file was shared with the
+>>>>>>> v0.0.4
 	// user, if applicable (RFC 3339 date-time).
 	SharedWithMeTime string `json:"sharedWithMeTime,omitempty"`
 
@@ -905,7 +1536,11 @@ type File struct {
 	SharingUser *User `json:"sharingUser,omitempty"`
 
 	// Size: The size of the file's content in bytes. This is only
+<<<<<<< HEAD
 	// applicable to files with binary content in Drive.
+=======
+	// applicable to files with binary content in Google Drive.
+>>>>>>> v0.0.4
 	Size int64 `json:"size,omitempty,string"`
 
 	// Spaces: The list of spaces which contain the file. The currently
@@ -915,7 +1550,11 @@ type File struct {
 	// Starred: Whether the user has starred the file.
 	Starred bool `json:"starred,omitempty"`
 
+<<<<<<< HEAD
 	// TeamDriveId: ID of the Team Drive the file resides in.
+=======
+	// TeamDriveId: Deprecated - use driveId instead.
+>>>>>>> v0.0.4
 	TeamDriveId string `json:"teamDriveId,omitempty"`
 
 	// ThumbnailLink: A short-lived link to the file's thumbnail, if
@@ -933,11 +1572,19 @@ type File struct {
 	Trashed bool `json:"trashed,omitempty"`
 
 	// TrashedTime: The time that the item was trashed (RFC 3339 date-time).
+<<<<<<< HEAD
 	// Only populated for Team Drive files.
 	TrashedTime string `json:"trashedTime,omitempty"`
 
 	// TrashingUser: If the file has been explicitly trashed, the user who
 	// trashed it. Only populated for Team Drive files.
+=======
+	// Only populated for items in shared drives.
+	TrashedTime string `json:"trashedTime,omitempty"`
+
+	// TrashingUser: If the file has been explicitly trashed, the user who
+	// trashed it. Only populated for items in shared drives.
+>>>>>>> v0.0.4
 	TrashingUser *User `json:"trashingUser,omitempty"`
 
 	// Version: A monotonically increasing version number for the file. This
@@ -962,7 +1609,11 @@ type File struct {
 
 	// WebContentLink: A link for downloading the content of the file in a
 	// browser. This is only available for files with binary content in
+<<<<<<< HEAD
 	// Drive.
+=======
+	// Google Drive.
+>>>>>>> v0.0.4
 	WebContentLink string `json:"webContentLink,omitempty"`
 
 	// WebViewLink: A link for opening the file in a relevant Google editor
@@ -970,7 +1621,11 @@ type File struct {
 	WebViewLink string `json:"webViewLink,omitempty"`
 
 	// WritersCanShare: Whether users with only writer permission can modify
+<<<<<<< HEAD
 	// the file's permissions. Not populated for Team Drive files.
+=======
+	// the file's permissions. Not populated for items in shared drives.
+>>>>>>> v0.0.4
 	WritersCanShare bool `json:"writersCanShare,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -1018,9 +1673,15 @@ type FileCapabilities struct {
 	// CanComment: Whether the current user can comment on this file.
 	CanComment bool `json:"canComment,omitempty"`
 
+<<<<<<< HEAD
 	// CanCopy: Whether the current user can copy this file. For a Team
 	// Drive item, whether the current user can copy non-folder descendants
 	// of this item, or this item itself if it is not a folder.
+=======
+	// CanCopy: Whether the current user can copy this file. For an item in
+	// a shared drive, whether the current user can copy non-folder
+	// descendants of this item, or this item itself if it is not a folder.
+>>>>>>> v0.0.4
 	CanCopy bool `json:"canCopy,omitempty"`
 
 	// CanDelete: Whether the current user can delete this file.
@@ -1028,7 +1689,11 @@ type FileCapabilities struct {
 
 	// CanDeleteChildren: Whether the current user can delete children of
 	// this folder. This is false when the item is not a folder. Only
+<<<<<<< HEAD
 	// populated for Team Drive items.
+=======
+	// populated for items in shared drives.
+>>>>>>> v0.0.4
 	CanDeleteChildren bool `json:"canDeleteChildren,omitempty"`
 
 	// CanDownload: Whether the current user can download this file.
@@ -1041,6 +1706,7 @@ type FileCapabilities struct {
 	// this folder. This is always false when the item is not a folder.
 	CanListChildren bool `json:"canListChildren,omitempty"`
 
+<<<<<<< HEAD
 	// CanMoveChildrenOutOfTeamDrive: Whether the current user can move
 	// children of this folder outside of the Team Drive. This is false when
 	// the item is not a folder. Only populated for Team Drive items.
@@ -1075,17 +1741,80 @@ type FileCapabilities struct {
 
 	// CanReadRevisions: Whether the current user can read the revisions
 	// resource of this file. For a Team Drive item, whether revisions of
+=======
+	// CanMoveChildrenOutOfDrive: Whether the current user can move children
+	// of this folder outside of the shared drive. This is false when the
+	// item is not a folder. Only populated for items in shared drives.
+	CanMoveChildrenOutOfDrive bool `json:"canMoveChildrenOutOfDrive,omitempty"`
+
+	// CanMoveChildrenOutOfTeamDrive: Deprecated - use
+	// canMoveChildrenOutOfDrive instead.
+	CanMoveChildrenOutOfTeamDrive bool `json:"canMoveChildrenOutOfTeamDrive,omitempty"`
+
+	// CanMoveChildrenWithinDrive: Whether the current user can move
+	// children of this folder within the shared drive. This is false when
+	// the item is not a folder. Only populated for items in shared drives.
+	CanMoveChildrenWithinDrive bool `json:"canMoveChildrenWithinDrive,omitempty"`
+
+	// CanMoveChildrenWithinTeamDrive: Deprecated - use
+	// canMoveChildrenWithinDrive instead.
+	CanMoveChildrenWithinTeamDrive bool `json:"canMoveChildrenWithinTeamDrive,omitempty"`
+
+	// CanMoveItemIntoTeamDrive: Deprecated - use canMoveItemOutOfDrive
+	// instead.
+	CanMoveItemIntoTeamDrive bool `json:"canMoveItemIntoTeamDrive,omitempty"`
+
+	// CanMoveItemOutOfDrive: Whether the current user can move this item
+	// outside of this drive by changing its parent. Note that a request to
+	// change the parent of the item may still fail depending on the new
+	// parent that is being added.
+	CanMoveItemOutOfDrive bool `json:"canMoveItemOutOfDrive,omitempty"`
+
+	// CanMoveItemOutOfTeamDrive: Deprecated - use canMoveItemOutOfDrive
+	// instead.
+	CanMoveItemOutOfTeamDrive bool `json:"canMoveItemOutOfTeamDrive,omitempty"`
+
+	// CanMoveItemWithinDrive: Whether the current user can move this item
+	// within this shared drive. Note that a request to change the parent of
+	// the item may still fail depending on the new parent that is being
+	// added. Only populated for items in shared drives.
+	CanMoveItemWithinDrive bool `json:"canMoveItemWithinDrive,omitempty"`
+
+	// CanMoveItemWithinTeamDrive: Deprecated - use canMoveItemWithinDrive
+	// instead.
+	CanMoveItemWithinTeamDrive bool `json:"canMoveItemWithinTeamDrive,omitempty"`
+
+	// CanMoveTeamDriveItem: Deprecated - use canMoveItemWithinDrive or
+	// canMoveItemOutOfDrive instead.
+	CanMoveTeamDriveItem bool `json:"canMoveTeamDriveItem,omitempty"`
+
+	// CanReadDrive: Whether the current user can read the shared drive to
+	// which this file belongs. Only populated for items in shared drives.
+	CanReadDrive bool `json:"canReadDrive,omitempty"`
+
+	// CanReadRevisions: Whether the current user can read the revisions
+	// resource of this file. For a shared drive item, whether revisions of
+>>>>>>> v0.0.4
 	// non-folder descendants of this item, or this item itself if it is not
 	// a folder, can be read.
 	CanReadRevisions bool `json:"canReadRevisions,omitempty"`
 
+<<<<<<< HEAD
 	// CanReadTeamDrive: Whether the current user can read the Team Drive to
 	// which this file belongs. Only populated for Team Drive files.
+=======
+	// CanReadTeamDrive: Deprecated - use canReadDrive instead.
+>>>>>>> v0.0.4
 	CanReadTeamDrive bool `json:"canReadTeamDrive,omitempty"`
 
 	// CanRemoveChildren: Whether the current user can remove children from
 	// this folder. This is always false when the item is not a folder. For
+<<<<<<< HEAD
 	// Team Drive items, use canDeleteChildren or canTrashChildren instead.
+=======
+	// a folder in a shared drive, use canDeleteChildren or canTrashChildren
+	// instead.
+>>>>>>> v0.0.4
 	CanRemoveChildren bool `json:"canRemoveChildren,omitempty"`
 
 	// CanRename: Whether the current user can rename this file.
@@ -1100,7 +1829,11 @@ type FileCapabilities struct {
 
 	// CanTrashChildren: Whether the current user can trash children of this
 	// folder. This is false when the item is not a folder. Only populated
+<<<<<<< HEAD
 	// for Team Drive items.
+=======
+	// for items in shared drives.
+>>>>>>> v0.0.4
 	CanTrashChildren bool `json:"canTrashChildren,omitempty"`
 
 	// CanUntrash: Whether the current user can restore this file from
@@ -1139,8 +1872,13 @@ type FileContentHints struct {
 	// elements.
 	IndexableText string `json:"indexableText,omitempty"`
 
+<<<<<<< HEAD
 	// Thumbnail: A thumbnail for the file. This will only be used if Drive
 	// cannot generate a standard thumbnail.
+=======
+	// Thumbnail: A thumbnail for the file. This will only be used if Google
+	// Drive cannot generate a standard thumbnail.
+>>>>>>> v0.0.4
 	Thumbnail *FileContentHintsThumbnail `json:"thumbnail,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "IndexableText") to
@@ -1167,7 +1905,11 @@ func (s *FileContentHints) MarshalJSON() ([]byte, error) {
 }
 
 // FileContentHintsThumbnail: A thumbnail for the file. This will only
+<<<<<<< HEAD
 // be used if Drive cannot generate a standard thumbnail.
+=======
+// be used if Google Drive cannot generate a standard thumbnail.
+>>>>>>> v0.0.4
 type FileContentHintsThumbnail struct {
 	// Image: The thumbnail data encoded with URL-safe Base64 (RFC 4648
 	// section 5).
@@ -1411,10 +2153,17 @@ type FileList struct {
 
 	// IncompleteSearch: Whether the search process was incomplete. If true,
 	// then some search results may be missing, since all documents were not
+<<<<<<< HEAD
 	// searched. This may occur when searching multiple Team Drives with the
 	// "user,allTeamDrives" corpora, but all corpora could not be searched.
 	// When this happens, it is suggested that clients narrow their query by
 	// choosing a different corpus such as "user" or "teamDrive".
+=======
+	// searched. This may occur when searching multiple drives with the
+	// "allDrives" corpora, but all corpora could not be searched. When this
+	// happens, it is suggested that clients narrow their query by choosing
+	// a different corpus such as "user" or "drive".
+>>>>>>> v0.0.4
 	IncompleteSearch bool `json:"incompleteSearch,omitempty"`
 
 	// Kind: Identifies what kind of resource this is. Value: the fixed
@@ -1533,6 +2282,14 @@ type Permission struct {
 	// string "drive#permission".
 	Kind string `json:"kind,omitempty"`
 
+<<<<<<< HEAD
+=======
+	// PermissionDetails: Details of whether the permissions on this shared
+	// drive item are inherited or directly on this item. This is an
+	// output-only field which is present only for shared drive items.
+	PermissionDetails []*PermissionPermissionDetails `json:"permissionDetails,omitempty"`
+
+>>>>>>> v0.0.4
 	// PhotoLink: A link to the user's profile photo, if available.
 	PhotoLink string `json:"photoLink,omitempty"`
 
@@ -1546,9 +2303,14 @@ type Permission struct {
 	// - reader
 	Role string `json:"role,omitempty"`
 
+<<<<<<< HEAD
 	// TeamDrivePermissionDetails: Details of whether the permissions on
 	// this Team Drive item are inherited or directly on this item. This is
 	// an output-only field which is present only for Team Drive items.
+=======
+	// TeamDrivePermissionDetails: Deprecated - use permissionDetails
+	// instead.
+>>>>>>> v0.0.4
 	TeamDrivePermissionDetails []*PermissionTeamDrivePermissionDetails `json:"teamDrivePermissionDetails,omitempty"`
 
 	// Type: The type of the grantee. Valid values are:
@@ -1586,6 +2348,57 @@ func (s *Permission) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+<<<<<<< HEAD
+=======
+type PermissionPermissionDetails struct {
+	// Inherited: Whether this permission is inherited. This field is always
+	// populated. This is an output-only field.
+	Inherited bool `json:"inherited,omitempty"`
+
+	// InheritedFrom: The ID of the item from which this permission is
+	// inherited. This is an output-only field and is only populated for
+	// members of the shared drive.
+	InheritedFrom string `json:"inheritedFrom,omitempty"`
+
+	// PermissionType: The permission type for this user. While new values
+	// may be added in future, the following are currently possible:
+	// - file
+	// - member
+	PermissionType string `json:"permissionType,omitempty"`
+
+	// Role: The primary role for this user. While new values may be added
+	// in the future, the following are currently possible:
+	// - organizer
+	// - fileOrganizer
+	// - writer
+	// - commenter
+	// - reader
+	Role string `json:"role,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Inherited") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Inherited") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *PermissionPermissionDetails) MarshalJSON() ([]byte, error) {
+	type NoMethod PermissionPermissionDetails
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+>>>>>>> v0.0.4
 type PermissionTeamDrivePermissionDetails struct {
 	// Inherited: Whether this permission is inherited. This field is always
 	// populated. This is an output-only field.
@@ -2487,16 +3300,42 @@ func (r *ChangesService) GetStartPageToken() *ChangesGetStartPageTokenCall {
 	return c
 }
 
+<<<<<<< HEAD
 // SupportsTeamDrives sets the optional parameter "supportsTeamDrives":
 // Whether the requesting application supports Team Drives.
+=======
+// DriveId sets the optional parameter "driveId": The ID of the shared
+// drive for which the starting pageToken for listing future changes
+// from that shared drive will be returned.
+func (c *ChangesGetStartPageTokenCall) DriveId(driveId string) *ChangesGetStartPageTokenCall {
+	c.urlParams_.Set("driveId", driveId)
+	return c
+}
+
+// SupportsAllDrives sets the optional parameter "supportsAllDrives":
+// Whether the requesting application supports both My Drives and shared
+// drives.
+func (c *ChangesGetStartPageTokenCall) SupportsAllDrives(supportsAllDrives bool) *ChangesGetStartPageTokenCall {
+	c.urlParams_.Set("supportsAllDrives", fmt.Sprint(supportsAllDrives))
+	return c
+}
+
+// SupportsTeamDrives sets the optional parameter "supportsTeamDrives":
+// Deprecated use supportsAllDrives instead.
+>>>>>>> v0.0.4
 func (c *ChangesGetStartPageTokenCall) SupportsTeamDrives(supportsTeamDrives bool) *ChangesGetStartPageTokenCall {
 	c.urlParams_.Set("supportsTeamDrives", fmt.Sprint(supportsTeamDrives))
 	return c
 }
 
+<<<<<<< HEAD
 // TeamDriveId sets the optional parameter "teamDriveId": The ID of the
 // Team Drive for which the starting pageToken for listing future
 // changes from that Team Drive will be returned.
+=======
+// TeamDriveId sets the optional parameter "teamDriveId": Deprecated use
+// driveId instead.
+>>>>>>> v0.0.4
 func (c *ChangesGetStartPageTokenCall) TeamDriveId(teamDriveId string) *ChangesGetStartPageTokenCall {
 	c.urlParams_.Set("teamDriveId", teamDriveId)
 	return c
@@ -2601,14 +3440,35 @@ func (c *ChangesGetStartPageTokenCall) Do(opts ...googleapi.CallOption) (*StartP
 	//   "httpMethod": "GET",
 	//   "id": "drive.changes.getStartPageToken",
 	//   "parameters": {
+<<<<<<< HEAD
 	//     "supportsTeamDrives": {
 	//       "default": "false",
 	//       "description": "Whether the requesting application supports Team Drives.",
+=======
+	//     "driveId": {
+	//       "description": "The ID of the shared drive for which the starting pageToken for listing future changes from that shared drive will be returned.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "supportsAllDrives": {
+	//       "default": "false",
+	//       "description": "Whether the requesting application supports both My Drives and shared drives.",
+	//       "location": "query",
+	//       "type": "boolean"
+	//     },
+	//     "supportsTeamDrives": {
+	//       "default": "false",
+	//       "description": "Deprecated use supportsAllDrives instead.",
+>>>>>>> v0.0.4
 	//       "location": "query",
 	//       "type": "boolean"
 	//     },
 	//     "teamDriveId": {
+<<<<<<< HEAD
 	//       "description": "The ID of the Team Drive for which the starting pageToken for listing future changes from that Team Drive will be returned.",
+=======
+	//       "description": "Deprecated use driveId instead.",
+>>>>>>> v0.0.4
 	//       "location": "query",
 	//       "type": "string"
 	//     }
@@ -2640,13 +3500,29 @@ type ChangesListCall struct {
 	header_      http.Header
 }
 
+<<<<<<< HEAD
 // List: Lists the changes for a user or Team Drive.
+=======
+// List: Lists the changes for a user or shared drive.
+>>>>>>> v0.0.4
 func (r *ChangesService) List(pageToken string) *ChangesListCall {
 	c := &ChangesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
 }
 
+<<<<<<< HEAD
+=======
+// DriveId sets the optional parameter "driveId": The shared drive from
+// which changes will be returned. If specified the change IDs will be
+// reflective of the shared drive; use the combined drive ID and change
+// ID as an identifier.
+func (c *ChangesListCall) DriveId(driveId string) *ChangesListCall {
+	c.urlParams_.Set("driveId", driveId)
+	return c
+}
+
+>>>>>>> v0.0.4
 // IncludeCorpusRemovals sets the optional parameter
 // "includeCorpusRemovals": Whether changes should include the file
 // resource if the file is still accessible by the user at the time of
@@ -2657,6 +3533,17 @@ func (c *ChangesListCall) IncludeCorpusRemovals(includeCorpusRemovals bool) *Cha
 	return c
 }
 
+<<<<<<< HEAD
+=======
+// IncludeItemsFromAllDrives sets the optional parameter
+// "includeItemsFromAllDrives": Whether both My Drive and shared drive
+// items should be included in results.
+func (c *ChangesListCall) IncludeItemsFromAllDrives(includeItemsFromAllDrives bool) *ChangesListCall {
+	c.urlParams_.Set("includeItemsFromAllDrives", fmt.Sprint(includeItemsFromAllDrives))
+	return c
+}
+
+>>>>>>> v0.0.4
 // IncludeRemoved sets the optional parameter "includeRemoved": Whether
 // to include changes indicating that items have been removed from the
 // list of changes, for example by deletion or loss of access.
@@ -2666,8 +3553,13 @@ func (c *ChangesListCall) IncludeRemoved(includeRemoved bool) *ChangesListCall {
 }
 
 // IncludeTeamDriveItems sets the optional parameter
+<<<<<<< HEAD
 // "includeTeamDriveItems": Whether Team Drive files or changes should
 // be included in results.
+=======
+// "includeTeamDriveItems": Deprecated use includeItemsFromAllDrives
+// instead.
+>>>>>>> v0.0.4
 func (c *ChangesListCall) IncludeTeamDriveItems(includeTeamDriveItems bool) *ChangesListCall {
 	c.urlParams_.Set("includeTeamDriveItems", fmt.Sprint(includeTeamDriveItems))
 	return c
@@ -2698,17 +3590,35 @@ func (c *ChangesListCall) Spaces(spaces string) *ChangesListCall {
 	return c
 }
 
+<<<<<<< HEAD
 // SupportsTeamDrives sets the optional parameter "supportsTeamDrives":
 // Whether the requesting application supports Team Drives.
+=======
+// SupportsAllDrives sets the optional parameter "supportsAllDrives":
+// Whether the requesting application supports both My Drives and shared
+// drives.
+func (c *ChangesListCall) SupportsAllDrives(supportsAllDrives bool) *ChangesListCall {
+	c.urlParams_.Set("supportsAllDrives", fmt.Sprint(supportsAllDrives))
+	return c
+}
+
+// SupportsTeamDrives sets the optional parameter "supportsTeamDrives":
+// Deprecated use supportsAllDrives instead.
+>>>>>>> v0.0.4
 func (c *ChangesListCall) SupportsTeamDrives(supportsTeamDrives bool) *ChangesListCall {
 	c.urlParams_.Set("supportsTeamDrives", fmt.Sprint(supportsTeamDrives))
 	return c
 }
 
+<<<<<<< HEAD
 // TeamDriveId sets the optional parameter "teamDriveId": The Team Drive
 // from which changes will be returned. If specified the change IDs will
 // be reflective of the Team Drive; use the combined Team Drive ID and
 // change ID as an identifier.
+=======
+// TeamDriveId sets the optional parameter "teamDriveId": Deprecated use
+// driveId instead.
+>>>>>>> v0.0.4
 func (c *ChangesListCall) TeamDriveId(teamDriveId string) *ChangesListCall {
 	c.urlParams_.Set("teamDriveId", teamDriveId)
 	return c
@@ -2809,19 +3719,40 @@ func (c *ChangesListCall) Do(opts ...googleapi.CallOption) (*ChangeList, error) 
 	}
 	return ret, nil
 	// {
+<<<<<<< HEAD
 	//   "description": "Lists the changes for a user or Team Drive.",
+=======
+	//   "description": "Lists the changes for a user or shared drive.",
+>>>>>>> v0.0.4
 	//   "httpMethod": "GET",
 	//   "id": "drive.changes.list",
 	//   "parameterOrder": [
 	//     "pageToken"
 	//   ],
 	//   "parameters": {
+<<<<<<< HEAD
+=======
+	//     "driveId": {
+	//       "description": "The shared drive from which changes will be returned. If specified the change IDs will be reflective of the shared drive; use the combined drive ID and change ID as an identifier.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+>>>>>>> v0.0.4
 	//     "includeCorpusRemovals": {
 	//       "default": "false",
 	//       "description": "Whether changes should include the file resource if the file is still accessible by the user at the time of the request, even when a file was removed from the list of changes and there will be no further change entries for this file.",
 	//       "location": "query",
 	//       "type": "boolean"
 	//     },
+<<<<<<< HEAD
+=======
+	//     "includeItemsFromAllDrives": {
+	//       "default": "false",
+	//       "description": "Whether both My Drive and shared drive items should be included in results.",
+	//       "location": "query",
+	//       "type": "boolean"
+	//     },
+>>>>>>> v0.0.4
 	//     "includeRemoved": {
 	//       "default": "true",
 	//       "description": "Whether to include changes indicating that items have been removed from the list of changes, for example by deletion or loss of access.",
@@ -2830,7 +3761,11 @@ func (c *ChangesListCall) Do(opts ...googleapi.CallOption) (*ChangeList, error) 
 	//     },
 	//     "includeTeamDriveItems": {
 	//       "default": "false",
+<<<<<<< HEAD
 	//       "description": "Whether Team Drive files or changes should be included in results.",
+=======
+	//       "description": "Deprecated use includeItemsFromAllDrives instead.",
+>>>>>>> v0.0.4
 	//       "location": "query",
 	//       "type": "boolean"
 	//     },
@@ -2861,6 +3796,7 @@ func (c *ChangesListCall) Do(opts ...googleapi.CallOption) (*ChangeList, error) 
 	//       "location": "query",
 	//       "type": "string"
 	//     },
+<<<<<<< HEAD
 	//     "supportsTeamDrives": {
 	//       "default": "false",
 	//       "description": "Whether the requesting application supports Team Drives.",
@@ -2869,6 +3805,39 @@ func (c *ChangesListCall) Do(opts ...googleapi.CallOption) (*ChangeList, error) 
 	//     },
 	//     "teamDriveId": {
 	//       "description": "The Team Drive from which changes will be returned. If specified the change IDs will be reflective of the Team Drive; use the combined Team Drive ID and change ID as an identifier.",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "changes",
+	//   "response": {
+	//     "$ref": "ChangeList"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/drive",
+	//     "https://www.googleapis.com/auth/drive.appdata",
+	//     "https://www.googleapis.com/auth/drive.file",
+	//     "https://www.googleapis.com/auth/drive.metadata",
+	//     "https://www.googleapis.com/auth/drive.metadata.readonly",
+	//     "https://www.googleapis.com/auth/drive.photos.readonly",
+	//     "https://www.googleapis.com/auth/drive.readonly"
+	//   ],
+	//   "supportsSubscription": true
+=======
+	//     "supportsAllDrives": {
+	//       "default": "false",
+	//       "description": "Whether the requesting application supports both My Drives and shared drives.",
+	//       "location": "query",
+	//       "type": "boolean"
+	//     },
+	//     "supportsTeamDrives": {
+	//       "default": "false",
+	//       "description": "Deprecated use supportsAllDrives instead.",
+	//       "location": "query",
+	//       "type": "boolean"
+	//     },
+	//     "teamDriveId": {
+	//       "description": "Deprecated use driveId instead.",
 	//       "location": "query",
 	//       "type": "string"
 	//     }
@@ -2909,6 +3878,15 @@ func (r *ChangesService) Watch(pageToken string, channel *Channel) *ChangesWatch
 	return c
 }
 
+// DriveId sets the optional parameter "driveId": The shared drive from
+// which changes will be returned. If specified the change IDs will be
+// reflective of the shared drive; use the combined drive ID and change
+// ID as an identifier.
+func (c *ChangesWatchCall) DriveId(driveId string) *ChangesWatchCall {
+	c.urlParams_.Set("driveId", driveId)
+	return c
+}
+
 // IncludeCorpusRemovals sets the optional parameter
 // "includeCorpusRemovals": Whether changes should include the file
 // resource if the file is still accessible by the user at the time of
@@ -2916,6 +3894,14 @@ func (r *ChangesService) Watch(pageToken string, channel *Channel) *ChangesWatch
 // and there will be no further change entries for this file.
 func (c *ChangesWatchCall) IncludeCorpusRemovals(includeCorpusRemovals bool) *ChangesWatchCall {
 	c.urlParams_.Set("includeCorpusRemovals", fmt.Sprint(includeCorpusRemovals))
+	return c
+}
+
+// IncludeItemsFromAllDrives sets the optional parameter
+// "includeItemsFromAllDrives": Whether both My Drive and shared drive
+// items should be included in results.
+func (c *ChangesWatchCall) IncludeItemsFromAllDrives(includeItemsFromAllDrives bool) *ChangesWatchCall {
+	c.urlParams_.Set("includeItemsFromAllDrives", fmt.Sprint(includeItemsFromAllDrives))
 	return c
 }
 
@@ -2928,8 +3914,8 @@ func (c *ChangesWatchCall) IncludeRemoved(includeRemoved bool) *ChangesWatchCall
 }
 
 // IncludeTeamDriveItems sets the optional parameter
-// "includeTeamDriveItems": Whether Team Drive files or changes should
-// be included in results.
+// "includeTeamDriveItems": Deprecated use includeItemsFromAllDrives
+// instead.
 func (c *ChangesWatchCall) IncludeTeamDriveItems(includeTeamDriveItems bool) *ChangesWatchCall {
 	c.urlParams_.Set("includeTeamDriveItems", fmt.Sprint(includeTeamDriveItems))
 	return c
@@ -2960,17 +3946,23 @@ func (c *ChangesWatchCall) Spaces(spaces string) *ChangesWatchCall {
 	return c
 }
 
+// SupportsAllDrives sets the optional parameter "supportsAllDrives":
+// Whether the requesting application supports both My Drives and shared
+// drives.
+func (c *ChangesWatchCall) SupportsAllDrives(supportsAllDrives bool) *ChangesWatchCall {
+	c.urlParams_.Set("supportsAllDrives", fmt.Sprint(supportsAllDrives))
+	return c
+}
+
 // SupportsTeamDrives sets the optional parameter "supportsTeamDrives":
-// Whether the requesting application supports Team Drives.
+// Deprecated use supportsAllDrives instead.
 func (c *ChangesWatchCall) SupportsTeamDrives(supportsTeamDrives bool) *ChangesWatchCall {
 	c.urlParams_.Set("supportsTeamDrives", fmt.Sprint(supportsTeamDrives))
 	return c
 }
 
-// TeamDriveId sets the optional parameter "teamDriveId": The Team Drive
-// from which changes will be returned. If specified the change IDs will
-// be reflective of the Team Drive; use the combined Team Drive ID and
-// change ID as an identifier.
+// TeamDriveId sets the optional parameter "teamDriveId": Deprecated use
+// driveId instead.
 func (c *ChangesWatchCall) TeamDriveId(teamDriveId string) *ChangesWatchCall {
 	c.urlParams_.Set("teamDriveId", teamDriveId)
 	return c
@@ -3070,9 +4062,20 @@ func (c *ChangesWatchCall) Do(opts ...googleapi.CallOption) (*Channel, error) {
 	//     "pageToken"
 	//   ],
 	//   "parameters": {
+	//     "driveId": {
+	//       "description": "The shared drive from which changes will be returned. If specified the change IDs will be reflective of the shared drive; use the combined drive ID and change ID as an identifier.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
 	//     "includeCorpusRemovals": {
 	//       "default": "false",
 	//       "description": "Whether changes should include the file resource if the file is still accessible by the user at the time of the request, even when a file was removed from the list of changes and there will be no further change entries for this file.",
+	//       "location": "query",
+	//       "type": "boolean"
+	//     },
+	//     "includeItemsFromAllDrives": {
+	//       "default": "false",
+	//       "description": "Whether both My Drive and shared drive items should be included in results.",
 	//       "location": "query",
 	//       "type": "boolean"
 	//     },
@@ -3084,7 +4087,7 @@ func (c *ChangesWatchCall) Do(opts ...googleapi.CallOption) (*Channel, error) {
 	//     },
 	//     "includeTeamDriveItems": {
 	//       "default": "false",
-	//       "description": "Whether Team Drive files or changes should be included in results.",
+	//       "description": "Deprecated use includeItemsFromAllDrives instead.",
 	//       "location": "query",
 	//       "type": "boolean"
 	//     },
@@ -3115,14 +4118,20 @@ func (c *ChangesWatchCall) Do(opts ...googleapi.CallOption) (*Channel, error) {
 	//       "location": "query",
 	//       "type": "string"
 	//     },
+	//     "supportsAllDrives": {
+	//       "default": "false",
+	//       "description": "Whether the requesting application supports both My Drives and shared drives.",
+	//       "location": "query",
+	//       "type": "boolean"
+	//     },
 	//     "supportsTeamDrives": {
 	//       "default": "false",
-	//       "description": "Whether the requesting application supports Team Drives.",
+	//       "description": "Deprecated use supportsAllDrives instead.",
 	//       "location": "query",
 	//       "type": "boolean"
 	//     },
 	//     "teamDriveId": {
-	//       "description": "The Team Drive from which changes will be returned. If specified the change IDs will be reflective of the Team Drive; use the combined Team Drive ID and change ID as an identifier.",
+	//       "description": "Deprecated use driveId instead.",
 	//       "location": "query",
 	//       "type": "string"
 	//     }
@@ -4028,6 +5037,1849 @@ func (c *CommentsUpdateCall) Do(opts ...googleapi.CallOption) (*Comment, error) 
 	//     "https://www.googleapis.com/auth/drive",
 	//     "https://www.googleapis.com/auth/drive.file"
 	//   ]
+>>>>>>> v0.0.4
+	// }
+
+}
+
+<<<<<<< HEAD
+// method id "drive.changes.watch":
+
+type ChangesWatchCall struct {
+	s          *Service
+	channel    *Channel
+=======
+// method id "drive.drives.create":
+
+type DrivesCreateCall struct {
+	s          *Service
+	drive      *Drive
+>>>>>>> v0.0.4
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+<<<<<<< HEAD
+// Watch: Subscribes to changes for a user.
+func (r *ChangesService) Watch(pageToken string, channel *Channel) *ChangesWatchCall {
+	c := &ChangesWatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.urlParams_.Set("pageToken", pageToken)
+	c.channel = channel
+	return c
+}
+
+// IncludeCorpusRemovals sets the optional parameter
+// "includeCorpusRemovals": Whether changes should include the file
+// resource if the file is still accessible by the user at the time of
+// the request, even when a file was removed from the list of changes
+// and there will be no further change entries for this file.
+func (c *ChangesWatchCall) IncludeCorpusRemovals(includeCorpusRemovals bool) *ChangesWatchCall {
+	c.urlParams_.Set("includeCorpusRemovals", fmt.Sprint(includeCorpusRemovals))
+	return c
+}
+
+// IncludeRemoved sets the optional parameter "includeRemoved": Whether
+// to include changes indicating that items have been removed from the
+// list of changes, for example by deletion or loss of access.
+func (c *ChangesWatchCall) IncludeRemoved(includeRemoved bool) *ChangesWatchCall {
+	c.urlParams_.Set("includeRemoved", fmt.Sprint(includeRemoved))
+	return c
+}
+
+// IncludeTeamDriveItems sets the optional parameter
+// "includeTeamDriveItems": Whether Team Drive files or changes should
+// be included in results.
+func (c *ChangesWatchCall) IncludeTeamDriveItems(includeTeamDriveItems bool) *ChangesWatchCall {
+	c.urlParams_.Set("includeTeamDriveItems", fmt.Sprint(includeTeamDriveItems))
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": The maximum number
+// of changes to return per page.
+func (c *ChangesWatchCall) PageSize(pageSize int64) *ChangesWatchCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// RestrictToMyDrive sets the optional parameter "restrictToMyDrive":
+// Whether to restrict the results to changes inside the My Drive
+// hierarchy. This omits changes to files such as those in the
+// Application Data folder or shared files which have not been added to
+// My Drive.
+func (c *ChangesWatchCall) RestrictToMyDrive(restrictToMyDrive bool) *ChangesWatchCall {
+	c.urlParams_.Set("restrictToMyDrive", fmt.Sprint(restrictToMyDrive))
+	return c
+}
+
+// Spaces sets the optional parameter "spaces": A comma-separated list
+// of spaces to query within the user corpus. Supported values are
+// 'drive', 'appDataFolder' and 'photos'.
+func (c *ChangesWatchCall) Spaces(spaces string) *ChangesWatchCall {
+	c.urlParams_.Set("spaces", spaces)
+	return c
+}
+
+// SupportsTeamDrives sets the optional parameter "supportsTeamDrives":
+// Whether the requesting application supports Team Drives.
+func (c *ChangesWatchCall) SupportsTeamDrives(supportsTeamDrives bool) *ChangesWatchCall {
+	c.urlParams_.Set("supportsTeamDrives", fmt.Sprint(supportsTeamDrives))
+	return c
+}
+
+// TeamDriveId sets the optional parameter "teamDriveId": The Team Drive
+// from which changes will be returned. If specified the change IDs will
+// be reflective of the Team Drive; use the combined Team Drive ID and
+// change ID as an identifier.
+func (c *ChangesWatchCall) TeamDriveId(teamDriveId string) *ChangesWatchCall {
+	c.urlParams_.Set("teamDriveId", teamDriveId)
+=======
+// Create: Creates a new shared drive.
+func (r *DrivesService) Create(requestId string, drive *Drive) *DrivesCreateCall {
+	c := &DrivesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.urlParams_.Set("requestId", requestId)
+	c.drive = drive
+>>>>>>> v0.0.4
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+<<<<<<< HEAD
+func (c *ChangesWatchCall) Fields(s ...googleapi.Field) *ChangesWatchCall {
+=======
+func (c *DrivesCreateCall) Fields(s ...googleapi.Field) *DrivesCreateCall {
+>>>>>>> v0.0.4
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+<<<<<<< HEAD
+func (c *ChangesWatchCall) Context(ctx context.Context) *ChangesWatchCall {
+=======
+func (c *DrivesCreateCall) Context(ctx context.Context) *DrivesCreateCall {
+>>>>>>> v0.0.4
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+<<<<<<< HEAD
+func (c *ChangesWatchCall) Header() http.Header {
+=======
+func (c *DrivesCreateCall) Header() http.Header {
+>>>>>>> v0.0.4
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+<<<<<<< HEAD
+func (c *ChangesWatchCall) doRequest(alt string) (*http.Response, error) {
+=======
+func (c *DrivesCreateCall) doRequest(alt string) (*http.Response, error) {
+>>>>>>> v0.0.4
+	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+<<<<<<< HEAD
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.channel)
+=======
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.drive)
+>>>>>>> v0.0.4
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+<<<<<<< HEAD
+	urls := googleapi.ResolveRelative(c.s.BasePath, "changes/watch")
+=======
+	urls := googleapi.ResolveRelative(c.s.BasePath, "drives")
+>>>>>>> v0.0.4
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+<<<<<<< HEAD
+// Do executes the "drive.changes.watch" call.
+// Exactly one of *Channel or error will be non-nil. Any non-2xx status
+// code is an error. Response headers are in either
+// *Channel.ServerResponse.Header or (if a response was returned at all)
+// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified
+// was returned.
+func (c *ChangesWatchCall) Do(opts ...googleapi.CallOption) (*Channel, error) {
+=======
+// Do executes the "drive.drives.create" call.
+// Exactly one of *Drive or error will be non-nil. Any non-2xx status
+// code is an error. Response headers are in either
+// *Drive.ServerResponse.Header or (if a response was returned at all)
+// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified
+// was returned.
+func (c *DrivesCreateCall) Do(opts ...googleapi.CallOption) (*Drive, error) {
+>>>>>>> v0.0.4
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+<<<<<<< HEAD
+	ret := &Channel{
+=======
+	ret := &Drive{
+>>>>>>> v0.0.4
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+<<<<<<< HEAD
+	//   "description": "Subscribes to changes for a user.",
+	//   "httpMethod": "POST",
+	//   "id": "drive.changes.watch",
+	//   "parameterOrder": [
+	//     "pageToken"
+	//   ],
+	//   "parameters": {
+	//     "includeCorpusRemovals": {
+	//       "default": "false",
+	//       "description": "Whether changes should include the file resource if the file is still accessible by the user at the time of the request, even when a file was removed from the list of changes and there will be no further change entries for this file.",
+	//       "location": "query",
+	//       "type": "boolean"
+	//     },
+	//     "includeRemoved": {
+	//       "default": "true",
+	//       "description": "Whether to include changes indicating that items have been removed from the list of changes, for example by deletion or loss of access.",
+	//       "location": "query",
+	//       "type": "boolean"
+	//     },
+	//     "includeTeamDriveItems": {
+	//       "default": "false",
+	//       "description": "Whether Team Drive files or changes should be included in results.",
+	//       "location": "query",
+	//       "type": "boolean"
+	//     },
+	//     "pageSize": {
+	//       "default": "100",
+	//       "description": "The maximum number of changes to return per page.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "maximum": "1000",
+	//       "minimum": "1",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "The token for continuing a previous list request on the next page. This should be set to the value of 'nextPageToken' from the previous response or to the response from the getStartPageToken method.",
+	//       "location": "query",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "restrictToMyDrive": {
+	//       "default": "false",
+	//       "description": "Whether to restrict the results to changes inside the My Drive hierarchy. This omits changes to files such as those in the Application Data folder or shared files which have not been added to My Drive.",
+	//       "location": "query",
+	//       "type": "boolean"
+	//     },
+	//     "spaces": {
+	//       "default": "drive",
+	//       "description": "A comma-separated list of spaces to query within the user corpus. Supported values are 'drive', 'appDataFolder' and 'photos'.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "supportsTeamDrives": {
+	//       "default": "false",
+	//       "description": "Whether the requesting application supports Team Drives.",
+	//       "location": "query",
+	//       "type": "boolean"
+	//     },
+	//     "teamDriveId": {
+	//       "description": "The Team Drive from which changes will be returned. If specified the change IDs will be reflective of the Team Drive; use the combined Team Drive ID and change ID as an identifier.",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "changes/watch",
+	//   "request": {
+	//     "$ref": "Channel",
+	//     "parameterName": "resource"
+	//   },
+	//   "response": {
+	//     "$ref": "Channel"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/drive",
+	//     "https://www.googleapis.com/auth/drive.appdata",
+	//     "https://www.googleapis.com/auth/drive.file",
+	//     "https://www.googleapis.com/auth/drive.metadata",
+	//     "https://www.googleapis.com/auth/drive.metadata.readonly",
+	//     "https://www.googleapis.com/auth/drive.photos.readonly",
+	//     "https://www.googleapis.com/auth/drive.readonly"
+	//   ],
+	//   "supportsSubscription": true
+=======
+	//   "description": "Creates a new shared drive.",
+	//   "httpMethod": "POST",
+	//   "id": "drive.drives.create",
+	//   "parameterOrder": [
+	//     "requestId"
+	//   ],
+	//   "parameters": {
+	//     "requestId": {
+	//       "description": "An ID, such as a random UUID, which uniquely identifies this user's request for idempotent creation of a shared drive. A repeated request by the same user and with the same request ID will avoid creating duplicates by attempting to create the same shared drive. If the shared drive already exists a 409 error will be returned.",
+	//       "location": "query",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "drives",
+	//   "request": {
+	//     "$ref": "Drive"
+	//   },
+	//   "response": {
+	//     "$ref": "Drive"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/drive"
+	//   ]
+>>>>>>> v0.0.4
+	// }
+
+}
+
+<<<<<<< HEAD
+// method id "drive.channels.stop":
+
+type ChannelsStopCall struct {
+	s          *Service
+	channel    *Channel
+=======
+// method id "drive.drives.delete":
+
+type DrivesDeleteCall struct {
+	s          *Service
+	driveId    string
+>>>>>>> v0.0.4
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+<<<<<<< HEAD
+// Stop: Stop watching resources through this channel
+func (r *ChannelsService) Stop(channel *Channel) *ChannelsStopCall {
+	c := &ChannelsStopCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.channel = channel
+=======
+// Delete: Permanently deletes a shared drive for which the user is an
+// organizer. The shared drive cannot contain any untrashed items.
+func (r *DrivesService) Delete(driveId string) *DrivesDeleteCall {
+	c := &DrivesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.driveId = driveId
+>>>>>>> v0.0.4
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+<<<<<<< HEAD
+func (c *ChannelsStopCall) Fields(s ...googleapi.Field) *ChannelsStopCall {
+=======
+func (c *DrivesDeleteCall) Fields(s ...googleapi.Field) *DrivesDeleteCall {
+>>>>>>> v0.0.4
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+<<<<<<< HEAD
+func (c *ChannelsStopCall) Context(ctx context.Context) *ChannelsStopCall {
+=======
+func (c *DrivesDeleteCall) Context(ctx context.Context) *DrivesDeleteCall {
+>>>>>>> v0.0.4
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+<<<<<<< HEAD
+func (c *ChannelsStopCall) Header() http.Header {
+=======
+func (c *DrivesDeleteCall) Header() http.Header {
+>>>>>>> v0.0.4
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+<<<<<<< HEAD
+func (c *ChannelsStopCall) doRequest(alt string) (*http.Response, error) {
+=======
+func (c *DrivesDeleteCall) doRequest(alt string) (*http.Response, error) {
+>>>>>>> v0.0.4
+	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+<<<<<<< HEAD
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.channel)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "channels/stop")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+=======
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "drives/{driveId}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("DELETE", urls, body)
+>>>>>>> v0.0.4
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+<<<<<<< HEAD
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "drive.channels.stop" call.
+func (c *ChannelsStopCall) Do(opts ...googleapi.CallOption) error {
+=======
+	googleapi.Expand(req.URL, map[string]string{
+		"driveId": c.driveId,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "drive.drives.delete" call.
+func (c *DrivesDeleteCall) Do(opts ...googleapi.CallOption) error {
+>>>>>>> v0.0.4
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if err != nil {
+		return err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return err
+	}
+	return nil
+	// {
+<<<<<<< HEAD
+	//   "description": "Stop watching resources through this channel",
+	//   "httpMethod": "POST",
+	//   "id": "drive.channels.stop",
+	//   "path": "channels/stop",
+	//   "request": {
+	//     "$ref": "Channel",
+	//     "parameterName": "resource"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/drive",
+	//     "https://www.googleapis.com/auth/drive.appdata",
+	//     "https://www.googleapis.com/auth/drive.file",
+	//     "https://www.googleapis.com/auth/drive.metadata",
+	//     "https://www.googleapis.com/auth/drive.metadata.readonly",
+	//     "https://www.googleapis.com/auth/drive.photos.readonly",
+	//     "https://www.googleapis.com/auth/drive.readonly"
+=======
+	//   "description": "Permanently deletes a shared drive for which the user is an organizer. The shared drive cannot contain any untrashed items.",
+	//   "httpMethod": "DELETE",
+	//   "id": "drive.drives.delete",
+	//   "parameterOrder": [
+	//     "driveId"
+	//   ],
+	//   "parameters": {
+	//     "driveId": {
+	//       "description": "The ID of the shared drive.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "drives/{driveId}",
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/drive"
+>>>>>>> v0.0.4
+	//   ]
+	// }
+
+}
+
+<<<<<<< HEAD
+// method id "drive.comments.create":
+
+type CommentsCreateCall struct {
+	s          *Service
+	fileId     string
+	comment    *Comment
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Create: Creates a new comment on a file.
+func (r *CommentsService) Create(fileId string, comment *Comment) *CommentsCreateCall {
+	c := &CommentsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.fileId = fileId
+	c.comment = comment
+=======
+// method id "drive.drives.get":
+
+type DrivesGetCall struct {
+	s            *Service
+	driveId      string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Gets a shared drive's metadata by ID.
+func (r *DrivesService) Get(driveId string) *DrivesGetCall {
+	c := &DrivesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.driveId = driveId
+	return c
+}
+
+// UseDomainAdminAccess sets the optional parameter
+// "useDomainAdminAccess": Issue the request as a domain administrator;
+// if set to true, then the requester will be granted access if they are
+// an administrator of the domain to which the shared drive belongs.
+func (c *DrivesGetCall) UseDomainAdminAccess(useDomainAdminAccess bool) *DrivesGetCall {
+	c.urlParams_.Set("useDomainAdminAccess", fmt.Sprint(useDomainAdminAccess))
+>>>>>>> v0.0.4
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+<<<<<<< HEAD
+func (c *CommentsCreateCall) Fields(s ...googleapi.Field) *CommentsCreateCall {
+=======
+func (c *DrivesGetCall) Fields(s ...googleapi.Field) *DrivesGetCall {
+>>>>>>> v0.0.4
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+<<<<<<< HEAD
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *CommentsCreateCall) Context(ctx context.Context) *CommentsCreateCall {
+=======
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *DrivesGetCall) IfNoneMatch(entityTag string) *DrivesGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *DrivesGetCall) Context(ctx context.Context) *DrivesGetCall {
+>>>>>>> v0.0.4
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+<<<<<<< HEAD
+func (c *CommentsCreateCall) Header() http.Header {
+=======
+func (c *DrivesGetCall) Header() http.Header {
+>>>>>>> v0.0.4
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+<<<<<<< HEAD
+func (c *CommentsCreateCall) doRequest(alt string) (*http.Response, error) {
+=======
+func (c *DrivesGetCall) doRequest(alt string) (*http.Response, error) {
+>>>>>>> v0.0.4
+	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+<<<<<<< HEAD
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.comment)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "files/{fileId}/comments")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+=======
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "drives/{driveId}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+>>>>>>> v0.0.4
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+<<<<<<< HEAD
+		"fileId": c.fileId,
+=======
+		"driveId": c.driveId,
+>>>>>>> v0.0.4
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+<<<<<<< HEAD
+// Do executes the "drive.comments.create" call.
+// Exactly one of *Comment or error will be non-nil. Any non-2xx status
+// code is an error. Response headers are in either
+// *Comment.ServerResponse.Header or (if a response was returned at all)
+// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified
+// was returned.
+func (c *CommentsCreateCall) Do(opts ...googleapi.CallOption) (*Comment, error) {
+=======
+// Do executes the "drive.drives.get" call.
+// Exactly one of *Drive or error will be non-nil. Any non-2xx status
+// code is an error. Response headers are in either
+// *Drive.ServerResponse.Header or (if a response was returned at all)
+// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified
+// was returned.
+func (c *DrivesGetCall) Do(opts ...googleapi.CallOption) (*Drive, error) {
+>>>>>>> v0.0.4
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+<<<<<<< HEAD
+	ret := &Comment{
+=======
+	ret := &Drive{
+>>>>>>> v0.0.4
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+<<<<<<< HEAD
+	//   "description": "Creates a new comment on a file.",
+	//   "httpMethod": "POST",
+	//   "id": "drive.comments.create",
+	//   "parameterOrder": [
+	//     "fileId"
+	//   ],
+	//   "parameters": {
+	//     "fileId": {
+	//       "description": "The ID of the file.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "files/{fileId}/comments",
+	//   "request": {
+	//     "$ref": "Comment"
+	//   },
+	//   "response": {
+	//     "$ref": "Comment"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/drive",
+	//     "https://www.googleapis.com/auth/drive.file"
+=======
+	//   "description": "Gets a shared drive's metadata by ID.",
+	//   "httpMethod": "GET",
+	//   "id": "drive.drives.get",
+	//   "parameterOrder": [
+	//     "driveId"
+	//   ],
+	//   "parameters": {
+	//     "driveId": {
+	//       "description": "The ID of the shared drive.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "useDomainAdminAccess": {
+	//       "default": "false",
+	//       "description": "Issue the request as a domain administrator; if set to true, then the requester will be granted access if they are an administrator of the domain to which the shared drive belongs.",
+	//       "location": "query",
+	//       "type": "boolean"
+	//     }
+	//   },
+	//   "path": "drives/{driveId}",
+	//   "response": {
+	//     "$ref": "Drive"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/drive",
+	//     "https://www.googleapis.com/auth/drive.readonly"
+>>>>>>> v0.0.4
+	//   ]
+	// }
+
+}
+
+<<<<<<< HEAD
+// method id "drive.comments.delete":
+
+type CommentsDeleteCall struct {
+	s          *Service
+	fileId     string
+	commentId  string
+=======
+// method id "drive.drives.hide":
+
+type DrivesHideCall struct {
+	s          *Service
+	driveId    string
+>>>>>>> v0.0.4
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+<<<<<<< HEAD
+// Delete: Deletes a comment.
+func (r *CommentsService) Delete(fileId string, commentId string) *CommentsDeleteCall {
+	c := &CommentsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.fileId = fileId
+	c.commentId = commentId
+=======
+// Hide: Hides a shared drive from the default view.
+func (r *DrivesService) Hide(driveId string) *DrivesHideCall {
+	c := &DrivesHideCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.driveId = driveId
+>>>>>>> v0.0.4
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+<<<<<<< HEAD
+func (c *CommentsDeleteCall) Fields(s ...googleapi.Field) *CommentsDeleteCall {
+=======
+func (c *DrivesHideCall) Fields(s ...googleapi.Field) *DrivesHideCall {
+>>>>>>> v0.0.4
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+<<<<<<< HEAD
+func (c *CommentsDeleteCall) Context(ctx context.Context) *CommentsDeleteCall {
+=======
+func (c *DrivesHideCall) Context(ctx context.Context) *DrivesHideCall {
+>>>>>>> v0.0.4
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+<<<<<<< HEAD
+func (c *CommentsDeleteCall) Header() http.Header {
+=======
+func (c *DrivesHideCall) Header() http.Header {
+>>>>>>> v0.0.4
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+<<<<<<< HEAD
+func (c *CommentsDeleteCall) doRequest(alt string) (*http.Response, error) {
+=======
+func (c *DrivesHideCall) doRequest(alt string) (*http.Response, error) {
+>>>>>>> v0.0.4
+	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+<<<<<<< HEAD
+	urls := googleapi.ResolveRelative(c.s.BasePath, "files/{fileId}/comments/{commentId}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("DELETE", urls, body)
+=======
+	urls := googleapi.ResolveRelative(c.s.BasePath, "drives/{driveId}/hide")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+>>>>>>> v0.0.4
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+<<<<<<< HEAD
+		"fileId":    c.fileId,
+		"commentId": c.commentId,
+=======
+		"driveId": c.driveId,
+>>>>>>> v0.0.4
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+<<<<<<< HEAD
+// Do executes the "drive.comments.delete" call.
+func (c *CommentsDeleteCall) Do(opts ...googleapi.CallOption) error {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if err != nil {
+		return err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return err
+	}
+	return nil
+	// {
+	//   "description": "Deletes a comment.",
+	//   "httpMethod": "DELETE",
+	//   "id": "drive.comments.delete",
+	//   "parameterOrder": [
+	//     "fileId",
+	//     "commentId"
+	//   ],
+	//   "parameters": {
+	//     "commentId": {
+	//       "description": "The ID of the comment.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "fileId": {
+	//       "description": "The ID of the file.",
+=======
+// Do executes the "drive.drives.hide" call.
+// Exactly one of *Drive or error will be non-nil. Any non-2xx status
+// code is an error. Response headers are in either
+// *Drive.ServerResponse.Header or (if a response was returned at all)
+// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified
+// was returned.
+func (c *DrivesHideCall) Do(opts ...googleapi.CallOption) (*Drive, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &Drive{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Hides a shared drive from the default view.",
+	//   "httpMethod": "POST",
+	//   "id": "drive.drives.hide",
+	//   "parameterOrder": [
+	//     "driveId"
+	//   ],
+	//   "parameters": {
+	//     "driveId": {
+	//       "description": "The ID of the shared drive.",
+>>>>>>> v0.0.4
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+<<<<<<< HEAD
+	//   "path": "files/{fileId}/comments/{commentId}",
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/drive",
+	//     "https://www.googleapis.com/auth/drive.file"
+=======
+	//   "path": "drives/{driveId}/hide",
+	//   "response": {
+	//     "$ref": "Drive"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/drive"
+>>>>>>> v0.0.4
+	//   ]
+	// }
+
+}
+
+<<<<<<< HEAD
+// method id "drive.comments.get":
+
+type CommentsGetCall struct {
+	s            *Service
+	fileId       string
+	commentId    string
+=======
+// method id "drive.drives.list":
+
+type DrivesListCall struct {
+	s            *Service
+>>>>>>> v0.0.4
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+<<<<<<< HEAD
+// Get: Gets a comment by ID.
+func (r *CommentsService) Get(fileId string, commentId string) *CommentsGetCall {
+	c := &CommentsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.fileId = fileId
+	c.commentId = commentId
+	return c
+}
+
+// IncludeDeleted sets the optional parameter "includeDeleted": Whether
+// to return deleted comments. Deleted comments will not include their
+// original content.
+func (c *CommentsGetCall) IncludeDeleted(includeDeleted bool) *CommentsGetCall {
+	c.urlParams_.Set("includeDeleted", fmt.Sprint(includeDeleted))
+=======
+// List: Lists the user's shared drives.
+func (r *DrivesService) List() *DrivesListCall {
+	c := &DrivesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": Maximum number of
+// shared drives to return.
+func (c *DrivesListCall) PageSize(pageSize int64) *DrivesListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": Page token for
+// shared drives.
+func (c *DrivesListCall) PageToken(pageToken string) *DrivesListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Q sets the optional parameter "q": Query string for searching shared
+// drives.
+func (c *DrivesListCall) Q(q string) *DrivesListCall {
+	c.urlParams_.Set("q", q)
+	return c
+}
+
+// UseDomainAdminAccess sets the optional parameter
+// "useDomainAdminAccess": Issue the request as a domain administrator;
+// if set to true, then all shared drives of the domain in which the
+// requester is an administrator are returned.
+func (c *DrivesListCall) UseDomainAdminAccess(useDomainAdminAccess bool) *DrivesListCall {
+	c.urlParams_.Set("useDomainAdminAccess", fmt.Sprint(useDomainAdminAccess))
+>>>>>>> v0.0.4
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+<<<<<<< HEAD
+func (c *CommentsGetCall) Fields(s ...googleapi.Field) *CommentsGetCall {
+=======
+func (c *DrivesListCall) Fields(s ...googleapi.Field) *DrivesListCall {
+>>>>>>> v0.0.4
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+<<<<<<< HEAD
+func (c *CommentsGetCall) IfNoneMatch(entityTag string) *CommentsGetCall {
+=======
+func (c *DrivesListCall) IfNoneMatch(entityTag string) *DrivesListCall {
+>>>>>>> v0.0.4
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+<<<<<<< HEAD
+func (c *CommentsGetCall) Context(ctx context.Context) *CommentsGetCall {
+=======
+func (c *DrivesListCall) Context(ctx context.Context) *DrivesListCall {
+>>>>>>> v0.0.4
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+<<<<<<< HEAD
+func (c *CommentsGetCall) Header() http.Header {
+=======
+func (c *DrivesListCall) Header() http.Header {
+>>>>>>> v0.0.4
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+<<<<<<< HEAD
+func (c *CommentsGetCall) doRequest(alt string) (*http.Response, error) {
+=======
+func (c *DrivesListCall) doRequest(alt string) (*http.Response, error) {
+>>>>>>> v0.0.4
+	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+<<<<<<< HEAD
+	urls := googleapi.ResolveRelative(c.s.BasePath, "files/{fileId}/comments/{commentId}")
+=======
+	urls := googleapi.ResolveRelative(c.s.BasePath, "drives")
+>>>>>>> v0.0.4
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+<<<<<<< HEAD
+	googleapi.Expand(req.URL, map[string]string{
+		"fileId":    c.fileId,
+		"commentId": c.commentId,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "drive.comments.get" call.
+// Exactly one of *Comment or error will be non-nil. Any non-2xx status
+// code is an error. Response headers are in either
+// *Comment.ServerResponse.Header or (if a response was returned at all)
+// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified
+// was returned.
+func (c *CommentsGetCall) Do(opts ...googleapi.CallOption) (*Comment, error) {
+=======
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "drive.drives.list" call.
+// Exactly one of *DriveList or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *DriveList.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *DrivesListCall) Do(opts ...googleapi.CallOption) (*DriveList, error) {
+>>>>>>> v0.0.4
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+<<<<<<< HEAD
+	ret := &Comment{
+=======
+	ret := &DriveList{
+>>>>>>> v0.0.4
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+<<<<<<< HEAD
+	//   "description": "Gets a comment by ID.",
+	//   "httpMethod": "GET",
+	//   "id": "drive.comments.get",
+	//   "parameterOrder": [
+	//     "fileId",
+	//     "commentId"
+	//   ],
+	//   "parameters": {
+	//     "commentId": {
+	//       "description": "The ID of the comment.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "fileId": {
+	//       "description": "The ID of the file.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "includeDeleted": {
+	//       "default": "false",
+	//       "description": "Whether to return deleted comments. Deleted comments will not include their original content.",
+=======
+	//   "description": "Lists the user's shared drives.",
+	//   "httpMethod": "GET",
+	//   "id": "drive.drives.list",
+	//   "parameters": {
+	//     "pageSize": {
+	//       "default": "10",
+	//       "description": "Maximum number of shared drives to return.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "maximum": "100",
+	//       "minimum": "1",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "Page token for shared drives.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "q": {
+	//       "description": "Query string for searching shared drives.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "useDomainAdminAccess": {
+	//       "default": "false",
+	//       "description": "Issue the request as a domain administrator; if set to true, then all shared drives of the domain in which the requester is an administrator are returned.",
+>>>>>>> v0.0.4
+	//       "location": "query",
+	//       "type": "boolean"
+	//     }
+	//   },
+<<<<<<< HEAD
+	//   "path": "files/{fileId}/comments/{commentId}",
+	//   "response": {
+	//     "$ref": "Comment"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/drive",
+	//     "https://www.googleapis.com/auth/drive.file",
+=======
+	//   "path": "drives",
+	//   "response": {
+	//     "$ref": "DriveList"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/drive",
+>>>>>>> v0.0.4
+	//     "https://www.googleapis.com/auth/drive.readonly"
+	//   ]
+	// }
+
+}
+
+<<<<<<< HEAD
+// method id "drive.comments.list":
+
+type CommentsListCall struct {
+	s            *Service
+	fileId       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Lists a file's comments.
+func (r *CommentsService) List(fileId string) *CommentsListCall {
+	c := &CommentsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.fileId = fileId
+	return c
+}
+
+// IncludeDeleted sets the optional parameter "includeDeleted": Whether
+// to include deleted comments. Deleted comments will not include their
+// original content.
+func (c *CommentsListCall) IncludeDeleted(includeDeleted bool) *CommentsListCall {
+	c.urlParams_.Set("includeDeleted", fmt.Sprint(includeDeleted))
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": The maximum number
+// of comments to return per page.
+func (c *CommentsListCall) PageSize(pageSize int64) *CommentsListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": The token for
+// continuing a previous list request on the next page. This should be
+// set to the value of 'nextPageToken' from the previous response.
+func (c *CommentsListCall) PageToken(pageToken string) *CommentsListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// StartModifiedTime sets the optional parameter "startModifiedTime":
+// The minimum value of 'modifiedTime' for the result comments (RFC 3339
+// date-time).
+func (c *CommentsListCall) StartModifiedTime(startModifiedTime string) *CommentsListCall {
+	c.urlParams_.Set("startModifiedTime", startModifiedTime)
+=======
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *DrivesListCall) Pages(ctx context.Context, f func(*DriveList) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+// method id "drive.drives.unhide":
+
+type DrivesUnhideCall struct {
+	s          *Service
+	driveId    string
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Unhide: Restores a shared drive to the default view.
+func (r *DrivesService) Unhide(driveId string) *DrivesUnhideCall {
+	c := &DrivesUnhideCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.driveId = driveId
+>>>>>>> v0.0.4
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+<<<<<<< HEAD
+func (c *CommentsListCall) Fields(s ...googleapi.Field) *CommentsListCall {
+=======
+func (c *DrivesUnhideCall) Fields(s ...googleapi.Field) *DrivesUnhideCall {
+>>>>>>> v0.0.4
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+<<<<<<< HEAD
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *CommentsListCall) IfNoneMatch(entityTag string) *CommentsListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *CommentsListCall) Context(ctx context.Context) *CommentsListCall {
+=======
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *DrivesUnhideCall) Context(ctx context.Context) *DrivesUnhideCall {
+>>>>>>> v0.0.4
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+<<<<<<< HEAD
+func (c *CommentsListCall) Header() http.Header {
+=======
+func (c *DrivesUnhideCall) Header() http.Header {
+>>>>>>> v0.0.4
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+<<<<<<< HEAD
+func (c *CommentsListCall) doRequest(alt string) (*http.Response, error) {
+=======
+func (c *DrivesUnhideCall) doRequest(alt string) (*http.Response, error) {
+>>>>>>> v0.0.4
+	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+<<<<<<< HEAD
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "files/{fileId}/comments")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+=======
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "drives/{driveId}/unhide")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+>>>>>>> v0.0.4
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+<<<<<<< HEAD
+		"fileId": c.fileId,
+=======
+		"driveId": c.driveId,
+>>>>>>> v0.0.4
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+<<<<<<< HEAD
+// Do executes the "drive.comments.list" call.
+// Exactly one of *CommentList or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *CommentList.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *CommentsListCall) Do(opts ...googleapi.CallOption) (*CommentList, error) {
+=======
+// Do executes the "drive.drives.unhide" call.
+// Exactly one of *Drive or error will be non-nil. Any non-2xx status
+// code is an error. Response headers are in either
+// *Drive.ServerResponse.Header or (if a response was returned at all)
+// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified
+// was returned.
+func (c *DrivesUnhideCall) Do(opts ...googleapi.CallOption) (*Drive, error) {
+>>>>>>> v0.0.4
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+<<<<<<< HEAD
+	ret := &CommentList{
+=======
+	ret := &Drive{
+>>>>>>> v0.0.4
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+<<<<<<< HEAD
+	//   "description": "Lists a file's comments.",
+	//   "httpMethod": "GET",
+	//   "id": "drive.comments.list",
+	//   "parameterOrder": [
+	//     "fileId"
+	//   ],
+	//   "parameters": {
+	//     "fileId": {
+	//       "description": "The ID of the file.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "includeDeleted": {
+	//       "default": "false",
+	//       "description": "Whether to include deleted comments. Deleted comments will not include their original content.",
+	//       "location": "query",
+	//       "type": "boolean"
+	//     },
+	//     "pageSize": {
+	//       "default": "20",
+	//       "description": "The maximum number of comments to return per page.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "maximum": "100",
+	//       "minimum": "1",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "The token for continuing a previous list request on the next page. This should be set to the value of 'nextPageToken' from the previous response.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "startModifiedTime": {
+	//       "description": "The minimum value of 'modifiedTime' for the result comments (RFC 3339 date-time).",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "files/{fileId}/comments",
+	//   "response": {
+	//     "$ref": "CommentList"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/drive",
+	//     "https://www.googleapis.com/auth/drive.file",
+	//     "https://www.googleapis.com/auth/drive.readonly"
+=======
+	//   "description": "Restores a shared drive to the default view.",
+	//   "httpMethod": "POST",
+	//   "id": "drive.drives.unhide",
+	//   "parameterOrder": [
+	//     "driveId"
+	//   ],
+	//   "parameters": {
+	//     "driveId": {
+	//       "description": "The ID of the shared drive.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "drives/{driveId}/unhide",
+	//   "response": {
+	//     "$ref": "Drive"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/drive"
+>>>>>>> v0.0.4
+	//   ]
+	// }
+
+}
+
+<<<<<<< HEAD
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *CommentsListCall) Pages(ctx context.Context, f func(*CommentList) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+// method id "drive.comments.update":
+
+type CommentsUpdateCall struct {
+	s          *Service
+	fileId     string
+	commentId  string
+	comment    *Comment
+=======
+// method id "drive.drives.update":
+
+type DrivesUpdateCall struct {
+	s          *Service
+	driveId    string
+	drive      *Drive
+>>>>>>> v0.0.4
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+<<<<<<< HEAD
+// Update: Updates a comment with patch semantics.
+func (r *CommentsService) Update(fileId string, commentId string, comment *Comment) *CommentsUpdateCall {
+	c := &CommentsUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.fileId = fileId
+	c.commentId = commentId
+	c.comment = comment
+=======
+// Update: Updates the metadate for a shared drive.
+func (r *DrivesService) Update(driveId string, drive *Drive) *DrivesUpdateCall {
+	c := &DrivesUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.driveId = driveId
+	c.drive = drive
+	return c
+}
+
+// UseDomainAdminAccess sets the optional parameter
+// "useDomainAdminAccess": Issue the request as a domain administrator;
+// if set to true, then the requester will be granted access if they are
+// an administrator of the domain to which the shared drive belongs.
+func (c *DrivesUpdateCall) UseDomainAdminAccess(useDomainAdminAccess bool) *DrivesUpdateCall {
+	c.urlParams_.Set("useDomainAdminAccess", fmt.Sprint(useDomainAdminAccess))
+>>>>>>> v0.0.4
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+<<<<<<< HEAD
+func (c *CommentsUpdateCall) Fields(s ...googleapi.Field) *CommentsUpdateCall {
+=======
+func (c *DrivesUpdateCall) Fields(s ...googleapi.Field) *DrivesUpdateCall {
+>>>>>>> v0.0.4
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+<<<<<<< HEAD
+func (c *CommentsUpdateCall) Context(ctx context.Context) *CommentsUpdateCall {
+=======
+func (c *DrivesUpdateCall) Context(ctx context.Context) *DrivesUpdateCall {
+>>>>>>> v0.0.4
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+<<<<<<< HEAD
+func (c *CommentsUpdateCall) Header() http.Header {
+=======
+func (c *DrivesUpdateCall) Header() http.Header {
+>>>>>>> v0.0.4
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+<<<<<<< HEAD
+func (c *CommentsUpdateCall) doRequest(alt string) (*http.Response, error) {
+=======
+func (c *DrivesUpdateCall) doRequest(alt string) (*http.Response, error) {
+>>>>>>> v0.0.4
+	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+<<<<<<< HEAD
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.comment)
+=======
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.drive)
+>>>>>>> v0.0.4
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+<<<<<<< HEAD
+	urls := googleapi.ResolveRelative(c.s.BasePath, "files/{fileId}/comments/{commentId}")
+=======
+	urls := googleapi.ResolveRelative(c.s.BasePath, "drives/{driveId}")
+>>>>>>> v0.0.4
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("PATCH", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+<<<<<<< HEAD
+		"fileId":    c.fileId,
+		"commentId": c.commentId,
+=======
+		"driveId": c.driveId,
+>>>>>>> v0.0.4
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+<<<<<<< HEAD
+// Do executes the "drive.comments.update" call.
+// Exactly one of *Comment or error will be non-nil. Any non-2xx status
+// code is an error. Response headers are in either
+// *Comment.ServerResponse.Header or (if a response was returned at all)
+// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified
+// was returned.
+func (c *CommentsUpdateCall) Do(opts ...googleapi.CallOption) (*Comment, error) {
+=======
+// Do executes the "drive.drives.update" call.
+// Exactly one of *Drive or error will be non-nil. Any non-2xx status
+// code is an error. Response headers are in either
+// *Drive.ServerResponse.Header or (if a response was returned at all)
+// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified
+// was returned.
+func (c *DrivesUpdateCall) Do(opts ...googleapi.CallOption) (*Drive, error) {
+>>>>>>> v0.0.4
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+<<<<<<< HEAD
+	ret := &Comment{
+=======
+	ret := &Drive{
+>>>>>>> v0.0.4
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+<<<<<<< HEAD
+	//   "description": "Updates a comment with patch semantics.",
+	//   "httpMethod": "PATCH",
+	//   "id": "drive.comments.update",
+	//   "parameterOrder": [
+	//     "fileId",
+	//     "commentId"
+	//   ],
+	//   "parameters": {
+	//     "commentId": {
+	//       "description": "The ID of the comment.",
+=======
+	//   "description": "Updates the metadate for a shared drive.",
+	//   "httpMethod": "PATCH",
+	//   "id": "drive.drives.update",
+	//   "parameterOrder": [
+	//     "driveId"
+	//   ],
+	//   "parameters": {
+	//     "driveId": {
+	//       "description": "The ID of the shared drive.",
+>>>>>>> v0.0.4
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+<<<<<<< HEAD
+	//     "fileId": {
+	//       "description": "The ID of the file.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "files/{fileId}/comments/{commentId}",
+	//   "request": {
+	//     "$ref": "Comment"
+	//   },
+	//   "response": {
+	//     "$ref": "Comment"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/drive",
+	//     "https://www.googleapis.com/auth/drive.file"
+=======
+	//     "useDomainAdminAccess": {
+	//       "default": "false",
+	//       "description": "Issue the request as a domain administrator; if set to true, then the requester will be granted access if they are an administrator of the domain to which the shared drive belongs.",
+	//       "location": "query",
+	//       "type": "boolean"
+	//     }
+	//   },
+	//   "path": "drives/{driveId}",
+	//   "request": {
+	//     "$ref": "Drive"
+	//   },
+	//   "response": {
+	//     "$ref": "Drive"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/drive"
+>>>>>>> v0.0.4
+	//   ]
 	// }
 
 }
@@ -4066,7 +6918,11 @@ func (c *FilesCopyCall) IgnoreDefaultVisibility(ignoreDefaultVisibility bool) *F
 // KeepRevisionForever sets the optional parameter
 // "keepRevisionForever": Whether to set the 'keepForever' field in the
 // new head revision. This is only applicable to files with binary
+<<<<<<< HEAD
 // content in Drive.
+=======
+// content in Google Drive.
+>>>>>>> v0.0.4
 func (c *FilesCopyCall) KeepRevisionForever(keepRevisionForever bool) *FilesCopyCall {
 	c.urlParams_.Set("keepRevisionForever", fmt.Sprint(keepRevisionForever))
 	return c
@@ -4079,8 +6935,21 @@ func (c *FilesCopyCall) OcrLanguage(ocrLanguage string) *FilesCopyCall {
 	return c
 }
 
+<<<<<<< HEAD
 // SupportsTeamDrives sets the optional parameter "supportsTeamDrives":
 // Whether the requesting application supports Team Drives.
+=======
+// SupportsAllDrives sets the optional parameter "supportsAllDrives":
+// Whether the requesting application supports both My Drives and shared
+// drives.
+func (c *FilesCopyCall) SupportsAllDrives(supportsAllDrives bool) *FilesCopyCall {
+	c.urlParams_.Set("supportsAllDrives", fmt.Sprint(supportsAllDrives))
+	return c
+}
+
+// SupportsTeamDrives sets the optional parameter "supportsTeamDrives":
+// Deprecated use supportsAllDrives instead.
+>>>>>>> v0.0.4
 func (c *FilesCopyCall) SupportsTeamDrives(supportsTeamDrives bool) *FilesCopyCall {
 	c.urlParams_.Set("supportsTeamDrives", fmt.Sprint(supportsTeamDrives))
 	return c
@@ -4197,7 +7066,11 @@ func (c *FilesCopyCall) Do(opts ...googleapi.CallOption) (*File, error) {
 	//     },
 	//     "keepRevisionForever": {
 	//       "default": "false",
+<<<<<<< HEAD
 	//       "description": "Whether to set the 'keepForever' field in the new head revision. This is only applicable to files with binary content in Drive.",
+=======
+	//       "description": "Whether to set the 'keepForever' field in the new head revision. This is only applicable to files with binary content in Google Drive.",
+>>>>>>> v0.0.4
 	//       "location": "query",
 	//       "type": "boolean"
 	//     },
@@ -4206,9 +7079,21 @@ func (c *FilesCopyCall) Do(opts ...googleapi.CallOption) (*File, error) {
 	//       "location": "query",
 	//       "type": "string"
 	//     },
+<<<<<<< HEAD
 	//     "supportsTeamDrives": {
 	//       "default": "false",
 	//       "description": "Whether the requesting application supports Team Drives.",
+=======
+	//     "supportsAllDrives": {
+	//       "default": "false",
+	//       "description": "Whether the requesting application supports both My Drives and shared drives.",
+	//       "location": "query",
+	//       "type": "boolean"
+	//     },
+	//     "supportsTeamDrives": {
+	//       "default": "false",
+	//       "description": "Deprecated use supportsAllDrives instead.",
+>>>>>>> v0.0.4
 	//       "location": "query",
 	//       "type": "boolean"
 	//     }
@@ -4262,7 +7147,11 @@ func (c *FilesCreateCall) IgnoreDefaultVisibility(ignoreDefaultVisibility bool) 
 // KeepRevisionForever sets the optional parameter
 // "keepRevisionForever": Whether to set the 'keepForever' field in the
 // new head revision. This is only applicable to files with binary
+<<<<<<< HEAD
 // content in Drive.
+=======
+// content in Google Drive.
+>>>>>>> v0.0.4
 func (c *FilesCreateCall) KeepRevisionForever(keepRevisionForever bool) *FilesCreateCall {
 	c.urlParams_.Set("keepRevisionForever", fmt.Sprint(keepRevisionForever))
 	return c
@@ -4275,8 +7164,21 @@ func (c *FilesCreateCall) OcrLanguage(ocrLanguage string) *FilesCreateCall {
 	return c
 }
 
+<<<<<<< HEAD
 // SupportsTeamDrives sets the optional parameter "supportsTeamDrives":
 // Whether the requesting application supports Team Drives.
+=======
+// SupportsAllDrives sets the optional parameter "supportsAllDrives":
+// Whether the requesting application supports both My Drives and shared
+// drives.
+func (c *FilesCreateCall) SupportsAllDrives(supportsAllDrives bool) *FilesCreateCall {
+	c.urlParams_.Set("supportsAllDrives", fmt.Sprint(supportsAllDrives))
+	return c
+}
+
+// SupportsTeamDrives sets the optional parameter "supportsTeamDrives":
+// Deprecated use supportsAllDrives instead.
+>>>>>>> v0.0.4
 func (c *FilesCreateCall) SupportsTeamDrives(supportsTeamDrives bool) *FilesCreateCall {
 	c.urlParams_.Set("supportsTeamDrives", fmt.Sprint(supportsTeamDrives))
 	return c
@@ -4472,7 +7374,11 @@ func (c *FilesCreateCall) Do(opts ...googleapi.CallOption) (*File, error) {
 	//     },
 	//     "keepRevisionForever": {
 	//       "default": "false",
+<<<<<<< HEAD
 	//       "description": "Whether to set the 'keepForever' field in the new head revision. This is only applicable to files with binary content in Drive.",
+=======
+	//       "description": "Whether to set the 'keepForever' field in the new head revision. This is only applicable to files with binary content in Google Drive.",
+>>>>>>> v0.0.4
 	//       "location": "query",
 	//       "type": "boolean"
 	//     },
@@ -4481,9 +7387,21 @@ func (c *FilesCreateCall) Do(opts ...googleapi.CallOption) (*File, error) {
 	//       "location": "query",
 	//       "type": "string"
 	//     },
+<<<<<<< HEAD
 	//     "supportsTeamDrives": {
 	//       "default": "false",
 	//       "description": "Whether the requesting application supports Team Drives.",
+=======
+	//     "supportsAllDrives": {
+	//       "default": "false",
+	//       "description": "Whether the requesting application supports both My Drives and shared drives.",
+	//       "location": "query",
+	//       "type": "boolean"
+	//     },
+	//     "supportsTeamDrives": {
+	//       "default": "false",
+	//       "description": "Deprecated use supportsAllDrives instead.",
+>>>>>>> v0.0.4
 	//       "location": "query",
 	//       "type": "boolean"
 	//     },
@@ -4523,8 +7441,13 @@ type FilesDeleteCall struct {
 }
 
 // Delete: Permanently deletes a file owned by the user without moving
+<<<<<<< HEAD
 // it to the trash. If the file belongs to a Team Drive the user must be
 // an organizer on the parent. If the target is a folder, all
+=======
+// it to the trash. If the file belongs to a shared drive the user must
+// be an organizer on the parent. If the target is a folder, all
+>>>>>>> v0.0.4
 // descendants owned by the user are also deleted.
 func (r *FilesService) Delete(fileId string) *FilesDeleteCall {
 	c := &FilesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -4532,8 +7455,21 @@ func (r *FilesService) Delete(fileId string) *FilesDeleteCall {
 	return c
 }
 
+<<<<<<< HEAD
 // SupportsTeamDrives sets the optional parameter "supportsTeamDrives":
 // Whether the requesting application supports Team Drives.
+=======
+// SupportsAllDrives sets the optional parameter "supportsAllDrives":
+// Whether the requesting application supports both My Drives and shared
+// drives.
+func (c *FilesDeleteCall) SupportsAllDrives(supportsAllDrives bool) *FilesDeleteCall {
+	c.urlParams_.Set("supportsAllDrives", fmt.Sprint(supportsAllDrives))
+	return c
+}
+
+// SupportsTeamDrives sets the optional parameter "supportsTeamDrives":
+// Deprecated use supportsAllDrives instead.
+>>>>>>> v0.0.4
 func (c *FilesDeleteCall) SupportsTeamDrives(supportsTeamDrives bool) *FilesDeleteCall {
 	c.urlParams_.Set("supportsTeamDrives", fmt.Sprint(supportsTeamDrives))
 	return c
@@ -4599,7 +7535,11 @@ func (c *FilesDeleteCall) Do(opts ...googleapi.CallOption) error {
 	}
 	return nil
 	// {
+<<<<<<< HEAD
 	//   "description": "Permanently deletes a file owned by the user without moving it to the trash. If the file belongs to a Team Drive the user must be an organizer on the parent. If the target is a folder, all descendants owned by the user are also deleted.",
+=======
+	//   "description": "Permanently deletes a file owned by the user without moving it to the trash. If the file belongs to a shared drive the user must be an organizer on the parent. If the target is a folder, all descendants owned by the user are also deleted.",
+>>>>>>> v0.0.4
 	//   "httpMethod": "DELETE",
 	//   "id": "drive.files.delete",
 	//   "parameterOrder": [
@@ -4612,9 +7552,21 @@ func (c *FilesDeleteCall) Do(opts ...googleapi.CallOption) error {
 	//       "required": true,
 	//       "type": "string"
 	//     },
+<<<<<<< HEAD
 	//     "supportsTeamDrives": {
 	//       "default": "false",
 	//       "description": "Whether the requesting application supports Team Drives.",
+=======
+	//     "supportsAllDrives": {
+	//       "default": "false",
+	//       "description": "Whether the requesting application supports both My Drives and shared drives.",
+	//       "location": "query",
+	//       "type": "boolean"
+	//     },
+	//     "supportsTeamDrives": {
+	//       "default": "false",
+	//       "description": "Deprecated use supportsAllDrives instead.",
+>>>>>>> v0.0.4
 	//       "location": "query",
 	//       "type": "boolean"
 	//     }
@@ -5041,8 +7993,21 @@ func (c *FilesGetCall) AcknowledgeAbuse(acknowledgeAbuse bool) *FilesGetCall {
 	return c
 }
 
+<<<<<<< HEAD
 // SupportsTeamDrives sets the optional parameter "supportsTeamDrives":
 // Whether the requesting application supports Team Drives.
+=======
+// SupportsAllDrives sets the optional parameter "supportsAllDrives":
+// Whether the requesting application supports both My Drives and shared
+// drives.
+func (c *FilesGetCall) SupportsAllDrives(supportsAllDrives bool) *FilesGetCall {
+	c.urlParams_.Set("supportsAllDrives", fmt.Sprint(supportsAllDrives))
+	return c
+}
+
+// SupportsTeamDrives sets the optional parameter "supportsTeamDrives":
+// Deprecated use supportsAllDrives instead.
+>>>>>>> v0.0.4
 func (c *FilesGetCall) SupportsTeamDrives(supportsTeamDrives bool) *FilesGetCall {
 	c.urlParams_.Set("supportsTeamDrives", fmt.Sprint(supportsTeamDrives))
 	return c
@@ -5181,9 +8146,21 @@ func (c *FilesGetCall) Do(opts ...googleapi.CallOption) (*File, error) {
 	//       "required": true,
 	//       "type": "string"
 	//     },
+<<<<<<< HEAD
 	//     "supportsTeamDrives": {
 	//       "default": "false",
 	//       "description": "Whether the requesting application supports Team Drives.",
+=======
+	//     "supportsAllDrives": {
+	//       "default": "false",
+	//       "description": "Whether the requesting application supports both My Drives and shared drives.",
+	//       "location": "query",
+	//       "type": "boolean"
+	//     },
+	//     "supportsTeamDrives": {
+	//       "default": "false",
+	//       "description": "Deprecated use supportsAllDrives instead.",
+>>>>>>> v0.0.4
 	//       "location": "query",
 	//       "type": "boolean"
 	//     }
@@ -5224,12 +8201,19 @@ func (r *FilesService) List() *FilesListCall {
 	return c
 }
 
+<<<<<<< HEAD
 // Corpora sets the optional parameter "corpora": Comma-separated list
 // of bodies of items (files/documents) to which the query applies.
 // Supported bodies are 'user', 'domain', 'teamDrive' and
 // 'allTeamDrives'. 'allTeamDrives' must be combined with 'user'; all
 // other values must be used in isolation. Prefer 'user' or 'teamDrive'
 // to 'allTeamDrives' for efficiency.
+=======
+// Corpora sets the optional parameter "corpora": Bodies of items
+// (files/documents) to which the query applies. Supported bodies are
+// 'user', 'domain', 'drive' and 'allDrives'. Prefer 'user' or 'drive'
+// to 'allDrives' for efficiency.
+>>>>>>> v0.0.4
 func (c *FilesListCall) Corpora(corpora string) *FilesListCall {
 	c.urlParams_.Set("corpora", corpora)
 	return c
@@ -5246,9 +8230,30 @@ func (c *FilesListCall) Corpus(corpus string) *FilesListCall {
 	return c
 }
 
+<<<<<<< HEAD
 // IncludeTeamDriveItems sets the optional parameter
 // "includeTeamDriveItems": Whether Team Drive items should be included
 // in results.
+=======
+// DriveId sets the optional parameter "driveId": ID of the shared drive
+// to search.
+func (c *FilesListCall) DriveId(driveId string) *FilesListCall {
+	c.urlParams_.Set("driveId", driveId)
+	return c
+}
+
+// IncludeItemsFromAllDrives sets the optional parameter
+// "includeItemsFromAllDrives": Whether both My Drive and shared drive
+// items should be included in results.
+func (c *FilesListCall) IncludeItemsFromAllDrives(includeItemsFromAllDrives bool) *FilesListCall {
+	c.urlParams_.Set("includeItemsFromAllDrives", fmt.Sprint(includeItemsFromAllDrives))
+	return c
+}
+
+// IncludeTeamDriveItems sets the optional parameter
+// "includeTeamDriveItems": Deprecated use includeItemsFromAllDrives
+// instead.
+>>>>>>> v0.0.4
 func (c *FilesListCall) IncludeTeamDriveItems(includeTeamDriveItems bool) *FilesListCall {
 	c.urlParams_.Set("includeTeamDriveItems", fmt.Sprint(includeTeamDriveItems))
 	return c
@@ -5299,15 +8304,33 @@ func (c *FilesListCall) Spaces(spaces string) *FilesListCall {
 	return c
 }
 
+<<<<<<< HEAD
 // SupportsTeamDrives sets the optional parameter "supportsTeamDrives":
 // Whether the requesting application supports Team Drives.
+=======
+// SupportsAllDrives sets the optional parameter "supportsAllDrives":
+// Whether the requesting application supports both My Drives and shared
+// drives.
+func (c *FilesListCall) SupportsAllDrives(supportsAllDrives bool) *FilesListCall {
+	c.urlParams_.Set("supportsAllDrives", fmt.Sprint(supportsAllDrives))
+	return c
+}
+
+// SupportsTeamDrives sets the optional parameter "supportsTeamDrives":
+// Deprecated use supportsAllDrives instead.
+>>>>>>> v0.0.4
 func (c *FilesListCall) SupportsTeamDrives(supportsTeamDrives bool) *FilesListCall {
 	c.urlParams_.Set("supportsTeamDrives", fmt.Sprint(supportsTeamDrives))
 	return c
 }
 
+<<<<<<< HEAD
 // TeamDriveId sets the optional parameter "teamDriveId": ID of Team
 // Drive to search.
+=======
+// TeamDriveId sets the optional parameter "teamDriveId": Deprecated use
+// driveId instead.
+>>>>>>> v0.0.4
 func (c *FilesListCall) TeamDriveId(teamDriveId string) *FilesListCall {
 	c.urlParams_.Set("teamDriveId", teamDriveId)
 	return c
@@ -5413,7 +8436,11 @@ func (c *FilesListCall) Do(opts ...googleapi.CallOption) (*FileList, error) {
 	//   "id": "drive.files.list",
 	//   "parameters": {
 	//     "corpora": {
+<<<<<<< HEAD
 	//       "description": "Comma-separated list of bodies of items (files/documents) to which the query applies. Supported bodies are 'user', 'domain', 'teamDrive' and 'allTeamDrives'. 'allTeamDrives' must be combined with 'user'; all other values must be used in isolation. Prefer 'user' or 'teamDrive' to 'allTeamDrives' for efficiency.",
+=======
+	//       "description": "Bodies of items (files/documents) to which the query applies. Supported bodies are 'user', 'domain', 'drive' and 'allDrives'. Prefer 'user' or 'drive' to 'allDrives' for efficiency.",
+>>>>>>> v0.0.4
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -5430,9 +8457,26 @@ func (c *FilesListCall) Do(opts ...googleapi.CallOption) (*FileList, error) {
 	//       "location": "query",
 	//       "type": "string"
 	//     },
+<<<<<<< HEAD
 	//     "includeTeamDriveItems": {
 	//       "default": "false",
 	//       "description": "Whether Team Drive items should be included in results.",
+=======
+	//     "driveId": {
+	//       "description": "ID of the shared drive to search.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "includeItemsFromAllDrives": {
+	//       "default": "false",
+	//       "description": "Whether both My Drive and shared drive items should be included in results.",
+	//       "location": "query",
+	//       "type": "boolean"
+	//     },
+	//     "includeTeamDriveItems": {
+	//       "default": "false",
+	//       "description": "Deprecated use includeItemsFromAllDrives instead.",
+>>>>>>> v0.0.4
 	//       "location": "query",
 	//       "type": "boolean"
 	//     },
@@ -5466,14 +8510,30 @@ func (c *FilesListCall) Do(opts ...googleapi.CallOption) (*FileList, error) {
 	//       "location": "query",
 	//       "type": "string"
 	//     },
+<<<<<<< HEAD
 	//     "supportsTeamDrives": {
 	//       "default": "false",
 	//       "description": "Whether the requesting application supports Team Drives.",
+=======
+	//     "supportsAllDrives": {
+	//       "default": "false",
+	//       "description": "Whether the requesting application supports both My Drives and shared drives.",
+	//       "location": "query",
+	//       "type": "boolean"
+	//     },
+	//     "supportsTeamDrives": {
+	//       "default": "false",
+	//       "description": "Deprecated use supportsAllDrives instead.",
+>>>>>>> v0.0.4
 	//       "location": "query",
 	//       "type": "boolean"
 	//     },
 	//     "teamDriveId": {
+<<<<<<< HEAD
 	//       "description": "ID of Team Drive to search.",
+=======
+	//       "description": "Deprecated use driveId instead.",
+>>>>>>> v0.0.4
 	//       "location": "query",
 	//       "type": "string"
 	//     }
@@ -5547,7 +8607,11 @@ func (c *FilesUpdateCall) AddParents(addParents string) *FilesUpdateCall {
 // KeepRevisionForever sets the optional parameter
 // "keepRevisionForever": Whether to set the 'keepForever' field in the
 // new head revision. This is only applicable to files with binary
+<<<<<<< HEAD
 // content in Drive.
+=======
+// content in Google Drive.
+>>>>>>> v0.0.4
 func (c *FilesUpdateCall) KeepRevisionForever(keepRevisionForever bool) *FilesUpdateCall {
 	c.urlParams_.Set("keepRevisionForever", fmt.Sprint(keepRevisionForever))
 	return c
@@ -5567,8 +8631,21 @@ func (c *FilesUpdateCall) RemoveParents(removeParents string) *FilesUpdateCall {
 	return c
 }
 
+<<<<<<< HEAD
 // SupportsTeamDrives sets the optional parameter "supportsTeamDrives":
 // Whether the requesting application supports Team Drives.
+=======
+// SupportsAllDrives sets the optional parameter "supportsAllDrives":
+// Whether the requesting application supports both My Drives and shared
+// drives.
+func (c *FilesUpdateCall) SupportsAllDrives(supportsAllDrives bool) *FilesUpdateCall {
+	c.urlParams_.Set("supportsAllDrives", fmt.Sprint(supportsAllDrives))
+	return c
+}
+
+// SupportsTeamDrives sets the optional parameter "supportsTeamDrives":
+// Deprecated use supportsAllDrives instead.
+>>>>>>> v0.0.4
 func (c *FilesUpdateCall) SupportsTeamDrives(supportsTeamDrives bool) *FilesUpdateCall {
 	c.urlParams_.Set("supportsTeamDrives", fmt.Sprint(supportsTeamDrives))
 	return c
@@ -5775,7 +8852,11 @@ func (c *FilesUpdateCall) Do(opts ...googleapi.CallOption) (*File, error) {
 	//     },
 	//     "keepRevisionForever": {
 	//       "default": "false",
+<<<<<<< HEAD
 	//       "description": "Whether to set the 'keepForever' field in the new head revision. This is only applicable to files with binary content in Drive.",
+=======
+	//       "description": "Whether to set the 'keepForever' field in the new head revision. This is only applicable to files with binary content in Google Drive.",
+>>>>>>> v0.0.4
 	//       "location": "query",
 	//       "type": "boolean"
 	//     },
@@ -5789,9 +8870,21 @@ func (c *FilesUpdateCall) Do(opts ...googleapi.CallOption) (*File, error) {
 	//       "location": "query",
 	//       "type": "string"
 	//     },
+<<<<<<< HEAD
 	//     "supportsTeamDrives": {
 	//       "default": "false",
 	//       "description": "Whether the requesting application supports Team Drives.",
+=======
+	//     "supportsAllDrives": {
+	//       "default": "false",
+	//       "description": "Whether the requesting application supports both My Drives and shared drives.",
+	//       "location": "query",
+	//       "type": "boolean"
+	//     },
+	//     "supportsTeamDrives": {
+	//       "default": "false",
+	//       "description": "Deprecated use supportsAllDrives instead.",
+>>>>>>> v0.0.4
 	//       "location": "query",
 	//       "type": "boolean"
 	//     },
@@ -5849,8 +8942,21 @@ func (c *FilesWatchCall) AcknowledgeAbuse(acknowledgeAbuse bool) *FilesWatchCall
 	return c
 }
 
+<<<<<<< HEAD
 // SupportsTeamDrives sets the optional parameter "supportsTeamDrives":
 // Whether the requesting application supports Team Drives.
+=======
+// SupportsAllDrives sets the optional parameter "supportsAllDrives":
+// Whether the requesting application supports both My Drives and shared
+// drives.
+func (c *FilesWatchCall) SupportsAllDrives(supportsAllDrives bool) *FilesWatchCall {
+	c.urlParams_.Set("supportsAllDrives", fmt.Sprint(supportsAllDrives))
+	return c
+}
+
+// SupportsTeamDrives sets the optional parameter "supportsTeamDrives":
+// Deprecated use supportsAllDrives instead.
+>>>>>>> v0.0.4
 func (c *FilesWatchCall) SupportsTeamDrives(supportsTeamDrives bool) *FilesWatchCall {
 	c.urlParams_.Set("supportsTeamDrives", fmt.Sprint(supportsTeamDrives))
 	return c
@@ -5981,9 +9087,21 @@ func (c *FilesWatchCall) Do(opts ...googleapi.CallOption) (*Channel, error) {
 	//       "required": true,
 	//       "type": "string"
 	//     },
+<<<<<<< HEAD
 	//     "supportsTeamDrives": {
 	//       "default": "false",
 	//       "description": "Whether the requesting application supports Team Drives.",
+=======
+	//     "supportsAllDrives": {
+	//       "default": "false",
+	//       "description": "Whether the requesting application supports both My Drives and shared drives.",
+	//       "location": "query",
+	//       "type": "boolean"
+	//     },
+	//     "supportsTeamDrives": {
+	//       "default": "false",
+	//       "description": "Deprecated use supportsAllDrives instead.",
+>>>>>>> v0.0.4
 	//       "location": "query",
 	//       "type": "boolean"
 	//     }
@@ -6023,7 +9141,11 @@ type PermissionsCreateCall struct {
 	header_    http.Header
 }
 
+<<<<<<< HEAD
 // Create: Creates a permission for a file or Team Drive.
+=======
+// Create: Creates a permission for a file or shared drive.
+>>>>>>> v0.0.4
 func (r *PermissionsService) Create(fileId string, permission *Permission) *PermissionsCreateCall {
 	c := &PermissionsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.fileId = fileId
@@ -6048,8 +9170,21 @@ func (c *PermissionsCreateCall) SendNotificationEmail(sendNotificationEmail bool
 	return c
 }
 
+<<<<<<< HEAD
 // SupportsTeamDrives sets the optional parameter "supportsTeamDrives":
 // Whether the requesting application supports Team Drives.
+=======
+// SupportsAllDrives sets the optional parameter "supportsAllDrives":
+// Whether the requesting application supports both My Drives and shared
+// drives.
+func (c *PermissionsCreateCall) SupportsAllDrives(supportsAllDrives bool) *PermissionsCreateCall {
+	c.urlParams_.Set("supportsAllDrives", fmt.Sprint(supportsAllDrives))
+	return c
+}
+
+// SupportsTeamDrives sets the optional parameter "supportsTeamDrives":
+// Deprecated use supportsAllDrives instead.
+>>>>>>> v0.0.4
 func (c *PermissionsCreateCall) SupportsTeamDrives(supportsTeamDrives bool) *PermissionsCreateCall {
 	c.urlParams_.Set("supportsTeamDrives", fmt.Sprint(supportsTeamDrives))
 	return c
@@ -6066,8 +9201,14 @@ func (c *PermissionsCreateCall) TransferOwnership(transferOwnership bool) *Permi
 
 // UseDomainAdminAccess sets the optional parameter
 // "useDomainAdminAccess": Issue the request as a domain administrator;
+<<<<<<< HEAD
 // if set to true, then the requester will be granted access if they are
 // an administrator of the domain to which the item belongs.
+=======
+// if set to true, then the requester will be granted access if the file
+// ID parameter refers to a shared drive and the requester is an
+// administrator of the domain to which the shared drive belongs.
+>>>>>>> v0.0.4
 func (c *PermissionsCreateCall) UseDomainAdminAccess(useDomainAdminAccess bool) *PermissionsCreateCall {
 	c.urlParams_.Set("useDomainAdminAccess", fmt.Sprint(useDomainAdminAccess))
 	return c
@@ -6163,7 +9304,11 @@ func (c *PermissionsCreateCall) Do(opts ...googleapi.CallOption) (*Permission, e
 	}
 	return ret, nil
 	// {
+<<<<<<< HEAD
 	//   "description": "Creates a permission for a file or Team Drive.",
+=======
+	//   "description": "Creates a permission for a file or shared drive.",
+>>>>>>> v0.0.4
 	//   "httpMethod": "POST",
 	//   "id": "drive.permissions.create",
 	//   "parameterOrder": [
@@ -6176,7 +9321,11 @@ func (c *PermissionsCreateCall) Do(opts ...googleapi.CallOption) (*Permission, e
 	//       "type": "string"
 	//     },
 	//     "fileId": {
+<<<<<<< HEAD
 	//       "description": "The ID of the file or Team Drive.",
+=======
+	//       "description": "The ID of the file or shared drive.",
+>>>>>>> v0.0.4
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -6186,9 +9335,21 @@ func (c *PermissionsCreateCall) Do(opts ...googleapi.CallOption) (*Permission, e
 	//       "location": "query",
 	//       "type": "boolean"
 	//     },
+<<<<<<< HEAD
 	//     "supportsTeamDrives": {
 	//       "default": "false",
 	//       "description": "Whether the requesting application supports Team Drives.",
+=======
+	//     "supportsAllDrives": {
+	//       "default": "false",
+	//       "description": "Whether the requesting application supports both My Drives and shared drives.",
+	//       "location": "query",
+	//       "type": "boolean"
+	//     },
+	//     "supportsTeamDrives": {
+	//       "default": "false",
+	//       "description": "Deprecated use supportsAllDrives instead.",
+>>>>>>> v0.0.4
 	//       "location": "query",
 	//       "type": "boolean"
 	//     },
@@ -6200,7 +9361,11 @@ func (c *PermissionsCreateCall) Do(opts ...googleapi.CallOption) (*Permission, e
 	//     },
 	//     "useDomainAdminAccess": {
 	//       "default": "false",
+<<<<<<< HEAD
 	//       "description": "Issue the request as a domain administrator; if set to true, then the requester will be granted access if they are an administrator of the domain to which the item belongs.",
+=======
+	//       "description": "Issue the request as a domain administrator; if set to true, then the requester will be granted access if the file ID parameter refers to a shared drive and the requester is an administrator of the domain to which the shared drive belongs.",
+>>>>>>> v0.0.4
 	//       "location": "query",
 	//       "type": "boolean"
 	//     }
@@ -6239,8 +9404,21 @@ func (r *PermissionsService) Delete(fileId string, permissionId string) *Permiss
 	return c
 }
 
+<<<<<<< HEAD
 // SupportsTeamDrives sets the optional parameter "supportsTeamDrives":
 // Whether the requesting application supports Team Drives.
+=======
+// SupportsAllDrives sets the optional parameter "supportsAllDrives":
+// Whether the requesting application supports both My Drives and shared
+// drives.
+func (c *PermissionsDeleteCall) SupportsAllDrives(supportsAllDrives bool) *PermissionsDeleteCall {
+	c.urlParams_.Set("supportsAllDrives", fmt.Sprint(supportsAllDrives))
+	return c
+}
+
+// SupportsTeamDrives sets the optional parameter "supportsTeamDrives":
+// Deprecated use supportsAllDrives instead.
+>>>>>>> v0.0.4
 func (c *PermissionsDeleteCall) SupportsTeamDrives(supportsTeamDrives bool) *PermissionsDeleteCall {
 	c.urlParams_.Set("supportsTeamDrives", fmt.Sprint(supportsTeamDrives))
 	return c
@@ -6248,8 +9426,14 @@ func (c *PermissionsDeleteCall) SupportsTeamDrives(supportsTeamDrives bool) *Per
 
 // UseDomainAdminAccess sets the optional parameter
 // "useDomainAdminAccess": Issue the request as a domain administrator;
+<<<<<<< HEAD
 // if set to true, then the requester will be granted access if they are
 // an administrator of the domain to which the item belongs.
+=======
+// if set to true, then the requester will be granted access if the file
+// ID parameter refers to a shared drive and the requester is an
+// administrator of the domain to which the shared drive belongs.
+>>>>>>> v0.0.4
 func (c *PermissionsDeleteCall) UseDomainAdminAccess(useDomainAdminAccess bool) *PermissionsDeleteCall {
 	c.urlParams_.Set("useDomainAdminAccess", fmt.Sprint(useDomainAdminAccess))
 	return c
@@ -6325,7 +9509,11 @@ func (c *PermissionsDeleteCall) Do(opts ...googleapi.CallOption) error {
 	//   ],
 	//   "parameters": {
 	//     "fileId": {
+<<<<<<< HEAD
 	//       "description": "The ID of the file or Team Drive.",
+=======
+	//       "description": "The ID of the file or shared drive.",
+>>>>>>> v0.0.4
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -6336,15 +9524,31 @@ func (c *PermissionsDeleteCall) Do(opts ...googleapi.CallOption) error {
 	//       "required": true,
 	//       "type": "string"
 	//     },
+<<<<<<< HEAD
 	//     "supportsTeamDrives": {
 	//       "default": "false",
 	//       "description": "Whether the requesting application supports Team Drives.",
+=======
+	//     "supportsAllDrives": {
+	//       "default": "false",
+	//       "description": "Whether the requesting application supports both My Drives and shared drives.",
+	//       "location": "query",
+	//       "type": "boolean"
+	//     },
+	//     "supportsTeamDrives": {
+	//       "default": "false",
+	//       "description": "Deprecated use supportsAllDrives instead.",
+>>>>>>> v0.0.4
 	//       "location": "query",
 	//       "type": "boolean"
 	//     },
 	//     "useDomainAdminAccess": {
 	//       "default": "false",
+<<<<<<< HEAD
 	//       "description": "Issue the request as a domain administrator; if set to true, then the requester will be granted access if they are an administrator of the domain to which the item belongs.",
+=======
+	//       "description": "Issue the request as a domain administrator; if set to true, then the requester will be granted access if the file ID parameter refers to a shared drive and the requester is an administrator of the domain to which the shared drive belongs.",
+>>>>>>> v0.0.4
 	//       "location": "query",
 	//       "type": "boolean"
 	//     }
@@ -6378,8 +9582,21 @@ func (r *PermissionsService) Get(fileId string, permissionId string) *Permission
 	return c
 }
 
+<<<<<<< HEAD
 // SupportsTeamDrives sets the optional parameter "supportsTeamDrives":
 // Whether the requesting application supports Team Drives.
+=======
+// SupportsAllDrives sets the optional parameter "supportsAllDrives":
+// Whether the requesting application supports both My Drives and shared
+// drives.
+func (c *PermissionsGetCall) SupportsAllDrives(supportsAllDrives bool) *PermissionsGetCall {
+	c.urlParams_.Set("supportsAllDrives", fmt.Sprint(supportsAllDrives))
+	return c
+}
+
+// SupportsTeamDrives sets the optional parameter "supportsTeamDrives":
+// Deprecated use supportsAllDrives instead.
+>>>>>>> v0.0.4
 func (c *PermissionsGetCall) SupportsTeamDrives(supportsTeamDrives bool) *PermissionsGetCall {
 	c.urlParams_.Set("supportsTeamDrives", fmt.Sprint(supportsTeamDrives))
 	return c
@@ -6387,8 +9604,14 @@ func (c *PermissionsGetCall) SupportsTeamDrives(supportsTeamDrives bool) *Permis
 
 // UseDomainAdminAccess sets the optional parameter
 // "useDomainAdminAccess": Issue the request as a domain administrator;
+<<<<<<< HEAD
 // if set to true, then the requester will be granted access if they are
 // an administrator of the domain to which the item belongs.
+=======
+// if set to true, then the requester will be granted access if the file
+// ID parameter refers to a shared drive and the requester is an
+// administrator of the domain to which the shared drive belongs.
+>>>>>>> v0.0.4
 func (c *PermissionsGetCall) UseDomainAdminAccess(useDomainAdminAccess bool) *PermissionsGetCall {
 	c.urlParams_.Set("useDomainAdminAccess", fmt.Sprint(useDomainAdminAccess))
 	return c
@@ -6513,15 +9736,31 @@ func (c *PermissionsGetCall) Do(opts ...googleapi.CallOption) (*Permission, erro
 	//       "required": true,
 	//       "type": "string"
 	//     },
+<<<<<<< HEAD
 	//     "supportsTeamDrives": {
 	//       "default": "false",
 	//       "description": "Whether the requesting application supports Team Drives.",
+=======
+	//     "supportsAllDrives": {
+	//       "default": "false",
+	//       "description": "Whether the requesting application supports both My Drives and shared drives.",
+	//       "location": "query",
+	//       "type": "boolean"
+	//     },
+	//     "supportsTeamDrives": {
+	//       "default": "false",
+	//       "description": "Deprecated use supportsAllDrives instead.",
+>>>>>>> v0.0.4
 	//       "location": "query",
 	//       "type": "boolean"
 	//     },
 	//     "useDomainAdminAccess": {
 	//       "default": "false",
+<<<<<<< HEAD
 	//       "description": "Issue the request as a domain administrator; if set to true, then the requester will be granted access if they are an administrator of the domain to which the item belongs.",
+=======
+	//       "description": "Issue the request as a domain administrator; if set to true, then the requester will be granted access if the file ID parameter refers to a shared drive and the requester is an administrator of the domain to which the shared drive belongs.",
+>>>>>>> v0.0.4
 	//       "location": "query",
 	//       "type": "boolean"
 	//     }
@@ -6553,7 +9792,11 @@ type PermissionsListCall struct {
 	header_      http.Header
 }
 
+<<<<<<< HEAD
 // List: Lists a file's or Team Drive's permissions.
+=======
+// List: Lists a file's or shared drive's permissions.
+>>>>>>> v0.0.4
 func (r *PermissionsService) List(fileId string) *PermissionsListCall {
 	c := &PermissionsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.fileId = fileId
@@ -6561,9 +9804,15 @@ func (r *PermissionsService) List(fileId string) *PermissionsListCall {
 }
 
 // PageSize sets the optional parameter "pageSize": The maximum number
+<<<<<<< HEAD
 // of permissions to return per page. When not set for files in a Team
 // Drive, at most 100 results will be returned. When not set for files
 // that are not in a Team Drive, the entire list will be returned.
+=======
+// of permissions to return per page. When not set for files in a shared
+// drive, at most 100 results will be returned. When not set for files
+// that are not in a shared drive, the entire list will be returned.
+>>>>>>> v0.0.4
 func (c *PermissionsListCall) PageSize(pageSize int64) *PermissionsListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
@@ -6577,8 +9826,21 @@ func (c *PermissionsListCall) PageToken(pageToken string) *PermissionsListCall {
 	return c
 }
 
+<<<<<<< HEAD
 // SupportsTeamDrives sets the optional parameter "supportsTeamDrives":
 // Whether the requesting application supports Team Drives.
+=======
+// SupportsAllDrives sets the optional parameter "supportsAllDrives":
+// Whether the requesting application supports both My Drives and shared
+// drives.
+func (c *PermissionsListCall) SupportsAllDrives(supportsAllDrives bool) *PermissionsListCall {
+	c.urlParams_.Set("supportsAllDrives", fmt.Sprint(supportsAllDrives))
+	return c
+}
+
+// SupportsTeamDrives sets the optional parameter "supportsTeamDrives":
+// Deprecated use supportsAllDrives instead.
+>>>>>>> v0.0.4
 func (c *PermissionsListCall) SupportsTeamDrives(supportsTeamDrives bool) *PermissionsListCall {
 	c.urlParams_.Set("supportsTeamDrives", fmt.Sprint(supportsTeamDrives))
 	return c
@@ -6586,8 +9848,14 @@ func (c *PermissionsListCall) SupportsTeamDrives(supportsTeamDrives bool) *Permi
 
 // UseDomainAdminAccess sets the optional parameter
 // "useDomainAdminAccess": Issue the request as a domain administrator;
+<<<<<<< HEAD
 // if set to true, then the requester will be granted access if they are
 // an administrator of the domain to which the item belongs.
+=======
+// if set to true, then the requester will be granted access if the file
+// ID parameter refers to a shared drive and the requester is an
+// administrator of the domain to which the shared drive belongs.
+>>>>>>> v0.0.4
 func (c *PermissionsListCall) UseDomainAdminAccess(useDomainAdminAccess bool) *PermissionsListCall {
 	c.urlParams_.Set("useDomainAdminAccess", fmt.Sprint(useDomainAdminAccess))
 	return c
@@ -6691,7 +9959,11 @@ func (c *PermissionsListCall) Do(opts ...googleapi.CallOption) (*PermissionList,
 	}
 	return ret, nil
 	// {
+<<<<<<< HEAD
 	//   "description": "Lists a file's or Team Drive's permissions.",
+=======
+	//   "description": "Lists a file's or shared drive's permissions.",
+>>>>>>> v0.0.4
 	//   "httpMethod": "GET",
 	//   "id": "drive.permissions.list",
 	//   "parameterOrder": [
@@ -6699,13 +9971,21 @@ func (c *PermissionsListCall) Do(opts ...googleapi.CallOption) (*PermissionList,
 	//   ],
 	//   "parameters": {
 	//     "fileId": {
+<<<<<<< HEAD
 	//       "description": "The ID of the file or Team Drive.",
+=======
+	//       "description": "The ID of the file or shared drive.",
+>>>>>>> v0.0.4
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "pageSize": {
+<<<<<<< HEAD
 	//       "description": "The maximum number of permissions to return per page. When not set for files in a Team Drive, at most 100 results will be returned. When not set for files that are not in a Team Drive, the entire list will be returned.",
+=======
+	//       "description": "The maximum number of permissions to return per page. When not set for files in a shared drive, at most 100 results will be returned. When not set for files that are not in a shared drive, the entire list will be returned.",
+>>>>>>> v0.0.4
 	//       "format": "int32",
 	//       "location": "query",
 	//       "maximum": "100",
@@ -6717,15 +9997,31 @@ func (c *PermissionsListCall) Do(opts ...googleapi.CallOption) (*PermissionList,
 	//       "location": "query",
 	//       "type": "string"
 	//     },
+<<<<<<< HEAD
 	//     "supportsTeamDrives": {
 	//       "default": "false",
 	//       "description": "Whether the requesting application supports Team Drives.",
+=======
+	//     "supportsAllDrives": {
+	//       "default": "false",
+	//       "description": "Whether the requesting application supports both My Drives and shared drives.",
+	//       "location": "query",
+	//       "type": "boolean"
+	//     },
+	//     "supportsTeamDrives": {
+	//       "default": "false",
+	//       "description": "Deprecated use supportsAllDrives instead.",
+>>>>>>> v0.0.4
 	//       "location": "query",
 	//       "type": "boolean"
 	//     },
 	//     "useDomainAdminAccess": {
 	//       "default": "false",
+<<<<<<< HEAD
 	//       "description": "Issue the request as a domain administrator; if set to true, then the requester will be granted access if they are an administrator of the domain to which the item belongs.",
+=======
+	//       "description": "Issue the request as a domain administrator; if set to true, then the requester will be granted access if the file ID parameter refers to a shared drive and the requester is an administrator of the domain to which the shared drive belongs.",
+>>>>>>> v0.0.4
 	//       "location": "query",
 	//       "type": "boolean"
 	//     }
@@ -6795,8 +10091,21 @@ func (c *PermissionsUpdateCall) RemoveExpiration(removeExpiration bool) *Permiss
 	return c
 }
 
+<<<<<<< HEAD
 // SupportsTeamDrives sets the optional parameter "supportsTeamDrives":
 // Whether the requesting application supports Team Drives.
+=======
+// SupportsAllDrives sets the optional parameter "supportsAllDrives":
+// Whether the requesting application supports both My Drives and shared
+// drives.
+func (c *PermissionsUpdateCall) SupportsAllDrives(supportsAllDrives bool) *PermissionsUpdateCall {
+	c.urlParams_.Set("supportsAllDrives", fmt.Sprint(supportsAllDrives))
+	return c
+}
+
+// SupportsTeamDrives sets the optional parameter "supportsTeamDrives":
+// Deprecated use supportsAllDrives instead.
+>>>>>>> v0.0.4
 func (c *PermissionsUpdateCall) SupportsTeamDrives(supportsTeamDrives bool) *PermissionsUpdateCall {
 	c.urlParams_.Set("supportsTeamDrives", fmt.Sprint(supportsTeamDrives))
 	return c
@@ -6813,8 +10122,14 @@ func (c *PermissionsUpdateCall) TransferOwnership(transferOwnership bool) *Permi
 
 // UseDomainAdminAccess sets the optional parameter
 // "useDomainAdminAccess": Issue the request as a domain administrator;
+<<<<<<< HEAD
 // if set to true, then the requester will be granted access if they are
 // an administrator of the domain to which the item belongs.
+=======
+// if set to true, then the requester will be granted access if the file
+// ID parameter refers to a shared drive and the requester is an
+// administrator of the domain to which the shared drive belongs.
+>>>>>>> v0.0.4
 func (c *PermissionsUpdateCall) UseDomainAdminAccess(useDomainAdminAccess bool) *PermissionsUpdateCall {
 	c.urlParams_.Set("useDomainAdminAccess", fmt.Sprint(useDomainAdminAccess))
 	return c
@@ -6920,7 +10235,11 @@ func (c *PermissionsUpdateCall) Do(opts ...googleapi.CallOption) (*Permission, e
 	//   ],
 	//   "parameters": {
 	//     "fileId": {
+<<<<<<< HEAD
 	//       "description": "The ID of the file or Team Drive.",
+=======
+	//       "description": "The ID of the file or shared drive.",
+>>>>>>> v0.0.4
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -6937,9 +10256,21 @@ func (c *PermissionsUpdateCall) Do(opts ...googleapi.CallOption) (*Permission, e
 	//       "location": "query",
 	//       "type": "boolean"
 	//     },
+<<<<<<< HEAD
 	//     "supportsTeamDrives": {
 	//       "default": "false",
 	//       "description": "Whether the requesting application supports Team Drives.",
+=======
+	//     "supportsAllDrives": {
+	//       "default": "false",
+	//       "description": "Whether the requesting application supports both My Drives and shared drives.",
+	//       "location": "query",
+	//       "type": "boolean"
+	//     },
+	//     "supportsTeamDrives": {
+	//       "default": "false",
+	//       "description": "Deprecated use supportsAllDrives instead.",
+>>>>>>> v0.0.4
 	//       "location": "query",
 	//       "type": "boolean"
 	//     },
@@ -6951,7 +10282,11 @@ func (c *PermissionsUpdateCall) Do(opts ...googleapi.CallOption) (*Permission, e
 	//     },
 	//     "useDomainAdminAccess": {
 	//       "default": "false",
+<<<<<<< HEAD
 	//       "description": "Issue the request as a domain administrator; if set to true, then the requester will be granted access if they are an administrator of the domain to which the item belongs.",
+=======
+	//       "description": "Issue the request as a domain administrator; if set to true, then the requester will be granted access if the file ID parameter refers to a shared drive and the requester is an administrator of the domain to which the shared drive belongs.",
+>>>>>>> v0.0.4
 	//       "location": "query",
 	//       "type": "boolean"
 	//     }
@@ -7803,9 +11138,15 @@ type RevisionsDeleteCall struct {
 }
 
 // Delete: Permanently deletes a file version. You can only delete
+<<<<<<< HEAD
 // revisions for files with binary content, like images or videos.
 // Revisions for other files, like Google Docs or Sheets, and the last
 // remaining file version can't be deleted.
+=======
+// revisions for files with binary content in Google Drive, like images
+// or videos. Revisions for other files, like Google Docs or Sheets, and
+// the last remaining file version can't be deleted.
+>>>>>>> v0.0.4
 func (r *RevisionsService) Delete(fileId string, revisionId string) *RevisionsDeleteCall {
 	c := &RevisionsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.fileId = fileId
@@ -7874,7 +11215,11 @@ func (c *RevisionsDeleteCall) Do(opts ...googleapi.CallOption) error {
 	}
 	return nil
 	// {
+<<<<<<< HEAD
 	//   "description": "Permanently deletes a file version. You can only delete revisions for files with binary content, like images or videos. Revisions for other files, like Google Docs or Sheets, and the last remaining file version can't be deleted.",
+=======
+	//   "description": "Permanently deletes a file version. You can only delete revisions for files with binary content in Google Drive, like images or videos. Revisions for other files, like Google Docs or Sheets, and the last remaining file version can't be deleted.",
+>>>>>>> v0.0.4
 	//   "httpMethod": "DELETE",
 	//   "id": "drive.revisions.delete",
 	//   "parameterOrder": [
@@ -8451,7 +11796,11 @@ type TeamdrivesCreateCall struct {
 	header_    http.Header
 }
 
+<<<<<<< HEAD
 // Create: Creates a new Team Drive.
+=======
+// Create: Deprecated use drives.create instead.
+>>>>>>> v0.0.4
 func (r *TeamdrivesService) Create(requestId string, teamdrive *TeamDrive) *TeamdrivesCreateCall {
 	c := &TeamdrivesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.urlParams_.Set("requestId", requestId)
@@ -8546,7 +11895,11 @@ func (c *TeamdrivesCreateCall) Do(opts ...googleapi.CallOption) (*TeamDrive, err
 	}
 	return ret, nil
 	// {
+<<<<<<< HEAD
 	//   "description": "Creates a new Team Drive.",
+=======
+	//   "description": "Deprecated use drives.create instead.",
+>>>>>>> v0.0.4
 	//   "httpMethod": "POST",
 	//   "id": "drive.teamdrives.create",
 	//   "parameterOrder": [
@@ -8584,8 +11937,12 @@ type TeamdrivesDeleteCall struct {
 	header_     http.Header
 }
 
+<<<<<<< HEAD
 // Delete: Permanently deletes a Team Drive for which the user is an
 // organizer. The Team Drive cannot contain any untrashed items.
+=======
+// Delete: Deprecated use drives.delete instead.
+>>>>>>> v0.0.4
 func (r *TeamdrivesService) Delete(teamDriveId string) *TeamdrivesDeleteCall {
 	c := &TeamdrivesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.teamDriveId = teamDriveId
@@ -8652,7 +12009,11 @@ func (c *TeamdrivesDeleteCall) Do(opts ...googleapi.CallOption) error {
 	}
 	return nil
 	// {
+<<<<<<< HEAD
 	//   "description": "Permanently deletes a Team Drive for which the user is an organizer. The Team Drive cannot contain any untrashed items.",
+=======
+	//   "description": "Deprecated use drives.delete instead.",
+>>>>>>> v0.0.4
 	//   "httpMethod": "DELETE",
 	//   "id": "drive.teamdrives.delete",
 	//   "parameterOrder": [
@@ -8685,7 +12046,11 @@ type TeamdrivesGetCall struct {
 	header_      http.Header
 }
 
+<<<<<<< HEAD
 // Get: Gets a Team Drive's metadata by ID.
+=======
+// Get: Deprecated use drives.get instead.
+>>>>>>> v0.0.4
 func (r *TeamdrivesService) Get(teamDriveId string) *TeamdrivesGetCall {
 	c := &TeamdrivesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.teamDriveId = teamDriveId
@@ -8799,7 +12164,11 @@ func (c *TeamdrivesGetCall) Do(opts ...googleapi.CallOption) (*TeamDrive, error)
 	}
 	return ret, nil
 	// {
+<<<<<<< HEAD
 	//   "description": "Gets a Team Drive's metadata by ID.",
+=======
+	//   "description": "Deprecated use drives.get instead.",
+>>>>>>> v0.0.4
 	//   "httpMethod": "GET",
 	//   "id": "drive.teamdrives.get",
 	//   "parameterOrder": [
@@ -8841,7 +12210,11 @@ type TeamdrivesListCall struct {
 	header_      http.Header
 }
 
+<<<<<<< HEAD
 // List: Lists the user's Team Drives.
+=======
+// List: Deprecated use drives.list instead.
+>>>>>>> v0.0.4
 func (r *TeamdrivesService) List() *TeamdrivesListCall {
 	c := &TeamdrivesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	return c
@@ -8972,7 +12345,11 @@ func (c *TeamdrivesListCall) Do(opts ...googleapi.CallOption) (*TeamDriveList, e
 	}
 	return ret, nil
 	// {
+<<<<<<< HEAD
 	//   "description": "Lists the user's Team Drives.",
+=======
+	//   "description": "Deprecated use drives.list instead.",
+>>>>>>> v0.0.4
 	//   "httpMethod": "GET",
 	//   "id": "drive.teamdrives.list",
 	//   "parameters": {
@@ -9046,7 +12423,11 @@ type TeamdrivesUpdateCall struct {
 	header_     http.Header
 }
 
+<<<<<<< HEAD
 // Update: Updates a Team Drive's metadata
+=======
+// Update: Deprecated use drives.update instead
+>>>>>>> v0.0.4
 func (r *TeamdrivesService) Update(teamDriveId string, teamdrive *TeamDrive) *TeamdrivesUpdateCall {
 	c := &TeamdrivesUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.teamDriveId = teamDriveId
@@ -9153,7 +12534,11 @@ func (c *TeamdrivesUpdateCall) Do(opts ...googleapi.CallOption) (*TeamDrive, err
 	}
 	return ret, nil
 	// {
+<<<<<<< HEAD
 	//   "description": "Updates a Team Drive's metadata",
+=======
+	//   "description": "Deprecated use drives.update instead",
+>>>>>>> v0.0.4
 	//   "httpMethod": "PATCH",
 	//   "id": "drive.teamdrives.update",
 	//   "parameterOrder": [

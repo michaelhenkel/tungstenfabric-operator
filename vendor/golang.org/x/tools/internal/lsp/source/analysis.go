@@ -18,27 +18,53 @@ import (
 	"sync"
 	"time"
 
+<<<<<<< HEAD
 	"golang.org/x/tools/go/analysis"
 )
 
 func analyze(ctx context.Context, v View, pkgs []Package, analyzers []*analysis.Analyzer) []*Action {
+=======
+	"golang.org/x/sync/errgroup"
+	"golang.org/x/tools/go/analysis"
+)
+
+func analyze(ctx context.Context, v View, pkgs []Package, analyzers []*analysis.Analyzer) ([]*Action, error) {
+	if ctx.Err() != nil {
+		return nil, ctx.Err()
+	}
+
+>>>>>>> v0.0.4
 	// Build nodes for initial packages.
 	var roots []*Action
 	for _, a := range analyzers {
 		for _, pkg := range pkgs {
 			root, err := pkg.GetActionGraph(ctx, a)
 			if err != nil {
+<<<<<<< HEAD
 				continue
 			}
 			root.isroot = true
+=======
+				return nil, err
+			}
+			root.isroot = true
+			root.view = v
+>>>>>>> v0.0.4
 			roots = append(roots, root)
 		}
 	}
 
 	// Execute the graph in parallel.
+<<<<<<< HEAD
 	execAll(v.FileSet(), roots)
 
 	return roots
+=======
+	if err := execAll(ctx, v.FileSet(), roots); err != nil {
+		return nil, err
+	}
+	return roots, nil
+>>>>>>> v0.0.4
 }
 
 // An action represents one unit of analysis work: the application of
@@ -59,6 +85,10 @@ type Action struct {
 	diagnostics  []analysis.Diagnostic
 	err          error
 	duration     time.Duration
+<<<<<<< HEAD
+=======
+	view         View
+>>>>>>> v0.0.4
 }
 
 type objectFactKey struct {
@@ -75,6 +105,7 @@ func (act *Action) String() string {
 	return fmt.Sprintf("%s@%s", act.Analyzer, act.Pkg)
 }
 
+<<<<<<< HEAD
 func execAll(fset *token.FileSet, actions []*Action) {
 	var wg sync.WaitGroup
 	for _, act := range actions {
@@ -97,6 +128,32 @@ func (act *Action) exec(fset *token.FileSet) {
 func (act *Action) execOnce(fset *token.FileSet) {
 	// Analyze dependencies.
 	execAll(fset, act.Deps)
+=======
+func execAll(ctx context.Context, fset *token.FileSet, actions []*Action) error {
+	g, ctx := errgroup.WithContext(ctx)
+	for _, act := range actions {
+		act := act
+		g.Go(func() error {
+			return act.exec(ctx, fset)
+		})
+	}
+	return g.Wait()
+}
+
+func (act *Action) exec(ctx context.Context, fset *token.FileSet) error {
+	var err error
+	act.once.Do(func() {
+		err = act.execOnce(ctx, fset)
+	})
+	return err
+}
+
+func (act *Action) execOnce(ctx context.Context, fset *token.FileSet) error {
+	// Analyze dependencies.
+	if err := execAll(ctx, fset, act.Deps); err != nil {
+		return err
+	}
+>>>>>>> v0.0.4
 
 	// Report an error if any dependency failed.
 	var failed []string
@@ -108,7 +165,11 @@ func (act *Action) execOnce(fset *token.FileSet) {
 	if failed != nil {
 		sort.Strings(failed)
 		act.err = fmt.Errorf("failed prerequisites: %s", strings.Join(failed, ", "))
+<<<<<<< HEAD
 		return
+=======
+		return act.err
+>>>>>>> v0.0.4
 	}
 
 	// Plumb the output values of the dependencies
@@ -148,6 +209,7 @@ func (act *Action) execOnce(fset *token.FileSet) {
 	}
 	act.pass = pass
 
+<<<<<<< HEAD
 	var err error
 	if len(act.Pkg.GetErrors()) > 0 && !pass.Analyzer.RunDespiteErrors {
 		err = fmt.Errorf("analysis skipped due to errors in package")
@@ -156,16 +218,33 @@ func (act *Action) execOnce(fset *token.FileSet) {
 		if err == nil {
 			if got, want := reflect.TypeOf(act.result), pass.Analyzer.ResultType; got != want {
 				err = fmt.Errorf(
+=======
+	if len(act.Pkg.GetErrors()) > 0 && !pass.Analyzer.RunDespiteErrors {
+		act.err = fmt.Errorf("analysis skipped due to errors in package")
+	} else {
+		act.result, act.err = pass.Analyzer.Run(pass)
+		if act.err == nil {
+			if got, want := reflect.TypeOf(act.result), pass.Analyzer.ResultType; got != want {
+				act.err = fmt.Errorf(
+>>>>>>> v0.0.4
 					"internal error: on package %s, analyzer %s returned a result of type %v, but declared ResultType %v",
 					pass.Pkg.Path(), pass.Analyzer, got, want)
 			}
 		}
 	}
+<<<<<<< HEAD
 	act.err = err
+=======
+>>>>>>> v0.0.4
 
 	// disallow calls after Run
 	pass.ExportObjectFact = nil
 	pass.ExportPackageFact = nil
+<<<<<<< HEAD
+=======
+
+	return act.err
+>>>>>>> v0.0.4
 }
 
 // inheritFacts populates act.facts with

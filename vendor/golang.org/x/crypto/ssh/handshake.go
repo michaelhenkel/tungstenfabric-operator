@@ -543,7 +543,12 @@ func (t *handshakeTransport) enterKeyExchange(otherInitPacket []byte) error {
 
 	clientInit := otherInit
 	serverInit := t.sentInitMsg
+<<<<<<< HEAD
 	if len(t.hostKeys) == 0 {
+=======
+	isClient := len(t.hostKeys) == 0
+	if isClient {
+>>>>>>> v0.0.4
 		clientInit, serverInit = serverInit, clientInit
 
 		magics.clientKexInit = t.sentInitPacket
@@ -551,7 +556,11 @@ func (t *handshakeTransport) enterKeyExchange(otherInitPacket []byte) error {
 	}
 
 	var err error
+<<<<<<< HEAD
 	t.algorithms, err = findAgreedAlgorithms(clientInit, serverInit)
+=======
+	t.algorithms, err = findAgreedAlgorithms(isClient, clientInit, serverInit)
+>>>>>>> v0.0.4
 	if err != nil {
 		return err
 	}

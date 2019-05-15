@@ -1,6 +1,7 @@
 apiVersion: tf.tungstenfabric.io/v1alpha1
 kind: RabbitmqCluster
 metadata:
+<<<<<<< HEAD
   name: rabbitmq-cluster-1
 spec:
   # Add fields here
@@ -10,3 +11,17 @@ spec:
   port: "5673"
   cookie: "47EFF3BB-4786-46E0-A5BB-58455B3C2CB4"
   imagepullpolicy: "Always"
+=======
+  name: cluster-1
+spec:
+  type: deployment
+  containers:
+    - name: rabbitmq
+      logvolumepath: "/var/log/rabbitmq"
+      datavolumepath: "/var/lib/rabbitmq"
+      resourceconfigmap: true
+  initcontainers:
+    - name: init
+      statusvolume: true
+      command: ["sh","-c","until grep ready /tmp/podinfo/pod_labels > /dev/null 2>&1; do sleep 1; done"]   
+>>>>>>> v0.0.4

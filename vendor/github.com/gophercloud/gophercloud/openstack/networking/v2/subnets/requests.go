@@ -173,7 +173,11 @@ type UpdateOptsBuilder interface {
 // UpdateOpts represents the attributes used when updating an existing subnet.
 type UpdateOpts struct {
 	// Name is a human-readable name of the subnet.
+<<<<<<< HEAD
 	Name string `json:"name,omitempty"`
+=======
+	Name *string `json:"name,omitempty"`
+>>>>>>> v0.0.4
 
 	// Description of the subnet.
 	Description *string `json:"description,omitempty"`
@@ -188,7 +192,11 @@ type UpdateOpts struct {
 	GatewayIP *string `json:"gateway_ip,omitempty"`
 
 	// DNSNameservers are the nameservers to be set via DHCP.
+<<<<<<< HEAD
 	DNSNameservers []string `json:"dns_nameservers,omitempty"`
+=======
+	DNSNameservers *[]string `json:"dns_nameservers,omitempty"`
+>>>>>>> v0.0.4
 
 	// HostRoutes are any static host routes to be set via DHCP.
 	HostRoutes *[]HostRoute `json:"host_routes,omitempty"`

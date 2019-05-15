@@ -630,7 +630,20 @@ func inHeadIM(p *parser) bool {
 			p.oe.pop()
 			p.acknowledgeSelfClosingTag()
 			return true
+<<<<<<< HEAD
 		case a.Script, a.Title, a.Noscript, a.Noframes, a.Style:
+=======
+		case a.Noscript:
+			p.addElement()
+			if p.scripting {
+				p.setOriginalIM()
+				p.im = textIM
+			} else {
+				p.im = inHeadNoscriptIM
+			}
+			return true
+		case a.Script, a.Title, a.Noframes, a.Style:
+>>>>>>> v0.0.4
 			p.addElement()
 			p.setOriginalIM()
 			p.im = textIM
@@ -692,6 +705,52 @@ func inHeadIM(p *parser) bool {
 	return false
 }
 
+<<<<<<< HEAD
+=======
+// 12.2.6.4.5.
+func inHeadNoscriptIM(p *parser) bool {
+	switch p.tok.Type {
+	case DoctypeToken:
+		// Ignore the token.
+		return true
+	case StartTagToken:
+		switch p.tok.DataAtom {
+		case a.Html:
+			return inBodyIM(p)
+		case a.Basefont, a.Bgsound, a.Link, a.Meta, a.Noframes, a.Style:
+			return inHeadIM(p)
+		case a.Head, a.Noscript:
+			// Ignore the token.
+			return true
+		}
+	case EndTagToken:
+		switch p.tok.DataAtom {
+		case a.Noscript, a.Br:
+		default:
+			// Ignore the token.
+			return true
+		}
+	case TextToken:
+		s := strings.TrimLeft(p.tok.Data, whitespace)
+		if len(s) == 0 {
+			// It was all whitespace.
+			return inHeadIM(p)
+		}
+	case CommentToken:
+		return inHeadIM(p)
+	}
+	p.oe.pop()
+	if p.top().DataAtom != a.Head {
+		panic("html: the new current node will be a head element.")
+	}
+	p.im = inHeadIM
+	if p.tok.DataAtom == a.Noscript {
+		return true
+	}
+	return false
+}
+
+>>>>>>> v0.0.4
 // Section 12.2.6.4.6.
 func afterHeadIM(p *parser) bool {
 	switch p.tok.Type {
@@ -1692,8 +1751,14 @@ func inCellIM(p *parser) bool {
 				return true
 			}
 			// Close the cell and reprocess.
+<<<<<<< HEAD
 			p.popUntil(tableScope, a.Td, a.Th)
 			p.clearActiveFormattingElements()
+=======
+			if p.popUntil(tableScope, a.Td, a.Th) {
+				p.clearActiveFormattingElements()
+			}
+>>>>>>> v0.0.4
 			p.im = inRowIM
 			return false
 		}

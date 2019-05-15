@@ -43,7 +43,11 @@ func (x Syntax) String() string {
 	return proto.EnumName(Syntax_name, int32(x))
 }
 func (Syntax) EnumDescriptor() ([]byte, []int) {
+<<<<<<< HEAD
 	return fileDescriptor_type_de958d9f8682c896, []int{0}
+=======
+	return fileDescriptor_type_d42eba12d866f154, []int{0}
+>>>>>>> v0.0.4
 }
 
 // Basic field types.
@@ -137,7 +141,11 @@ func (x Field_Kind) String() string {
 	return proto.EnumName(Field_Kind_name, int32(x))
 }
 func (Field_Kind) EnumDescriptor() ([]byte, []int) {
+<<<<<<< HEAD
 	return fileDescriptor_type_de958d9f8682c896, []int{1, 0}
+=======
+	return fileDescriptor_type_d42eba12d866f154, []int{1, 0}
+>>>>>>> v0.0.4
 }
 
 // Whether a field is optional, required, or repeated.
@@ -171,7 +179,11 @@ func (x Field_Cardinality) String() string {
 	return proto.EnumName(Field_Cardinality_name, int32(x))
 }
 func (Field_Cardinality) EnumDescriptor() ([]byte, []int) {
+<<<<<<< HEAD
 	return fileDescriptor_type_de958d9f8682c896, []int{1, 1}
+=======
+	return fileDescriptor_type_d42eba12d866f154, []int{1, 1}
+>>>>>>> v0.0.4
 }
 
 // A protocol buffer message type.
@@ -197,7 +209,11 @@ func (m *Type) Reset()         { *m = Type{} }
 func (m *Type) String() string { return proto.CompactTextString(m) }
 func (*Type) ProtoMessage()    {}
 func (*Type) Descriptor() ([]byte, []int) {
+<<<<<<< HEAD
 	return fileDescriptor_type_de958d9f8682c896, []int{0}
+=======
+	return fileDescriptor_type_d42eba12d866f154, []int{0}
+>>>>>>> v0.0.4
 }
 func (m *Type) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_Type.Unmarshal(m, b)
@@ -292,7 +308,11 @@ func (m *Field) Reset()         { *m = Field{} }
 func (m *Field) String() string { return proto.CompactTextString(m) }
 func (*Field) ProtoMessage()    {}
 func (*Field) Descriptor() ([]byte, []int) {
+<<<<<<< HEAD
 	return fileDescriptor_type_de958d9f8682c896, []int{1}
+=======
+	return fileDescriptor_type_d42eba12d866f154, []int{1}
+>>>>>>> v0.0.4
 }
 func (m *Field) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_Field.Unmarshal(m, b)
@@ -403,7 +423,11 @@ func (m *Enum) Reset()         { *m = Enum{} }
 func (m *Enum) String() string { return proto.CompactTextString(m) }
 func (*Enum) ProtoMessage()    {}
 func (*Enum) Descriptor() ([]byte, []int) {
+<<<<<<< HEAD
 	return fileDescriptor_type_de958d9f8682c896, []int{2}
+=======
+	return fileDescriptor_type_d42eba12d866f154, []int{2}
+>>>>>>> v0.0.4
 }
 func (m *Enum) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_Enum.Unmarshal(m, b)
@@ -475,7 +499,11 @@ func (m *EnumValue) Reset()         { *m = EnumValue{} }
 func (m *EnumValue) String() string { return proto.CompactTextString(m) }
 func (*EnumValue) ProtoMessage()    {}
 func (*EnumValue) Descriptor() ([]byte, []int) {
+<<<<<<< HEAD
 	return fileDescriptor_type_de958d9f8682c896, []int{3}
+=======
+	return fileDescriptor_type_d42eba12d866f154, []int{3}
+>>>>>>> v0.0.4
 }
 func (m *EnumValue) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_EnumValue.Unmarshal(m, b)
@@ -538,7 +566,11 @@ func (m *Option) Reset()         { *m = Option{} }
 func (m *Option) String() string { return proto.CompactTextString(m) }
 func (*Option) ProtoMessage()    {}
 func (*Option) Descriptor() ([]byte, []int) {
+<<<<<<< HEAD
 	return fileDescriptor_type_de958d9f8682c896, []int{4}
+=======
+	return fileDescriptor_type_d42eba12d866f154, []int{4}
+>>>>>>> v0.0.4
 }
 func (m *Option) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_Option.Unmarshal(m, b)
@@ -583,9 +615,15 @@ func init() {
 	proto.RegisterEnum("google.protobuf.Field_Cardinality", Field_Cardinality_name, Field_Cardinality_value)
 }
 
+<<<<<<< HEAD
 func init() { proto.RegisterFile("google/protobuf/type.proto", fileDescriptor_type_de958d9f8682c896) }
 
 var fileDescriptor_type_de958d9f8682c896 = []byte{
+=======
+func init() { proto.RegisterFile("google/protobuf/type.proto", fileDescriptor_type_d42eba12d866f154) }
+
+var fileDescriptor_type_d42eba12d866f154 = []byte{
+>>>>>>> v0.0.4
 	// 810 bytes of a gzipped FileDescriptorProto
 	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xa4, 0x55, 0xcd, 0x8e, 0xda, 0x56,
 	0x14, 0x8e, 0x8d, 0xf1, 0xe0, 0xc3, 0xc0, 0xdc, 0xdc, 0x44, 0x89, 0x33, 0x91, 0x52, 0x44, 0xbb,

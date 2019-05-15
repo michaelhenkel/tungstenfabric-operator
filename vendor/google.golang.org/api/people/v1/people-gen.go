@@ -86,9 +86,12 @@ const (
 	// See and download your contacts
 	ContactsReadonlyScope = "https://www.googleapis.com/auth/contacts.readonly"
 
+<<<<<<< HEAD
 	// View your basic profile info, including your age range and language
 	PlusLoginScope = "https://www.googleapis.com/auth/plus.login"
 
+=======
+>>>>>>> v0.0.4
 	// View your street addresses
 	UserAddressesReadScope = "https://www.googleapis.com/auth/user.addresses.read"
 
@@ -105,7 +108,11 @@ const (
 	UserinfoEmailScope = "https://www.googleapis.com/auth/userinfo.email"
 
 	// See your personal info, including any personal info you've made
+<<<<<<< HEAD
 	// publically available
+=======
+	// publicly available
+>>>>>>> v0.0.4
 	UserinfoProfileScope = "https://www.googleapis.com/auth/userinfo.profile"
 )
 
@@ -114,7 +121,10 @@ func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, err
 	scopesOption := option.WithScopes(
 		"https://www.googleapis.com/auth/contacts",
 		"https://www.googleapis.com/auth/contacts.readonly",
+<<<<<<< HEAD
 		"https://www.googleapis.com/auth/plus.login",
+=======
+>>>>>>> v0.0.4
 		"https://www.googleapis.com/auth/user.addresses.read",
 		"https://www.googleapis.com/auth/user.birthday.read",
 		"https://www.googleapis.com/auth/user.emails.read",
@@ -547,6 +557,7 @@ func (s *ContactGroup) MarshalJSON() ([]byte, error) {
 
 // ContactGroupMembership: A Google contact group membership.
 type ContactGroupMembership struct {
+<<<<<<< HEAD
 	// ContactGroupId: The contact group ID for the contact group
 	// membership. The contact group
 	// ID can be custom or one of these predefined values:
@@ -556,6 +567,23 @@ type ContactGroupMembership struct {
 	// *  A numerical ID for user-created groups.
 	ContactGroupId string `json:"contactGroupId,omitempty"`
 
+=======
+	// ContactGroupId: The read-only contact group ID for the contact group
+	// membership.
+	ContactGroupId string `json:"contactGroupId,omitempty"`
+
+	// ContactGroupResourceName: The resource name for the contact group,
+	// assigned by the server. An ASCII
+	// string, in the form of
+	// `contactGroups/`<var>contact_group_id</var>.
+	// Only contact_group_resource_name can be used for modifying
+	// memberships.
+	// Any contact group membership can be removed, but only user group
+	// or
+	// "myContacts" or "starred" system groups memberships can be added.
+	ContactGroupResourceName string `json:"contactGroupResourceName,omitempty"`
+
+>>>>>>> v0.0.4
 	// ForceSendFields is a list of field names (e.g. "ContactGroupId") to
 	// unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,
@@ -769,10 +797,16 @@ func (s *Date) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+<<<<<<< HEAD
 // DomainMembership: A Google Apps Domain membership.
 type DomainMembership struct {
 	// InViewerDomain: True if the person is in the viewer's Google Apps
 	// domain.
+=======
+// DomainMembership: A read-only G Suite Domain membership.
+type DomainMembership struct {
+	// InViewerDomain: True if the person is in the viewer's G Suite domain.
+>>>>>>> v0.0.4
 	InViewerDomain bool `json:"inViewerDomain,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "InViewerDomain") to
@@ -1246,12 +1280,22 @@ func (s *Locale) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+<<<<<<< HEAD
 // Membership: A person's read-only membership in a group.
+=======
+// Membership: A person's membership in a group. Only contact group
+// memberships can be
+// modified.
+>>>>>>> v0.0.4
 type Membership struct {
 	// ContactGroupMembership: The contact group membership.
 	ContactGroupMembership *ContactGroupMembership `json:"contactGroupMembership,omitempty"`
 
+<<<<<<< HEAD
 	// DomainMembership: The domain membership.
+=======
+	// DomainMembership: The read-only domain membership.
+>>>>>>> v0.0.4
 	DomainMembership *DomainMembership `json:"domainMembership,omitempty"`
 
 	// Metadata: Metadata about the membership.
@@ -1286,7 +1330,11 @@ func (s *Membership) MarshalJSON() ([]byte, error) {
 // contact group's members. Contacts can be
 // removed from any group but they can only be added to a user group
 // or
+<<<<<<< HEAD
 // myContacts or starred system groups.
+=======
+// "myContacts" or "starred" system groups.
+>>>>>>> v0.0.4
 type ModifyContactGroupMembersRequest struct {
 	// ResourceNamesToAdd: The resource names of the contact people to add
 	// in the form of in the form
@@ -1654,7 +1702,11 @@ type Person struct {
 	// Locales: The person's locale preferences.
 	Locales []*Locale `json:"locales,omitempty"`
 
+<<<<<<< HEAD
 	// Memberships: The person's read-only group memberships.
+=======
+	// Memberships: The person's group memberships.
+>>>>>>> v0.0.4
 	Memberships []*Membership `json:"memberships,omitempty"`
 
 	// Metadata: Read-only metadata about the person.
@@ -1973,7 +2025,11 @@ type ProfileMetadata struct {
 	//   "USER_TYPE_UNKNOWN" - The user type is not known.
 	//   "GOOGLE_USER" - The user is a Google user.
 	//   "GPLUS_USER" - The user is a Google+ user.
+<<<<<<< HEAD
 	//   "GOOGLE_APPS_USER" - The user is a Google Apps for Work user.
+=======
+	//   "GOOGLE_APPS_USER" - The user is a G Suite user.
+>>>>>>> v0.0.4
 	UserTypes []string `json:"userTypes,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "ObjectType") to
@@ -2298,8 +2354,13 @@ type Source struct {
 	// profile at https://profiles.google.com/<var>id</var>
 	// where
 	// <var>id</var> is the source id.
+<<<<<<< HEAD
 	//   "DOMAIN_PROFILE" - [Google Apps domain
 	// profile](https://admin.google.com).
+=======
+	//   "DOMAIN_PROFILE" - [G Suite domain
+	// profile](https://support.google.com/a/answer/1628008).
+>>>>>>> v0.0.4
 	//   "CONTACT" - [Google contact](https://contacts.google.com). You can
 	// view the
 	// contact at https://contact.google.com/<var>id</var> where
@@ -4143,7 +4204,10 @@ func (c *PeopleGetCall) Do(opts ...googleapi.CallOption) (*Person, error) {
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/contacts",
 	//     "https://www.googleapis.com/auth/contacts.readonly",
+<<<<<<< HEAD
 	//     "https://www.googleapis.com/auth/plus.login",
+=======
+>>>>>>> v0.0.4
 	//     "https://www.googleapis.com/auth/user.addresses.read",
 	//     "https://www.googleapis.com/auth/user.birthday.read",
 	//     "https://www.googleapis.com/auth/user.emails.read",
@@ -4375,7 +4439,10 @@ func (c *PeopleGetBatchGetCall) Do(opts ...googleapi.CallOption) (*GetPeopleResp
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/contacts",
 	//     "https://www.googleapis.com/auth/contacts.readonly",
+<<<<<<< HEAD
 	//     "https://www.googleapis.com/auth/plus.login",
+=======
+>>>>>>> v0.0.4
 	//     "https://www.googleapis.com/auth/user.addresses.read",
 	//     "https://www.googleapis.com/auth/user.birthday.read",
 	//     "https://www.googleapis.com/auth/user.emails.read",
@@ -4439,6 +4506,10 @@ func (r *PeopleService) UpdateContact(resourceName string, person *Person) *Peop
 // * imClients
 // * interests
 // * locales
+<<<<<<< HEAD
+=======
+// * memberships
+>>>>>>> v0.0.4
 // * names
 // * nicknames
 // * occupations
@@ -4560,7 +4631,11 @@ func (c *PeopleUpdateContactCall) Do(opts ...googleapi.CallOption) (*Person, err
 	//       "type": "string"
 	//     },
 	//     "updatePersonFields": {
+<<<<<<< HEAD
 	//       "description": "**Required.** A field mask to restrict which fields on the person are\nupdated. Multiple fields can be specified by separating them with commas.\nAll updated fields will be replaced. Valid values are:\n\n* addresses\n* biographies\n* birthdays\n* emailAddresses\n* events\n* genders\n* imClients\n* interests\n* locales\n* names\n* nicknames\n* occupations\n* organizations\n* phoneNumbers\n* relations\n* residences\n* sipAddresses\n* urls\n* userDefined",
+=======
+	//       "description": "**Required.** A field mask to restrict which fields on the person are\nupdated. Multiple fields can be specified by separating them with commas.\nAll updated fields will be replaced. Valid values are:\n\n* addresses\n* biographies\n* birthdays\n* emailAddresses\n* events\n* genders\n* imClients\n* interests\n* locales\n* memberships\n* names\n* nicknames\n* occupations\n* organizations\n* phoneNumbers\n* relations\n* residences\n* sipAddresses\n* urls\n* userDefined",
+>>>>>>> v0.0.4
 	//       "format": "google-fieldmask",
 	//       "location": "query",
 	//       "type": "string"

@@ -1,6 +1,7 @@
 apiVersion: tf.tungstenfabric.io/v1alpha1
 kind: ZookeeperCluster
 metadata:
+<<<<<<< HEAD
   name: zookeeper-cluster-1
 spec:
   size: 1
@@ -9,3 +10,17 @@ spec:
   imagepullpolicy: "Always"
   zookeeperport: "2181"
   zookeeperports: "2888:3888"
+=======
+  name: cluster-1
+spec:
+  type: deployment
+  containers:
+    - name: zookeeper
+      logvolumepath: "/var/log/zookeeker"
+      datavolumepath: "/var/lib/zookeeper"
+      resourceconfigmap: true
+  initcontainers:
+    - name: init
+      statusvolume: true
+      command: ["sh","-c","until grep ready /tmp/podinfo/pod_labels > /dev/null 2>&1; do sleep 1; done"]   
+>>>>>>> v0.0.4

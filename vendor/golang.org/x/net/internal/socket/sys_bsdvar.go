@@ -2,7 +2,11 @@
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
+<<<<<<< HEAD
 // +build freebsd netbsd openbsd
+=======
+// +build aix freebsd netbsd openbsd
+>>>>>>> v0.0.4
 
 package socket
 
@@ -15,6 +19,12 @@ func probeProtocolStack() int {
 	if (runtime.GOOS == "netbsd" || runtime.GOOS == "openbsd") && runtime.GOARCH == "arm" {
 		return 8
 	}
+<<<<<<< HEAD
+=======
+	if runtime.GOOS == "aix" {
+		return 1
+	}
+>>>>>>> v0.0.4
 	var p uintptr
 	return int(unsafe.Sizeof(p))
 }

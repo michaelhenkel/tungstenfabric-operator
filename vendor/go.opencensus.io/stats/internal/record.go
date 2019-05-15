@@ -19,7 +19,11 @@ import (
 )
 
 // DefaultRecorder will be called for each Record call.
+<<<<<<< HEAD
 var DefaultRecorder func(tags *tag.Map, measurement interface{}, attachments map[string]string)
+=======
+var DefaultRecorder func(tags *tag.Map, measurement interface{}, attachments map[string]interface{})
+>>>>>>> v0.0.4
 
 // SubscriptionReporter reports when a view subscribed with a measure.
 var SubscriptionReporter func(measure string)

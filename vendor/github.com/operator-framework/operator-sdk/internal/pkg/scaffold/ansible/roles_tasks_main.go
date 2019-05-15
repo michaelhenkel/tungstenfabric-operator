@@ -34,10 +34,18 @@ func (r *RolesTasksMain) GetInput() (input.Input, error) {
 		r.Path = filepath.Join(RolesDir, r.Resource.LowerKind, RolesTasksMainFile)
 	}
 	r.TemplateBody = rolesTasksMainAnsibleTmpl
+<<<<<<< HEAD
+=======
+	r.Delims = AnsibleDelims
+>>>>>>> v0.0.4
 
 	return r.Input, nil
 }
 
 const rolesTasksMainAnsibleTmpl = `---
+<<<<<<< HEAD
 # tasks file for {{.Resource.LowerKind}}
+=======
+# tasks file for [[.Resource.LowerKind]]
+>>>>>>> v0.0.4
 `

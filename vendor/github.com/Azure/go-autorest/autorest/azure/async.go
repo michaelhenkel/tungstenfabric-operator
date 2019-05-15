@@ -45,6 +45,7 @@ var pollingCodes = [...]int{http.StatusNoContent, http.StatusAccepted, http.Stat
 // Future provides a mechanism to access the status and results of an asynchronous request.
 // Since futures are stateful they should be passed by value to avoid race conditions.
 type Future struct {
+<<<<<<< HEAD
 	req *http.Request // legacy
 	pt  pollingTracker
 }
@@ -53,6 +54,9 @@ type Future struct {
 // Deprecated: Please use NewFutureFromResponse instead.
 func NewFuture(req *http.Request) Future {
 	return Future{req: req}
+=======
+	pt pollingTracker
+>>>>>>> v0.0.4
 }
 
 // NewFutureFromResponse returns a new Future object initialized
@@ -86,12 +90,15 @@ func (f Future) PollingMethod() PollingMethodType {
 	return f.pt.pollingMethod()
 }
 
+<<<<<<< HEAD
 // Done queries the service to see if the operation has completed.
 // Deprecated: Use DoneWithContext()
 func (f *Future) Done(sender autorest.Sender) (bool, error) {
 	return f.DoneWithContext(context.Background(), sender)
 }
 
+=======
+>>>>>>> v0.0.4
 // DoneWithContext queries the service to see if the operation has completed.
 func (f *Future) DoneWithContext(ctx context.Context, sender autorest.Sender) (done bool, err error) {
 	ctx = tracing.StartSpan(ctx, "github.com/Azure/go-autorest/autorest/azure/async.DoneWithContext")
@@ -104,6 +111,7 @@ func (f *Future) DoneWithContext(ctx context.Context, sender autorest.Sender) (d
 		tracing.EndSpan(ctx, sc, err)
 	}()
 
+<<<<<<< HEAD
 	// support for legacy Future implementation
 	if f.req != nil {
 		resp, err := sender.Do(f.req)
@@ -118,6 +126,8 @@ func (f *Future) DoneWithContext(ctx context.Context, sender autorest.Sender) (d
 		f.req = nil
 	}
 	// end legacy
+=======
+>>>>>>> v0.0.4
 	if f.pt == nil {
 		return false, autorest.NewError("Future", "Done", "future is not initialized")
 	}
@@ -168,6 +178,7 @@ func (f Future) GetPollingDelay() (time.Duration, bool) {
 	return d, true
 }
 
+<<<<<<< HEAD
 // WaitForCompletion will return when one of the following conditions is met: the long
 // running operation has completed, the provided context is cancelled, or the client's
 // polling duration has been exceeded.  It will retry failed polling attempts based on
@@ -177,6 +188,8 @@ func (f Future) WaitForCompletion(ctx context.Context, client autorest.Client) e
 	return f.WaitForCompletionRef(ctx, client)
 }
 
+=======
+>>>>>>> v0.0.4
 // WaitForCompletionRef will return when one of the following conditions is met: the long
 // running operation has completed, the provided context is cancelled, or the client's
 // polling duration has been exceeded.  It will retry failed polling attempts based on
@@ -919,6 +932,7 @@ func isValidURL(s string) bool {
 	return err == nil && u.IsAbs()
 }
 
+<<<<<<< HEAD
 // DoPollForAsynchronous returns a SendDecorator that polls if the http.Response is for an Azure
 // long-running operation. It will delay between requests for the duration specified in the
 // RetryAfter header or, if the header is absent, the passed delay. Polling may be canceled via
@@ -956,6 +970,8 @@ func DoPollForAsynchronous(delay time.Duration) autorest.SendDecorator {
 	}
 }
 
+=======
+>>>>>>> v0.0.4
 // PollingMethodType defines a type used for enumerating polling mechanisms.
 type PollingMethodType string
 

@@ -14,11 +14,19 @@ import (
 	"strings"
 	"unicode/utf8"
 
+<<<<<<< HEAD
 	"golang.org/x/text/internal"
 	"golang.org/x/text/internal/gen"
 	"golang.org/x/text/internal/number"
 	"golang.org/x/text/internal/stringset"
 	"golang.org/x/text/language"
+=======
+	"golang.org/x/text/internal/gen"
+	"golang.org/x/text/internal/language"
+	"golang.org/x/text/internal/language/compact"
+	"golang.org/x/text/internal/number"
+	"golang.org/x/text/internal/stringset"
+>>>>>>> v0.0.4
 	"golang.org/x/text/unicode/cldr"
 )
 
@@ -151,19 +159,31 @@ func genSymbols(w *gen.CodeWriter, data *cldr.CLDR) {
 	type symbols [NumSymbolTypes]string
 
 	type key struct {
+<<<<<<< HEAD
 		tag    int // from language.CompactIndex
+=======
+		tag    compact.ID
+>>>>>>> v0.0.4
 		system system
 	}
 	symbolMap := map[key]*symbols{}
 
+<<<<<<< HEAD
 	defaults := map[int]system{}
+=======
+	defaults := map[compact.ID]system{}
+>>>>>>> v0.0.4
 
 	for _, lang := range data.Locales() {
 		ldml := data.RawLDML(lang)
 		if ldml.Numbers == nil {
 			continue
 		}
+<<<<<<< HEAD
 		langIndex, ok := language.CompactIndex(language.MustParse(lang))
+=======
+		langIndex, ok := compact.FromTag(language.MustParse(lang))
+>>>>>>> v0.0.4
 		if !ok {
 			log.Fatalf("No compact index for language %s", lang)
 		}
@@ -213,7 +233,11 @@ func genSymbols(w *gen.CodeWriter, data *cldr.CLDR) {
 		for t := SymDecimal; t < NumSymbolTypes; t++ {
 			p := k.tag
 			for syms[t] == "" {
+<<<<<<< HEAD
 				p = int(internal.Parent[p])
+=======
+				p = p.Parent()
+>>>>>>> v0.0.4
 				if pSyms, ok := symbolMap[key{p, k.system}]; ok && (*pSyms)[t] != "" {
 					syms[t] = (*pSyms)[t]
 					break
@@ -234,7 +258,11 @@ func genSymbols(w *gen.CodeWriter, data *cldr.CLDR) {
 
 	for ns := system(0); ns < nNumberSystems; ns++ {
 		for _, l := range data.Locales() {
+<<<<<<< HEAD
 			langIndex, _ := language.CompactIndex(language.MustParse(l))
+=======
+			langIndex, _ := compact.FromTag(language.MustParse(l))
+>>>>>>> v0.0.4
 			s := symbolMap[key{langIndex, ns}]
 			if s == nil {
 				continue
@@ -255,7 +283,11 @@ func genSymbols(w *gen.CodeWriter, data *cldr.CLDR) {
 
 	// resolveSymbolIndex gets the index from the closest matching locale,
 	// including the locale itself.
+<<<<<<< HEAD
 	resolveSymbolIndex := func(langIndex int, ns system) symOffset {
+=======
+	resolveSymbolIndex := func(langIndex compact.ID, ns system) symOffset {
+>>>>>>> v0.0.4
 		for {
 			if sym := symbolMap[key{langIndex, ns}]; sym != nil {
 				return symOffset(m[*sym])
@@ -263,22 +295,36 @@ func genSymbols(w *gen.CodeWriter, data *cldr.CLDR) {
 			if langIndex == 0 {
 				return 0 // und, latn
 			}
+<<<<<<< HEAD
 			langIndex = int(internal.Parent[langIndex])
+=======
+			langIndex = langIndex.Parent()
+>>>>>>> v0.0.4
 		}
 	}
 
 	// Create an index with the symbols for each locale for the latn numbering
 	// system. If this is not the default, or the only one, for a locale, we
 	// will overwrite the value later.
+<<<<<<< HEAD
 	var langToDefaults [language.NumCompactTags]symOffset
 	for _, l := range data.Locales() {
 		langIndex, _ := language.CompactIndex(language.MustParse(l))
+=======
+	var langToDefaults [compact.NumCompactTags]symOffset
+	for _, l := range data.Locales() {
+		langIndex, _ := compact.FromTag(language.MustParse(l))
+>>>>>>> v0.0.4
 		langToDefaults[langIndex] = resolveSymbolIndex(langIndex, 0)
 	}
 
 	// Delete redundant entries.
 	for _, l := range data.Locales() {
+<<<<<<< HEAD
 		langIndex, _ := language.CompactIndex(language.MustParse(l))
+=======
+		langIndex, _ := compact.FromTag(language.MustParse(l))
+>>>>>>> v0.0.4
 		def := defaults[langIndex]
 		syms := symbolMap[key{langIndex, def}]
 		if syms == nil {
@@ -298,7 +344,11 @@ func genSymbols(w *gen.CodeWriter, data *cldr.CLDR) {
 	// be referenced if a user specified an alternative numbering system.
 	var langToAlt []altSymData
 	for _, l := range data.Locales() {
+<<<<<<< HEAD
 		langIndex, _ := language.CompactIndex(language.MustParse(l))
+=======
+		langIndex, _ := compact.FromTag(language.MustParse(l))
+>>>>>>> v0.0.4
 		start := len(langToAlt)
 		if start >= hasNonLatnMask {
 			log.Fatalf("Number of alternative assignments >= %x", hasNonLatnMask)
@@ -306,7 +356,11 @@ func genSymbols(w *gen.CodeWriter, data *cldr.CLDR) {
 		// Create the entry for the default value.
 		def := defaults[langIndex]
 		langToAlt = append(langToAlt, altSymData{
+<<<<<<< HEAD
 			compactTag: uint16(langIndex),
+=======
+			compactTag: langIndex,
+>>>>>>> v0.0.4
 			system:     def,
 			symIndex:   resolveSymbolIndex(langIndex, def),
 		})
@@ -317,7 +371,11 @@ func genSymbols(w *gen.CodeWriter, data *cldr.CLDR) {
 			}
 			if sym := symbolMap[key{langIndex, ns}]; sym != nil {
 				langToAlt = append(langToAlt, altSymData{
+<<<<<<< HEAD
 					compactTag: uint16(langIndex),
+=======
+					compactTag: langIndex,
+>>>>>>> v0.0.4
 					system:     ns,
 					symIndex:   resolveSymbolIndex(langIndex, ns),
 				})
@@ -361,16 +419,26 @@ func genFormats(w *gen.CodeWriter, data *cldr.CLDR) {
 
 	// TODO: It would be possible to eliminate two of these slices by having
 	// another indirection and store a reference to the combination of patterns.
+<<<<<<< HEAD
 	decimal := make([]byte, language.NumCompactTags)
 	scientific := make([]byte, language.NumCompactTags)
 	percent := make([]byte, language.NumCompactTags)
+=======
+	decimal := make([]byte, compact.NumCompactTags)
+	scientific := make([]byte, compact.NumCompactTags)
+	percent := make([]byte, compact.NumCompactTags)
+>>>>>>> v0.0.4
 
 	for _, lang := range data.Locales() {
 		ldml := data.RawLDML(lang)
 		if ldml.Numbers == nil {
 			continue
 		}
+<<<<<<< HEAD
 		langIndex, ok := language.CompactIndex(language.MustParse(lang))
+=======
+		langIndex, ok := compact.FromTag(language.MustParse(lang))
+>>>>>>> v0.0.4
 		if !ok {
 			log.Fatalf("No compact index for language %s", lang)
 		}
@@ -440,8 +508,13 @@ func genFormats(w *gen.CodeWriter, data *cldr.CLDR) {
 	// indicates an unspecified value.
 	for _, data := range [][]byte{decimal, scientific, percent} {
 		for i := range data {
+<<<<<<< HEAD
 			p := uint16(i)
 			for ; data[p] == 0; p = internal.Parent[p] {
+=======
+			p := compact.ID(i)
+			for ; data[p] == 0; p = p.Parent() {
+>>>>>>> v0.0.4
 			}
 			data[i] = data[p]
 		}

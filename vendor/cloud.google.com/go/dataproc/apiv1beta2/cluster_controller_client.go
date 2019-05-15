@@ -399,6 +399,7 @@ func (op *CreateClusterOperation) Name() string {
 	return op.lro.Name()
 }
 
+<<<<<<< HEAD
 // Delete deletes a long-running operation.
 // This method indicates that the client is no longer interested in the operation result.
 // It does not cancel the operation.
@@ -406,6 +407,8 @@ func (op *CreateClusterOperation) Delete(ctx context.Context, opts ...gax.CallOp
 	return op.lro.Delete(ctx, opts...)
 }
 
+=======
+>>>>>>> v0.0.4
 // DeleteClusterOperation manages a long-running operation from DeleteCluster.
 type DeleteClusterOperation struct {
 	lro *longrunning.Operation
@@ -462,6 +465,7 @@ func (op *DeleteClusterOperation) Name() string {
 	return op.lro.Name()
 }
 
+<<<<<<< HEAD
 // Delete deletes a long-running operation.
 // This method indicates that the client is no longer interested in the operation result.
 // It does not cancel the operation.
@@ -469,6 +473,8 @@ func (op *DeleteClusterOperation) Delete(ctx context.Context, opts ...gax.CallOp
 	return op.lro.Delete(ctx, opts...)
 }
 
+=======
+>>>>>>> v0.0.4
 // DiagnoseClusterOperation manages a long-running operation from DiagnoseCluster.
 type DiagnoseClusterOperation struct {
 	lro *longrunning.Operation
@@ -525,6 +531,7 @@ func (op *DiagnoseClusterOperation) Name() string {
 	return op.lro.Name()
 }
 
+<<<<<<< HEAD
 // Delete deletes a long-running operation.
 // This method indicates that the client is no longer interested in the operation result.
 // It does not cancel the operation.
@@ -532,6 +539,8 @@ func (op *DiagnoseClusterOperation) Delete(ctx context.Context, opts ...gax.Call
 	return op.lro.Delete(ctx, opts...)
 }
 
+=======
+>>>>>>> v0.0.4
 // UpdateClusterOperation manages a long-running operation from UpdateCluster.
 type UpdateClusterOperation struct {
 	lro *longrunning.Operation
@@ -600,6 +609,7 @@ func (op *UpdateClusterOperation) Done() bool {
 func (op *UpdateClusterOperation) Name() string {
 	return op.lro.Name()
 }
+<<<<<<< HEAD
 
 // Delete deletes a long-running operation.
 // This method indicates that the client is no longer interested in the operation result.
@@ -607,3 +617,5 @@ func (op *UpdateClusterOperation) Name() string {
 func (op *UpdateClusterOperation) Delete(ctx context.Context, opts ...gax.CallOption) error {
 	return op.lro.Delete(ctx, opts...)
 }
+=======
+>>>>>>> v0.0.4

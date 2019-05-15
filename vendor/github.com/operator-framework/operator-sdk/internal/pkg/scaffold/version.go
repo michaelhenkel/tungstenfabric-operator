@@ -20,7 +20,14 @@ import (
 	"github.com/operator-framework/operator-sdk/internal/pkg/scaffold/input"
 )
 
+<<<<<<< HEAD
 const VersionFile = "version.go"
+=======
+const (
+	VersionDir  = "version"
+	VersionFile = "version.go"
+)
+>>>>>>> v0.0.4
 
 type Version struct {
 	input.Input

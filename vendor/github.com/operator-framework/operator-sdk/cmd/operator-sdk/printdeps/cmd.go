@@ -18,6 +18,12 @@ import (
 	"fmt"
 
 	"github.com/operator-framework/operator-sdk/internal/pkg/scaffold"
+<<<<<<< HEAD
+=======
+	"github.com/operator-framework/operator-sdk/internal/pkg/scaffold/ansible"
+	"github.com/operator-framework/operator-sdk/internal/pkg/scaffold/helm"
+	"github.com/operator-framework/operator-sdk/internal/util/projutil"
+>>>>>>> v0.0.4
 
 	"github.com/spf13/cobra"
 )
@@ -47,10 +53,46 @@ func printDepsFunc(cmd *cobra.Command, args []string) error {
 	if len(args) != 0 {
 		return fmt.Errorf("command %s doesn't accept any arguments", cmd.CommandPath())
 	}
+<<<<<<< HEAD
 	if asFile {
 		scaffold.PrintDepsAsFile()
 	} else if err := scaffold.PrintDeps(); err != nil {
+=======
+
+	if err := printDeps(asFile); err != nil {
+>>>>>>> v0.0.4
 		return fmt.Errorf("print deps failed: (%v)", err)
 	}
 	return nil
 }
+<<<<<<< HEAD
+=======
+
+func printDeps(asFile bool) error {
+	// Make sure the project has a dep manager file.
+	mt, err := projutil.GetDepManagerType()
+	if err != nil {
+		return err
+	}
+	isDep := mt == projutil.DepManagerDep
+
+	// Migrated Ansible and Helm projects will be of type OperatorTypeGo but
+	// their deps files will differ from a vanilla Go project.
+	switch {
+	case projutil.IsOperatorAnsible():
+		if isDep {
+			return ansible.PrintDepGopkgTOML(asFile)
+		}
+	case projutil.IsOperatorHelm():
+		if isDep {
+			return helm.PrintDepGopkgTOML(asFile)
+		}
+	case projutil.IsOperatorGo():
+		if isDep {
+			return scaffold.PrintDepGopkgTOML(asFile)
+		}
+	}
+
+	return projutil.ErrUnknownOperatorType{}
+}
+>>>>>>> v0.0.4

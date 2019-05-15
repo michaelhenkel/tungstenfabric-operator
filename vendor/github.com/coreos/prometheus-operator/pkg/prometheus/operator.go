@@ -16,6 +16,10 @@ package prometheus
 
 import (
 	"bytes"
+<<<<<<< HEAD
+=======
+	"compress/gzip"
+>>>>>>> v0.0.4
 	"fmt"
 	"reflect"
 	"strings"
@@ -43,6 +47,10 @@ import (
 	"k8s.io/apimachinery/pkg/runtime"
 	utilruntime "k8s.io/apimachinery/pkg/util/runtime"
 	"k8s.io/client-go/kubernetes"
+<<<<<<< HEAD
+=======
+	corev1client "k8s.io/client-go/kubernetes/typed/core/v1"
+>>>>>>> v0.0.4
 	"k8s.io/client-go/rest"
 	"k8s.io/client-go/tools/cache"
 	"k8s.io/client-go/util/workqueue"
@@ -134,6 +142,11 @@ type Config struct {
 	TLSInsecure                  bool
 	TLSConfig                    rest.TLSClientConfig
 	ConfigReloaderImage          string
+<<<<<<< HEAD
+=======
+	ConfigReloaderCPU            string
+	ConfigReloaderMemory         string
+>>>>>>> v0.0.4
 	PrometheusConfigReloader     string
 	AlertmanagerDefaultBaseImage string
 	PrometheusDefaultBaseImage   string
@@ -1013,6 +1026,7 @@ func (c *Operator) sync(key string) error {
 		return err
 	}
 
+<<<<<<< HEAD
 	if !exists {
 		level.Debug(c.logger).Log("msg", "no current Prometheus statefulset found")
 		sset, err := makeStatefulSet(*p, "", &c.config, ruleConfigMapNames, newSSetInputHash)
@@ -1020,6 +1034,15 @@ func (c *Operator) sync(key string) error {
 			return errors.Wrap(err, "making statefulset failed")
 		}
 
+=======
+	sset, err := makeStatefulSet(*p, &c.config, ruleConfigMapNames, newSSetInputHash)
+	if err != nil {
+		return errors.Wrap(err, "making statefulset failed")
+	}
+
+	if !exists {
+		level.Debug(c.logger).Log("msg", "no current Prometheus statefulset found")
+>>>>>>> v0.0.4
 		level.Debug(c.logger).Log("msg", "creating Prometheus statefulset")
 		if _, err := ssetClient.Create(sset); err != nil {
 			return errors.Wrap(err, "creating statefulset failed")
@@ -1033,11 +1056,14 @@ func (c *Operator) sync(key string) error {
 		return nil
 	}
 
+<<<<<<< HEAD
 	sset, err := makeStatefulSet(*p, obj.(*appsv1.StatefulSet).Spec.PodManagementPolicy, &c.config, ruleConfigMapNames, newSSetInputHash)
 	if err != nil {
 		return errors.Wrap(err, "making statefulset failed")
 	}
 
+=======
+>>>>>>> v0.0.4
 	level.Debug(c.logger).Log("msg", "updating current Prometheus statefulset")
 
 	_, err = ssetClient.Update(sset)
@@ -1159,13 +1185,59 @@ func loadAdditionalScrapeConfigsSecret(additionalScrapeConfigs *v1.SecretKeySele
 	return nil, nil
 }
 
+<<<<<<< HEAD
 func loadBasicAuthSecret(basicAuth *monitoringv1.BasicAuth, s *v1.SecretList) (BasicAuthCredentials, error) {
 	var username string
 	var password string
+=======
+func extractCredKey(secret *v1.Secret, sel v1.SecretKeySelector, cred string) (string, error) {
+	if s, ok := secret.Data[sel.Key]; ok {
+		return string(s), nil
+	}
+	return "", fmt.Errorf("secret %s key %q in secret %q not found", cred, sel.Key, sel.Name)
+}
+
+func getCredFromSecret(c corev1client.SecretInterface, sel v1.SecretKeySelector, cred string, cacheKey string, cache map[string]*v1.Secret) (_ string, err error) {
+	var s *v1.Secret
+	var ok bool
+
+	if s, ok = cache[cacheKey]; !ok {
+		if s, err = c.Get(sel.Name, metav1.GetOptions{}); err != nil {
+			return "", fmt.Errorf("unable to fetch %s secret %q: %s", cred, sel.Name, err)
+		}
+		cache[cacheKey] = s
+	}
+	return extractCredKey(s, sel, cred)
+}
+
+func loadBasicAuthSecretFromAPI(basicAuth *monitoringv1.BasicAuth, c corev1client.CoreV1Interface, ns string, cache map[string]*v1.Secret) (BasicAuthCredentials, error) {
+	var username string
+	var password string
+	var err error
+
+	sClient := c.Secrets(ns)
+
+	if username, err = getCredFromSecret(sClient, basicAuth.Username, "username", ns+"/"+basicAuth.Username.Name, cache); err != nil {
+		return BasicAuthCredentials{}, err
+	}
+
+	if password, err = getCredFromSecret(sClient, basicAuth.Password, "password", ns+"/"+basicAuth.Password.Name, cache); err != nil {
+		return BasicAuthCredentials{}, err
+	}
+
+	return BasicAuthCredentials{username: username, password: password}, nil
+}
+
+func loadBasicAuthSecret(basicAuth *monitoringv1.BasicAuth, s *v1.SecretList) (BasicAuthCredentials, error) {
+	var username string
+	var password string
+	var err error
+>>>>>>> v0.0.4
 
 	for _, secret := range s.Items {
 
 		if secret.Name == basicAuth.Username.Name {
+<<<<<<< HEAD
 
 			if u, ok := secret.Data[basicAuth.Username.Key]; ok {
 				username = string(u)
@@ -1181,6 +1253,16 @@ func loadBasicAuthSecret(basicAuth *monitoringv1.BasicAuth, s *v1.SecretList) (B
 				password = string(p)
 			} else {
 				return BasicAuthCredentials{}, fmt.Errorf("secret password key %q in secret %q not found", basicAuth.Password.Key, secret.Name)
+=======
+			if username, err = extractCredKey(&secret, basicAuth.Username, "username"); err != nil {
+				return BasicAuthCredentials{}, err
+			}
+		}
+
+		if secret.Name == basicAuth.Password.Name {
+			if password, err = extractCredKey(&secret, basicAuth.Password, "password"); err != nil {
+				return BasicAuthCredentials{}, err
+>>>>>>> v0.0.4
 			}
 
 		}
@@ -1197,6 +1279,18 @@ func loadBasicAuthSecret(basicAuth *monitoringv1.BasicAuth, s *v1.SecretList) (B
 
 }
 
+<<<<<<< HEAD
+=======
+func gzipConfig(buf *bytes.Buffer, conf []byte) error {
+	w := gzip.NewWriter(buf)
+	defer w.Close()
+	if _, err := w.Write(conf); err != nil {
+		return err
+	}
+	return nil
+}
+
+>>>>>>> v0.0.4
 func (c *Operator) loadBasicAuthSecrets(
 	mons map[string]*monitoringv1.ServiceMonitor,
 	remoteReads []monitoringv1.RemoteReadSpec,
@@ -1205,6 +1299,7 @@ func (c *Operator) loadBasicAuthSecrets(
 	SecretsInPromNS *v1.SecretList,
 ) (map[string]BasicAuthCredentials, error) {
 
+<<<<<<< HEAD
 	sMonSecretMap := make(map[string]*v1.SecretList)
 	for _, mon := range mons {
 		smNamespace := mon.Namespace
@@ -1224,6 +1319,14 @@ func (c *Operator) loadBasicAuthSecrets(
 		for i, ep := range mon.Spec.Endpoints {
 			if ep.BasicAuth != nil {
 				credentials, err := loadBasicAuthSecret(ep.BasicAuth, sMonSecretMap[mon.Namespace])
+=======
+	secrets := map[string]BasicAuthCredentials{}
+	nsSecretCache := make(map[string]*v1.Secret)
+	for _, mon := range mons {
+		for i, ep := range mon.Spec.Endpoints {
+			if ep.BasicAuth != nil {
+				credentials, err := loadBasicAuthSecretFromAPI(ep.BasicAuth, c.kclient.CoreV1(), mon.Namespace, nsSecretCache)
+>>>>>>> v0.0.4
 				if err != nil {
 					return nil, fmt.Errorf("could not generate basicAuth for servicemonitor %s. %s", mon.Name, err)
 				}
@@ -1313,7 +1416,17 @@ func (c *Operator) createOrUpdateConfigurationSecret(p *monitoringv1.Prometheus,
 	s.ObjectMeta.Annotations = map[string]string{
 		"generated": "true",
 	}
+<<<<<<< HEAD
 	s.Data[configFilename] = []byte(conf)
+=======
+
+	// Compress config to avoid 1mb secret limit for a while
+	var buf bytes.Buffer
+	if err = gzipConfig(&buf, conf); err != nil {
+		return errors.Wrap(err, "couldnt gzip config")
+	}
+	s.Data[configFilename] = buf.Bytes()
+>>>>>>> v0.0.4
 
 	curSecret, err := sClient.Get(s.Name, metav1.GetOptions{})
 	if apierrors.IsNotFound(err) {

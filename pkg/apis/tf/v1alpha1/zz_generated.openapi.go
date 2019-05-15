@@ -13,6 +13,7 @@ import (
 
 func GetOpenAPIDefinitions(ref common.ReferenceCallback) map[string]common.OpenAPIDefinition {
 	return map[string]common.OpenAPIDefinition{
+<<<<<<< HEAD
 		"github.com/michaelhenkel/tungstenfabric-operator/pkg/apis/tf/v1alpha1.CassandraCluster":       schema_pkg_apis_tf_v1alpha1_CassandraCluster(ref),
 		"github.com/michaelhenkel/tungstenfabric-operator/pkg/apis/tf/v1alpha1.CassandraClusterSpec":   schema_pkg_apis_tf_v1alpha1_CassandraClusterSpec(ref),
 		"github.com/michaelhenkel/tungstenfabric-operator/pkg/apis/tf/v1alpha1.CassandraClusterStatus": schema_pkg_apis_tf_v1alpha1_CassandraClusterStatus(ref),
@@ -36,6 +37,22 @@ func schema_pkg_apis_tf_v1alpha1_CassandraCluster(ref common.ReferenceCallback) 
 		Schema: spec.Schema{
 			SchemaProps: spec.SchemaProps{
 				Description: "CassandraCluster is the Schema for the cassandraclusters API",
+=======
+		"github.com/michaelhenkel/tungstenfabric-operator/pkg/apis/tf/v1alpha1.TungstenfabricConfig":       schema_pkg_apis_tf_v1alpha1_TungstenfabricConfig(ref),
+		"github.com/michaelhenkel/tungstenfabric-operator/pkg/apis/tf/v1alpha1.TungstenfabricConfigSpec":   schema_pkg_apis_tf_v1alpha1_TungstenfabricConfigSpec(ref),
+		"github.com/michaelhenkel/tungstenfabric-operator/pkg/apis/tf/v1alpha1.TungstenfabricConfigStatus": schema_pkg_apis_tf_v1alpha1_TungstenfabricConfigStatus(ref),
+		"github.com/michaelhenkel/tungstenfabric-operator/pkg/apis/tf/v1alpha1.Vrouter":                    schema_pkg_apis_tf_v1alpha1_Vrouter(ref),
+		"github.com/michaelhenkel/tungstenfabric-operator/pkg/apis/tf/v1alpha1.VrouterSpec":                schema_pkg_apis_tf_v1alpha1_VrouterSpec(ref),
+		"github.com/michaelhenkel/tungstenfabric-operator/pkg/apis/tf/v1alpha1.VrouterStatus":              schema_pkg_apis_tf_v1alpha1_VrouterStatus(ref),
+	}
+}
+
+func schema_pkg_apis_tf_v1alpha1_TungstenfabricConfig(ref common.ReferenceCallback) common.OpenAPIDefinition {
+	return common.OpenAPIDefinition{
+		Schema: spec.Schema{
+			SchemaProps: spec.SchemaProps{
+				Description: "TungstenfabricConfig is the Schema for the tungstenfabricconfigs API",
+>>>>>>> v0.0.4
 				Properties: map[string]spec.Schema{
 					"kind": {
 						SchemaProps: spec.SchemaProps{
@@ -58,18 +75,27 @@ func schema_pkg_apis_tf_v1alpha1_CassandraCluster(ref common.ReferenceCallback) 
 					},
 					"spec": {
 						SchemaProps: spec.SchemaProps{
+<<<<<<< HEAD
 							Ref: ref("github.com/michaelhenkel/tungstenfabric-operator/pkg/apis/tf/v1alpha1.CassandraClusterSpec"),
+=======
+							Ref: ref("github.com/michaelhenkel/tungstenfabric-operator/pkg/apis/tf/v1alpha1.TungstenfabricConfigSpec"),
+>>>>>>> v0.0.4
 						},
 					},
 					"status": {
 						SchemaProps: spec.SchemaProps{
+<<<<<<< HEAD
 							Ref: ref("github.com/michaelhenkel/tungstenfabric-operator/pkg/apis/tf/v1alpha1.CassandraClusterStatus"),
+=======
+							Ref: ref("github.com/michaelhenkel/tungstenfabric-operator/pkg/apis/tf/v1alpha1.TungstenfabricConfigStatus"),
+>>>>>>> v0.0.4
 						},
 					},
 				},
 			},
 		},
 		Dependencies: []string{
+<<<<<<< HEAD
 			"github.com/michaelhenkel/tungstenfabric-operator/pkg/apis/tf/v1alpha1.CassandraClusterSpec", "github.com/michaelhenkel/tungstenfabric-operator/pkg/apis/tf/v1alpha1.CassandraClusterStatus", "k8s.io/apimachinery/pkg/apis/meta/v1.ObjectMeta"},
 	}
 }
@@ -79,6 +105,17 @@ func schema_pkg_apis_tf_v1alpha1_CassandraClusterSpec(ref common.ReferenceCallba
 		Schema: spec.Schema{
 			SchemaProps: spec.SchemaProps{
 				Description: "CassandraClusterSpec defines the desired state of CassandraCluster",
+=======
+			"github.com/michaelhenkel/tungstenfabric-operator/pkg/apis/tf/v1alpha1.TungstenfabricConfigSpec", "github.com/michaelhenkel/tungstenfabric-operator/pkg/apis/tf/v1alpha1.TungstenfabricConfigStatus", "k8s.io/apimachinery/pkg/apis/meta/v1.ObjectMeta"},
+	}
+}
+
+func schema_pkg_apis_tf_v1alpha1_TungstenfabricConfigSpec(ref common.ReferenceCallback) common.OpenAPIDefinition {
+	return common.OpenAPIDefinition{
+		Schema: spec.Schema{
+			SchemaProps: spec.SchemaProps{
+				Description: "TungstenfabricConfigSpec defines the desired state of TungstenfabricConfig",
+>>>>>>> v0.0.4
 				Properties:  map[string]spec.Schema{},
 			},
 		},
@@ -86,11 +123,19 @@ func schema_pkg_apis_tf_v1alpha1_CassandraClusterSpec(ref common.ReferenceCallba
 	}
 }
 
+<<<<<<< HEAD
 func schema_pkg_apis_tf_v1alpha1_CassandraClusterStatus(ref common.ReferenceCallback) common.OpenAPIDefinition {
 	return common.OpenAPIDefinition{
 		Schema: spec.Schema{
 			SchemaProps: spec.SchemaProps{
 				Description: "CassandraClusterStatus defines the observed state of CassandraCluster",
+=======
+func schema_pkg_apis_tf_v1alpha1_TungstenfabricConfigStatus(ref common.ReferenceCallback) common.OpenAPIDefinition {
+	return common.OpenAPIDefinition{
+		Schema: spec.Schema{
+			SchemaProps: spec.SchemaProps{
+				Description: "TungstenfabricConfigStatus defines the observed state of TungstenfabricConfig",
+>>>>>>> v0.0.4
 				Properties:  map[string]spec.Schema{},
 			},
 		},
@@ -98,11 +143,19 @@ func schema_pkg_apis_tf_v1alpha1_CassandraClusterStatus(ref common.ReferenceCall
 	}
 }
 
+<<<<<<< HEAD
 func schema_pkg_apis_tf_v1alpha1_ConfigCluster(ref common.ReferenceCallback) common.OpenAPIDefinition {
 	return common.OpenAPIDefinition{
 		Schema: spec.Schema{
 			SchemaProps: spec.SchemaProps{
 				Description: "ConfigCluster is the Schema for the configclusters API",
+=======
+func schema_pkg_apis_tf_v1alpha1_Vrouter(ref common.ReferenceCallback) common.OpenAPIDefinition {
+	return common.OpenAPIDefinition{
+		Schema: spec.Schema{
+			SchemaProps: spec.SchemaProps{
+				Description: "Vrouter is the Schema for the vrouters API",
+>>>>>>> v0.0.4
 				Properties: map[string]spec.Schema{
 					"kind": {
 						SchemaProps: spec.SchemaProps{
@@ -125,18 +178,27 @@ func schema_pkg_apis_tf_v1alpha1_ConfigCluster(ref common.ReferenceCallback) com
 					},
 					"spec": {
 						SchemaProps: spec.SchemaProps{
+<<<<<<< HEAD
 							Ref: ref("github.com/michaelhenkel/tungstenfabric-operator/pkg/apis/tf/v1alpha1.ConfigClusterSpec"),
+=======
+							Ref: ref("github.com/michaelhenkel/tungstenfabric-operator/pkg/apis/tf/v1alpha1.VrouterSpec"),
+>>>>>>> v0.0.4
 						},
 					},
 					"status": {
 						SchemaProps: spec.SchemaProps{
+<<<<<<< HEAD
 							Ref: ref("github.com/michaelhenkel/tungstenfabric-operator/pkg/apis/tf/v1alpha1.ConfigClusterStatus"),
+=======
+							Ref: ref("github.com/michaelhenkel/tungstenfabric-operator/pkg/apis/tf/v1alpha1.VrouterStatus"),
+>>>>>>> v0.0.4
 						},
 					},
 				},
 			},
 		},
 		Dependencies: []string{
+<<<<<<< HEAD
 			"github.com/michaelhenkel/tungstenfabric-operator/pkg/apis/tf/v1alpha1.ConfigClusterSpec", "github.com/michaelhenkel/tungstenfabric-operator/pkg/apis/tf/v1alpha1.ConfigClusterStatus", "k8s.io/apimachinery/pkg/apis/meta/v1.ObjectMeta"},
 	}
 }
@@ -146,6 +208,17 @@ func schema_pkg_apis_tf_v1alpha1_ConfigClusterSpec(ref common.ReferenceCallback)
 		Schema: spec.Schema{
 			SchemaProps: spec.SchemaProps{
 				Description: "ConfigClusterSpec defines the desired state of ConfigCluster",
+=======
+			"github.com/michaelhenkel/tungstenfabric-operator/pkg/apis/tf/v1alpha1.VrouterSpec", "github.com/michaelhenkel/tungstenfabric-operator/pkg/apis/tf/v1alpha1.VrouterStatus", "k8s.io/apimachinery/pkg/apis/meta/v1.ObjectMeta"},
+	}
+}
+
+func schema_pkg_apis_tf_v1alpha1_VrouterSpec(ref common.ReferenceCallback) common.OpenAPIDefinition {
+	return common.OpenAPIDefinition{
+		Schema: spec.Schema{
+			SchemaProps: spec.SchemaProps{
+				Description: "VrouterSpec defines the desired state of Vrouter",
+>>>>>>> v0.0.4
 				Properties:  map[string]spec.Schema{},
 			},
 		},
@@ -153,6 +226,7 @@ func schema_pkg_apis_tf_v1alpha1_ConfigClusterSpec(ref common.ReferenceCallback)
 	}
 }
 
+<<<<<<< HEAD
 func schema_pkg_apis_tf_v1alpha1_ConfigClusterStatus(ref common.ReferenceCallback) common.OpenAPIDefinition {
 	return common.OpenAPIDefinition{
 		Schema: spec.Schema{
@@ -401,6 +475,13 @@ func schema_pkg_apis_tf_v1alpha1_ZookeeperClusterStatus(ref common.ReferenceCall
 		Schema: spec.Schema{
 			SchemaProps: spec.SchemaProps{
 				Description: "ZookeeperClusterStatus defines the observed state of ZookeeperCluster",
+=======
+func schema_pkg_apis_tf_v1alpha1_VrouterStatus(ref common.ReferenceCallback) common.OpenAPIDefinition {
+	return common.OpenAPIDefinition{
+		Schema: spec.Schema{
+			SchemaProps: spec.SchemaProps{
+				Description: "VrouterStatus defines the observed state of Vrouter",
+>>>>>>> v0.0.4
 				Properties:  map[string]spec.Schema{},
 			},
 		},

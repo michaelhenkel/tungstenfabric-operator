@@ -156,6 +156,16 @@ func lookupAndFormat(p *printer, r Reference, a []interface{}) {
 	}
 }
 
+<<<<<<< HEAD
+=======
+type rawPrinter struct {
+	p *printer
+}
+
+func (p rawPrinter) Render(msg string)     { p.p.WriteString(msg) }
+func (p rawPrinter) Arg(i int) interface{} { return nil }
+
+>>>>>>> v0.0.4
 // Arg implements catmsg.Renderer.
 func (p *printer) Arg(i int) interface{} { // TODO, also return "ok" bool
 	i--

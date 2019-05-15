@@ -48,6 +48,21 @@ func defaultBigQueryStorageClientOptions() []option.ClientOption {
 
 func defaultBigQueryStorageCallOptions() *BigQueryStorageCallOptions {
 	retry := map[[2]string][]gax.CallOption{
+<<<<<<< HEAD
+=======
+		{"create_read_session", "idempotent"}: {
+			gax.WithRetry(func() gax.Retryer {
+				return gax.OnCodes([]codes.Code{
+					codes.DeadlineExceeded,
+					codes.Unavailable,
+				}, gax.Backoff{
+					Initial:    100 * time.Millisecond,
+					Max:        60000 * time.Millisecond,
+					Multiplier: 1.3,
+				})
+			}),
+		},
+>>>>>>> v0.0.4
 		{"default", "idempotent"}: {
 			gax.WithRetry(func() gax.Retryer {
 				return gax.OnCodes([]codes.Code{
@@ -62,7 +77,11 @@ func defaultBigQueryStorageCallOptions() *BigQueryStorageCallOptions {
 		},
 	}
 	return &BigQueryStorageCallOptions{
+<<<<<<< HEAD
 		CreateReadSession:             retry[[2]string{"default", "idempotent"}],
+=======
+		CreateReadSession:             retry[[2]string{"create_read_session", "idempotent"}],
+>>>>>>> v0.0.4
 		ReadRows:                      retry[[2]string{"default", "idempotent"}],
 		BatchCreateReadSessionStreams: retry[[2]string{"default", "idempotent"}],
 		FinalizeStream:                retry[[2]string{"default", "idempotent"}],

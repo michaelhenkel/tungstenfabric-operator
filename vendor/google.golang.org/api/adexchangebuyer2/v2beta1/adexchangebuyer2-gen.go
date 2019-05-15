@@ -267,7 +267,10 @@ type BiddersService struct {
 
 func NewBiddersAccountsService(s *Service) *BiddersAccountsService {
 	rs := &BiddersAccountsService{s: s}
+<<<<<<< HEAD
 	rs.Creatives = NewBiddersAccountsCreativesService(s)
+=======
+>>>>>>> v0.0.4
 	rs.FilterSets = NewBiddersAccountsFilterSetsService(s)
 	return rs
 }
@@ -275,6 +278,7 @@ func NewBiddersAccountsService(s *Service) *BiddersAccountsService {
 type BiddersAccountsService struct {
 	s *Service
 
+<<<<<<< HEAD
 	Creatives *BiddersAccountsCreativesService
 
 	FilterSets *BiddersAccountsFilterSetsService
@@ -289,6 +293,11 @@ type BiddersAccountsCreativesService struct {
 	s *Service
 }
 
+=======
+	FilterSets *BiddersAccountsFilterSetsService
+}
+
+>>>>>>> v0.0.4
 func NewBiddersAccountsFilterSetsService(s *Service) *BiddersAccountsFilterSetsService {
 	rs := &BiddersAccountsFilterSetsService{s: s}
 	rs.BidMetrics = NewBiddersAccountsFilterSetsBidMetricsService(s)
@@ -941,10 +950,18 @@ func (s *Buyer) MarshalJSON() ([]byte, error) {
 // described by
 // the specified callout status.
 type CalloutStatusRow struct {
+<<<<<<< HEAD
 	// CalloutStatusId: The ID of the callout status.
 	// See
 	// [callout-status-codes](https://developers.google.com/authorized-buyers
 	// /rtb/downloads/callout-status-codes).
+=======
+	// CalloutStatusId: The ID of the callout
+	// status.
+	// See
+	// [callout-status-codes](https://developers.google.com/autho
+	// rized-buyers/rtb/downloads/callout-status-codes).
+>>>>>>> v0.0.4
 	CalloutStatusId int64 `json:"calloutStatusId,omitempty"`
 
 	// ImpressionCount: The number of impressions for which there was a bid
@@ -1045,6 +1062,12 @@ type Client struct {
 	//   "ADVERTISER" - An advertiser.
 	//   "BRAND" - A brand.
 	//   "AGENCY" - An advertising agency.
+<<<<<<< HEAD
+=======
+	//   "ENTITY_TYPE_UNCLASSIFIED" - An explicit value for a client that
+	// was not yet classified
+	// as any particular entity.
+>>>>>>> v0.0.4
 	EntityType string `json:"entityType,omitempty"`
 
 	// PartnerClientId: Optional arbitrary unique identifier of this client
@@ -1356,8 +1379,11 @@ func (s *Correction) MarshalJSON() ([]byte, error) {
 }
 
 // Creative: A creative and its classification data.
+<<<<<<< HEAD
 //
 // Next ID: 42
+=======
+>>>>>>> v0.0.4
 type Creative struct {
 	// AccountId: The account that this creative belongs to.
 	// Can be used to filter the response of the
@@ -1522,7 +1548,16 @@ type Creative struct {
 	// bids.
 	DetectedSensitiveCategories []int64 `json:"detectedSensitiveCategories,omitempty"`
 
+<<<<<<< HEAD
 	// FilteringStats: @OutputOnly The filtering stats for this creative.
+=======
+	// FilteringStats: @OutputOnly The filtering stats for this
+	// creative.
+	// Deprecated; please
+	// use
+	// bidders.accounts.filterSets.filteredBids.creatives.list
+	// method instead.
+>>>>>>> v0.0.4
 	FilteringStats *FilteringStats `json:"filteringStats,omitempty"`
 
 	// Html: An HTML creative.
@@ -1844,10 +1879,18 @@ type CreativeStatusRow struct {
 	// BidCount: The number of bids with the specified status.
 	BidCount *MetricValue `json:"bidCount,omitempty"`
 
+<<<<<<< HEAD
 	// CreativeStatusId: The ID of the creative status.
 	// See
 	// [creative-status-codes](https://developers.google.com/authorized-buyer
 	// s/rtb/downloads/creative-status-codes).
+=======
+	// CreativeStatusId: The ID of the creative
+	// status.
+	// See
+	// [creative-status-codes](https://developers.google.com/auth
+	// orized-buyers/rtb/downloads/creative-status-codes).
+>>>>>>> v0.0.4
 	CreativeStatusId int64 `json:"creativeStatusId,omitempty"`
 
 	// RowDimensions: The values of all dimensions associated with metric
@@ -1986,10 +2029,18 @@ type DayPart struct {
 	//   "SUNDAY" - Sunday
 	DayOfWeek string `json:"dayOfWeek,omitempty"`
 
+<<<<<<< HEAD
 	// EndTime: The ending time of the day for the ad to show (minute level
 	// granularity).
 	// The end time is exclusive.
 	// This field is not available for filtering in PQL queries.
+=======
+	// EndTime: The ending time of the day for the ad to show (minute
+	// level
+	// granularity). The end time is exclusive. This field is not
+	// available
+	// for filtering in PQL queries.
+>>>>>>> v0.0.4
 	EndTime *TimeOfDay `json:"endTime,omitempty"`
 
 	// StartTime: The starting time of day for the ad to show (minute level
@@ -2061,9 +2112,15 @@ func (s *DayPartTargeting) MarshalJSON() ([]byte, error) {
 
 // Deal: A deal represents a segment of inventory for displaying ads
 // on.
+<<<<<<< HEAD
 // A proposal can contain multiple deals. A deal contains the terms and
 // targeting information that
 // is used for serving.
+=======
+// A proposal can contain multiple deals. A deal contains the terms
+// and
+// targeting information that is used for serving.
+>>>>>>> v0.0.4
 type Deal struct {
 	// AvailableEndTime: Proposed flight end time of the deal.
 	// This will generally be stored in a granularity of a second.
@@ -2073,11 +2130,20 @@ type Deal struct {
 	// AvailableStartTime: Optional proposed flight start time of the
 	// deal.
 	// This will generally be stored in the granularity of one second since
+<<<<<<< HEAD
 	// deal serving
 	// starts at seconds boundary. Any time specified with more
 	// granularity
 	// (e.g., in milliseconds) will be truncated towards the start of time
 	// in seconds.
+=======
+	// deal
+	// serving starts at seconds boundary. Any time specified with
+	// more
+	// granularity (e.g., in milliseconds) will be truncated towards the
+	// start of
+	// time in seconds.
+>>>>>>> v0.0.4
 	AvailableStartTime string `json:"availableStartTime,omitempty"`
 
 	// BuyerPrivateData: Buyer private data (hidden from seller).
@@ -2123,7 +2189,12 @@ type Deal struct {
 
 	// CreativeRestrictions: Restricitions about the creatives associated
 	// with the deal (i.e., size)
+<<<<<<< HEAD
 	// This is available for Programmatic Guaranteed/Preferred Deals in Ad
+=======
+	// This is available for Programmatic Guaranteed/Preferred Deals in
+	// Ad
+>>>>>>> v0.0.4
 	// Manager.
 	// @OutputOnly
 	CreativeRestrictions *CreativeRestrictions `json:"creativeRestrictions,omitempty"`
@@ -3621,9 +3692,16 @@ type ListCreativeStatusBreakdownByDetailResponse struct {
 	// uyers/rtb/downloads/ad-product-categories).
 	//   "DISAPPROVAL_REASON" - Indicates that the detail ID refers to a
 	// disapproval reason; see
+<<<<<<< HEAD
 	// DisapprovalReason enum in
 	// [snippet-status-report-proto](https://developers.google.com/authorized
 	// -buyers/rtb/downloads/snippet-status-report-proto).
+=======
+	// DisapprovalReason enum
+	// in
+	// [snippet-status-report-proto](https://developers.google.com/authori
+	// zed-buyers/rtb/downloads/snippet-status-report-proto).
+>>>>>>> v0.0.4
 	DetailType string `json:"detailType,omitempty"`
 
 	// FilteredBidDetailRows: List of rows, with counts of bids with a given
@@ -4847,6 +4925,7 @@ func (s *PrivateData) MarshalJSON() ([]byte, error) {
 // know more about the inventory.
 type Product struct {
 	// AvailableEndTime: The proposed end time for the deal. The field will
+<<<<<<< HEAD
 	// be truncated to the order of
 	// seconds during serving.
 	AvailableEndTime string `json:"availableEndTime,omitempty"`
@@ -4856,6 +4935,17 @@ type Product struct {
 	// Thus, a field specified as 3:23:34.456 (HH:mm:ss.SSS) will be
 	// truncated to 3:23:34
 	// when serving.
+=======
+	// be truncated to the
+	// order of seconds during serving.
+	AvailableEndTime string `json:"availableEndTime,omitempty"`
+
+	// AvailableStartTime: Inventory availability dates. The start time will
+	// be truncated to seconds
+	// during serving. Thus, a field specified as 3:23:34.456 (HH:mm:ss.SSS)
+	// will
+	// be truncated to 3:23:34 when serving.
+>>>>>>> v0.0.4
 	AvailableStartTime string `json:"availableStartTime,omitempty"`
 
 	// CreateTime: Creation time.
@@ -4982,8 +5072,14 @@ type Proposal struct {
 	BuyerPrivateData *PrivateData `json:"buyerPrivateData,omitempty"`
 
 	// Deals: The deals associated with this proposal. For Private Auction
+<<<<<<< HEAD
 	// proposals (whose deals have
 	// NonGuaranteedAuctionTerms), there will only be one deal.
+=======
+	// proposals
+	// (whose deals have NonGuaranteedAuctionTerms), there will only be one
+	// deal.
+>>>>>>> v0.0.4
 	Deals []*Deal `json:"deals,omitempty"`
 
 	// DisplayName: The name for the proposal.
@@ -5116,13 +5212,19 @@ func (s *Proposal) MarshalJSON() ([]byte, error) {
 // Represents a publisher profile in Marketplace.
 //
 // All fields are read only. All string fields are free-form text
+<<<<<<< HEAD
 // entered by the publisher
 // unless noted otherwise.
+=======
+// entered by the
+// publisher unless noted otherwise.
+>>>>>>> v0.0.4
 type PublisherProfile struct {
 	// AudienceDescription: Description on the publisher's audience.
 	AudienceDescription string `json:"audienceDescription,omitempty"`
 
 	// BuyerPitchStatement: Statement explaining what's unique about
+<<<<<<< HEAD
 	// publisher's business, and why buyers should
 	// partner with the publisher.
 	BuyerPitchStatement string `json:"buyerPitchStatement,omitempty"`
@@ -5131,24 +5233,49 @@ type PublisherProfile struct {
 	// This is free text entered by the publisher
 	// and may include information like names, phone numbers and email
 	// addresses.
+=======
+	// publisher's business, and why
+	// buyers should partner with the publisher.
+	BuyerPitchStatement string `json:"buyerPitchStatement,omitempty"`
+
+	// DirectDealsContact: Contact information for direct reservation deals.
+	// This is free text entered
+	// by the publisher and may include information like names, phone
+	// numbers and
+	// email addresses.
+>>>>>>> v0.0.4
 	DirectDealsContact string `json:"directDealsContact,omitempty"`
 
 	// DisplayName: Name of the publisher profile.
 	DisplayName string `json:"displayName,omitempty"`
 
 	// Domains: The list of domains represented in this publisher profile.
+<<<<<<< HEAD
 	// Empty if this is a parent profile.
 	// These are top private domains, meaning that these will not contain a
 	// string like
 	// "photos.google.co.uk/123", but will instead contain "google.co.uk".
+=======
+	// Empty if this is
+	// a parent profile. These are top private domains, meaning that these
+	// will
+	// not contain a string like "photos.google.co.uk/123", but will
+	// instead
+	// contain "google.co.uk".
+>>>>>>> v0.0.4
 	Domains []string `json:"domains,omitempty"`
 
 	// GooglePlusUrl: URL to publisher's Google+ page.
 	GooglePlusUrl string `json:"googlePlusUrl,omitempty"`
 
 	// LogoUrl: A Google public URL to the logo for this publisher profile.
+<<<<<<< HEAD
 	// The logo is stored as
 	// a PNG, JPG, or GIF image.
+=======
+	// The logo is
+	// stored as a PNG, JPG, or GIF image.
+>>>>>>> v0.0.4
 	LogoUrl string `json:"logoUrl,omitempty"`
 
 	// MediaKitUrl: URL to additional marketing and sales materials.
@@ -5158,9 +5285,16 @@ type PublisherProfile struct {
 	Overview string `json:"overview,omitempty"`
 
 	// ProgrammaticDealsContact: Contact information for programmatic deals.
+<<<<<<< HEAD
 	// This is free text entered by the publisher
 	// and may include information like names, phone numbers and email
 	// addresses.
+=======
+	// This is free text entered by
+	// the publisher and may include information like names, phone numbers
+	// and
+	// email addresses.
+>>>>>>> v0.0.4
 	ProgrammaticDealsContact string `json:"programmaticDealsContact,omitempty"`
 
 	// PublisherProfileId: Unique ID for publisher profile.
@@ -7361,8 +7495,15 @@ func (c *AccountsClientsUsersListCall) PageSize(pageSize int64) *AccountsClients
 // Typically, this is the value
 // of
 // ListClientUsersResponse.nextPageToken
+<<<<<<< HEAD
 // returned from the previous call to the
 // accounts.clients.users.list method.
+=======
+// returned from the previous call to
+// the
+// accounts.clients.users.list
+// method.
+>>>>>>> v0.0.4
 func (c *AccountsClientsUsersListCall) PageToken(pageToken string) *AccountsClientsUsersListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
@@ -7496,7 +7637,11 @@ func (c *AccountsClientsUsersListCall) Do(opts ...googleapi.CallOption) (*ListCl
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
+<<<<<<< HEAD
 	//       "description": "A token identifying a page of results the server should return.\nTypically, this is the value of\nListClientUsersResponse.nextPageToken\nreturned from the previous call to the\naccounts.clients.users.list method.",
+=======
+	//       "description": "A token identifying a page of results the server should return.\nTypically, this is the value of\nListClientUsersResponse.nextPageToken\nreturned from the previous call to the\naccounts.clients.users.list\nmethod.",
+>>>>>>> v0.0.4
 	//       "location": "query",
 	//       "type": "string"
 	//     }
@@ -11784,6 +11929,7 @@ func (c *AccountsPublisherProfilesListCall) Pages(ctx context.Context, f func(*L
 	}
 }
 
+<<<<<<< HEAD
 // method id "adexchangebuyer2.bidders.accounts.creatives.delete":
 
 type BiddersAccountsCreativesDeleteCall struct {
@@ -11929,6 +12075,8 @@ func (c *BiddersAccountsCreativesDeleteCall) Do(opts ...googleapi.CallOption) (*
 
 }
 
+=======
+>>>>>>> v0.0.4
 // method id "adexchangebuyer2.bidders.accounts.filterSets.create":
 
 type BiddersAccountsFilterSetsCreateCall struct {

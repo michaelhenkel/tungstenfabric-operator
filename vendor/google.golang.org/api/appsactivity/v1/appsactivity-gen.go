@@ -613,7 +613,11 @@ type ActivitiesListCall struct {
 }
 
 // List: Returns a list of activities visible to the current logged in
+<<<<<<< HEAD
 // user. Visible activities are determined by the visiblity settings of
+=======
+// user. Visible activities are determined by the visibility settings of
+>>>>>>> v0.0.4
 // the object that was acted on, e.g. Drive files a user can see. An
 // activity is a record of past events. Multiple events may be merged if
 // they are similar. A request is scoped to activities from a given
@@ -673,9 +677,16 @@ func (c *ActivitiesListCall) Source(source string) *ActivitiesListCall {
 	return c
 }
 
+<<<<<<< HEAD
 // UserId sets the optional parameter "userId": Indicates the user to
 // return activity for. Use the special value me to indicate the
 // currently authenticated user.
+=======
+// UserId sets the optional parameter "userId": The ID used for ACL
+// checks (does not filter the resulting event list by the assigned
+// value). Use the special value me to indicate the currently
+// authenticated user.
+>>>>>>> v0.0.4
 func (c *ActivitiesListCall) UserId(userId string) *ActivitiesListCall {
 	c.urlParams_.Set("userId", userId)
 	return c
@@ -776,7 +787,11 @@ func (c *ActivitiesListCall) Do(opts ...googleapi.CallOption) (*ListActivitiesRe
 	}
 	return ret, nil
 	// {
+<<<<<<< HEAD
 	//   "description": "Returns a list of activities visible to the current logged in user. Visible activities are determined by the visiblity settings of the object that was acted on, e.g. Drive files a user can see. An activity is a record of past events. Multiple events may be merged if they are similar. A request is scoped to activities from a given Google service using the source parameter.",
+=======
+	//   "description": "Returns a list of activities visible to the current logged in user. Visible activities are determined by the visibility settings of the object that was acted on, e.g. Drive files a user can see. An activity is a record of past events. Multiple events may be merged if they are similar. A request is scoped to activities from a given Google service using the source parameter.",
+>>>>>>> v0.0.4
 	//   "httpMethod": "GET",
 	//   "id": "appsactivity.activities.list",
 	//   "parameters": {
@@ -823,7 +838,11 @@ func (c *ActivitiesListCall) Do(opts ...googleapi.CallOption) (*ListActivitiesRe
 	//     },
 	//     "userId": {
 	//       "default": "me",
+<<<<<<< HEAD
 	//       "description": "Indicates the user to return activity for. Use the special value me to indicate the currently authenticated user.",
+=======
+	//       "description": "The ID used for ACL checks (does not filter the resulting event list by the assigned value). Use the special value me to indicate the currently authenticated user.",
+>>>>>>> v0.0.4
 	//       "location": "query",
 	//       "type": "string"
 	//     }

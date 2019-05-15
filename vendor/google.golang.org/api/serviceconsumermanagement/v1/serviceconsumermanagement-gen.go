@@ -336,7 +336,11 @@ func (s *ApplyTenantProjectConfigRequest) MarshalJSON() ([]byte, error) {
 type AttachTenantProjectRequest struct {
 	// ExternalResource: When attaching an external project, this is in the
 	// format of
+<<<<<<< HEAD
 	// `projects/{project_number}’.
+=======
+	// `projects/{project_number}`.
+>>>>>>> v0.0.4
 	ExternalResource string `json:"externalResource,omitempty"`
 
 	// ReservedResource: When attaching a reserved project already in
@@ -376,7 +380,11 @@ func (s *AttachTenantProjectRequest) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+<<<<<<< HEAD
 // AuthProvider: Configuration for an anthentication provider, including
+=======
+// AuthProvider: Configuration for an authentication provider, including
+>>>>>>> v0.0.4
 // support for
 // [JSON Web
 // Token
@@ -1288,6 +1296,38 @@ func (s *CustomHttpPattern) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+<<<<<<< HEAD
+=======
+// DeleteTenantProjectRequest: Request message to delete tenant project
+// resource from the tenancy unit.
+type DeleteTenantProjectRequest struct {
+	// Tag: Tag of the resource within the tenancy unit.
+	Tag string `json:"tag,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Tag") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Tag") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *DeleteTenantProjectRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod DeleteTenantProjectRequest
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+>>>>>>> v0.0.4
 // Documentation: `Documentation` provides the information for
 // describing a service.
 //
@@ -1432,10 +1472,17 @@ type DocumentationRule struct {
 	// Wildcards are only allowed at the end and for a whole component of
 	// the
 	// qualified name, i.e. "foo.*" is ok, but not "foo.b*" or "foo.*.bar".
+<<<<<<< HEAD
 	// To
 	// specify a default for all applicable elements, the whole pattern
 	// "*"
 	// is used.
+=======
+	// A
+	// wildcard will match one or more components. To specify a default for
+	// all
+	// applicable elements, the whole pattern "*" is used.
+>>>>>>> v0.0.4
 	Selector string `json:"selector,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g.
@@ -1898,9 +1945,17 @@ func (s *Http) MarshalJSON() ([]byte, error) {
 //
 // HTTP | gRPC
 // -----|-----
+<<<<<<< HEAD
 // `GET /v1/messages/123456?revision=2&sub.subfield=foo` |
 // `GetMessage(message_id: "123456" revision: 2 sub:
 // SubMessage(subfield: "foo"))`
+=======
+// `GET /v1/messages/123456?revision=2&sub.subfield=foo`
+// |
+// `GetMessage(message_id: "123456" revision: 2 sub:
+// SubMessage(subfield:
+// "foo"))`
+>>>>>>> v0.0.4
 //
 // Note that fields which are mapped to URL query parameters must have
 // a
@@ -1941,7 +1996,12 @@ func (s *Http) MarshalJSON() ([]byte, error) {
 // HTTP | gRPC
 // -----|-----
 // `PATCH /v1/messages/123456 { "text": "Hi!" }` |
+<<<<<<< HEAD
 // `UpdateMessage(message_id: "123456" message { text: "Hi!" })`
+=======
+// `UpdateMessage(message_id:
+// "123456" message { text: "Hi!" })`
+>>>>>>> v0.0.4
 //
 // The special name `*` can be used in the body mapping to define
 // that
@@ -1970,7 +2030,12 @@ func (s *Http) MarshalJSON() ([]byte, error) {
 // HTTP | gRPC
 // -----|-----
 // `PATCH /v1/messages/123456 { "text": "Hi!" }` |
+<<<<<<< HEAD
 // `UpdateMessage(message_id: "123456" text: "Hi!")`
+=======
+// `UpdateMessage(message_id:
+// "123456" text: "Hi!")`
+>>>>>>> v0.0.4
 //
 // Note that when using `*` in the body mapping, it is not possible
 // to
@@ -2007,7 +2072,12 @@ func (s *Http) MarshalJSON() ([]byte, error) {
 // -----|-----
 // `GET /v1/messages/123456` | `GetMessage(message_id: "123456")`
 // `GET /v1/users/me/messages/123456` | `GetMessage(user_id: "me"
+<<<<<<< HEAD
 // message_id: "123456")`
+=======
+// message_id:
+// "123456")`
+>>>>>>> v0.0.4
 //
 // ## Rules for HTTP mapping
 //
@@ -2070,9 +2140,15 @@ func (s *Http) MarshalJSON() ([]byte, error) {
 // server side does the reverse decoding. Such variables show up in
 // the
 // [Discovery
+<<<<<<< HEAD
 // Document](https://developers.google.com/discovery/v1/reference/apis)
 // a
 // s `{var}`.
+=======
+// Document](https://developers.google.com/discovery/v1/re
+// ference/apis) as
+// `{var}`.
+>>>>>>> v0.0.4
 //
 // If a variable contains multiple path segments, such as
 // "{var=foo/*}"
@@ -2082,11 +2158,20 @@ func (s *Http) MarshalJSON() ([]byte, error) {
 // percent-encoded.
 // The server side does the reverse decoding, except "%2F" and "%2f" are
 // left
+<<<<<<< HEAD
 // unchanged. Such variables show up in the
 // [Discovery
 // Document](https://developers.google.com/discovery/v1/reference/apis)
 // a
 // s `{+var}`.
+=======
+// unchanged. Such variables show up in
+// the
+// [Discovery
+// Document](https://developers.google.com/discovery/v1/re
+// ference/apis) as
+// `{+var}`.
+>>>>>>> v0.0.4
 //
 // ## Using gRPC API Service Configuration
 //
@@ -3503,6 +3588,64 @@ func (s *PolicyBinding) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+<<<<<<< HEAD
+=======
+// Quota: Quota configuration helps to achieve fairness and budgeting in
+// service
+// usage.
+//
+// The metric based quota configuration works this way:
+// - The service configuration defines a set of metrics.
+// - For API calls, the quota.metric_rules maps methods to metrics with
+//   corresponding costs.
+// - The quota.limits defines limits on the metrics, which will be used
+// for
+//   quota checks at runtime.
+//
+// An example quota configuration in yaml format:
+//
+//    quota:
+//      limits:
+//
+//      - name: apiWriteQpsPerProject
+//        metric: library.googleapis.com/write_calls
+//        unit: "1/min/{project}"  # rate limit for consumer projects
+//        values:
+//          STANDARD: 10000
+//
+//
+//      # The metric rules bind all methods to the read_calls metric,
+//      # except for the UpdateBook and DeleteBook methods. These two
+// methods
+//      # are mapped to the write_calls metric, with the UpdateBook
+// method
+//      # consuming at twice rate as the DeleteBook method.
+//      metric_rules:
+//      - selector: "*"
+//        metric_costs:
+//          library.googleapis.com/read_calls: 1
+//      - selector: google.example.library.v1.LibraryService.UpdateBook
+//        metric_costs:
+//          library.googleapis.com/write_calls: 2
+//      - selector: google.example.library.v1.LibraryService.DeleteBook
+//        metric_costs:
+//          library.googleapis.com/write_calls: 1
+//
+//  Corresponding Metric definition:
+//
+//      metrics:
+//      - name: library.googleapis.com/read_calls
+//        display_name: Read requests
+//        metric_kind: DELTA
+//        value_type: INT64
+//
+//      - name: library.googleapis.com/write_calls
+//        display_name: Write requests
+//        metric_kind: DELTA
+//        value_type: INT64
+//
+//
+>>>>>>> v0.0.4
 type Quota struct {
 	// Limits: List of `QuotaLimit` definitions for the service.
 	Limits []*QuotaLimit `json:"limits,omitempty"`
@@ -4561,6 +4704,39 @@ func (s *Type) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+<<<<<<< HEAD
+=======
+// UndeleteTenantProjectRequest: Request message to undelete tenant
+// project resource previously deleted from
+// the tenancy unit.
+type UndeleteTenantProjectRequest struct {
+	// Tag: Tag of the resource within the tenancy unit.
+	Tag string `json:"tag,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Tag") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Tag") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *UndeleteTenantProjectRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod UndeleteTenantProjectRequest
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+>>>>>>> v0.0.4
 // Usage: Configuration controlling usage of a service.
 type Usage struct {
 	// ProducerNotificationChannel: The full resource name of a channel used
@@ -4694,6 +4870,346 @@ func (s *UsageRule) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+<<<<<<< HEAD
+=======
+// V1AddVisibilityLabelsResponse: Response message for the
+// `AddVisibilityLabels` method.
+// This response message is assigned to the `response` field of the
+// returned
+// Operation when that operation is done.
+type V1AddVisibilityLabelsResponse struct {
+	// Labels: The updated set of visibility labels for this consumer on
+	// this service.
+	Labels []string `json:"labels,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Labels") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Labels") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *V1AddVisibilityLabelsResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod V1AddVisibilityLabelsResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// V1Beta1BatchCreateProducerOverridesResponse: Response message for
+// BatchCreateProducerOverrides
+type V1Beta1BatchCreateProducerOverridesResponse struct {
+	// Overrides: The overrides that were created.
+	Overrides []*V1Beta1QuotaOverride `json:"overrides,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Overrides") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Overrides") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *V1Beta1BatchCreateProducerOverridesResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod V1Beta1BatchCreateProducerOverridesResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// V1Beta1DisableConsumerResponse: Response message for the
+// `DisableConsumer` method.
+// This response message is assigned to the `response` field of the
+// returned
+// Operation when that operation is done.
+type V1Beta1DisableConsumerResponse struct {
+}
+
+// V1Beta1EnableConsumerResponse: Response message for the
+// `EnableConsumer` method.
+// This response message is assigned to the `response` field of the
+// returned
+// Operation when that operation is done.
+type V1Beta1EnableConsumerResponse struct {
+}
+
+// V1Beta1ImportProducerOverridesResponse: Response message for
+// ImportProducerOverrides
+type V1Beta1ImportProducerOverridesResponse struct {
+	// Overrides: The overrides that were created from the imported data.
+	Overrides []*V1Beta1QuotaOverride `json:"overrides,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Overrides") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Overrides") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *V1Beta1ImportProducerOverridesResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod V1Beta1ImportProducerOverridesResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// V1Beta1QuotaOverride: A quota override
+type V1Beta1QuotaOverride struct {
+	// Dimensions: If this map is nonempty, then this override applies only
+	// to specific values
+	// for dimensions defined in the limit unit.
+	//
+	// For example, an override on a limit with the unit
+	// 1/{project}/{region}
+	// could contain an entry with the key "region" and the value
+	// "us-east-1";
+	// the override is only applied to quota consumed in that region.
+	//
+	// This map has the following restrictions:
+	// - Keys that are not defined in the limit's unit are not valid keys.
+	//   Any string appearing in {brackets} in the unit (besides {project}
+	// or
+	//   {user}) is a defined key.
+	// - "project" is not a valid key; the project is already specified in
+	//   the parent resource name.
+	// - "user" is not a valid key; the API does not support quota
+	// overrides
+	//   that apply only to a specific user.
+	// - If "region" appears as a key, its value must be a valid Cloud
+	// region.
+	// - If "zone" appears as a key, its value must be a valid Cloud zone.
+	// - If any valid key other than "region" or "zone" appears in the map,
+	// then
+	//   all valid keys other than "region" or "zone" must also appear in
+	// the map.
+	Dimensions map[string]string `json:"dimensions,omitempty"`
+
+	// Metric: The name of the metric to which this override applies.
+	//
+	// An example name would be:
+	// `compute.googleapis.com/cpus`
+	Metric string `json:"metric,omitempty"`
+
+	// Name: The resource name of the producer override.
+	// An example name would
+	// be:
+	// `services/compute.googleapis.com/projects/123/consumerQuotaMetrics
+	// /compute.googleapis.com%2Fcpus/limits/%2Fproject%2Fregion/producerOver
+	// rides/4a3f2c1d`
+	Name string `json:"name,omitempty"`
+
+	// OverrideValue: The overriding quota limit value.
+	// Can be any nonnegative integer, or -1 (unlimited quota).
+	OverrideValue int64 `json:"overrideValue,omitempty,string"`
+
+	// Unit: The limit unit of the limit to which this override applies.
+	//
+	// An example unit would be:
+	// `1/{project}/{region}`
+	// Note that `{project}` and `{region}` are not placeholders in this
+	// example;
+	// the literal characters `{` and `}` occur in the string.
+	Unit string `json:"unit,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Dimensions") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Dimensions") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *V1Beta1QuotaOverride) MarshalJSON() ([]byte, error) {
+	type NoMethod V1Beta1QuotaOverride
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// V1Beta1RefreshConsumerResponse: Response message for the
+// `RefreshConsumer` method.
+// This response message is assigned to the `response` field of the
+// returned
+// Operation when that operation is done.
+type V1Beta1RefreshConsumerResponse struct {
+}
+
+// V1DisableConsumerResponse: Response message for the `DisableConsumer`
+// method.
+// This response message is assigned to the `response` field of the
+// returned
+// Operation when that operation is done.
+type V1DisableConsumerResponse struct {
+}
+
+// V1EnableConsumerResponse: Response message for the `EnableConsumer`
+// method.
+// This response message is assigned to the `response` field of the
+// returned
+// Operation when that operation is done.
+type V1EnableConsumerResponse struct {
+}
+
+// V1GenerateServiceAccountResponse: Response message for the
+// `GenerateServiceAccount` method.
+//
+// This response message is assigned to the `response` field of the
+// returned
+// Operation when that operation is done.
+type V1GenerateServiceAccountResponse struct {
+	// Account: ServiceAccount that was created or retrieved.
+	Account *V1ServiceAccount `json:"account,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Account") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Account") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *V1GenerateServiceAccountResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod V1GenerateServiceAccountResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// V1RefreshConsumerResponse: Response message for the `RefreshConsumer`
+// method.
+// This response message is assigned to the `response` field of the
+// returned
+// Operation when that operation is done.
+type V1RefreshConsumerResponse struct {
+}
+
+// V1RemoveVisibilityLabelsResponse: Response message for the
+// `RemoveVisibilityLabels` method.
+// This response message is assigned to the `response` field of the
+// returned
+// Operation when that operation is done.
+type V1RemoveVisibilityLabelsResponse struct {
+	// Labels: The updated set of visibility labels for this consumer on
+	// this service.
+	Labels []string `json:"labels,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Labels") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Labels") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *V1RemoveVisibilityLabelsResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod V1RemoveVisibilityLabelsResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// V1ServiceAccount: A service account in the Identity and Access
+// Management API.
+type V1ServiceAccount struct {
+	// Email: The email address of the service account.
+	Email string `json:"email,omitempty"`
+
+	// IamAccountName: The IAM resource name of the service account in the
+	// following format:
+	// projects/{PROJECT_ID}/serviceAccounts/{ACCOUNT}.
+	IamAccountName string `json:"iamAccountName,omitempty"`
+
+	// Name: P4 SA resource name.
+	//
+	// An example name would
+	// be:
+	// `services/serviceconsumermanagement.googleapis.com/projects/123/se
+	// rviceAccounts/default`
+	Name string `json:"name,omitempty"`
+
+	// Tag: The P4 SA configuration tag. This must be defined in
+	// activation_grants.
+	// If not specified when creating the account, the tag is set to
+	// "default".
+	Tag string `json:"tag,omitempty"`
+
+	// UniqueId: The unique and stable id of the service account.
+	UniqueId string `json:"uniqueId,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Email") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Email") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *V1ServiceAccount) MarshalJSON() ([]byte, error) {
+	type NoMethod V1ServiceAccount
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+>>>>>>> v0.0.4
 // method id "serviceconsumermanagement.operations.cancel":
 
 type OperationsCancelCall struct {
@@ -5908,7 +6424,11 @@ type ServicesTenancyUnitsAttachProjectCall struct {
 // The caller is checked against a set of permissions as if
 // calling
 // `AddTenantProject` on the same service consumer.
+<<<<<<< HEAD
 // To trigger the attachement, the targeted tenant project must be in
+=======
+// To trigger the attachment, the targeted tenant project must be in
+>>>>>>> v0.0.4
 // a
 // folder. Make sure the ServiceConsumerManagement service account
 // is
@@ -6013,7 +6533,11 @@ func (c *ServicesTenancyUnitsAttachProjectCall) Do(opts ...googleapi.CallOption)
 	}
 	return ret, nil
 	// {
+<<<<<<< HEAD
 	//   "description": "Attach an existing project to the tenancy unit as a new tenant\nresource. The project could either be the tenant project reserved by\ncalling `AddTenantProject` under a tenancy unit of a service producer's\nproject of a managed service, or from a separate project.\nThe caller is checked against a set of permissions as if calling\n`AddTenantProject` on the same service consumer.\nTo trigger the attachement, the targeted tenant project must be in a\nfolder. Make sure the ServiceConsumerManagement service account is\nthe owner of that project. These two requirements are already met\nif the project is reserved by calling `AddTenantProject`.\nOperation\u003cresponse: Empty\u003e.",
+=======
+	//   "description": "Attach an existing project to the tenancy unit as a new tenant\nresource. The project could either be the tenant project reserved by\ncalling `AddTenantProject` under a tenancy unit of a service producer's\nproject of a managed service, or from a separate project.\nThe caller is checked against a set of permissions as if calling\n`AddTenantProject` on the same service consumer.\nTo trigger the attachment, the targeted tenant project must be in a\nfolder. Make sure the ServiceConsumerManagement service account is\nthe owner of that project. These two requirements are already met\nif the project is reserved by calling `AddTenantProject`.\nOperation\u003cresponse: Empty\u003e.",
+>>>>>>> v0.0.4
 	//   "flatPath": "v1/services/{servicesId}/{servicesId1}/{servicesId2}/tenancyUnits/{tenancyUnitsId}:attachProject",
 	//   "httpMethod": "POST",
 	//   "id": "serviceconsumermanagement.services.tenancyUnits.attachProject",
@@ -6315,6 +6839,163 @@ func (c *ServicesTenancyUnitsDeleteCall) Do(opts ...googleapi.CallOption) (*Oper
 
 }
 
+<<<<<<< HEAD
+=======
+// method id "serviceconsumermanagement.services.tenancyUnits.deleteProject":
+
+type ServicesTenancyUnitsDeleteProjectCall struct {
+	s                          *APIService
+	name                       string
+	deletetenantprojectrequest *DeleteTenantProjectRequest
+	urlParams_                 gensupport.URLParams
+	ctx_                       context.Context
+	header_                    http.Header
+}
+
+// DeleteProject: Deletes the specified project resource identified by a
+// tenant resource tag.
+// The mothod removes a project lien with a 'TenantManager' origin if
+// that was
+// added. It will then attempt to delete the project. If that operation
+// fails,
+// this method also fails.
+// After the project has been deleted, the tenant resource state is set
+// to
+// DELETED.  To permanently remove resource metadata, call
+// the
+// `RemoveTenantProject` method.
+// New resources with the same tag can't be added if there are
+// existing
+// resources in a DELETED state.
+// Operation<response: Empty>.
+func (r *ServicesTenancyUnitsService) DeleteProject(name string, deletetenantprojectrequest *DeleteTenantProjectRequest) *ServicesTenancyUnitsDeleteProjectCall {
+	c := &ServicesTenancyUnitsDeleteProjectCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.deletetenantprojectrequest = deletetenantprojectrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ServicesTenancyUnitsDeleteProjectCall) Fields(s ...googleapi.Field) *ServicesTenancyUnitsDeleteProjectCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ServicesTenancyUnitsDeleteProjectCall) Context(ctx context.Context) *ServicesTenancyUnitsDeleteProjectCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ServicesTenancyUnitsDeleteProjectCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ServicesTenancyUnitsDeleteProjectCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.deletetenantprojectrequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}:deleteProject")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "serviceconsumermanagement.services.tenancyUnits.deleteProject" call.
+// Exactly one of *Operation or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ServicesTenancyUnitsDeleteProjectCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Deletes the specified project resource identified by a tenant resource tag.\nThe mothod removes a project lien with a 'TenantManager' origin if that was\nadded. It will then attempt to delete the project. If that operation fails,\nthis method also fails.\nAfter the project has been deleted, the tenant resource state is set to\nDELETED.  To permanently remove resource metadata, call the\n`RemoveTenantProject` method.\nNew resources with the same tag can't be added if there are existing\nresources in a DELETED state.\nOperation\u003cresponse: Empty\u003e.",
+	//   "flatPath": "v1/services/{servicesId}/{servicesId1}/{servicesId2}/tenancyUnits/{tenancyUnitsId}:deleteProject",
+	//   "httpMethod": "POST",
+	//   "id": "serviceconsumermanagement.services.tenancyUnits.deleteProject",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Name of the tenancy unit.\nSuch as 'services/service.googleapis.com/projects/12345/tenancyUnits/abcd'.",
+	//       "location": "path",
+	//       "pattern": "^services/[^/]+/[^/]+/[^/]+/tenancyUnits/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}:deleteProject",
+	//   "request": {
+	//     "$ref": "DeleteTenantProjectRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "Operation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+>>>>>>> v0.0.4
 // method id "serviceconsumermanagement.services.tenancyUnits.list":
 
 type ServicesTenancyUnitsListCall struct {
@@ -6678,3 +7359,154 @@ func (c *ServicesTenancyUnitsRemoveProjectCall) Do(opts ...googleapi.CallOption)
 	// }
 
 }
+<<<<<<< HEAD
+=======
+
+// method id "serviceconsumermanagement.services.tenancyUnits.undeleteProject":
+
+type ServicesTenancyUnitsUndeleteProjectCall struct {
+	s                            *APIService
+	name                         string
+	undeletetenantprojectrequest *UndeleteTenantProjectRequest
+	urlParams_                   gensupport.URLParams
+	ctx_                         context.Context
+	header_                      http.Header
+}
+
+// UndeleteProject: Attempts to undelete a previously deleted tenant
+// project. The project must
+// be in a DELETED state.
+// There are no guarantees that an undeleted project will be in
+// a fully restored and functional state. Call the
+// `ApplyTenantProjectConfig`
+// method to update its configuration and then validate all managed
+// service
+// resources.
+// Operation<response: Empty>.
+func (r *ServicesTenancyUnitsService) UndeleteProject(name string, undeletetenantprojectrequest *UndeleteTenantProjectRequest) *ServicesTenancyUnitsUndeleteProjectCall {
+	c := &ServicesTenancyUnitsUndeleteProjectCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.undeletetenantprojectrequest = undeletetenantprojectrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ServicesTenancyUnitsUndeleteProjectCall) Fields(s ...googleapi.Field) *ServicesTenancyUnitsUndeleteProjectCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ServicesTenancyUnitsUndeleteProjectCall) Context(ctx context.Context) *ServicesTenancyUnitsUndeleteProjectCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ServicesTenancyUnitsUndeleteProjectCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ServicesTenancyUnitsUndeleteProjectCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.undeletetenantprojectrequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}:undeleteProject")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "serviceconsumermanagement.services.tenancyUnits.undeleteProject" call.
+// Exactly one of *Operation or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ServicesTenancyUnitsUndeleteProjectCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Attempts to undelete a previously deleted tenant project. The project must\nbe in a DELETED state.\nThere are no guarantees that an undeleted project will be in\na fully restored and functional state. Call the `ApplyTenantProjectConfig`\nmethod to update its configuration and then validate all managed service\nresources.\nOperation\u003cresponse: Empty\u003e.",
+	//   "flatPath": "v1/services/{servicesId}/{servicesId1}/{servicesId2}/tenancyUnits/{tenancyUnitsId}:undeleteProject",
+	//   "httpMethod": "POST",
+	//   "id": "serviceconsumermanagement.services.tenancyUnits.undeleteProject",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Name of the tenancy unit.\nSuch as 'services/service.googleapis.com/projects/12345/tenancyUnits/abcd'.",
+	//       "location": "path",
+	//       "pattern": "^services/[^/]+/[^/]+/[^/]+/tenancyUnits/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}:undeleteProject",
+	//   "request": {
+	//     "$ref": "UndeleteTenantProjectRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "Operation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+>>>>>>> v0.0.4

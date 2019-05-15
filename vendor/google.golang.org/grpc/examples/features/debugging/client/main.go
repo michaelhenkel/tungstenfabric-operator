@@ -59,7 +59,11 @@ func main() {
 	}
 	defer conn.Close()
 	// Manually provide resolved addresses for the target.
+<<<<<<< HEAD
 	r.NewAddress([]resolver.Address{{Addr: ":10001"}, {Addr: ":10002"}, {Addr: ":10003"}})
+=======
+	r.UpdateState(resolver.State{Addresses: []resolver.Address{{Addr: ":10001"}, {Addr: ":10002"}, {Addr: ":10003"}}})
+>>>>>>> v0.0.4
 
 	c := pb.NewGreeterClient(conn)
 

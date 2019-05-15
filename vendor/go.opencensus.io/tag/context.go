@@ -17,8 +17,11 @@ package tag
 
 import (
 	"context"
+<<<<<<< HEAD
 
 	"go.opencensus.io/exemplar"
+=======
+>>>>>>> v0.0.4
 )
 
 // FromContext returns the tag map stored in the context.
@@ -43,6 +46,7 @@ func NewContext(ctx context.Context, m *Map) context.Context {
 type ctxKey struct{}
 
 var mapCtxKey = ctxKey{}
+<<<<<<< HEAD
 
 func init() {
 	exemplar.RegisterAttachmentExtractor(extractTagsAttachments)
@@ -65,3 +69,5 @@ func extractTagsAttachments(ctx context.Context, a exemplar.Attachments) exempla
 	}
 	return a
 }
+=======
+>>>>>>> v0.0.4

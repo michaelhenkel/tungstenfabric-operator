@@ -649,7 +649,11 @@ func (s *AuditLogConfig) MarshalJSON() ([]byte, error) {
 // Binding: Associates `members` with a `role`.
 type Binding struct {
 	// Condition: The condition that is associated with this binding.
+<<<<<<< HEAD
 	// NOTE: an unsatisfied condition will not allow user access via
+=======
+	// NOTE: An unsatisfied condition will not allow user access via
+>>>>>>> v0.0.4
 	// current
 	// binding. Different bindings, including their conditions, are
 	// examined
@@ -1006,6 +1010,7 @@ func (s *DeidentifyConfig) MarshalJSON() ([]byte, error) {
 // DeidentifyDatasetRequest: Redacts identifying information from the
 // specified dataset.
 type DeidentifyDatasetRequest struct {
+<<<<<<< HEAD
 	// Config: Deidentify configuration
 	Config *DeidentifyConfig `json:"config,omitempty"`
 
@@ -1016,6 +1021,22 @@ type DeidentifyDatasetRequest struct {
 	// `projects/{project_id}/locations/{location_id}/datasets/{datase
 	// t_id}`).
 	// The new dataset must not exist, or the request will fail.
+=======
+	// Config: Deidentify configuration.
+	Config *DeidentifyConfig `json:"config,omitempty"`
+
+	// DestinationDataset: The name of the dataset resource to create and
+	// write the redacted data
+	// to
+	// (e.g.,
+	// `projects/{project_id}/locations/{location_id}/datasets/{dat
+	// aset_id}`).
+	//
+	//  * The destination dataset must not exist.
+	//  * The destination dataset must be in the same project as the source
+	//    dataset. De-identifying data across multiple projects is not
+	// supported.
+>>>>>>> v0.0.4
 	DestinationDataset string `json:"destinationDataset,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Config") to
@@ -1159,10 +1180,18 @@ type DicomConfig struct {
 	// Profile (DICOM Standard Edition 2018e).
 	//   "KEEP_ALL_PROFILE" - Keep all tags.
 	//   "DEIDENTIFY_TAG_CONTENTS" - Inspects within tag contents and
+<<<<<<< HEAD
 	// replaces sensitive text with its type.
 	// Applies to all tags with the following Value Representation
 	// names:
 	// AE, LO, LT, PN, SH, ST, UC, UT
+=======
+	// replaces sensitive text. The process
+	// can be configured using the TextConfig.
+	// Applies to all tags with the following Value Representation
+	// names:
+	// AE, LO, LT, PN, SH, ST, UC, UT, DA, DT, AS
+>>>>>>> v0.0.4
 	FilterProfile string `json:"filterProfile,omitempty"`
 
 	// KeepList: List of tags to keep. Remove all other tags.
@@ -1628,9 +1657,16 @@ type FieldMetadata struct {
 	// Possible values:
 	//   "ACTION_UNSPECIFIED" - No action specified.
 	//   "TRANSFORM" - Transform the entire field.
+<<<<<<< HEAD
 	//   "INSPECT_AND_TRANSFORM" - Should be inspected and any PHI found
 	// should be
 	// transformed.
+=======
+	//   "INSPECT_AND_TRANSFORM" - Inspect and transform any found PHI. When
+	// `AnnotationConfig` is
+	// provided, annotations of PHI will be generated, except for Date and
+	// Datetime.
+>>>>>>> v0.0.4
 	//   "DO_NOT_TRANSFORM" - Do not transform.
 	Action string `json:"action,omitempty"`
 
@@ -2257,7 +2293,11 @@ func (s *Hl7V2Store) MarshalJSON() ([]byte, error) {
 //       rpc GetResource(GetResourceRequest) returns
 // (google.api.HttpBody);
 //       rpc UpdateResource(google.api.HttpBody) returns
+<<<<<<< HEAD
 // (google.protobuf.Empty);
+=======
+//       (google.protobuf.Empty);
+>>>>>>> v0.0.4
 //     }
 //
 // Example with streaming methods:
@@ -2381,6 +2421,7 @@ func (s *ImageConfig) MarshalJSON() ([]byte, error) {
 // ImportDicomDataErrorDetails: Returns the errors encountered during
 // DICOM store import.
 type ImportDicomDataErrorDetails struct {
+<<<<<<< HEAD
 	// DicomStore: The name of the DICOM store where the resources have been
 	// imported, in
 	// the
@@ -2389,6 +2430,8 @@ type ImportDicomDataErrorDetails struct {
 	// taset_id}/dicomStores/{dicom_store_id}`
 	DicomStore string `json:"dicomStore,omitempty"`
 
+=======
+>>>>>>> v0.0.4
 	// SampleErrors: Deprecated. Use only for debugging purposes.
 	//
 	// Contains sample errors encountered in imports of individual
@@ -2396,7 +2439,11 @@ type ImportDicomDataErrorDetails struct {
 	// (for example, a Cloud Storage object).
 	SampleErrors []*ErrorDetail `json:"sampleErrors,omitempty"`
 
+<<<<<<< HEAD
 	// ForceSendFields is a list of field names (e.g. "DicomStore") to
+=======
+	// ForceSendFields is a list of field names (e.g. "SampleErrors") to
+>>>>>>> v0.0.4
 	// unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,
 	// non-interface field appearing in ForceSendFields will be sent to the
@@ -2404,10 +2451,17 @@ type ImportDicomDataErrorDetails struct {
 	// used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
+<<<<<<< HEAD
 	// NullFields is a list of field names (e.g. "DicomStore") to include in
 	// API requests with the JSON null value. By default, fields with empty
 	// values are omitted from API requests. However, any field with an
 	// empty value appearing in NullFields will be sent to the server as
+=======
+	// NullFields is a list of field names (e.g. "SampleErrors") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+>>>>>>> v0.0.4
 	// null. It is an error if a field in this list has a non-empty value.
 	// This may be used to include null fields in Patch requests.
 	NullFields []string `json:"-"`

@@ -32,6 +32,10 @@ import (
 	"time"
 
 	"golang.org/x/crypto/acme"
+<<<<<<< HEAD
+=======
+	"golang.org/x/net/idna"
+>>>>>>> v0.0.4
 )
 
 // createCertRetryAfter is how much time to wait before removing a failed state
@@ -62,10 +66,23 @@ type HostPolicy func(ctx context.Context, host string) error
 // HostWhitelist returns a policy where only the specified host names are allowed.
 // Only exact matches are currently supported. Subdomains, regexp or wildcard
 // will not match.
+<<<<<<< HEAD
 func HostWhitelist(hosts ...string) HostPolicy {
 	whitelist := make(map[string]bool, len(hosts))
 	for _, h := range hosts {
 		whitelist[h] = true
+=======
+//
+// Note that all hosts will be converted to Punycode via idna.Lookup.ToASCII so that
+// Manager.GetCertificate can handle the Unicode IDN and mixedcase hosts correctly.
+// Invalid hosts will be silently ignored.
+func HostWhitelist(hosts ...string) HostPolicy {
+	whitelist := make(map[string]bool, len(hosts))
+	for _, h := range hosts {
+		if h, err := idna.Lookup.ToASCII(h); err == nil {
+			whitelist[h] = true
+		}
+>>>>>>> v0.0.4
 	}
 	return func(_ context.Context, host string) error {
 		if !whitelist[host] {
@@ -243,7 +260,21 @@ func (m *Manager) GetCertificate(hello *tls.ClientHelloInfo) (*tls.Certificate, 
 	if !strings.Contains(strings.Trim(name, "."), ".") {
 		return nil, errors.New("acme/autocert: server name component count invalid")
 	}
+<<<<<<< HEAD
 	if strings.ContainsAny(name, `+/\`) {
+=======
+
+	// Note that this conversion is necessary because some server names in the handshakes
+	// started by some clients (such as cURL) are not converted to Punycode, which will
+	// prevent us from obtaining certificates for them. In addition, we should also treat
+	// example.com and EXAMPLE.COM as equivalent and return the same certificate for them.
+	// Fortunately, this conversion also helped us deal with this kind of mixedcase problems.
+	//
+	// Due to the "σςΣ" problem (see https://unicode.org/faq/idn.html#22), we can't use
+	// idna.Punycode.ToASCII (or just idna.ToASCII) here.
+	name, err := idna.Lookup.ToASCII(name)
+	if err != nil {
+>>>>>>> v0.0.4
 		return nil, errors.New("acme/autocert: server name contains invalid character")
 	}
 

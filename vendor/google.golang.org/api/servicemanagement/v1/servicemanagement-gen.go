@@ -487,7 +487,11 @@ func (s *AuditLogConfig) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+<<<<<<< HEAD
 // AuthProvider: Configuration for an anthentication provider, including
+=======
+// AuthProvider: Configuration for an authentication provider, including
+>>>>>>> v0.0.4
 // support for
 // [JSON Web
 // Token
@@ -1048,7 +1052,11 @@ func (s *BillingDestination) MarshalJSON() ([]byte, error) {
 // Binding: Associates `members` with a `role`.
 type Binding struct {
 	// Condition: The condition that is associated with this binding.
+<<<<<<< HEAD
 	// NOTE: an unsatisfied condition will not allow user access via
+=======
+	// NOTE: An unsatisfied condition will not allow user access via
+>>>>>>> v0.0.4
 	// current
 	// binding. Different bindings, including their conditions, are
 	// examined
@@ -1197,11 +1205,18 @@ type ConfigChange struct {
 	// 'key' is used. If the field has no unique identifier, the numeric
 	// index
 	// is used.
+<<<<<<< HEAD
 	// ##
 	// Examples:
 	//
 	// visibility.rules[selector=="google.LibraryService.CreateBoo
 	// k"].restriction
+=======
+	// Examples:
+	// -
+	// visibility.rules[selector=="google.LibraryService.ListBooks"].restrict
+	// ion
+>>>>>>> v0.0.4
 	// -
 	// quota.metric_rules[selector=="google"].metric_costs[key=="reads"].valu
 	// e
@@ -1875,10 +1890,17 @@ type DocumentationRule struct {
 	// Wildcards are only allowed at the end and for a whole component of
 	// the
 	// qualified name, i.e. "foo.*" is ok, but not "foo.b*" or "foo.*.bar".
+<<<<<<< HEAD
 	// To
 	// specify a default for all applicable elements, the whole pattern
 	// "*"
 	// is used.
+=======
+	// A
+	// wildcard will match one or more components. To specify a default for
+	// all
+	// applicable elements, the whole pattern "*" is used.
+>>>>>>> v0.0.4
 	Selector string `json:"selector,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g.
@@ -2513,9 +2535,17 @@ func (s *Http) MarshalJSON() ([]byte, error) {
 //
 // HTTP | gRPC
 // -----|-----
+<<<<<<< HEAD
 // `GET /v1/messages/123456?revision=2&sub.subfield=foo` |
 // `GetMessage(message_id: "123456" revision: 2 sub:
 // SubMessage(subfield: "foo"))`
+=======
+// `GET /v1/messages/123456?revision=2&sub.subfield=foo`
+// |
+// `GetMessage(message_id: "123456" revision: 2 sub:
+// SubMessage(subfield:
+// "foo"))`
+>>>>>>> v0.0.4
 //
 // Note that fields which are mapped to URL query parameters must have
 // a
@@ -2556,7 +2586,12 @@ func (s *Http) MarshalJSON() ([]byte, error) {
 // HTTP | gRPC
 // -----|-----
 // `PATCH /v1/messages/123456 { "text": "Hi!" }` |
+<<<<<<< HEAD
 // `UpdateMessage(message_id: "123456" message { text: "Hi!" })`
+=======
+// `UpdateMessage(message_id:
+// "123456" message { text: "Hi!" })`
+>>>>>>> v0.0.4
 //
 // The special name `*` can be used in the body mapping to define
 // that
@@ -2585,7 +2620,12 @@ func (s *Http) MarshalJSON() ([]byte, error) {
 // HTTP | gRPC
 // -----|-----
 // `PATCH /v1/messages/123456 { "text": "Hi!" }` |
+<<<<<<< HEAD
 // `UpdateMessage(message_id: "123456" text: "Hi!")`
+=======
+// `UpdateMessage(message_id:
+// "123456" text: "Hi!")`
+>>>>>>> v0.0.4
 //
 // Note that when using `*` in the body mapping, it is not possible
 // to
@@ -2622,7 +2662,12 @@ func (s *Http) MarshalJSON() ([]byte, error) {
 // -----|-----
 // `GET /v1/messages/123456` | `GetMessage(message_id: "123456")`
 // `GET /v1/users/me/messages/123456` | `GetMessage(user_id: "me"
+<<<<<<< HEAD
 // message_id: "123456")`
+=======
+// message_id:
+// "123456")`
+>>>>>>> v0.0.4
 //
 // ## Rules for HTTP mapping
 //
@@ -2685,9 +2730,15 @@ func (s *Http) MarshalJSON() ([]byte, error) {
 // server side does the reverse decoding. Such variables show up in
 // the
 // [Discovery
+<<<<<<< HEAD
 // Document](https://developers.google.com/discovery/v1/reference/apis)
 // a
 // s `{var}`.
+=======
+// Document](https://developers.google.com/discovery/v1/re
+// ference/apis) as
+// `{var}`.
+>>>>>>> v0.0.4
 //
 // If a variable contains multiple path segments, such as
 // "{var=foo/*}"
@@ -2697,11 +2748,20 @@ func (s *Http) MarshalJSON() ([]byte, error) {
 // percent-encoded.
 // The server side does the reverse decoding, except "%2F" and "%2f" are
 // left
+<<<<<<< HEAD
 // unchanged. Such variables show up in the
 // [Discovery
 // Document](https://developers.google.com/discovery/v1/reference/apis)
 // a
 // s `{+var}`.
+=======
+// unchanged. Such variables show up in
+// the
+// [Discovery
+// Document](https://developers.google.com/discovery/v1/re
+// ference/apis) as
+// `{+var}`.
+>>>>>>> v0.0.4
 //
 // ## Using gRPC API Service Configuration
 //
@@ -4347,6 +4407,64 @@ func (s *Policy) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+<<<<<<< HEAD
+=======
+// Quota: Quota configuration helps to achieve fairness and budgeting in
+// service
+// usage.
+//
+// The metric based quota configuration works this way:
+// - The service configuration defines a set of metrics.
+// - For API calls, the quota.metric_rules maps methods to metrics with
+//   corresponding costs.
+// - The quota.limits defines limits on the metrics, which will be used
+// for
+//   quota checks at runtime.
+//
+// An example quota configuration in yaml format:
+//
+//    quota:
+//      limits:
+//
+//      - name: apiWriteQpsPerProject
+//        metric: library.googleapis.com/write_calls
+//        unit: "1/min/{project}"  # rate limit for consumer projects
+//        values:
+//          STANDARD: 10000
+//
+//
+//      # The metric rules bind all methods to the read_calls metric,
+//      # except for the UpdateBook and DeleteBook methods. These two
+// methods
+//      # are mapped to the write_calls metric, with the UpdateBook
+// method
+//      # consuming at twice rate as the DeleteBook method.
+//      metric_rules:
+//      - selector: "*"
+//        metric_costs:
+//          library.googleapis.com/read_calls: 1
+//      - selector: google.example.library.v1.LibraryService.UpdateBook
+//        metric_costs:
+//          library.googleapis.com/write_calls: 2
+//      - selector: google.example.library.v1.LibraryService.DeleteBook
+//        metric_costs:
+//          library.googleapis.com/write_calls: 1
+//
+//  Corresponding Metric definition:
+//
+//      metrics:
+//      - name: library.googleapis.com/read_calls
+//        display_name: Read requests
+//        metric_kind: DELTA
+//        value_type: INT64
+//
+//      - name: library.googleapis.com/write_calls
+//        display_name: Write requests
+//        metric_kind: DELTA
+//        value_type: INT64
+//
+//
+>>>>>>> v0.0.4
 type Quota struct {
 	// Limits: List of `QuotaLimit` definitions for the service.
 	Limits []*QuotaLimit `json:"limits,omitempty"`

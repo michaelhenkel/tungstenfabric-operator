@@ -82,7 +82,12 @@ const CreateRequest = `
     "name": "mysecret",
     "payload": "foobar",
     "payload_content_type": "text/plain",
+<<<<<<< HEAD
     "secret_type": "opaque"
+=======
+    "secret_type": "opaque",
+    "expiration": "2028-06-21T02:49:48"
+>>>>>>> v0.0.4
 }`
 
 // CreateResponse provides a Create result.

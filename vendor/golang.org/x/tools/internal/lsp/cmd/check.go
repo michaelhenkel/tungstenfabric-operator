@@ -8,14 +8,21 @@ import (
 	"context"
 	"flag"
 	"fmt"
+<<<<<<< HEAD
 	"go/token"
 	"io/ioutil"
+=======
+>>>>>>> v0.0.4
 
 	"golang.org/x/tools/internal/lsp/protocol"
 	"golang.org/x/tools/internal/span"
 )
 
+<<<<<<< HEAD
 // definition implements the definition noun for the query command.
+=======
+// check implements the check verb for gopls.
+>>>>>>> v0.0.4
 type check struct {
 	app *Application
 }
@@ -54,15 +61,22 @@ func (c *check) Run(ctx context.Context, args ...string) error {
 	client := &checkClient{
 		diagnostics: make(chan entry),
 	}
+<<<<<<< HEAD
 	client.app = c.app
 	checking := map[span.URI][]byte{}
 	// now we ready to kick things off
 	server, err := c.app.connect(ctx, client)
+=======
+	checking := map[span.URI]*protocol.ColumnMapper{}
+	// now we ready to kick things off
+	_, err := c.app.connect(ctx, client)
+>>>>>>> v0.0.4
 	if err != nil {
 		return err
 	}
 	for _, arg := range args {
 		uri := span.FileURI(arg)
+<<<<<<< HEAD
 		content, err := ioutil.ReadFile(arg)
 		if err != nil {
 			return err
@@ -74,10 +88,18 @@ func (c *check) Run(ctx context.Context, args ...string) error {
 		if err := server.DidOpen(ctx, p); err != nil {
 			return err
 		}
+=======
+		m, err := client.AddFile(ctx, uri)
+		if err != nil {
+			return err
+		}
+		checking[uri] = m
+>>>>>>> v0.0.4
 	}
 	// now wait for results
 	for entry := range client.diagnostics {
 		//TODO:timeout?
+<<<<<<< HEAD
 		content, found := checking[entry.uri]
 		if !found {
 			continue
@@ -86,6 +108,12 @@ func (c *check) Run(ctx context.Context, args ...string) error {
 		f := fset.AddFile(string(entry.uri), -1, len(content))
 		f.SetLinesForContent(content)
 		m := protocol.NewColumnMapper(entry.uri, fset, f, content)
+=======
+		m, found := checking[entry.uri]
+		if !found {
+			continue
+		}
+>>>>>>> v0.0.4
 		for _, d := range entry.diagnostics {
 			spn, err := m.RangeSpan(d.Range)
 			if err != nil {
