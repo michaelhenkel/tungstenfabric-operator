@@ -175,13 +175,13 @@ spec:
       networkscriptsvolume: true
       hostbinvolume: true
       resourceconfigmap: true
-    - name: vrouternicinit
-      privileged: true
-      hostusrbinvolume: true
-      usrsrcvolume: true
-      networkscriptsvolume: true   
-      hostbinvolume: true  
-      resourceconfigmap: true
+      #    - name: vrouternicinit
+      #privileged: true
+      #hostusrbinvolume: true
+      #usrsrcvolume: true
+      #networkscriptsvolume: true   
+      #hostbinvolume: true  
+      #resourceconfigmap: true
     - name: vroutercni
       privileged: true
       hostusrbinvolume: true
@@ -190,7 +190,8 @@ spec:
       optcnibinvolume: true
       varlogcontrailcnivolume: true
       logvolumepath: "/var/log/contrail"
-      resourceconfigmap: true---
+      resourceconfigmap: true
+---
 apiVersion: tf.tungstenfabric.io/v1alpha1
 kind: WebuiCluster
 metadata:
