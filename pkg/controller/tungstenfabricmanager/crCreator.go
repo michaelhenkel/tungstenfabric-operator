@@ -303,6 +303,7 @@ func (r *ReconcileTungstenfabricManager) Vrouter(
 				HostBinVolume: true,
 				ResourceConfigMap: true,
 			},{
+/*
 				Name: "vrouternicinit",
 				Privileged: true,
 				HostUserBinVolume: true,
@@ -312,6 +313,7 @@ func (r *ReconcileTungstenfabricManager) Vrouter(
 				HostBinVolume: true,
 				ResourceConfigMap: true,
 			},{
+*/
 				Name: "vroutercni",
 				Privileged: true,
 				HostUserBinVolume: true,

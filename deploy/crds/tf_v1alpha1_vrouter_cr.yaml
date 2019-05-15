@@ -37,13 +37,13 @@ spec:
       networkscriptsvolume: true
       hostbinvolume: true
       resourceconfigmap: true
-    - name: vrouternicinit
-      privileged: true
-      hostusrbinvolume: true
-      usrsrcvolume: true
-      networkscriptsvolume: true   
-      hostbinvolume: true  
-      resourceconfigmap: true
+      #    - name: vrouternicinit
+      #privileged: true
+      #hostusrbinvolume: true
+      #usrsrcvolume: true
+      #networkscriptsvolume: true   
+      #hostbinvolume: true  
+      #resourceconfigmap: true
     - name: vroutercni
       privileged: true
       hostusrbinvolume: true
