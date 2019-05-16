@@ -37,7 +37,7 @@ type General struct {
 	AuthMode string `json:"authMode,omitempty"`
 	CloudAdminRole string `json:"cloudAdminRole,omitempty"`
 	GlobalReadOnlyRole string `json:"globalReadOnlyRole,omitempty"`
-	CloudOrchestrator string `json:"cloudOrchestrator"`
+	CloudOrchestrator string `json:"cloudOrchestrator,omitempty"`
 }
 
 type Images struct {

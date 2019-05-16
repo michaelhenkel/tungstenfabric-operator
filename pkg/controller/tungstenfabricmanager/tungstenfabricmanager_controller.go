@@ -158,59 +158,63 @@ func (r *ReconcileTungstenfabricManager) Reconcile(request reconcile.Request) (r
 	clusterResourceMap["Vrouter"] = false
 
 
+	var generalConfig *tfv1alpha1.General
+	if instance.Spec.General != nil {
+		generalConfig = instance.Spec.General
+	}
 	for _, resource := range(instance.Spec.StartResources){
 		switch resource{
 		case "CassandraCluster":
-			err = r.CassandraCluster(instance.Name, instance.Namespace)
+			err = r.CassandraCluster(instance.Name, instance.Namespace, generalConfig)
 			if err != nil {
 				reqLogger.Error(err, "Failed to create resource " + resource)
 				return reconcile.Result{}, err
 			}
 			clusterResourceMap["CassandraCluster"] = true
 		case "ZookeeperCluster":
-			err = r.ZookeeperCluster(instance.Name, instance.Namespace)
+			err = r.ZookeeperCluster(instance.Name, instance.Namespace, generalConfig)
 			if err != nil {
 				reqLogger.Error(err, "Failed to create resource " + resource)
 				return reconcile.Result{}, err
 			}
 			clusterResourceMap["ZookeeperCluster"] = true
 		case "RabbitmqCluster":
-			err = r.RabbitmqCluster(instance.Name, instance.Namespace)
+			err = r.RabbitmqCluster(instance.Name, instance.Namespace, generalConfig)
 			if err != nil {
 				reqLogger.Error(err, "Failed to create resource " + resource)
 				return reconcile.Result{}, err
 			}
 			clusterResourceMap["RabbitmqCluster"] = true
 		case "ConfigCluster":
-			err = r.ConfigCluster(instance.Name, instance.Namespace)
+			err = r.ConfigCluster(instance.Name, instance.Namespace, generalConfig)
 			if err != nil {
 				reqLogger.Error(err, "Failed to create resource " + resource)
 				return reconcile.Result{}, err
 			}
 			clusterResourceMap["ConfigCluster"] = true
 		case "ControlCluster":
-			err = r.ControlCluster(instance.Name, instance.Namespace)
+			err = r.ControlCluster(instance.Name, instance.Namespace, generalConfig)
 			if err != nil {
 				reqLogger.Error(err, "Failed to create resource " + resource)
 				return reconcile.Result{}, err
 			}
 			clusterResourceMap["ControlCluster"] = true
 		case "KubemanagerCluster":
-			err = r.KubemanagerCluster(instance.Name, instance.Namespace)
+			err = r.KubemanagerCluster(instance.Name, instance.Namespace, generalConfig)
 			if err != nil {
 				reqLogger.Error(err, "Failed to create resource " + resource)
 				return reconcile.Result{}, err
 			}
 			clusterResourceMap["KubemanagerCluster"] = true
 		case "WebuiCluster":
-			err = r.WebuiCluster(instance.Name, instance.Namespace)
+			err = r.WebuiCluster(instance.Name, instance.Namespace, generalConfig)
 			if err != nil {
 				reqLogger.Error(err, "Failed to create resource " + resource)
 				return reconcile.Result{}, err
 			}
 			clusterResourceMap["WebuiCluster"] = true
 		case "Vrouter":
-			err = r.Vrouter(instance.Name, instance.Namespace)
+			err = r.Vrouter(instance.Name, instance.Namespace, generalConfig)
 			if err != nil {
 				reqLogger.Error(err, "Failed to create resource " + resource)
 				return reconcile.Result{}, err

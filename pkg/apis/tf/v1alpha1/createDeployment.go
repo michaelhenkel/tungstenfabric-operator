@@ -19,6 +19,7 @@ import (
 	"k8s.io/client-go/rest"
 	"k8s.io/client-go/kubernetes"
 	"gopkg.in/yaml.v2"
+	"fmt"
 )
 var log = logf.Log.WithName("TungstenFabricResource")
 var err error
@@ -106,6 +107,14 @@ func (c *ClusterResource) CreateConfigMap(cl client.Client, instance metav1.Obje
 		c.ResourceConfig["KUBERNETES_SERVICE_SUBNETS"] = serviceSubnet
 		c.ResourceConfig["KUBERNETES_CLUSTER_NAME"] = clusterName
 	}
+	
+	if c.General != nil {
+		if c.General.CloudOrchestrator != "" {
+			fmt.Println("c.General.CloudOrchestrator ", c.General.CloudOrchestrator)
+			c.ResourceConfig["CLOUD_ORCHESTRATOR"] = c.General.CloudOrchestrator
+		}
+	}
+
 
 	configMap := &corev1.ConfigMap{
 		ObjectMeta: metav1.ObjectMeta{

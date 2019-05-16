@@ -10,7 +10,8 @@ import (
 
 func (r *ReconcileTungstenfabricManager) ConfigCluster(
 	instanceName string,
-	instanceNamespace string) error {
+	instanceNamespace string,
+	generalConfig *tfv1alpha1.General) error {
 
 	resourceSpec := tfv1alpha1.ConfigClusterSpec{
 		Type: "deployment",
@@ -76,6 +77,7 @@ func (r *ReconcileTungstenfabricManager) ConfigCluster(
 				ResourceConfigMap: true,
 			},
 		},
+		General: generalConfig,
 	}
 
 	clusterResource := &tfv1alpha1.ConfigCluster{
@@ -99,7 +101,8 @@ func (r *ReconcileTungstenfabricManager) ConfigCluster(
 
 func (r *ReconcileTungstenfabricManager) ControlCluster(
 	instanceName string,
-	instanceNamespace string) error {
+	instanceNamespace string,
+	generalConfig *tfv1alpha1.General) error {
 
 	resourceSpec := tfv1alpha1.ControlClusterSpec{
 		Type: "deployment",
@@ -142,6 +145,7 @@ func (r *ReconcileTungstenfabricManager) ControlCluster(
 				ResourceConfigMap: true,
 			},
 		},
+		General: generalConfig,
 	}
 
 	clusterResource := &tfv1alpha1.ControlCluster{
@@ -165,7 +169,8 @@ func (r *ReconcileTungstenfabricManager) ControlCluster(
 
 func (r *ReconcileTungstenfabricManager) KubemanagerCluster(
 	instanceName string,
-	instanceNamespace string) error {
+	instanceNamespace string,
+	generalConfig *tfv1alpha1.General) error {
 
 	resourceSpec := tfv1alpha1.KubemanagerClusterSpec{
 		Type: "deployment",
@@ -188,6 +193,7 @@ func (r *ReconcileTungstenfabricManager) KubemanagerCluster(
 				ResourceConfigMap: true,
 			},
 		},
+		General: generalConfig,
 	}
 
 	clusterResource := &tfv1alpha1.KubemanagerCluster{
@@ -211,7 +217,8 @@ func (r *ReconcileTungstenfabricManager) KubemanagerCluster(
 
 func (r *ReconcileTungstenfabricManager) WebuiCluster(
 	instanceName string,
-	instanceNamespace string) error {
+	instanceNamespace string,
+	generalConfig *tfv1alpha1.General) error {
 
 	resourceSpec := tfv1alpha1.WebuiClusterSpec{
 		Type: "deployment",
@@ -235,6 +242,7 @@ func (r *ReconcileTungstenfabricManager) WebuiCluster(
 				ResourceConfigMap: true,
 			},
 		},
+		General: generalConfig,
 	}
 
 	clusterResource := &tfv1alpha1.WebuiCluster{
@@ -258,7 +266,8 @@ func (r *ReconcileTungstenfabricManager) WebuiCluster(
 
 func (r *ReconcileTungstenfabricManager) Vrouter(
 	instanceName string,
-	instanceNamespace string) error {
+	instanceNamespace string,
+	generalConfig *tfv1alpha1.General) error {
 
 	resourceSpec := tfv1alpha1.VrouterSpec{
 		Type: "daemonset",
@@ -266,7 +275,7 @@ func (r *ReconcileTungstenfabricManager) Vrouter(
 			{
 				Name: "vrouteragent",
 				Privileged: true,
-				LifeCycleScript: []string{"/cleanup.sh"},
+				LifeCycleScript: []string{"/clean-up.sh"},
 				LogVolumePath: "/var/log/contrail",
 				DevVolume: true,
 				NetworkScriptsVolume: true,
@@ -325,6 +334,7 @@ func (r *ReconcileTungstenfabricManager) Vrouter(
 				ResourceConfigMap: true,
 			},
 		},
+		General: generalConfig,
 	}
 
 	clusterResource := &tfv1alpha1.Vrouter{
@@ -348,7 +358,8 @@ func (r *ReconcileTungstenfabricManager) Vrouter(
 
 func (r *ReconcileTungstenfabricManager) CassandraCluster(
 	instanceName string,
-	instanceNamespace string) error {
+	instanceNamespace string,
+	generalConfig *tfv1alpha1.General) error {
 
 	resourceSpec := tfv1alpha1.CassandraClusterSpec{
 		Type: "deployment",
@@ -367,6 +378,7 @@ func (r *ReconcileTungstenfabricManager) CassandraCluster(
 				Command: []string{"sh","-c","until grep ready /tmp/podinfo/pod_labels > /dev/null 2>&1; do sleep 1; done"},
 			},
 		},
+		General: generalConfig,
 	}
 
 	clusterResource := &tfv1alpha1.CassandraCluster{
@@ -390,7 +402,8 @@ func (r *ReconcileTungstenfabricManager) CassandraCluster(
 
 func (r *ReconcileTungstenfabricManager) ZookeeperCluster(
 	instanceName string,
-	instanceNamespace string) error {
+	instanceNamespace string,
+	generalConfig *tfv1alpha1.General) error {
 
 	resourceSpec := tfv1alpha1.ZookeeperClusterSpec{
 		Type: "deployment",
@@ -409,6 +422,7 @@ func (r *ReconcileTungstenfabricManager) ZookeeperCluster(
 				Command: []string{"sh","-c","until grep ready /tmp/podinfo/pod_labels > /dev/null 2>&1; do sleep 1; done"},
 			},
 		},
+		General: generalConfig,
 	}
 
 	clusterResource := &tfv1alpha1.ZookeeperCluster{
@@ -432,7 +446,8 @@ func (r *ReconcileTungstenfabricManager) ZookeeperCluster(
 
 func (r *ReconcileTungstenfabricManager) RabbitmqCluster(
 	instanceName string,
-	instanceNamespace string) error {
+	instanceNamespace string,
+	generalConfig *tfv1alpha1.General) error {
 
 	resourceSpec := tfv1alpha1.RabbitmqClusterSpec{
 		Type: "deployment",
@@ -451,6 +466,7 @@ func (r *ReconcileTungstenfabricManager) RabbitmqCluster(
 				Command: []string{"sh","-c","until grep ready /tmp/podinfo/pod_labels > /dev/null 2>&1; do sleep 1; done"},
 			},
 		},
+		General: generalConfig,
 	}
 
 	clusterResource := &tfv1alpha1.RabbitmqCluster{
