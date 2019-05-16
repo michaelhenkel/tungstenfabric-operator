@@ -47,6 +47,7 @@ spec:
     authMode: ""
     cloudAdminRole: ""
     globalReadOnlyRole: ""
+    cloudOrchestrator: kubernetes
   kubemanagerConfig:
     size: "1"
     service:
