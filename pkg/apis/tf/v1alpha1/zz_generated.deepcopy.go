@@ -529,13 +529,6 @@ func (in *ControlClusterSpec) DeepCopyInto(out *ControlClusterSpec) {
 			}
 		}
 	}
-	if in.ConfigParameters != nil {
-		in, out := &in.ConfigParameters, &out.ConfigParameters
-		*out = make(map[string]string, len(*in))
-		for key, val := range *in {
-			(*out)[key] = val
-		}
-	}
 	if in.InitContainers != nil {
 		in, out := &in.InitContainers, &out.InitContainers
 		*out = make([]*Container, len(*in))
@@ -545,6 +538,13 @@ func (in *ControlClusterSpec) DeepCopyInto(out *ControlClusterSpec) {
 				*out = new(Container)
 				(*in).DeepCopyInto(*out)
 			}
+		}
+	}
+	if in.ConfigParameters != nil {
+		in, out := &in.ConfigParameters, &out.ConfigParameters
+		*out = make(map[string]string, len(*in))
+		for key, val := range *in {
+			(*out)[key] = val
 		}
 	}
 	if in.General != nil {

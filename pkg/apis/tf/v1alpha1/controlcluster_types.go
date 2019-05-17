@@ -14,10 +14,10 @@ type ControlClusterSpec struct {
 	// Important: Run "operator-sdk generate k8s" to regenerate code after modifying this file
 	// Add custom validation using kubebuilder tags: https://book.kubebuilder.io/beyond_basics/generating_crd.html
 	Containers []*Container `json:"containers"`
-	ConfigParameters map[string]string
 	InitContainers []*Container `json:"initcontainers"`
-	Type string
-	General *General
+	ConfigParameters map[string]string `json:"configparameters,omitempty"`
+	Type string `json:"type,omitempty"`
+	General *General `json:"general,omitempty"`
 }
 
 // ControlClusterStatus defines the observed state of ControlCluster

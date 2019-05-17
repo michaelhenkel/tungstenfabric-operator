@@ -15,9 +15,9 @@ type ZookeeperClusterSpec struct {
 	// Add custom validation using kubebuilder tags: https://book.kubebuilder.io/beyond_basics/generating_crd.html
 	Containers []*Container `json:"containers"`
 	InitContainers []*Container `json:"initcontainers"`
-	ConfigParameters map[string]string
-	Type string
-	General *General
+	ConfigParameters map[string]string `json:"configparameters,omitempty"`
+	Type string `json:"type,omitempty"`
+	General *General `json:"general,omitempty"`
 }
 
 // ZookeeperClusterStatus defines the observed state of ZookeeperCluster
