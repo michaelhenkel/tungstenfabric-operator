@@ -560,6 +560,11 @@ func (c *ClusterResource) CreateDeployment(cl client.Client, instance metav1.Obj
 				},				
 			}
 		}
+		var command []string
+		if container.Command != nil{
+			command = container.Command
+		}
+
 		deploymentContainer := corev1.Container{
 			Image: container.Image,
 			Name: strings.ToLower(container.Name),
@@ -569,6 +574,7 @@ func (c *ClusterResource) CreateDeployment(cl client.Client, instance metav1.Obj
 			Lifecycle: &lifeCycle,
 			ImagePullPolicy: corev1.PullPolicy(container.PullPolicy),
 			EnvFrom: envFrom,
+			Command: command,
 			Env: envList,
 			VolumeMounts: *volumeMountList,
 		}
