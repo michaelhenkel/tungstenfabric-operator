@@ -483,6 +483,14 @@ func createVolumesList(cr *ClusterResource) *[]corev1.Volume{
 
 func (c *ClusterResource) CreateDeployment(cl client.Client, instance metav1.Object, scheme *runtime.Scheme) error {
 
+	var imagePullSecretsList []corev1.LocalObjectReference
+	for _, imagePullSecretName := range(c.BaseInstance.Spec.ImagePullSecrets){
+		imagePullSecret := corev1.LocalObjectReference{
+			Name: imagePullSecretName,
+		}
+		imagePullSecretsList = append(imagePullSecretsList, imagePullSecret)
+	}
+
 	var sizeString string
 	var hostNetworkString string
 	if c.General != nil {
@@ -674,6 +682,7 @@ func (c *ClusterResource) CreateDeployment(cl client.Client, instance metav1.Obj
 			Labels: map[string]string{"app": c.Name, c.Name + "_cr": c.Name},
 		},
 		Spec: corev1.PodSpec{
+			ImagePullSecrets: imagePullSecretsList,
 			ServiceAccountName: serviceAccountName,
 			HostNetwork: hostNetworkBool,
 			NodeSelector: nodeSelector,

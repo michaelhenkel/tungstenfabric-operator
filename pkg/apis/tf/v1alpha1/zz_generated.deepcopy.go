@@ -1021,6 +1021,11 @@ func (in *TungstenfabricManagerSpec) DeepCopyInto(out *TungstenfabricManagerSpec
 		*out = new(General)
 		**out = **in
 	}
+	if in.ImagePullSecrets != nil {
+		in, out := &in.ImagePullSecrets, &out.ImagePullSecrets
+		*out = make([]string, len(*in))
+		copy(*out, *in)
+	}
 	if in.KubemanagerConfig != nil {
 		in, out := &in.KubemanagerConfig, &out.KubemanagerConfig
 		*out = make(map[string]string, len(*in))

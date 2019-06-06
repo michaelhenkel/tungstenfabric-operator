@@ -15,6 +15,7 @@ type TungstenfabricManagerSpec struct {
 	// Add custom validation using kubebuilder tags: https://book.kubebuilder.io/beyond_basics/generating_crd.html
 	Images map[string]string `json:"images,inline"`
 	General *General `json:"general,inline"`
+	ImagePullSecrets []string `json:"imagePullSecrets,omitempty"`
 
 	KubemanagerConfig map[string]string `json:"kubemanagerConfig,inline"`
 	CassandraConfig map[string]string `json:"cassandraConfig,inline"`
